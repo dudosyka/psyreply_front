@@ -18,6 +18,12 @@ export default createStore({
     },
     results: {
       editBlock: null
+    },
+    company: {
+
+    },
+    group: {
+
     }
   },
   getters: {
@@ -100,8 +106,17 @@ export default createStore({
         state.app.popup.message = ''
       }, 3000)
     },
+    setEditCompany(state, company) {
+      state.company = company;
+    },
+    setEditGroup(state, group) {
+      state.group = group;
+    }
   },
   actions: {
+    createGroup() {
+
+    }
   },
   modules: {
   }

@@ -69,7 +69,6 @@ export default {
       this.update()
     },
     selectBlock(n) {
-      console.log(n)
       let block = this.blocks.filter(el => el.id === n.id)
       block = block[0]
       if ('active' in block) {

@@ -15,7 +15,6 @@
   <div class="invalid" v-else>Invalid</div>
   <div class="dashboard__button">
     <img @click="openClientDash" src="@/assets/img/dash.svg" alt="">
-<!--    <div class="title">Дашборд</div>-->
   </div>
 </li>
 </template>
@@ -71,10 +70,10 @@ export default {
 <style scoped>
 .results__item{
   display: grid;
-  grid-template-columns: 1fr 0.25fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr  1fr;
+  grid-template-columns: 1fr 0.25fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr;
   align-items: center;
   background: rgba(255, 255, 255, 0.17);
-  border-radius: 14px;
+  border-radius: 0.875rem;
   padding-left: 1rem;
   border-bottom: rgba(255, 255, 255, 0.5);
   border-top: rgba(255, 255, 255, 0.5);
@@ -109,11 +108,10 @@ export default {
 
 }
 .line{
-background-color: rgba(255, 255, 255, 0.36);
+  background-color: rgba(255, 255, 255, 0.36);
   height: 2rem;
-  width: 2px;
+  width: 0.125rem;
   justify-self: center;
-
 }
 .valid{
   color:rgba(0, 255, 25, 1);

@@ -38,10 +38,12 @@ import EditBlock from '@/components/Block/EditBlock';
 import CreateCompany from "@/components/Company/CreateCompany";
 import EditCompany from '@/components/Company/EditCompany';
 import Company from '@/api/admin/Company';
+import CreateGroup from "@/components/Group/CreateGroup";
 
 export default {
   name: "CompanyView",
   components: {
+    CreateGroup,
     CreateCompany, EditCompany,
     CreateBlock, EditBlock
   },
@@ -77,9 +79,6 @@ export default {
       this.companyId = n.id
       this.window = 'editCompany'
     },
-    selectHandle(n) {
-      console.log(n)
-    }
   }
 }
 </script>

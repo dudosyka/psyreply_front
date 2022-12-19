@@ -9,7 +9,7 @@
       @select="$emit('select', item)"
       @edit="$emit('edit', item)"
     >
-      {{item[keyOfName]}}
+      {{showId ? `${item[showId]} ` : ""}} {{item[keyOfName]}}
     </y-list-item>
   </ul>
 </template>
@@ -29,6 +29,9 @@ export default {
     keyOfName: {
       type: String,
       default: name
+    },
+    showId: {
+      default: false
     },
     selectable: {
       type: Boolean,

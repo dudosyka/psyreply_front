@@ -1,50 +1,82 @@
 <template>
   <y-modal class="main">
-    <header class="header">
-      <y-left-arrow-button @click="$emit('close')" />
-      <h1>Редактирование: {{company.name}}</h1>
-    </header>
-    <y-modal class="block">
-      <header>
-        <h2 class="heading">Редактирование основной информации</h2>
+    <template
+        v-if="window === 'main'"
+    >
+      <header class="header">
+        <y-left-arrow-button @click="$emit('close')" />
+        <h1>Редактирование: {{company.name}}</h1>
       </header>
-      <y-input v-model.trim="company.name" />
-      <y-cool-button @click="edit">Сохранить</y-cool-button>
-    </y-modal>
-    <y-modal class="block" v-if="company.blocks.length > 0">
-      <header>
-        <h2 class="heading">Блоки в компании</h2>
-      </header>
-      <y-list
-        key-of-name="name"
-        :selectable="true"
-        :items="company.blocks"
-        @select="selectRemoveBlock"
-      />
-      <y-cool-button @click="removeBlock">Удалить блок из {{ company.name }}</y-cool-button>
-    </y-modal>
-    <y-modal class="block">
-      <header>
-        <h2 class="heading">Блоки, которые можно добавить</h2>
-      </header>
-      <y-list
-        v-if="blocks.length > 0"
-        key-of-name="name"
-        :items="blocks"
-        :selectable="true"
-        @select="selectAddBlock"
-      />
-      <y-cool-button @click="addBlocks">Добавить блок в {{ company.name }}</y-cool-button>
-    </y-modal>
+      <y-modal class="block">
+        <header>
+          <h2 class="heading">Редактирование основной информации</h2>
+        </header>
+        <y-input v-model.trim="company.name" />
+        <y-cool-button @click="edit">Сохранить</y-cool-button>
+      </y-modal>
+      <y-modal class="block" v-if="company.blocks.length > 0">
+        <header>
+          <h2 class="heading">Блоки в компании</h2>
+        </header>
+        <y-list
+            key-of-name="name"
+            :selectable="true"
+            :items="company.blocks"
+            @select="selectRemoveBlock"
+        />
+        <y-cool-button @click="removeBlock">Удалить блок из {{ company.name }}</y-cool-button>
+      </y-modal>
+      <y-modal class="block">
+        <header>
+          <h2 class="heading">Управление группами компании</h2>
+        </header>
+        <y-list
+            key-of-name="name"
+            :selectable="true"
+            :items="company.groups"
+            @select="selectGroup"
+        />
+        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
+      </y-modal>
+      <y-modal class="block">
+        <header>
+          <h2 class="heading">Блоки, которые можно добавить</h2>
+        </header>
+        <y-list
+            v-if="blocks.length > 0"
+            key-of-name="name"
+            :items="blocks"
+            :selectable="true"
+            @select="selectAddBlock"
+        />
+        <y-cool-button @click="addBlocks">Добавить блок в {{ company.name }}</y-cool-button>
+      </y-modal>
+    </template>
+    <create-group
+        v-if="window === 'createGroup'"
+        @close="update"
+    >
+    </create-group>
+
+    <edit-group
+        v-if="window === 'editGroup'"
+        @close="update"
+    >
+    </edit-group>
+
   </y-modal>
+
 </template>
 
 <script>
 import Company from '@/api/admin/Company';
 import Block from '@/api/admin/Block';
 import YCoolButton from '@/components/UI/YCoolButton';
+import CreateGroup from "@/components/Group/CreateGroup";
+import EditGroup from "@/components/Group/EditGroup";
 
 function update(data) {
+  data.window = 'main'
   const company = new Company()
   company.get(data.companyId)
     .then(res => {
@@ -72,12 +104,13 @@ function update(data) {
 
 export default {
   name: "EditCompany",
-  components: {YCoolButton},
+  components: {CreateGroup, EditGroup, YCoolButton},
   props: {
     companyId: Number
   },
   data() {
     return {
+      window: 'main',
       blocks: [],
       company: {
         id: null,
@@ -92,6 +125,15 @@ export default {
     update(this)
   },
   methods: {
+    addGroup() {
+      this.$store.commit('setEditCompany', this.company);
+      this.window = 'createGroup';
+    },
+    selectGroup(n) {
+      this.$store.commit('setEditCompany', this.company);
+      this.$store.commit('setEditGroup', n);
+      this.window = 'editGroup';
+    },
     selectAddBlock(n) {
       let block = this.blocks.filter(el => el.id === n.id)
       block = block[0]
