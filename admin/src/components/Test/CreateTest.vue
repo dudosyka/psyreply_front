@@ -71,9 +71,10 @@
 
           <div class="type__test">
             <div class="type__test__title">Формула</div>
-            <y-input class="w-50" v-model="test.formula" />
+            <y-input class="w-50" v-model="test.formula" /> <br>
             <div class="formula_controls">
-              <y-button @click="autoFormula">Сумма по всем вопросам</y-button>
+              <y-button class="formula_control" @click="autoFormula">Сумма по всем вопросам</y-button>
+              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>
             </div>
           </div>
 
@@ -110,6 +111,7 @@ import Metric from '@/api/admin/Metric';
 import QuestionType from '@/api/admin/QuestionType';
 import Test from '@/api/admin/Test'
 import CreateMetric from "@/components/Test/Metrics/CreateMetric";
+import YInput from "@/components/UI/YInput";
 
 function update(data) {
   if (data.testId !== -1) {
@@ -160,6 +162,7 @@ function update(data) {
 export default {
   name: "CreateTest",
   components: {
+    YInput,
     CreateMetric,
     AddAnswers, Question
   },
@@ -179,6 +182,7 @@ export default {
       window: 'main',
       questionTypes: [],
       metrics: [],
+      formula_div: "",
       test: {
         type: null,
         title: null,
@@ -279,8 +283,10 @@ export default {
 
       const formula = body.formula
 
-      if (test.shlypaMarkupValidation(`+${formula}`)) {
-        body.formula = `+${formula}`
+      this.formula_div = (this.formula_div == "") ? 1 : parseInt(this.formula_div);
+
+      if (test.shlypaMarkupValidation(`[+${formula}]/${this.formula_div}`)) {
+        body.formula = `[+${formula}]/${this.formula_div}`
       } else {
         return this.$store.commit('openErrorPopup', 'Ошибка в формуле')
       }
@@ -452,10 +458,15 @@ hr {
 }
 
 .formula_controls {
+  width: 50%;
+  margin-top: 1rem;
   margin-left: 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+}
+
+.formula_control {
+  margin-right: 2rem;
 }
 
 </style>

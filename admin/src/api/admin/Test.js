@@ -14,6 +14,6 @@ export default class Test extends Request {
   }
 
   shlypaMarkupValidation(string) {
-    return /^(\+((\$\d+)|(\(((\d+)|(\$\d+))[+*-]\$\d+\))|(\(\-?\$\d+\))))+$/.test(string)
+    return /^\[(\+((\$\d+)|(\(((\d+)|(\$\d+))[+*-]\$\d+\))|(\(\-?\$\d+\))))+\]\/\d+$/.test(string)
   }
 }
