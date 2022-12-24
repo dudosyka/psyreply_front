@@ -43,7 +43,7 @@ function update(data) {
       if (res.ok) {
         res.json().then(r => data.test = r)
       } else {
-        alert(res.msg())
+        this.$store.commit('openErrorPopup', res.msg())
       }
     })
 
@@ -53,7 +53,7 @@ function update(data) {
       if (res.ok) {
         res.json().then(r => data.blocks = r)
       } else {
-        alert(res.msg())
+        this.$store.commit('openErrorPopup', res.msg())
       }
     })
 }
@@ -92,7 +92,8 @@ export default {
       const blocks = this.blocks.filter(el => el.active)
 
       if (blocks.length === 0) {
-        return alert('Выберите блоки, пожалуйста')
+        this.$store.commit('openErrorPopup', "Вы должны выбрать блоки!")
+        return;
       }
 
       const body = {
@@ -104,13 +105,13 @@ export default {
         test.addToBlock(block.id, body)
           .then(res => {
             if (res.ok) {
-              alert(`Тест ${this.test.title} успешно добавлен в блок ${blocks[0].name}`)
+              this.$store.commit('openPopup', `Тест ${this.test.title} успешно добавлен в блок ${blocks[0].name}`)
               block.active = false
             } else {
               if (res.err.status === 409) {
-                alert('Тест уже добавлен в блок')
+                this.$store.commit('openErrorPopup', "Тест уже добавлен в блок")
               } else {
-                alert(res.msg())
+                this.$store.commit('openErrorPopup', res.msg())
               }
             }
           })
@@ -121,10 +122,10 @@ export default {
       test.remove(this.test.id)
         .then(res => {
           if (res.ok) {
-            alert('Тест успешно удален')
+            this.$store.commit('openPopup', `Тест успешно добавлен`)
             this.close()
           } else {
-            alert(res.msg())
+            this.$store.commit('openErrorPopup', res.msg())
             console.log(res)
           }
         })

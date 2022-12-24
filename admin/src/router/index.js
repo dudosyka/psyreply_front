@@ -9,25 +9,25 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    path: '/block',
+    path: '/block:after(.*)',
     name: 'block',
     component: () => import('@/views/BlockView'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/test',
+    path: '/test:after(.*)',
     name: 'test',
     component: () => import('@/views/TestView'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/company',
+    path: '/company:after(.*)',
     name: 'company',
     component: () => import('@/views/CompanyView'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/results',
+    path: '/results:after(.*)',
     name: 'results',
     component: () => import('@/views/ResultsView'),
     meta: { requiresAuth: true }

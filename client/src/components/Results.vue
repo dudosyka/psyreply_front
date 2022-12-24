@@ -21,7 +21,7 @@ export default {
   name: "Results",
   methods: {
     getAll() {
-      this.$store.dispatch('getResults')
+      this.$store.dispatch('getResultsAfterPass')
     }
   },
   computed: {

@@ -1,4 +1,5 @@
 <template>
+  <y-popup-warn></y-popup-warn>
   <div class="wrapper">
     <y-left-side-bar />
     <main class="main">
@@ -11,11 +12,12 @@
               <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
             </select>-->
             <y-select
+                class="fs-2"
               :selects="companies"
               @select="updateBlocksList"
             />
           </div>
-          <y-button :plus="true" @click="this.window ='createBlock'">Новый блок</y-button>
+          <y-button :plus="true" @click="createBlock">Новый блок</y-button>
         </header>
 <!--        U can add "items" props to list component. It must be array -->
         <y-list
@@ -44,6 +46,7 @@ import EditBlock from '@/components/Block/EditBlock';
 
 import Block from '@/api/admin/Block';
 import Company from '@/api/admin/Company';
+import YPopupWarn from "@/components/UI/YPopupWarn";
 
 function update(data) {
   const block = new Block()
@@ -58,6 +61,7 @@ function update(data) {
 export default {
   name: "BlockView",
   components: {
+    YPopupWarn,
     CreateBlock, EditBlock
   },
   data() {
@@ -70,6 +74,13 @@ export default {
     }
   },
   created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if (toParams.after === '')
+            this.window = 'main'
+        }
+    )
     update(this)
     const company = new Company()
     this.companies.push({ })
@@ -91,8 +102,13 @@ export default {
   },
   methods: {
     editBlock(n){
+      this.$router.push('/block/edit')
       this.window = 'editBlock'
       this.editBlockId = n.id
+    },
+    createBlock() {
+      this.$router.push('/block/create')
+      this.window = 'createBlock'
     },
     updateBlocksList(n) {
       this.companies.map(el => {
@@ -103,6 +119,7 @@ export default {
       update(this)
     },
     close() {
+      this.$router.push('/block')
       this.window = 'main'
 
       this.companies.map(el => el.active = false)
@@ -155,6 +172,10 @@ export default {
   height: 26px;
   margin-right: 20px;
   cursor: pointer;
+}
+
+.fs-2 {
+  font-size: 1.3rem;
 }
 
 </style>

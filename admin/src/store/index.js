@@ -7,10 +7,15 @@ export default createStore({
         show: false,
         message: null
       },
+      popupWarn: {
+        show: false,
+        message: null,
+        acceptCallback: null,
+      },
       popup: {
         show: false,
         message: null
-      }
+      },
     },
     newTest: {
       questionsCount: 0,
@@ -41,6 +46,9 @@ export default createStore({
     },
     popupError(state) {
       return state.app.popupError
+    },
+    popupWarn(state) {
+      return state.app.popupWarn
     },
     popup(state) {
       return state.app.popup
@@ -97,6 +105,18 @@ export default createStore({
     closeErrorPopup(state) {
       state.app.popupError.show = false
       state.app.popupError.message = ''
+    },
+    openWarnPopup(state, { message, acceptCallback }) {
+      state.app.popupWarn.show = true;
+      state.app.popupWarn.message = message;
+      state.app.popupWarn.acceptCallback = acceptCallback;
+    },
+    acceptWarnPopup(state) {
+      state.app.popupWarn.acceptCallback();
+    },
+    closeWarnPopup(state) {
+      state.app.popupWarn.show = false;
+      state.app.popupWarn.message = "";
     },
     openPopup(state, message) {
       state.app.popup.show = true

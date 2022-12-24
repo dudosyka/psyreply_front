@@ -7,7 +7,7 @@
           <div class="header__select">
             <div class="heading header__heading">Компании</div>
           </div>
-          <y-button :plus="true" @click="this.window ='createCompany'">Новая компания</y-button>
+          <y-button :plus="true" @click="createCompany">Новая компания</y-button>
         </header>
         <!--        U can add "items" props to list component. It must be array -->
         <y-list
@@ -55,6 +55,13 @@ export default {
     }
   },
   created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if (toParams.after === '')
+            this.window = 'main'
+        }
+    )
     const company = new Company()
     company.getOne()
       .then(res => {
@@ -64,8 +71,13 @@ export default {
       })
   },
   methods: {
+    createCompany() {
+      this.$router.push('/company/create');
+      this.window = 'createCompany'
+    },
     getCompanies() {
       this.window = 'main'
+      this.$router.push('/company')
       const company = new Company()
       company.getOne()
         .then(res => {
@@ -77,6 +89,7 @@ export default {
     editCompany(n) {
       console.log(n)
       this.companyId = n.id
+      this.$router.push('/company/edit');
       this.window = 'editCompany'
     },
   }

@@ -54,9 +54,6 @@
 </template>
 
 <script>
-import CreateBlock from '@/components/Block/CreateBlock';
-import EditBlock from '@/components/Block/EditBlock';
-import CreateCompany from "@/components/Company/CreateCompany";
 import YSelect from "@/components/UI/YSelect";
 import YDate from "@/components/UI/YDate";
 import YPopup from "@/components/UI/YPopup";
@@ -68,7 +65,6 @@ import YDashboard from "@/components/Results/YDashboard";
 import Company from '@/api/admin/Company';
 import Results from '@/api/admin/Results';
 import Block from '@/api/admin/Block';
-import Test from '@/api/admin/Test';
 
 function update(data) {
     const results = new Results()
@@ -97,6 +93,13 @@ export default {
     YDashboard,
   },
   created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if (toParams.after === '')
+            this.window = 'main'
+        }
+    )
     update(this)
     this.companies.push({ })
     this.companies.forEach(el => el['active'] = false)
@@ -187,11 +190,13 @@ export default {
       update(this)
     },
     openEditWindow(obj) {
+      this.$router.push('/results/edit')
       this.$store.commit('setEditBlock', obj)
       this.window = 'dashboard'
     },
     closeEditWindow() {
       this.window = 'main'
+      this.$router.push('/results')
       this.$store.commit('removeEditBlock')
       update(this)
     },

@@ -74,7 +74,7 @@
         <template v-if="step === 'after-test'">
           <y-modal class="before_test">
             <h2 class="before_test__title">Тест пройден</h2>
-            <y-cool-button @click="getCurResults">Просмотреть результаты</y-cool-button>
+            <y-cool-button @click="getCurResults">Посмотреть результаты</y-cool-button>
           </y-modal>
         </template>
       </transition>

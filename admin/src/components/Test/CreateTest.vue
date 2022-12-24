@@ -1,5 +1,6 @@
 <template>
   <y-modal class="modal">
+    <template v-if="window === 'main'">
       <header class="header">
         <y-left-arrow-button v-if="testId === -1" @click="close" />
         <h1 class="heading">{{ title }}</h1>
@@ -18,11 +19,11 @@
           <div class="type__test">
             <div class="type__test__title">Тип теста</div>
             <y-mini-button
-              class="type__test__type"
-              v-for="type of questionTypes"
-              :key="`${type.id}${type.name}`"
-              :active="type.id === test.type"
-              @click="selectLabel('type', type.id)"
+                class="type__test__type"
+                v-for="type of questionTypes"
+                :key="`${type.id}${type.name}`"
+                :active="type.id === test.type"
+                @click="selectLabel('type', type.id)"
             >
               {{ type.name }}
             </y-mini-button>
@@ -30,18 +31,21 @@
           <div class="type__test">
             <div class="type__test__title">Тип метрики</div>
             <y-mini-button
-              class="type__test__type"
-              v-for="metric of metrics"
-              :key="`${metric.id}${metric.name}`"
-              :active="metric.id === test.metric"
-              @click="selectLabel('metric', metric.id)"
+                class="type__test__type"
+                v-for="metric of metrics"
+                :key="`${metric.id}${metric.name}`"
+                :active="metric.id === test.metric"
+                @click="selectLabel('metric', metric.id)"
             >
               {{ metric.name }}
             </y-mini-button>
-          </div>
-          <div class="type__test">
-            <div class="type__test__title">Формула</div>
-            <y-input v-model="test.formula" />
+
+            <y-mini-button
+                class="type__test__type"
+                @click="createMetric"
+            >
+              Добавить
+            </y-mini-button>
           </div>
         </div>
       </article>
@@ -50,18 +54,28 @@
         <hr/>
         <div class="header__plus">
           <h2 class="heading">Вопросы</h2>
-          <button @click="addQuestion" class="plus">+</button>
+          <y-cool-button v-if="questions.length <= 0" class="ml-1" @click="addQuestion">Добавить вопрос</y-cool-button>
         </div>
 
         <template v-if="questions.length > 0">
 
           <template v-for="(question, id) in questions" :key="`${id}${question.id}`">
             <question
-              :question-id="id"
-              :type="test.type"
-              @remove="removeQuestion(id)"
+                :question-id="id"
+                :type="test.type"
+                @remove="removeQuestion(id)"
             />
           </template>
+
+          <y-cool-button @click="addQuestion">Добавить вопрос</y-cool-button>
+
+          <div class="type__test">
+            <div class="type__test__title">Формула</div>
+            <y-input class="w-50" v-model="test.formula" />
+            <div class="formula_controls">
+              <y-button @click="autoFormula">Сумма по всем вопросам</y-button>
+            </div>
+          </div>
 
           <y-cool-button @click="saveTest">Сохранить тест</y-cool-button>
         </template>
@@ -72,12 +86,19 @@
           </div>
         </div>
 
-<!--        <hr>
-        <y-test-type1 />
-        <hr>
-        <y-test-type2 />
-        <hr>-->
+        <!--        <hr>
+                <y-test-type1 />
+                <hr>
+                <y-test-type2 />
+                <hr>-->
+
       </section>
+    </template>
+
+    <create-metric
+        v-if="window === 'createMetric'"
+        @close="createMetricClosed"
+    ></create-metric>
   </y-modal>
 </template>
 
@@ -88,6 +109,7 @@ import Question from '@/components/Test/Question';
 import Metric from '@/api/admin/Metric';
 import QuestionType from '@/api/admin/QuestionType';
 import Test from '@/api/admin/Test'
+import CreateMetric from "@/components/Test/Metrics/CreateMetric";
 
 function update(data) {
   if (data.testId !== -1) {
@@ -109,7 +131,7 @@ function update(data) {
             data.$store.commit('fillQuestions', r.questions)
           })
         } else {
-          alert(res.msg())
+          this.$store.commit('openErrorPopup', res.msg())
           console.log(res)
         }
       })
@@ -121,7 +143,7 @@ function update(data) {
       if (res.ok) {
         res.json().then(r => data.metrics = r)
       } else {
-        alert('Произошла ошибка')
+        this.$store.commit('openErrorPopup', res.msg())
       }
     })
   const types = new QuestionType
@@ -130,7 +152,7 @@ function update(data) {
       if (res.ok) {
         res.json().then(r => data.questionTypes = r)
       } else {
-        alert('Произошла ошибка')
+        this.$store.commit('openErrorPopup', res.msg())
       }
     })
 }
@@ -138,6 +160,7 @@ function update(data) {
 export default {
   name: "CreateTest",
   components: {
+    CreateMetric,
     AddAnswers, Question
   },
   emits: ['close'],
@@ -153,6 +176,7 @@ export default {
   },
   data(){
     return {
+      window: 'main',
       questionTypes: [],
       metrics: [],
       test: {
@@ -164,9 +188,40 @@ export default {
     }
   },
   created() {
+    this.$store.commit('clearNewTest');
     update(this)
   },
   methods: {
+    updateMetricList() {
+      this.$store.commit('clearNewTest');
+      const metric = new Metric()
+      metric.getOne()
+          .then(res => {
+            if (res.ok) {
+              res.json().then(r => this.metrics = r)
+            } else {
+              this.$store.commit('openErrorPopup', res.msg())
+            }
+          })
+    },
+    createMetric() {
+      this.window = 'createMetric';
+      this.$router.push('/test/createMetric');
+    },
+    createMetricClosed() {
+      this.window = 'main'
+      this.updateMetricList();
+      this.$router.push('/test/create')
+    },
+    autoFormula() {
+      const formulaArr = []
+      let i = 1;
+      this.$store.getters.questions.map(() => {
+        formulaArr.push("$" + i);
+        i++;
+      });
+      this.test.formula = formulaArr.join("+");
+    },
     close() {
       this.$emit('close')
       this.$store.commit('clearNewTest')
@@ -262,7 +317,7 @@ export default {
               this.$store.commit('clearNewTest')
               this.update()
             } else {
-              alert(res.msg())
+              this.$store.commit('openErrorPopup', res.msg())
             }
           })
       } else {
@@ -273,7 +328,7 @@ export default {
               this.$store.commit('clearNewTest')
               this.$emit('close')
             } else {
-              alert(res.msg())
+              this.$store.commit('openErrorPopup', res.msg())
             }
           })
       }
@@ -318,7 +373,8 @@ export default {
 
 }
 .type__test {
-  margin-top: 40px;
+  margin-top: 70px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: stretch;
@@ -385,6 +441,21 @@ hr {
   border-right: 0px solid white;
   border-bottom: 0px solid white;
   border-top: 1px solid rgba(255, 255, 255, 0.52);
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.formula_controls {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 </style>

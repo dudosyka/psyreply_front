@@ -33,7 +33,7 @@ export default {
 <style scoped>
 hr {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
   min-width: 30vw;
   border-left: 0px solid white;
   border-right: 0px solid white;

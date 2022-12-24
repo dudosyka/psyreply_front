@@ -176,6 +176,7 @@ export default {
   padding: 0 1rem;
   background: linear-gradient(200.42deg, #38F9D7 13.57%, #43E97B 98.35%);
   border-radius: 7px;
+  color: #302a3e;
 }
 
 .develop-leave-active,

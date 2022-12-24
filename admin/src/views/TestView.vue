@@ -7,7 +7,7 @@
           <div class="header__select">
             <div class="heading header__heading">Тесты</div>
           </div>
-          <y-button :plus="true"  @click="window = 'createTest'">Новый тест</y-button>
+          <y-button :plus="true"  @click="createTest">Новый тест</y-button>
         </header>
         <y-list
           v-if="tests.length > 0"
@@ -59,15 +59,30 @@ export default {
     }
   },
   created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if (toParams.after === '')
+            this.window = 'main'
+        }
+    )
     update(this)
   },
   methods: {
+    createTest() {
+      this.$router.push('/test/create')
+      this.window = 'createTest'
+    },
     editTest(n) {
+      this.$router.push('/test/edit')
       this.editTestId = n.id
       this.window = 'editTest'
     },
     close(toWindow) {
       this.window = toWindow
+      if (toWindow == 'main') {
+        this.$router.push('/test')
+      }
       this.$store.commit('clearNewTest')
       update(this)
     }

@@ -14,6 +14,7 @@ import YMiniButton from "@/components/UI/YMiniButton";
 import YDate from "@/components/UI/YDate";
 import YPopup from "@/components/UI/YPopup";
 import YPopupError from "@/components/UI/YPopupError";
+import YPopupWarn from "@/components/UI/YPopupError";
 import YResultsListItem from "@/components/UI/YResultsListItem";
 import YResultsTabel from "@/components/UI/YResultsTabel";
 import YResultsTabelItem from "@/components/UI/YResultsTabelItem";
@@ -37,6 +38,7 @@ export default [
   YDate,
   YPopup,
   YPopupError,
+  YPopupWarn,
   YResultsListItem,
   YResultsTabel,
   YResultsTabelItem,

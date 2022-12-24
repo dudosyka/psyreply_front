@@ -6,6 +6,9 @@
   <transition name="popup">
     <y-popup />
   </transition>
+  <transition name="popup">
+    <y-popup-warn />
+  </transition>
 </template>
 
 <script>

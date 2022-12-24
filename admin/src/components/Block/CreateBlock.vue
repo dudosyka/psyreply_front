@@ -10,7 +10,7 @@
         <y-input max="59" min="0" type="number" v-model="block.seconds" placeholder="сс" class="time-picker__input"/>
       </y-modal>
 
-      <y-button @click="window = 'createTest'" :plus="true">Добавить тест</y-button>
+      <y-button @click="createTest" :plus="true">Добавить тест</y-button>
 
     </header>
     <y-input
@@ -28,7 +28,7 @@
 
   <create-test
     v-if="window === 'createTest'"
-    @close="window = 'main'"
+    @close="createTestClosed"
   />
 </template>
 
@@ -56,17 +56,27 @@ export default {
     }
   },
   created() {
-    const test = new Test()
-    test.getAll({ filters: {  } })
-      .then(res => {
-        if (res.ok) {
-          res.json().then(r => this.tests = r)
-        } else {
-          alert(res.msg())
-        }
-      })
+    this.updateTestList()
   },
   methods: {
+    updateTestList() {
+      const test = new Test()
+      test.getAll({ filters: {  } })
+          .then(res => {
+            if (res.ok) {
+              res.json().then(r => this.tests = r)
+            } else {
+              this.$store.commit('openErrorPopup', res.msg())
+            }
+          })
+    },
+    createTest() {
+      this.window = 'createTest';
+    },
+    createTestClosed() {
+      this.window = 'main'
+      this.updateTestList()
+    },
     selectTest(n) {
       let test = this.tests.filter(el => el.id === n.id)
       test = test[0]
@@ -102,10 +112,10 @@ export default {
         .then(res => {
           console.log(res)
           if (res.ok) {
-            alert('Блок успешно создан')
+            this.$store.commit('openPopup', "Блок успешно создан!")
             this.$emit('close')
           } else {
-            alert(res.msg())
+            this.$store.commit('openErrorPopup', res.msg())
             console.log(res)
           }
         })

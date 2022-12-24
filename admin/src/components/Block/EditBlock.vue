@@ -60,6 +60,7 @@
 import Block from '@/api/admin/Block';
 import YCoolButton from '@/components/UI/YCoolButton';
 import Test from '@/api/admin/Test';
+import YPopupWarn from "@/components/UI/YPopupWarn";
 
 function update(data) {
   const block = new Block()
@@ -79,7 +80,7 @@ function update(data) {
           data.newTime = { hours, minutes, seconds }
         })
       } else {
-        alert(res.msg())
+        this.$store.commit('openErrorPopup', res.msg())
       }
     })
 
@@ -89,7 +90,7 @@ function update(data) {
       if (res.ok) {
         res.json().then(r => data.tests = r)
       } else {
-        alert(res.msg())
+        this.$store.commit('openErrorPopup', res.msg())
         console.log(res)
       }
     })
@@ -97,7 +98,7 @@ function update(data) {
 
 export default {
   name: "EditBlock",
-  components: {YCoolButton},
+  components: {YCoolButton, YPopupWarn},
 
   props: ['id'],
   data() {
@@ -225,22 +226,23 @@ export default {
         })
     },
     removeBlock() {
-      const block = new Block()
+      this.$store.commit('openWarnPopup', { message: "Вы уверены, что хотите удалить блок? (Удаление блока НЕ повлечёт за собой удаление тестов внутри него)", acceptCallback: () => {
+        const block = new Block()
 
-      const body = {
-        blocks: [this.id]
-      }
+        const body = {
+          blocks: [this.id]
+        }
 
-      block.remove(body)
-        .then(res => {
-          if (res.ok) {
-            alert('Блок успешно удалён')
-            this.$emit('close')
-          } else {
-            alert(res.msg())
-            console.log(res)
-          }
-        })
+        block.remove(body)
+            .then(res => {
+              if (res.ok) {
+                this.$store.commit('openPopup', "Блок успешно удален!")
+                this.$emit('close')
+              } else {
+                this.$store.commit('openErrorPopup', res.msg)
+              }
+            })
+      }})
     }
   }
 }

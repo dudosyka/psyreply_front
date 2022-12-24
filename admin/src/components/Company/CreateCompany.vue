@@ -66,6 +66,7 @@ export default {
     },
     close() {
       this.window = 'main'
+      this.$router.push('/company')
       this.update()
     },
     selectBlock(n) {
@@ -85,17 +86,16 @@ export default {
       if (this.company.name.length > 3) {
         body.company = this.company
       } else {
-        alert('Слишком короткоее название')
+        this.$store.commit('openErrorPopup', "Слишком короткое название!")
       }
       if (blocks.length > 0) body.company.inputBlocks = blocks
       company.create('', body)
         .then(res => {
           if (res.ok) {
-            alert('компания создана')
+            this.$store.commit('openPopup', "Компания успешно создана!")
             this.$emit('close')
           } else {
-            alert(res.msg())
-            console.log(res)
+            this.$store.commit('openErrorPopup', res.msg())
           }
         })
     },

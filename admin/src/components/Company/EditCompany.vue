@@ -173,14 +173,14 @@ export default {
             this.$store.commit('openPopup', 'Блоки добавлены')
             this.update()
           } else {
-            alert(res.msg())
+            this.$store.commit('openErrorPopup', res.msg())
           }
         })
     },
     removeBlock() {
       const blockRemove = this.company.blocks.filter(el => el.active)
       if (blockRemove.length === 0) {
-        return alert('Выберите блок для удаления')
+        this.$store.commit('openErrorPopup', "Для удаления вы должны выбрать хотя бы 1 блок!")
       }
 
       const body = {
@@ -197,7 +197,7 @@ export default {
             this.$store.commit('openPopup', 'Блоки удалены')
             this.update()
           } else {
-            alert(res.msg())
+            this.$store.commit('openErrorPopup', res.msg())
           }
         })
     },

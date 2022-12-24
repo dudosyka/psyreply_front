@@ -64,7 +64,11 @@ export default {
   justify-content: space-between;
 }
 .qtext {
+  font-size: 1.5rem;
   text-align: center;
+}
+.yqitem {
+  margin-top: 2rem;
 }
 @media screen and (max-width:820px){
   .qtext{

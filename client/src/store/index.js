@@ -203,7 +203,7 @@ export default createStore({
         .then(res => {
           if (res.ok) {
             res.text().then(r => {
-              const token = r.split('t=')[1]
+              const token = r.split('/results/')[1]
               localStorage.setItem('resultsToken', token)
               dispatch('getResults')
             })
