@@ -25,6 +25,18 @@
             />
           </div>
         </header>
+        <div class="filters" v-if="filters.block_id">
+          <y-input
+              class="week_input"
+              font-size="1"
+              v-model.trim="filters.week"
+              placeholder="Номер недели"
+          />
+          <y-select
+              :selects="groups"
+              @select="updateGroupSelect"
+          />
+        </div>
         <y-results-list v-if="results.length > 0">
           <y-results-list-item
             v-for="result in results"
@@ -68,7 +80,13 @@ import Block from '@/api/admin/Block';
 
 function update(data) {
     const results = new Results()
-    results.getAll({ filters: data.filters })
+    let options = data.filters;
+    const { week, ...filters } = options;
+
+    if (data.filters.week != "")
+      filters.week = week;
+
+    results.getAll({ filters })
       .then(res => {
         if(res.ok) {
           res.json().then(r => {
@@ -100,6 +118,12 @@ export default {
             this.window = 'main'
         }
     )
+    this.$watch(
+        () => this.filters.week,
+        () => {
+          update(this)
+        }
+    )
     update(this)
     this.companies.push({ })
     this.companies.forEach(el => el['active'] = false)
@@ -124,6 +148,7 @@ export default {
       window: 'main',
       results: [],
       companies: [],
+      groups: [],
       blocks: [],
       filters: {},
       editBlock: null,
@@ -131,6 +156,38 @@ export default {
     }
   },
   methods: {
+
+    getCompanyGroups() {
+      const company = new Company();
+      company.getGroups(this.filters.company_id).then(res => {
+        this.groups = res.map(el => {
+          return {
+            active: false,
+            name: el.name,
+            id: el.id
+          }
+        })
+        this.groups.push({
+          active: true,
+          name: "Группа",
+          id: 0
+        })
+      })
+    },
+
+    updateGroupSelect(n) {
+      for (let i = 0; i < this.groups.length; i++) {
+        if (this.groups[i].id == n.id) {
+          this.filters.group_id = n.id;
+          this.groups[i].active = true;
+        } else {
+          if (this.groups[i].active)
+            this.groups[i].active = false;
+        }
+      }
+      update(this);
+    },
+
     updateCompaniesSelect(n) {
       this.companies.map(el => {
         el.active = el.id === n.id;
@@ -172,6 +229,7 @@ export default {
         this.blocks = []
       }
 
+      this.getCompanyGroups();
       update(this)
     },
     updateBlocksSelect(n) {
@@ -180,8 +238,9 @@ export default {
       })
 
       const select = this.blocks.filter(el => el.active)
-      console.log(select)
+
       if (select[0].id) {
+        this.filters.week = "";
         this.filters.block_id = select[0].id
       } else {
         delete this.filters.block_id
@@ -300,5 +359,16 @@ export default {
 
 }
 
+.filters {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.week_input {
+  width: 20%;
+}
 
 </style>
