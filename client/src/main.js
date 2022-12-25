@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import VueApexCharts from "vue3-apexcharts";
 import components from '@/components/UI/index'
+import $ from 'expose-loader?exposes=$,jQuery!./jquery'
+import ChartJs from 'expose-loader?exposes=ChartJs!./Chart'
 
 const app = createApp(App)
 
