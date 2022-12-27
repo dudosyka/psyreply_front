@@ -32,10 +32,18 @@
               v-model.trim="filters.week"
               placeholder="Номер недели"
           />
-          <y-select
-              :selects="groups"
-              @select="updateGroupSelect"
-          />
+          <div>
+            <y-select
+                :selects="groups"
+                @select="updateGroupSelect"
+            />
+            <y-cool-button v-if="filters.week != null && filters.week != ''">
+              <export-excel
+                  :data = "onExport">
+                Статистика по выбранным
+              </export-excel>
+            </y-cool-button>
+          </div>
         </div>
         <y-results-list v-if="results.length > 0">
           <y-results-list-item
@@ -48,19 +56,24 @@
             :valid="result.approved"
             :date="result.createdAt"
             @edit="openEditWindow(result)"
+            :selectable="filters.week != null && filters.week != ''"
+            @select="result_selected(result)"
+            :active="result.active"
           />
         </y-results-list>
         <p class="new__results" v-else>
           {{ answerMessage }}
         </p>
       </y-modal>
-      <y-modal v-if="window==='dashboard'">
+      <y-modal v-if="window === 'dashboard'">
           <y-dashboard
             :block="editBlock"
             @close="closeEditWindow"
           />
       </y-modal>
+      <y-modal v-if="window === 'stat'">
 
+      </y-modal>
     </main>
   </div>
 </template>
@@ -77,6 +90,9 @@ import YDashboard from "@/components/Results/YDashboard";
 import Company from '@/api/admin/Company';
 import Results from '@/api/admin/Results';
 import Block from '@/api/admin/Block';
+import YList from "@/components/UI/YList";
+import YListItem from "@/components/UI/YListItem";
+import YCoolButton from "@/components/UI/YCoolButton";
 
 function update(data) {
     const results = new Results()
@@ -102,6 +118,9 @@ function update(data) {
 export default {
   name: "RelultsView",
   components: {
+    YCoolButton,
+    YListItem,
+    YList,
     YResultsList,
     YResultsListItem,
     YPopupError,
@@ -152,11 +171,60 @@ export default {
       blocks: [],
       filters: {},
       editBlock: null,
-      haveResults: false
+      haveResults: false,
+      onExport: []
     }
   },
   methods: {
+    async result_selected(n) {
+      if (n.active)
+        n.active = false;
+      else
+        n.active = true;
 
+      const filtered = this.results.filter(el => el.active);
+      const results = new Results();
+      if (!filtered.length)
+        return {};
+      const stat = await results.getStat(filtered.map(el => el.id))
+
+      const onExport = filtered.map(res => {
+        const resMetric = JSON.parse(res.data);
+        let metricObject = {};
+        resMetric.map(el => {
+          metricObject[stat.metrics[el.metric_id].name] = el.value;
+        });
+        return {
+          "Название блока": res.block.name,
+          "Логин": res.user.login,
+          "Jet Bot ID": res.user.jetBotId,
+          "Дата прохождения": res.createdAt,
+          "Номер недели": res.week,
+          ...metricObject
+        }
+      });
+
+      let statMetricObject = {}
+      Object.keys(stat.metrics).map(el => {
+        const metric = stat.metrics[el];
+        let metricSum = 0;
+        metric.values.map(el => {
+          metricSum += el;
+        })
+        statMetricObject[metric.name] = (metricSum / metric.values.length).toFixed(2);
+      })
+
+      onExport.push({
+        "Название блока": filtered[0].block.name,
+        "Логин": "",
+        "JetBotId": "",
+        "Дата прохождения": "",
+        "Номер недели": filtered[0].week,
+        ...statMetricObject
+      })
+
+      this.onExport = onExport;
+    },
     getCompanyGroups() {
       const company = new Company();
       company.getGroups(this.filters.company_id).then(res => {
@@ -232,6 +300,7 @@ export default {
       this.getCompanyGroups();
       update(this)
     },
+
     updateBlocksSelect(n) {
       this.blocks.map(el => {
         el.active = el.id === n.id;
@@ -248,6 +317,7 @@ export default {
 
       update(this)
     },
+
     openEditWindow(obj) {
       this.$router.push('/results/edit')
       this.$store.commit('setEditBlock', obj)

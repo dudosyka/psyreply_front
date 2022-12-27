@@ -15,6 +15,12 @@
   <div class="invalid" v-else>Invalid</div>
   <div class="dashboard__button">
     <img @click="openClientDash" src="@/assets/img/dash.svg" alt="">
+    <div
+        v-if="selectable"
+        @click="$emit('select', row)"
+        class="elipce"
+        :class="{ elipce_active: active }"
+    ></div>
   </div>
 </li>
 </template>
@@ -45,6 +51,12 @@ export default {
     },
     row: {
       default: {}
+    },
+    selectable: {
+      default: false,
+    },
+    active: {
+      default: false,
     }
   },
   methods: {
@@ -100,7 +112,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding-top: 1rem;
   padding-bottom: 1rem;
   background: rgba(255, 255, 255, 0.16);
@@ -127,5 +139,19 @@ color: rgba(255, 46, 0, 1);
 }
 .title{
   margin-left: 1rem;
+}
+.elipce {
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(155.31deg, rgba(255, 255, 255, 0.5) 12.33%, rgba(255, 255, 255, 0) 34.31%, rgba(255, 255, 255, 0) 52.66%, rgba(255, 255, 255, 0.54) 74.67%);
+  background-blend-mode: overlay;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.elipce:hover {
+  cursor: pointer;
+}
+.elipce_active {
+  background: linear-gradient(200.42deg, #38F9D7 13.57%, #43E97B 98.35%);
 }
 </style>

@@ -122,7 +122,7 @@ function update(data) {
           res.json().then(r => {
             data.test.type = r.type.id
             data.test.title = r.title
-            data.test.formula = r.formula.split('').slice(1,r.formula.length).join('')
+            data.test.formula = r.formula.match('\\[\\+(.*)\\]')[1]
             data.test.metric = r.metric.id
             r.questions = r.questions.map(el => {
               return {
