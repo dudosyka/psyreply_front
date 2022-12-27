@@ -1,90 +1,90 @@
 <template>
   <div class="main">
-<!--    <div class="main__bottom">-->
-<!--      <transition name="fade-to-top">-->
-<!--        <div v-if="allDataIsReady" class="bottom__container">-->
-<!--          <transition name="fade-to-top">-->
-<!--            <template v-if="step === 'before-test'">-->
-<!--              <y-modal class="before_test">-->
-<!--                <y-cool-button @click="startTest">Начать тестирование</y-cool-button>-->
-<!--              </y-modal>-->
-<!--            </template>-->
-<!--          </transition>-->
+    <div class="main__bottom">
+      <transition name="fade-to-top">
+        <div v-if="allDataIsReady" class="bottom__container">
+          <transition name="fade-to-top">
+            <template v-if="step === 'before-test'">
+              <y-modal class="before_test">
+                <y-cool-button @click="startTest">Начать тестирование</y-cool-button>
+              </y-modal>
+            </template>
+          </transition>
 
-<!--          <transition name="opacity">-->
-<!--            <div v-if="step === 'testing'">-->
-<!--              <template v-for="(test, test_arr_id) in blockOnPass.tests" :key="test.createdAt">-->
-<!--                <template v-for="(question, question_arr_id) in test.questions" :key="`${question.createdAt}${question.id}`">-->
-<!--                  &lt;!&ndash;              TODO: change layout for transition animation &ndash;&gt;-->
-<!--                  <transition name="slide">-->
-<!--                    <template v-if="testNow === test_arr_id && questionNow === question_arr_id">-->
-<!--                      &lt;!&ndash;               One fom more  &ndash;&gt;-->
-<!--                      <template v-if="test.type_id === 1">-->
-<!--                        <question-type3-->
-<!--                          class="question"-->
-<!--                          :test-arr-id="test_arr_id"-->
-<!--                          :question-arr-id="question_arr_id"-->
-<!--                          :passed="percentOfPass"-->
-<!--                          @next="nextQuestion(1)"-->
-<!--                        />-->
-<!--                      </template>-->
-<!--                      &lt;!&ndash;                Yes Not ki &ndash;&gt;-->
-<!--                      <template v-else-if="test.type_id === 2">-->
-<!--                        <question-type1-->
-<!--                          class="question"-->
-<!--                          :test-arr-id="test_arr_id"-->
-<!--                          :question-arr-id="question_arr_id"-->
-<!--                          :passed="percentOfPass"-->
-<!--                          @next="nextQuestion(1)"-->
-<!--                        />-->
-<!--                      </template>-->
-<!--                      &lt;!&ndash;                More from more &ndash;&gt;-->
-<!--                      &lt;!&ndash;                NOTE: just check 'more' attribute &ndash;&gt;-->
-<!--                      <template v-else-if="test.type_id === 3">-->
-<!--                        <question-type3-->
-<!--                          class="question"-->
-<!--                          :test-arr-id="test_arr_id"-->
-<!--                          :question-arr-id="question_arr_id"-->
-<!--                          :passed="percentOfPass"-->
-<!--                          :more="true"-->
-<!--                          @next="nextQuestion(1)"-->
-<!--                        />-->
-<!--                      </template>-->
-<!--                      <template v-else-if="test.type_id === 4">-->
-<!--                        &lt;!&ndash;                  Range &ndash;&gt;-->
-<!--                        <question-type2-->
-<!--                          class="question"-->
-<!--                          :test-arr-id="test_arr_id"-->
-<!--                          :question-arr-id="question_arr_id"-->
-<!--                          :passed="percentOfPass"-->
-<!--                          @next="nextQuestion"-->
-<!--                        />-->
-<!--                      </template>-->
-<!--                    </template>-->
-<!--                  </transition>-->
-<!--                </template>-->
-<!--              </template>-->
-<!--            </div>-->
-<!--          </transition>-->
-<!--        </div>-->
-<!--      </transition>-->
+          <transition name="opacity">
+            <div v-if="step === 'testing'">
+              <template v-for="(test, test_arr_id) in blockOnPass.tests" :key="test.createdAt">
+                <template v-for="(question, question_arr_id) in test.questions" :key="`${question.createdAt}${question.id}`">
+                  <!--              TODO: change layout for transition animation -->
+                  <transition name="slide">
+                    <template v-if="testNow === test_arr_id && questionNow === question_arr_id">
+                      <!--               One fom more  -->
+                      <template v-if="test.type_id === 1">
+                        <question-type3
+                          class="question"
+                          :test-arr-id="test_arr_id"
+                          :question-arr-id="question_arr_id"
+                          :passed="percentOfPass"
+                          @next="nextQuestion(1)"
+                        />
+                      </template>
+                      <!--                Yes Not ki -->
+                      <template v-else-if="test.type_id === 2">
+                        <question-type1
+                          class="question"
+                          :test-arr-id="test_arr_id"
+                          :question-arr-id="question_arr_id"
+                          :passed="percentOfPass"
+                          @next="nextQuestion(1)"
+                        />
+                      </template>
+                      <!--                More from more -->
+                      <!--                NOTE: just check 'more' attribute -->
+                      <template v-else-if="test.type_id === 3">
+                        <question-type3
+                          class="question"
+                          :test-arr-id="test_arr_id"
+                          :question-arr-id="question_arr_id"
+                          :passed="percentOfPass"
+                          :more="true"
+                          @next="nextQuestion(1)"
+                        />
+                      </template>
+                      <template v-else-if="test.type_id === 4">
+                        <!--                  Range -->
+                        <question-type2
+                          class="question"
+                          :test-arr-id="test_arr_id"
+                          :question-arr-id="question_arr_id"
+                          :passed="percentOfPass"
+                          @next="nextQuestion"
+                        />
+                      </template>
+                    </template>
+                  </transition>
+                </template>
+              </template>
+            </div>
+          </transition>
+        </div>
+      </transition>
 
-<!--      <transition name="fade-to-top">-->
-<!--        &lt;!&ndash;        TODO: do beautiful&ndash;&gt;-->
-<!--        <template v-if="step === 'after-test'">-->
-<!--          <y-modal class="before_test">-->
-<!--            <h2 class="before_test__title">Тест пройден</h2>-->
-<!--            <y-cool-button @click="getCurResults">Посмотреть результаты</y-cool-button>-->
-<!--          </y-modal>-->
-<!--        </template>-->
-<!--      </transition>-->
+      <transition name="fade-to-top">
+        <!--        TODO: do beautiful-->
+        <template v-if="step === 'after-test'">
+          <y-modal class="before_test">
+            <h2 class="before_test__title">Тест пройден</h2>
+            <y-cool-button @click="getCurResults">Посмотреть результаты</y-cool-button>
+          </y-modal>
+        </template>
+      </transition>
 
-<!--      <transition name="fade-to-top">-->
-<!--        <template v-if="allResultsIsReady">-->
-<!--          <results v-if="step === 'results'" />-->
-<!--        </template>-->
-<!--      </transition>-->
-<!--    </div>-->
+      <transition name="fade-to-top">
+        <template v-if="allResultsIsReady">
+          <results v-if="step === 'results'" />
+        </template>
+      </transition>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -101,31 +101,31 @@ export default {
     QuestionType1,QuestionType2,QuestionType3,Results
   },
   created() {
-    // if (window.location.pathname.length > 1) {
-    //
-    //   const view = window.location.pathname.split('/')[1]
-    //   const token = window.location.pathname.split('/')[2]
-    //   //Crunch with localStorage, because store does not see changes after commit in router
-    //   localStorage.setItem(`${view}Token`, token)
-    //   localStorage.setItem('view', view)
-    //   this.$router.replace('/')
-    // }
-    //
-    // if (!localStorage.getItem("testToken") && !localStorage.getItem("resultsToken"))
-    //   window.location = 'https://psyreply.com';
-    //
-    // const view = localStorage.getItem('view')
-    //
-    // switch (view) {
-    //   case 'results':
-    //     this.step = 'results'
-    //     this.getResultsData()
-    //     break
-    //   case 'test':
-    //     this.step = 'before-test'
-    //     this.getBlockData()
-    //     break
-    // }
+    if (window.location.pathname.length > 1) {
+
+      const view = window.location.pathname.split('/')[1]
+      const token = window.location.pathname.split('/')[2]
+      //Crunch with localStorage, because store does not see changes after commit in router
+      localStorage.setItem(`${view}Token`, token)
+      localStorage.setItem('view', view)
+      this.$router.replace('/')
+    }
+
+    if (!localStorage.getItem("testToken") && !localStorage.getItem("resultsToken"))
+      window.location = 'https://psyreply.com';
+
+    const view = localStorage.getItem('view')
+
+    switch (view) {
+      case 'results':
+        this.step = 'results'
+        this.getResultsData()
+        break
+      case 'test':
+        this.step = 'before-test'
+        this.getBlockData()
+        break
+    }
   },
   data() {
     return {

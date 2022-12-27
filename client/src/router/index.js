@@ -12,14 +12,14 @@ const routes = [
     path: '/:view/:token',
     component: HomeView,
   },
-  {
-    path: "/game/check/view",
-    component: BirdGameView,
-  },
-  {
-    path: "/second/game/check/view",
-    component: ClickGameView,
-  }
+  // {
+  //   path: "/game/check/view",
+  //   component: BirdGameView,
+  // },
+  // {
+  //   path: "/second/game/check/view",
+  //   component: ClickGameView,
+  // }
 ]
 
 const router = createRouter({
