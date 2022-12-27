@@ -32,7 +32,7 @@
               v-model.trim="filters.week"
               placeholder="Номер недели"
           />
-          <div>
+          <div class="export-block">
             <y-select
                 :selects="groups"
                 @select="updateGroupSelect"
@@ -106,8 +106,14 @@ function update(data) {
       .then(res => {
         if(res.ok) {
           res.json().then(r => {
-            data.results = []
-            r.forEach(el => data.results.push(el))
+            let results = []
+            r.forEach(el => {
+              const old = data.results.filter(a => a.id == el.id);
+              if (old.length)
+                el.active = old[0].active;
+              results.push(el)
+            })
+            data.results = results;
           })
         } else {
           data.$store.commit('openErrorPopup', 'Не удалось загрузить результаты')
@@ -439,6 +445,12 @@ export default {
 
 .week_input {
   width: 20%;
+}
+
+.export-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 </style>
