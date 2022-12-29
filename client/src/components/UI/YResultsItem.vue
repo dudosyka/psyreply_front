@@ -67,6 +67,15 @@ export default {
 
       return {
         chart: {
+          dropShadow: {
+            enabled: true,
+            enabledOnSeries: undefined,
+            top: 0,
+            left: 0,
+            blur: 5,
+              color: '#ff00a6',
+            opacity: 1,
+          },
           type: 'line',
           redrawOnParentResize: true,
           selection: disable,
@@ -74,15 +83,23 @@ export default {
           brush: disable,
           toolbar: hide,
         },
-        tooltip: disable,
-        stroke: {
-          colors: '#9676e1',
+        tooltip: {
+          enabled: false,
+
         },
+        markers: {
+          size: [5],
+          colors: '#ff1692'
+        },
+        stroke: {
+          curve: 'smooth',
+          colors: '#ff00a6',
+          opacity: 1,        },
         xaxis: {
           labels: {
             show: true,
             style: {
-              colors: '#fff',
+              colors: 'rgba(255,255,255,0.56)',
               cssClass: 'apexcharts-xaxis-label',
             },
           }
@@ -91,7 +108,7 @@ export default {
           labels: {
             show: true,
             style: {
-              colors: '#fff',
+              colors: 'rgba(255,255,255,0.56)',
               cssClass: 'apexcharts-xaxis-label',
             },
           }
