@@ -1,5 +1,6 @@
 <template>
   <y-modal class="main">
+    <y-popup-warn></y-popup-warn>
     <header class="header">
       <y-left-arrow-button @click="close" />
       <h1>Редактирование: {{test.title}}</h1>
@@ -35,6 +36,7 @@ import CreateTest from '@/components/Test/CreateTest';
 
 import Test from '@/api/admin/Test';
 import Block from '@/api/admin/Block';
+import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 
 function update(data) {
   const test = new Test()
@@ -61,6 +63,7 @@ function update(data) {
 export default {
   name: "EditTest",
   components: {
+    YPopupWarn,
     CreateTest
   },
   props: {
@@ -118,17 +121,23 @@ export default {
       }
     },
     removeTest() {
-      const test = new Test()
-      test.remove(this.test.id)
-        .then(res => {
-          if (res.ok) {
-            this.$store.commit('openPopup', `Тест успешно добавлен`)
-            this.close()
-          } else {
-            this.$store.commit('openErrorPopup', res.msg())
-            console.log(res)
-          }
-        })
+      this.$store.commit('openWarnPopup', {
+        message: `Вы уверены что хотите удалить этот тест?`,
+        acceptCallback: () => {
+          const test = new Test()
+          test.remove(this.test.id)
+            .then(res => {
+              if (res.ok) {
+                this.$store.commit('openPopup', "Тест успешно удален!")
+                this.$emit('close')
+                this.close()
+              } else {
+                this.$store.commit('openErrorPopup', res.msg())
+                console.log(res)
+              }
+            })
+        }
+      });
     }
   }
 }

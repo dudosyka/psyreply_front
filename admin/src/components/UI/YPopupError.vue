@@ -4,7 +4,7 @@
       <div class="popup__exit"><img src="@/assets/img/cross.png" width="12rem"  alt=""></div>
       <div class="popup__icon"><img src="@/assets/img/error.svg" alt=""></div>
       <h1 class="popup__title">Что-то пошло не так</h1>
-      <div class="popup__fix">Вызывайте фиксиков или попробуйте сново</div>
+      <div class="popup__fix">Вызывайте фиксиков или попробуйте снова</div>
 <!--      <div class="error__code__title">Код ошибки</div>-->
       <div class="error__code">{{ popupError.message}}</div>
     </div>
