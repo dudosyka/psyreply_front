@@ -3,8 +3,10 @@
     <header class="header">
       <y-left-arrow-button @click="$emit('close')" />
       <h1 class="heading">Редактирование: {{ block.name }}</h1>
-      <y-button :plus="true" @click="generateBlockToken()">Сгенерировать токен</y-button>
-      <y-input max="1000" min="0" v-model.trim="block.week" type="number" />
+      <template v-if="block.company_id != null">
+        <y-button :plus="true" @click="generateBlockToken()">Сгенерировать токен</y-button>
+        <y-input max="1000" min="0" v-model.trim="block.week" type="number" />
+      </template>
     </header>
 
     <y-modal>

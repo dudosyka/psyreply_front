@@ -28,18 +28,6 @@
       </y-modal>
       <y-modal class="block">
         <header>
-          <h2 class="heading">Управление группами компании</h2>
-        </header>
-        <y-list
-            key-of-name="name"
-            :selectable="true"
-            :items="company.groups"
-            @select="selectGroup"
-        />
-        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
-      </y-modal>
-      <y-modal class="block">
-        <header>
           <h2 class="heading">Блоки, которые можно добавить</h2>
         </header>
         <y-list
@@ -50,6 +38,18 @@
             @select="selectAddBlock"
         />
         <y-cool-button @click="addBlocks">Добавить блок в {{ company.name }}</y-cool-button>
+      </y-modal>
+      <y-modal class="block">
+        <header>
+          <h2 class="heading">Управление группами компании</h2>
+        </header>
+        <y-list
+            key-of-name="name"
+            :selectable="true"
+            :items="company.groups"
+            @select="selectGroup"
+        />
+        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
       </y-modal>
     </template>
     <create-group
