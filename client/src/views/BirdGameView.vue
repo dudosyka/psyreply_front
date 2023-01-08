@@ -50,6 +50,7 @@
 
 <script>
 import axios from "axios";
+import mainConf, {ProjectState} from "../../../main.conf";
 
 export default {
   name: "BirdGameView",
@@ -82,7 +83,8 @@ export default {
 
           bird = false;
           const clickTime = Date.now();
-          console.log(clickTime, birdTime);
+          if (mainConf.projectState === ProjectState.dev)
+            console.log(clickTime, birdTime);
           TimestampClick.push(clickTime - birdTime)
         }
       })
@@ -100,7 +102,8 @@ export default {
         let a = setInterval(() => {
           counter++
           ShowImage()
-          console.log(counter)
+          if (mainConf.projectState === ProjectState.dev)
+            console.log(counter)
 
           if (counter == 10) {
             clearInterval(a)
@@ -134,14 +137,17 @@ export default {
                 let x = 0;
                 goodData.map(i => x += i)
                 var meaning = Math.floor(x/goodData.length);
-                console.log(goodData)
-                console.log(meaning)
+                if (mainConf.projectState === ProjectState.dev) {
+                  console.log(goodData)
+                  console.log(meaning)
+                }
 
 
                 //TODO:  условие на адекватность
                 var mediana = goodData[1];
                 var average = Math.floor((goodData[3] + goodData[4] + goodData[5] + goodData[6] + goodData[7] + goodData[8] + goodData[9]) /7)
-                console.log(mediana);
+                if (mainConf.projectState === ProjectState.dev)
+                  console.log(mediana);
                 let flag = true;
                 for (let i = 3; i < goodData.length; i += 1) {
                   if (Math.abs(goodData[i]-mediana) <=3000){
@@ -187,11 +193,14 @@ export default {
                     result: meaning,
                     uid: uid,
                   }).then(res => {
-                    console.log(res)
+                    if (mainConf.projectState === ProjectState.dev)
+                      console.log(res)
                   }).catch(err => {
-                    console.error(err)
+                    if (mainConf.projectState === ProjectState.dev)
+                      console.error(err)
                   })
-                  console.log(goodData);
+                  if (mainConf.projectState === ProjectState.dev)
+                    console.log(goodData);
                 }
                 else {
                   document.querySelector('.main_after_test').style.display = "flex";

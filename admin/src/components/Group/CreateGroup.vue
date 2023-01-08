@@ -31,6 +31,7 @@
 <script>
 import User from "@/api/admin/User";
 import Group from "@/api/admin/Group";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 export default {
   name: "CreateGroup",
@@ -45,7 +46,8 @@ export default {
     }
   },
   async created() {
-    console.log(this.$store.state.company.name);
+    if (mainConf.projectState === ProjectState.dev)
+      console.log(this.$store.state.company.name);
     this.company = this.$store.state.company;
 
     const user = new User();

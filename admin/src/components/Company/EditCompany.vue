@@ -74,6 +74,7 @@ import Block from '@/api/admin/Block';
 import YCoolButton from '@/components/UI/YCoolButton';
 import CreateGroup from "@/components/Group/CreateGroup";
 import EditGroup from "@/components/Group/EditGroup";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 function update(data) {
   data.window = 'main'
@@ -169,7 +170,8 @@ export default {
       block.create(`copy/${this.companyId}`, body)
         .then(res => {
           if (res.ok) {
-            console.log(res)
+            if (mainConf.projectState === ProjectState.dev)
+              console.log(res)
             this.$store.commit('openPopup', 'Блоки добавлены')
             this.update()
           } else {
@@ -193,7 +195,8 @@ export default {
       block.remove(body)
         .then(res => {
           if (res.ok) {
-            console.log(res)
+            if (mainConf.projectState === ProjectState.dev)
+              console.log(res)
             this.$store.commit('openPopup', 'Блоки удалены')
             this.update()
           } else {

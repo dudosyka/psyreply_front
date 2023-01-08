@@ -1,4 +1,5 @@
 import Admin from '@/api/admin/Auth';
+import mainConf, {ProjectState} from "../../../main.conf";
 
 
 class Error {
@@ -30,7 +31,8 @@ export default class Request {
     return new Promise((resolve, reject) => {
 
       const input = `${this.host}/${url}`
-      console.log(input)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(input)
 
       let init = null
 

@@ -49,6 +49,7 @@
 import User from "@/api/admin/User";
 import Group from "@/api/admin/Group";
 import Company from "@/api/admin/Company";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 export default {
   name: "EditGroup",
@@ -87,7 +88,8 @@ export default {
     deleteFromGroup() {
       const group = new Group();
       const users = this.group.users.filter(el => el.active).map(el => el.id);
-      console.log(this.group.id, users);
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(this.group.id, users);
       group.removeUsers(this.group.id, users).then(res => {
         const company = new Company();
         company.get(this.company.id, res => res.json()).then(company => {
@@ -100,7 +102,8 @@ export default {
     addUsers() {
       const group = new Group();
       const users = this.users.filter(el => el.active).map(el => parseInt(el.id));
-      console.log(this.group.id, users)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(this.group.id, users)
       group.update(this.group.id, {
         name: this.group.name,
         users

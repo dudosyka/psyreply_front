@@ -36,6 +36,7 @@
 import CreateTest from '@/components/Test/CreateTest';
 import Test from '@/api/admin/Test'
 import Block from '@/api/admin/Block';
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 export default {
   name: "CreateBlock",
@@ -105,18 +106,21 @@ export default {
 
       tests.map(el => body.tests.push(el.id))
 
-      console.log(body.test)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(body.test)
 
       const block = new Block()
       block.create('', body)
         .then(res => {
-          console.log(res)
+          if (mainConf.projectState === ProjectState.dev)
+            console.log(res)
           if (res.ok) {
             this.$store.commit('openPopup', "Блок успешно создан!")
             this.$emit('close')
           } else {
             this.$store.commit('openErrorPopup', res.msg())
-            console.log(res)
+            if (mainConf.projectState === ProjectState.dev)
+              console.log(res)
           }
         })
     }

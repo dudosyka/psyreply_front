@@ -37,6 +37,7 @@ import CreateTest from '@/components/Test/CreateTest';
 import Test from '@/api/admin/Test';
 import Block from '@/api/admin/Block';
 import YPopupWarn from "@/components/UI/YPopupWarn.vue";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 function update(data) {
   const test = new Test()
@@ -132,8 +133,9 @@ export default {
                 this.$emit('close')
                 this.close()
               } else {
-                this.$store.commit('openErrorPopup', res.msg())
-                console.log(res)
+                this.$store.commit('openErrorPopup', res.msg()
+                if (mainConf.projectState === ProjectState.dev)
+                  console.log(res)
               }
             })
         }

@@ -63,6 +63,7 @@ import Block from '@/api/admin/Block';
 import YCoolButton from '@/components/UI/YCoolButton';
 import Test from '@/api/admin/Test';
 import YPopupWarn from "@/components/UI/YPopupWarn";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 function update(data) {
   const block = new Block()
@@ -93,7 +94,8 @@ function update(data) {
         res.json().then(r => data.tests = r)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
-        console.log(res)
+        if (mainConf.projectState === ProjectState.dev)
+          console.log(res)
       }
     })
 }
@@ -130,7 +132,8 @@ export default {
       update(this)
     },
     selectAddTest(n) {
-      console.log(n)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(n)
       //this.block.tests.forEach(el => el.active = false)
       let test = this.block.tests.filter(el => el.id === n.id)
       test = test[0]
@@ -141,7 +144,8 @@ export default {
       }
     },
     selectRemoveTest(n) {
-      console.log(n)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(n)
       //this.tests.forEach(el => el.active = false)
       let test = this.tests.filter(el => el.id === n.id)
       test = test[0]

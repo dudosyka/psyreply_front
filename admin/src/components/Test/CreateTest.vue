@@ -112,6 +112,7 @@ import QuestionType from '@/api/admin/QuestionType';
 import Test from '@/api/admin/Test'
 import CreateMetric from "@/components/Test/Metrics/CreateMetric";
 import YInput from "@/components/UI/YInput";
+import mainConf, {ProjectState} from "../../../../main.conf";
 
 function update(data) {
   if (data.testId !== -1) {
@@ -134,7 +135,8 @@ function update(data) {
           })
         } else {
           this.$store.commit('openErrorPopup', res.msg())
-          console.log(res)
+          if (mainConf.projectState === ProjectState.dev)
+            console.log(res)
         }
       })
   }

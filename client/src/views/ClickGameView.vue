@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import mainConf, {ProjectState} from "../../../main.conf";
+
 export default {
   name: "ClickGameView",
   data() {
@@ -254,8 +256,10 @@ export default {
     this.test1()
         .then(
             data => {
-              console.log('test1_countnm ')
-              console.log(this.try1)
+              if (mainConf.projectState === ProjectState.dev) {
+                console.log('test1_countnm ')
+                console.log(this.try1)
+              }
               localStorage.setItem("try1",this.try1)
               document.querySelector(".rer").style.display = "none"
               document.querySelector(".mainbody").style.display = "none";
@@ -269,8 +273,10 @@ export default {
     this.test2()
         .then(
             data => {
-              console.log('test2_countnm ')
-              console.log(this.try2)
+              if (mainConf.projectState === ProjectState.dev) {
+                console.log('test2_countnm ')
+                console.log(this.try2)
+              }
               localStorage.setItem("try2",this.try2)
               document.querySelector(".rer").style.display = "none"
               document.querySelector(".mainbody").style.display = "none";
@@ -287,9 +293,11 @@ export default {
               this.try1=parseInt(localStorage.getItem("try1"))
               this.try2=parseInt(localStorage.getItem("try2"))
               let SashaZaebal = Math.round((this.try1+this.try2+this.try3)/3)
-              console.log('test3_countnm ', this.try3)
+              if (mainConf.projectState === ProjectState.dev)
+                console.log('test3_countnm ', this.try3)
 
-              console.log(SashaZaebal)
+              if (mainConf.projectState === ProjectState.dev) {
+                console.log(SashaZaebal)
               document.querySelector(".rer").style.display = "none"
               document.querySelector(".mainbody").style.display = "none";
               document.querySelector("#app2").style.display = "none";

@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import mainConf, {ProjectState} from "../../../main.conf";
 
 export default createStore({
   state: {
@@ -80,7 +81,8 @@ export default createStore({
       state.newTest.questions = questions
     },
     addAnswer(state, data) {
-      console.log(data)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(data)
       state.newTest.questions[data.questionId].answers.push(data.answer)
     },
     editAnswer(state, data) {

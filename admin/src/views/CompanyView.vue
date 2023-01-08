@@ -39,6 +39,7 @@ import CreateCompany from "@/components/Company/CreateCompany";
 import EditCompany from '@/components/Company/EditCompany';
 import Company from '@/api/admin/Company';
 import CreateGroup from "@/components/Group/CreateGroup";
+import mainConf, {ProjectState} from "../../../main.conf";
 
 export default {
   name: "CompanyView",
@@ -87,7 +88,8 @@ export default {
         })
     },
     editCompany(n) {
-      console.log(n)
+      if (mainConf.projectState === ProjectState.dev)
+        console.log(n)
       this.companyId = n.id
       this.$router.push('/company/edit');
       this.window = 'editCompany'
