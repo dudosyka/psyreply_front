@@ -133,7 +133,7 @@ export default {
                 this.$emit('close')
                 this.close()
               } else {
-                this.$store.commit('openErrorPopup', res.msg()
+                this.$store.commit('openErrorPopup', res.msg());
                 if (mainConf.projectState === ProjectState.dev)
                   console.log(res)
               }

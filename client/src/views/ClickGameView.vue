@@ -296,7 +296,7 @@ export default {
               if (mainConf.projectState === ProjectState.dev)
                 console.log('test3_countnm ', this.try3)
 
-              if (mainConf.projectState === ProjectState.dev) {
+              if (mainConf.projectState === ProjectState.dev)
                 console.log(SashaZaebal)
               document.querySelector(".rer").style.display = "none"
               document.querySelector(".mainbody").style.display = "none";
