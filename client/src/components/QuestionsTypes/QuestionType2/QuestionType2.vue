@@ -80,7 +80,7 @@ export default {
         const data = {
           test_id: this.testArrId,
           question_id: this.questionArrId,
-          answer: [this.selectedAnswer]
+          answer: [this.selectedAnswer + 1]
         }
         this.$store.commit('selectAnswer', data)
       }

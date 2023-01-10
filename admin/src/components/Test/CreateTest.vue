@@ -272,7 +272,7 @@ export default {
         }
       }
 
-      this.$store.commit('addQuestion', question)
+      this.$store.commit('addQuestion', { question, needCopy: this.test.type !== 2})
     },
     saveTest() {
       if (this.test.title.length < 4) {
@@ -298,18 +298,19 @@ export default {
       body.questions = this.questions
 
       let flag = false
-      let i = 0;
+      let i = 1;
       body.questions = body.questions.map((el, id) => {
         if (el.coins > 99099099) {
           this.$store.commit('openErrorPopup', `Слишком большое число монет в ${id} вопросе. Максимальное количество 99099099`)
           flag = true
         }
         el.answers = el.answers.map(el => {
-          el.id++;
+          console.log('Answer id', el.id)
+          // el.id++;
           el.value = parseInt(el.value);
           return el;
         });
-        el.relative_id = i + 1;
+        el.relative_id = i;
         i++;
         el.coins = parseInt(el.coins);
         return {
@@ -334,6 +335,15 @@ export default {
             }
           })
       } else {
+        body.questions = body.questions.map(quest => {
+          const first = quest.answers[0].id;
+          quest.answers = quest.answers.map(answ => {
+            if (first == 0)
+              answ.id++;
+            return answ;
+          })
+          return quest;
+        });
         console.log(body);
         test.create('', body)
           .then(res => {
@@ -352,10 +362,16 @@ export default {
     },
     calculateFormulaDivision() {
       let max = 0;
+      console.log("TEST TYPE", this.test.type)
       this.$store.getters.questions.map(quest => {
         let maxInAnswers = 0;
         quest.answers.map(answ => {
-          maxInAnswers = (answ.value > maxInAnswers) ? parseInt(answ.value) : maxInAnswers;
+          // If we get question where we can pick all answers we should sum all of them points
+          if (this.test.type === 3) {
+            maxInAnswers += parseInt(answ.value);
+          } else {
+            maxInAnswers = (answ.value > maxInAnswers) ? parseInt(answ.value) : maxInAnswers;
+          }
         })
         console.log(maxInAnswers)
         max += maxInAnswers
