@@ -63,18 +63,15 @@ export default createStore({
       state.results.editBlock = null
     },
     addQuestion(state, { question, needCopy }) {
-      console.log(state.newTest.questionsCount);
       question.id = state.newTest.questionsCount
       state.newTest.questions.push(question)
       state.newTest.questionsCount++
 
       if (state.newTest.questions.length > 1 && needCopy) {
         let i = 1;
-        console.log(state.newTest.questions[0]);
         state.newTest.questions[0].answers.map(el => {
           let answer = el;
           answer.id = i;
-          console.log(answer);
           this.commit("addAnswer", {
             answer,
             questionId: question.id
@@ -92,6 +89,7 @@ export default createStore({
     },
     removeQuestion(state, question) {
       state.newTest.questions.splice(question, 1)
+      state.newTest.questionsCount--;
     },
     fillQuestions(state, questions) {
       state.newTest.questions = questions

@@ -148,7 +148,6 @@ export default {
       this.startTime = Date.now()
     },
     nextQuestion(m) {
-      console.log(this.testNow, m.test_arr_id, this.questionNow, m.question_arr_id)
       const tests = this.blockOnPass.tests
       const questions = tests[this.testNow].questions
 

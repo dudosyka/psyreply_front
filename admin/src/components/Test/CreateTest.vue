@@ -305,7 +305,6 @@ export default {
           flag = true
         }
         el.answers = el.answers.map(el => {
-          console.log('Answer id', el.id)
           // el.id++;
           el.value = parseInt(el.value);
           return el;
@@ -323,7 +322,6 @@ export default {
       }
 
       if (this.testId !== -1) {
-        console.log(body);
         test.update(this.testId, { id: this.testId, ...body })
           .then(res => {
             if (res.ok) {
@@ -344,7 +342,6 @@ export default {
           })
           return quest;
         });
-        console.log(body);
         test.create('', body)
           .then(res => {
             if (res.ok) {
@@ -362,7 +359,6 @@ export default {
     },
     calculateFormulaDivision() {
       let max = 0;
-      console.log("TEST TYPE", this.test.type)
       this.$store.getters.questions.map(quest => {
         let maxInAnswers = 0;
         quest.answers.map(answ => {
@@ -373,10 +369,8 @@ export default {
             maxInAnswers = (answ.value > maxInAnswers) ? parseInt(answ.value) : maxInAnswers;
           }
         })
-        console.log(maxInAnswers)
         max += maxInAnswers
       })
-      console.log(this.formula_div);
       this.formula_div = max;
     }
   },

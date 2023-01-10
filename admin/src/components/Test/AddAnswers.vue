@@ -37,7 +37,7 @@ export default {
   methods: {
     addAnswer() {
       const answer = {}
-      answer['id'] = this.answers.length
+      answer['id'] = this.answers.length + 1
       answer['title'] = null
       answer['value'] = null
       this.$store.commit('addAnswer', {
