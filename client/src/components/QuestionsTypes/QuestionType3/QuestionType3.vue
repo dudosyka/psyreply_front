@@ -64,7 +64,7 @@ export default {
 <style scoped>
 .question__text{
   margin-top: 1rem;
- width: 50rem;
+  width: 50rem;
   font-size: 1.5rem;
   text-align: center;
 }

@@ -93,40 +93,16 @@ export default {
 .question__text {
   font-size: 1rem!important;
 }
-.QuestionType{
-  margin-top: 4em;
-  margin-bottom: 4em;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  flex-direction: column;
-}
+
 .question {
   font-size: 1rem;
 }
-.q__modal{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+
 .question__status {
   font-size: 1.5rem;
 }
+
 @media screen and (max-width:820px) {
-  .QuestionType{
-    margin-top: 0em;
-    margin-bottom: 0em;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-  }
   .test__percent{
     font-size: 2rem;
   }
@@ -143,6 +119,8 @@ export default {
     font-size: 2.5rem;
   }
 }
+
+
 .q__list{
   margin-top: 1rem;
 }
@@ -193,5 +171,50 @@ hr {
   margin-right:0.5rem ;
 }
 
+/*
+.QuestionType{
+  margin-top: 4em;
+  margin-bottom: 4em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-direction: column;
+}
+.q__modal{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width:820px) {
+  .QuestionType{
+    margin-top: 0em;
+    margin-bottom: 0em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
+  .test__percent{
+    font-size: 2rem;
+  }
+  .coins{
+    display: none;
+  }
+  .q__logo{
+    margin-bottom: 2rem;
+  }
+  .question{
+    font-size: 1rem;
+  }
+  .question__status{
+    font-size: 2.5rem;
+  }
+}*/
 
 </style>

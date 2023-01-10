@@ -66,6 +66,7 @@ export default {
   justify-content: end;
   flex-direction: column;
 }
+
 .q__modal{
   position: relative;
   display: flex;
@@ -75,7 +76,6 @@ export default {
 }
 @media screen and (max-width:820px) {
   .QuestionType{
-
     margin-top: 0em;
     margin-bottom: 0em;
     position: relative;
@@ -86,6 +86,7 @@ export default {
     width: 100%;
     height: auto;
   }
+
   .test__percent{
     font-size: 2rem;
   }

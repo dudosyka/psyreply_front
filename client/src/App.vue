@@ -2,7 +2,7 @@
   <div class="main">
     <div class="main__bottom">
       <transition name="fade">
-        <div v-if="allDataIsReady && step === 'before-test'" class="bottom__container">
+        <div v-if="allDataIsReady && step !== 'results'" class="bottom__container">
           <transition name="fade">
             <template v-if="step === 'before-test'">
               <y-modal class="before_test">
@@ -25,7 +25,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
-                          @next="nextQuestion(1)"
+                          @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
                       <!--                Yes Not ki -->
@@ -35,7 +35,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
-                          @next="nextQuestion(1)"
+                          @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
                       <!--                More from more -->
@@ -47,7 +47,7 @@
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
                           :more="true"
-                          @next="nextQuestion(1)"
+                          @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
                       <template v-else-if="test.type_id === 4">
@@ -175,6 +175,7 @@ export default {
       }
     },
     getCurResults() {
+      this.step = 'results';
       this.$store.dispatch('getCurResults')
     },
     getResults() {
@@ -206,6 +207,10 @@ export default {
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+.display__none {
+  display: none;
+}
 
 /* TODO: fix layout for animation */
 
