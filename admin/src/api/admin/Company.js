@@ -12,4 +12,8 @@ export default class Company extends Request {
   getGroups(company_id) {
     return this.execute(`company/${company_id}/group`, "GET", false, res => res.json(), err => err);
   }
+
+  remove(company_id) {
+    return this.execute(`company/${company_id}`, 'DELETE', false, res => res, err => err);
+  }
 }

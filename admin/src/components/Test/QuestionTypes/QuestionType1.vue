@@ -4,7 +4,7 @@
     <y-input @input="giveData" v-model="question.title" />
    <div class="question__title__add">
     <h3>Ответы</h3>
-     <button @click="popUp.show = true" class="question__add plus">+</button>
+     <button @click="questionEditAnswers" class="question__add plus">+</button>
    </div>
     <y-button @click="$emit('remove')" class="question__del">X</y-button>
 
@@ -45,6 +45,10 @@ export default {
         question: this.question
       })
     },
+    questionEditAnswers() {
+    //   console.log(this.questionId);
+      this.popUp.show = true;
+    }
   },
   computed: {
     listId() {
@@ -88,9 +92,9 @@ export default {
   font-family: 'Rubik';
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  width: 32px;
   line-height: 28px;
-  width: 26px;
+  font-size: 28px;
   height: auto;
   align-items: center;
   text-align: center;

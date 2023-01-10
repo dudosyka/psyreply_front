@@ -1,4 +1,5 @@
 <template>
+  <y-popup-warn></y-popup-warn>
   <div class="wrapper">
     <y-left-side-bar />
     <main class="main">
@@ -40,13 +41,14 @@ import EditCompany from '@/components/Company/EditCompany';
 import Company from '@/api/admin/Company';
 import CreateGroup from "@/components/Group/CreateGroup";
 import mainConf, {ProjectState} from "../../../main.conf";
+import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 
 export default {
   name: "CompanyView",
   components: {
     CreateGroup,
     CreateCompany, EditCompany,
-    CreateBlock, EditBlock
+    CreateBlock, EditBlock, YPopupWarn
   },
   data() {
     return {

@@ -87,12 +87,19 @@ export default {
   justify-content: start;
   align-items: center;
 }
+.heading {
+  font-size: 1.5rem;
+}
 .answers__add{
   display: grid;
   grid-template-columns: 60% 1fr 1fr;
   align-items: center;
   margin-top: 50px;
   grid-gap: 1.875rem;
+}
+.label {
+  font-size: 1.5rem !important;
+  margin-right: 12px;
 }
 .question__coins {
   display: grid;
@@ -128,14 +135,13 @@ hr {
   font-family: 'Rubik';
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  width: 26px;
   height: auto;
   align-items: center;
   text-align: center;
   color: #FFFFFF;
   cursor: pointer;
-
+  width: 36px;
+  line-height: 34px;
+  font-size: 32px;
 }
 </style>

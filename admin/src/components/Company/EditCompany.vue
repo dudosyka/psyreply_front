@@ -64,6 +64,13 @@
     >
     </edit-group>
 
+    <y-modal>
+      <header class="header">
+        <h2 class="heading">Опасная зона</h2>
+      </header>
+      <y-cool-button @click="remove">Удалить компанию</y-cool-button>
+    </y-modal>
+
   </y-modal>
 
 </template>
@@ -75,6 +82,7 @@ import YCoolButton from '@/components/UI/YCoolButton';
 import CreateGroup from "@/components/Group/CreateGroup";
 import EditGroup from "@/components/Group/EditGroup";
 import mainConf, {ProjectState} from "../../../../main.conf";
+import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 
 function update(data) {
   data.window = 'main'
@@ -105,7 +113,7 @@ function update(data) {
 
 export default {
   name: "EditCompany",
-  components: {CreateGroup, EditGroup, YCoolButton},
+  components: {CreateGroup, EditGroup, YCoolButton, YPopupWarn},
   props: {
     companyId: Number
   },
@@ -215,6 +223,21 @@ export default {
       }, err => err)
 
     },
+    remove() {
+      this.$store.commit('openWarnPopup', { message: "Вы уверены, что хотите удалить компанию?", acceptCallback: () => {
+          const company = new Company()
+
+          company.remove(this.companyId)
+              .then(res => {
+                if (res.ok) {
+                  this.$store.commit('openPopup', "Компания успешно удалена!")
+                  this.$emit('close')
+                } else {
+                  this.$store.commit('openErrorPopup', res.msg)
+                }
+              })
+        }})
+    },
     update() { update(this) }
   }
 }
@@ -222,6 +245,10 @@ export default {
 
 <style scoped>
 .main {
+  display: grid;
+  grid-gap: 1rem;
+}
+.modal {
   display: grid;
   grid-gap: 1rem;
 }

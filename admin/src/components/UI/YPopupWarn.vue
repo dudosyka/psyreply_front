@@ -94,7 +94,7 @@ export default {
   font-size: 0.9rem;
 }
 .error__code{
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   margin-top: 0.5rem;
   color:rgba(251, 128, 255, 0.58);
 }

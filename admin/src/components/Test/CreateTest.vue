@@ -74,7 +74,7 @@
             <y-input class="w-50" v-model="test.formula" /> <br>
             <div class="formula_controls">
               <y-button class="formula_control" @click="autoFormula">Сумма по всем вопросам</y-button>
-              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>
+<!--              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>-->
             </div>
           </div>
 
@@ -124,6 +124,7 @@ function update(data) {
             data.test.type = r.type.id
             data.test.title = r.title
             data.test.formula = r.formula.match('\\[\\+(.*)\\]')[1]
+            data.formula_div = r.formula.match('.*\\/(.*)')[1]
             data.test.metric = r.metric.id
             r.questions = r.questions.map(el => {
               return {
@@ -199,7 +200,6 @@ export default {
   },
   methods: {
     updateMetricList() {
-      this.$store.commit('clearNewTest');
       const metric = new Metric()
       metric.getOne()
           .then(res => {
@@ -279,6 +279,8 @@ export default {
         this.$store.commit('openErrorPopup', 'Слишком короткое название')
       }
 
+      this.calculateFormulaDivision();
+
       const test = new Test()
 
       const body = JSON.parse(JSON.stringify(this.test))
@@ -296,6 +298,7 @@ export default {
       body.questions = this.questions
 
       let flag = false
+      let i = 0;
       body.questions = body.questions.map((el, id) => {
         if (el.coins > 99099099) {
           this.$store.commit('openErrorPopup', `Слишком большое число монет в ${id} вопросе. Максимальное количество 99099099`)
@@ -305,12 +308,13 @@ export default {
           el.id++;
           el.value = parseInt(el.value);
           return el;
-        })
-        el.relative_id = el.id + 1;
+        });
+        el.relative_id = i + 1;
+        i++;
         el.coins = parseInt(el.coins);
         return {
           ...el,
-          id: null
+          id: el.id ?? null
         }
       })
       if (flag) {
@@ -318,7 +322,8 @@ export default {
       }
 
       if (this.testId !== -1) {
-        test.update(this.testId, body)
+        console.log(body);
+        test.update(this.testId, { id: this.testId, ...body })
           .then(res => {
             if (res.ok) {
               this.$store.commit('openPopup', 'Тест успешно изменён')
@@ -329,6 +334,7 @@ export default {
             }
           })
       } else {
+        console.log(body);
         test.create('', body)
           .then(res => {
             if (res.ok) {
@@ -343,10 +349,24 @@ export default {
     },
     removeQuestion(id) {
       this.$store.commit('removeQuestion', id)
+    },
+    calculateFormulaDivision() {
+      let max = 0;
+      this.$store.getters.questions.map(quest => {
+        let maxInAnswers = 0;
+        quest.answers.map(answ => {
+          maxInAnswers = (answ.value > maxInAnswers) ? parseInt(answ.value) : maxInAnswers;
+        })
+        console.log(maxInAnswers)
+        max += maxInAnswers
+      })
+      console.log(this.formula_div);
+      this.formula_div = max;
     }
   },
   computed: {
     questions() {
+      this.calculateFormulaDivision();
       return this.$store.getters.questions
     },
     coins() {
@@ -411,9 +431,9 @@ export default {
   font-family: 'Rubik';
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  width: 26px;
+  width: 36px !important;
+  line-height: 34px !important;
+  font-size: 32px !important;
   height: auto;
   align-items: center;
   text-align: center;

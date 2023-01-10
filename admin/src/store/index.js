@@ -66,6 +66,21 @@ export default createStore({
       question.id = state.newTest.questionsCount
       state.newTest.questions.push(question)
       state.newTest.questionsCount++
+
+      if (state.newTest.questions.length > 1) {
+        let i = 1;
+        console.log(state.newTest.questions[0]);
+        state.newTest.questions[0].answers.map(el => {
+          this.commit("addAnswer", {
+            answer: {
+              ...el,
+              id: i
+            },
+            questionId: question.id
+          });
+          i++
+        })
+      }
     },
     editQuestion(state, question) {
       state.newTest.questions.map((el, index) => {
