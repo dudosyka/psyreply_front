@@ -10,7 +10,7 @@
     ></div>
   </div>
 
-  <hr>
+  <hr v-if="!last">
 </div>
 </template>
 
@@ -18,7 +18,8 @@
 export default {
   name: "YAnswersItem",
   props: {
-    active: Boolean
+    active: Boolean,
+    last: Boolean
   }
 }
 </script>
@@ -31,13 +32,15 @@ export default {
   justify-content: space-between;
 }
 .item__text{
-  width: 20rem;
-  font-size:2rem;
+  width: 25rem;
+  font-size: 2.5rem;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 .item__elipce{
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
   background-color: rgba(217, 217, 217, 0.17);;
 }
 .item__elipce--active {
@@ -50,6 +53,6 @@ hr {
   border-left: 0px solid white;
   border-right: 0px solid white;
   border-bottom: 0px solid white;
-  border-top: 1px solid rgba(255, 255, 255, 0.52);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 </style>

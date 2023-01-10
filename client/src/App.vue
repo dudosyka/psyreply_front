@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <div class="main__bottom">
-      <transition name="fade-to-top">
-        <div v-if="allDataIsReady" class="bottom__container">
-          <transition name="fade-to-top">
+      <transition name="fade">
+        <div v-if="allDataIsReady && step === 'before-test'" class="bottom__container">
+          <transition name="fade">
             <template v-if="step === 'before-test'">
               <y-modal class="before_test">
                 <y-cool-button @click="startTest">Начать тестирование</y-cool-button>
@@ -16,7 +16,7 @@
               <template v-for="(test, test_arr_id) in blockOnPass.tests" :key="test.createdAt">
                 <template v-for="(question, question_arr_id) in test.questions" :key="`${question.createdAt}${question.id}`">
                   <!--              TODO: change layout for transition animation -->
-                  <transition name="slide">
+                  <transition name="opacity">
                     <template v-if="testNow === test_arr_id && questionNow === question_arr_id">
                       <!--               One fom more  -->
                       <template v-if="test.type_id === 1">
@@ -57,7 +57,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
-                          @next="nextQuestion"
+                          @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
                     </template>
@@ -69,7 +69,7 @@
         </div>
       </transition>
 
-      <transition name="fade-to-top">
+      <transition name="fade">
         <!--        TODO: do beautiful-->
         <template v-if="step === 'after-test'">
           <y-modal class="before_test">
@@ -79,7 +79,7 @@
         </template>
       </transition>
 
-      <transition name="fade-to-top">
+      <transition name="fade">
         <template v-if="allResultsIsReady">
           <results v-if="step === 'results'" />
         </template>
@@ -148,6 +148,7 @@ export default {
       this.startTime = Date.now()
     },
     nextQuestion(m) {
+      console.log(this.testNow, m.test_arr_id, this.questionNow, m.question_arr_id)
       const tests = this.blockOnPass.tests
       const questions = tests[this.testNow].questions
 
@@ -211,30 +212,25 @@ export default {
 .slide-leave-active,
 .slide-enter-active {
   opacity: 1;
-  transform: translateX(0);
   transition: all 0.5s ease-in-out;
 }
 
 .slide-enter-from {
   opacity: 0;
-  transform: translateX(50%);
 }
 .slide-leave-to {
   opacity: 0;
-  transform: translateX(-50%);
 }
 
 .fade-to-top-leave-active,
 .fade-to-top-enter-active {
   opacity: 1;
-  transform: translateY(0);
   transition: all 0.5s;
 }
 
 .fade-to-top-enter-from,
 .fade-to-top-leave-to {
   opacity: 0;
-  transform: translateY(5rem);
 }
 
 .opacity-leave-active,

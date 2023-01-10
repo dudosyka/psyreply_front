@@ -90,6 +90,9 @@ export default {
 </script>
 
 <style scoped>
+.question__text {
+  font-size: 1rem!important;
+}
 .QuestionType{
   margin-top: 4em;
   margin-bottom: 4em;
@@ -98,10 +101,8 @@ export default {
   align-items: center;
   justify-content: end;
   flex-direction: column;
-
-
 }
-.question{
+.question {
   font-size: 1rem;
 }
 .q__modal{
@@ -111,9 +112,11 @@ export default {
   align-items: center;
   justify-content: center;
 }
+.question__status {
+  font-size: 1.5rem;
+}
 @media screen and (max-width:820px) {
   .QuestionType{
-
     margin-top: 0em;
     margin-bottom: 0em;
     position: relative;
@@ -134,7 +137,7 @@ export default {
     margin-bottom: 2rem;
   }
   .question{
-    font-size: 2rem;
+    font-size: 1rem;
   }
   .question__status{
     font-size: 2.5rem;
@@ -165,6 +168,7 @@ hr {
   justify-items: center;
   align-items: center;
   text-align: center;
+  font-size: 1rem;
   width: 100%;
 }
 

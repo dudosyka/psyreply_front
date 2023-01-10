@@ -1,13 +1,15 @@
 <template>
   <div class="YAnswersList">
+
     <div class="modal">
       <div class="list">
-        <y-answers-item
+      <y-answers-item
           v-for="(answer, answer_arr_id) in answers"
           :active="(selectedAnswer.includes(answer.id))"
+          :last="answer.last"
           @click="selectAnswer(answer.id)"
-        >{{ answer.title }}</y-answers-item>
-      </div>
+      >{{ answer.title }}</y-answers-item>
+    </div>
     </div>
   </div>
 </template>
@@ -56,7 +58,13 @@ export default {
         question_id: this.questionArrId
       }
       const question = this.$store.getters.questionData(coordinates)
-      return JSON.parse(question.value)
+      let i = 0;
+      const answers = JSON.parse(question.value);
+      return answers.map(el => {
+        el.last = (i >= answers.length - 1);
+        i++;
+        return el;
+      });
     }
   }
 }
@@ -64,21 +72,26 @@ export default {
 
 <style scoped>
 .YAnswersList{
-
 }
 .modal {
-  background: linear-gradient(140.62deg, hsla(0, 0%, 100%, 0.25) 2.81%, hsla(0, 0%, 100%, 0.1) 100.82%);
-  padding: 3.0625rem 3.0625rem  3.0625rem;
+  background: linear-gradient(140.62deg, hsla(0, 0%, 100%, 0.07) 2.81%, hsla(0, 0%, 100%, 0.07) 100.82%);
+  padding: 3.6rem 3.6rem  3.6rem 3.6rem;
   box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
-  border-radius: 1rem;
+  border-radius: 3rem;
   border-color: var(--light-opacity);
   border-width: 2px;
   border-style: solid;
   width: 100%;
-
+  overflow-y: scroll;
+}
+.overlay {
+  background: black;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
 }
 .list{
-  height: 30rem;
+  height: 25rem;
+  z-index: 1;
 }
-
 </style>
