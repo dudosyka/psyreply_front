@@ -38,6 +38,7 @@ import Test from '@/api/admin/Test';
 import Block from '@/api/admin/Block';
 import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 import mainConf, {ProjectState} from "../../../../main.conf";
+import YPopup from "@/components/UI/YPopup.vue";
 
 function update(data) {
   const test = new Test()
@@ -54,7 +55,12 @@ function update(data) {
   block.getAll({ filters: {exclude_test: data.id} })
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.blocks = r)
+        res.json().then(r => {
+          data.blocks = r.map(el => {
+            el.name = (el.company) ? `(${el.company.name}) ` + el.name : `(Шаблон) ` + el.name
+            return el;
+          })
+        })
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }
@@ -64,6 +70,7 @@ function update(data) {
 export default {
   name: "EditTest",
   components: {
+    YPopup,
     YPopupWarn,
     CreateTest
   },
@@ -92,7 +99,7 @@ export default {
         block['active'] = true
       }
     },
-    addToBlock() {
+    async addToBlock() {
       const blocks = this.blocks.filter(el => el.active)
 
       if (blocks.length === 0) {
@@ -105,21 +112,30 @@ export default {
       }
 
       const test = new Test()
-      for (let block of blocks) {
-        test.addToBlock(block.id, body)
-          .then(res => {
+      const __this = this;
+      await Promise.all(blocks.map(async block => {
+        await test.addToBlock(block.id, body)
+          .then(async res => {
             if (res.ok) {
-              this.$store.commit('openPopup', `Тест ${this.test.title} успешно добавлен в блок ${blocks[0].name}`)
-              block.active = false
+              return true;
             } else {
               if (res.err.status === 409) {
-                this.$store.commit('openErrorPopup', "Тест уже добавлен в блок")
+                throw Error("409");
               } else {
-                this.$store.commit('openErrorPopup', res.msg())
+                throw Error(res.msg())
               }
             }
           })
-      }
+      })).then(() => {
+        __this.$store.commit('openPopup', `Тест ${this.test.title} успешно добавлен в выбранные блоки`)
+        update(__this);
+      }).catch(err => {
+        if (err === '409')
+          __this.$store.commit('openErrorPopup', "Тест уже добавлен в блок")
+        else
+          __this.$store.commit('openErrorPopup', res.msg())
+      })
+
     },
     removeTest() {
       this.$store.commit('openWarnPopup', {

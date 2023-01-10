@@ -6,7 +6,7 @@ export default class Test extends Request {
   }
 
   addToBlock(blockId, body) {
-    return this.create(`move/${blockId}`, body)
+    return this.create(`move/${blockId}`, body, res => res, err => err)
   }
 
   removeFromBlock(blockId, body) {
