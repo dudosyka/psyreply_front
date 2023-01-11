@@ -336,7 +336,7 @@ export default {
   }
   .main__bottom {
     display: flex;
-    position: fixed;
+    width: 100%;
     bottom: 0;
     left: 0;
     right: 0;
