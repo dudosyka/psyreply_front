@@ -1,6 +1,6 @@
 <template>
 <div class="YAnswerItem">
-  <div class="item">
+  <div class="item" :class="{ 'item-active': active }">
     <div class="item__text">
       <slot></slot>
     </div>

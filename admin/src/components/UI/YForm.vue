@@ -7,7 +7,7 @@
     </div>
     <div class="form__box">
       <label class="box__lable">Пароль</label>
-      <y-input class="box__input" v-model.trim="formData.password" />
+      <y-input :type="'password'" class="box__input" v-model.trim="formData.password" />
     </div>
     <div class="form__button">
       <button @click.prevent="submit" class="btn btn__login">Войти</button>
