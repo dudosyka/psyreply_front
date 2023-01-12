@@ -62,6 +62,15 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width:820px) {
+  .q__modal {
+    height: 100%;
+    min-height: auto;
+  }
+  .question__text {
+    font-size: 2.5rem!important;
+  }
+}
 .question__text{
   margin-top: 1rem;
   width: 50rem;

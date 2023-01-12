@@ -30,6 +30,12 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background: #00000042;
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-top: 5px;
+  border-radius: 20px;
+  border: 1px solid #ffffff61;
 }
 .item__text{
   width: 25rem;
@@ -54,5 +60,17 @@ hr {
   border-right: 0px solid white;
   border-bottom: 0px solid white;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+.item-active {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #00000042;
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-top: 5px;
+  border-radius: 20px;
+  border: 1px solid #ffffff61;
 }
 </style>
