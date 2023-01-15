@@ -1,30 +1,31 @@
 <template>
   <div class="QuestionType">
-    <y-modal class="q__modal">
-      <y-icon class="q__logo" />
-      <div class="questions">
-        <p class="question__text">{{questionData.title}}</p>
-        <y-answers-list
+    <y-icon class="q__logo" />
+    <div class="questions">
+      <p class="question__text">{{questionData.title}}</p>
+      <y-answers-list
           :test-arr-id="testArrId"
           :question-arr-id="questionArrId"
           :more="more"
-        />
-        <y-cool-button
+      />
+      <y-cool-button
           class="q__button"
           @click="$emit('next')"
           :disabled="!haveAnswer"
-        >
-          Продолжить
-        </y-cool-button>
-        <div class="q__coins__per">
-<!--          <div class="coins">
-            <img class="coins__img" src="@/assets/img/coins.svg" alt="">
-            <p>{{questionData.coins}}</p>
-          </div>-->
-          <p class="test__percent">{{ passed }}% пройдено</p>
-        </div>
+      >
+        Продолжить
+      </y-cool-button>
+      <div class="q__coins__per">
+        <!--          <div class="coins">
+                    <img class="coins__img" src="@/assets/img/coins.svg" alt="">
+                    <p>{{questionData.coins}}</p>
+                  </div>-->
+        <p class="test__percent">{{ passed }}% пройдено</p>
       </div>
-    </y-modal>
+    </div>
+<!--    <y-modal class="q__modal">-->
+<!--      -->
+<!--    </y-modal>-->
     <div class="back"></div>
   </div>
 </template>
@@ -63,7 +64,7 @@ export default {
 
 <style scoped>
 .QuestionType {
-  height: 70%;
+  height: 100%;
   overflow-y: scroll;
 }
 @media screen and (max-width:820px) {
@@ -71,6 +72,9 @@ export default {
     height: 100%;
     min-height: 10%;
     overflow-y: scroll;
+    position: fixed;
+    display: flex;
+    align-items: flex-end;
   }
   .question__text {
     font-size: 2.5rem!important;

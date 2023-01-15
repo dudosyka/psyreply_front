@@ -1,33 +1,34 @@
 <template>
   <div class="QuestionType">
-    <y-modal class="q__modal">
-      <y-icon class="q__logo" />
-      <div class="questions">
-        <p class="question__status">{{ questionData.title }}</p>
-        <hr>
-        <h2 class="question__status">{{ selectedAnswerTitle }}</h2>
-        <y-range
+    <y-icon class="q__logo" />
+    <div class="questions">
+      <p class="question__status">{{ questionData.title }}</p>
+      <hr>
+      <h2 class="question__status">{{ selectedAnswerTitle }}</h2>
+      <y-range
           :min="answer.min"
           :max="answer.max"
           :step="1"
           v-model.number="selectedAnswer"
-        />
-        <y-cool-button
+      />
+      <y-cool-button
           class="q__button"
           @click="$emit('next')"
           :disabled="!haveAnswer"
-        >
-          Продолжить
-        </y-cool-button>
-        <div class="q__coins__per">
-<!--          <div class="coins">-->
-<!--            <img class="coins__img" src="@/assets/img/coins.svg" alt="">-->
-<!--            <p>200</p>-->
-<!--          </div>-->
-          <p class="test__percent">{{passed}}% пройдено</p>
-        </div>
+      >
+        Продолжить
+      </y-cool-button>
+      <div class="q__coins__per">
+        <!--          <div class="coins">-->
+        <!--            <img class="coins__img" src="@/assets/img/coins.svg" alt="">-->
+        <!--            <p>200</p>-->
+        <!--          </div>-->
+        <p class="test__percent">{{passed}}% пройдено</p>
       </div>
-    </y-modal>
+    </div>
+<!--    <y-modal class="q__modal">-->
+
+<!--    </y-modal>-->
     <div class="back"></div>
   </div>
 </template>
@@ -91,7 +92,7 @@ export default {
 
 <style scoped>
 .QuestionType {
-  height: 70%;
+  height: 100%;
   overflow-y: scroll;
 }
 .question__text {

@@ -1,28 +1,29 @@
 <template>
   <div class="QuestionType">
-    <y-modal class="q__modal">
-      <y-icon class="q__logo" />
-      <div class="questions">
-        <y-questions-list
+    <y-icon class="q__logo" />
+    <div class="questions">
+      <y-questions-list
           :test-arr-id="testArrId"
           :question-arr-id="questionArrId"
-        />
-        <y-cool-button
+      />
+      <y-cool-button
           class="q__button"
           @click="$emit('next')"
           :disabled="!haveAnswer"
-        >
-          Продолжить
-        </y-cool-button>
-        <div class="q__coins__per">
-<!--          <div class="coins">
-            <img class="coins__img" src="@/assets/img/coins.svg" alt="">
-            <p>{{questionData.coins}}</p>
-          </div>-->
-          <p class="test__percent">{{passed}}% пройдено</p>
-        </div>
+      >
+        Продолжить
+      </y-cool-button>
+      <div class="q__coins__per">
+        <!--          <div class="coins">
+                    <img class="coins__img" src="@/assets/img/coins.svg" alt="">
+                    <p>{{questionData.coins}}</p>
+                  </div>-->
+        <p class="test__percent">{{passed}}% пройдено</p>
       </div>
-    </y-modal>
+    </div>
+<!--    <y-modal class="q__modal">-->
+
+<!--    </y-modal>-->
     <div class="back"></div>
   </div>
 </template>
@@ -58,15 +59,8 @@ export default {
 
 <style>
 .QuestionType{
-  margin-top: 4em;
-  margin-bottom: 4em;
-  position: relative;
-  display: flex;
-  height: 70%;
+  height: 100%;
   overflow-y: scroll;
-  align-items: center;
-  justify-content: end;
-  flex-direction: column;
 }
 
 .q__modal{
@@ -78,6 +72,10 @@ export default {
 
 }
 @media screen and (max-width:820px) {
+  .questions {
+    height: 100%;
+    overflow-y: scroll;
+  }
   .QuestionType{
     margin-top: 0em;
     margin-bottom: 0em;
@@ -108,6 +106,7 @@ export default {
   .questions{
     display: grid;
     grid-gap: 5rem!important;
+
 
   }
 }
