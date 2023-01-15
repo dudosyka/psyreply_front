@@ -53,7 +53,7 @@ export default {
 .show_all_container {
   display: flex;
   width: 100%;
-  justify-content: end;
+  justify-content: center;
   align-items: end;
   margin-top: 2rem;
 }

@@ -82,6 +82,7 @@ export default {
   border-width: 2px;
   border-style: solid;
   width: 100%;
+  height: 30vh;
   overflow-y: scroll;
 }
 .overlay {

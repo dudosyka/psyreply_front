@@ -68,7 +68,7 @@ export default {
   text-align: center;
 }
 .yqitem {
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 }
 @media screen and (max-width:820px){
   .qtext{

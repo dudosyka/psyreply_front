@@ -141,7 +141,7 @@ hr {
   border-left: 0px solid white;
   border-right: 0px solid white;
   border-bottom: 0px solid white;
-  border-top: 1px solid rgba(255, 255, 255, 0.52);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 .coins{
   display: flex;

@@ -71,7 +71,7 @@ export default {
 
 }
 @media screen and (max-width:820px) {
-  .questions {
+  .question {
     height: 100%;
     /*overflow-y: scroll;*/
   }

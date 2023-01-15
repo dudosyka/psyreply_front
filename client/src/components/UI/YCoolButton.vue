@@ -21,6 +21,8 @@ export default {
   border-radius: 1.1rem;
   font-size: 1.025rem;
   color: var(--light);
+  height: 100%;
+  max-height: 51.72px;
   font-weight: 500;
   transition: background .3s ease-in-out, opacity .3s ease-in-out;
   min-width: 31vw;
@@ -42,6 +44,8 @@ export default {
     box-shadow: -10px 19px 20px rgba(43, 9, 120, 0.35);
     border-radius: 2rem;
     font-size: 2.5rem;
+    height: 100%;
+    max-height: 51.72px;
     color: var(--light);
     font-weight: 500;
     min-width: 80vw;

@@ -3,7 +3,7 @@
     <div class="main__bottom">
       <transition name="fade">
         <div v-if="allDataIsReady && step !== 'results'" class="bottom__container">
-          <SwipeUpArrow v-if="step === 'before-test'"></SwipeUpArrow>
+<!--          <SwipeUpArrow v-if="step === 'before-test'"></SwipeUpArrow>-->
           <transition name="fade">
             <template v-if="step === 'before-test'">
               <y-modal class="before_test">
@@ -96,11 +96,11 @@ import QuestionType3 from "./components/QuestionsTypes/QuestionType3/QuestionTyp
 import Results from "./components/Results";
 import router from '@/router';
 import results from '@/components/Results';
-import SwipeUpArrow from "@/components/UI/SwipeUpArrow.vue";
+// import SwipeUpArrow from "@/components/UI/SwipeUpArrow.vue";
 
 export default {
   components:{
-    SwipeUpArrow,
+    // SwipeUpArrow,
     QuestionType1,QuestionType2,QuestionType3,Results
   },
   created() {
@@ -316,10 +316,10 @@ export default {
 }
 
 .question {
-  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   top: 20%;
+  height: 100%;
 }
 
 @media screen and (max-width:820px) {
