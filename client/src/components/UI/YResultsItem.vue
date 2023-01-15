@@ -73,7 +73,7 @@ export default {
             top: 0,
             left: 0,
             blur: 5,
-              color: '#ff00a6',
+            color: '#ff00a6',
             opacity: 1,
           },
           type: 'line',
@@ -85,7 +85,6 @@ export default {
         },
         tooltip: {
           enabled: false,
-
         },
         markers: {
           size: [5],
@@ -94,7 +93,8 @@ export default {
         stroke: {
           curve: 'smooth',
           colors: '#ff00a6',
-          opacity: 1,        },
+          opacity: 1,
+        },
         xaxis: {
           labels: {
             show: true,

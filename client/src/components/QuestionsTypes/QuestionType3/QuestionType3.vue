@@ -65,9 +65,11 @@ export default {
 <style scoped>
 .QuestionType {
   height: 100%;
-  overflow-y: scroll;
 }
 @media screen and (max-width:820px) {
+  .QuestionType {
+    overflow-y: scroll;
+  }
   .q__modal {
     height: 100%;
     min-height: 10%;
@@ -82,7 +84,6 @@ export default {
 }
 .question__text{
   margin-top: 1rem;
-  width: 50rem;
   font-size: 1.5rem;
   text-align: center;
 }

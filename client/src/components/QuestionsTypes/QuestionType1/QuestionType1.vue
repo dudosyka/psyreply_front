@@ -60,7 +60,6 @@ export default {
 <style>
 .QuestionType{
   height: 100%;
-  overflow-y: scroll;
 }
 
 .q__modal{
@@ -74,7 +73,7 @@ export default {
 @media screen and (max-width:820px) {
   .questions {
     height: 100%;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
   }
   .QuestionType{
     margin-top: 0em;
@@ -86,7 +85,6 @@ export default {
     justify-content: center;
     width: 100%;
     height: 80vh;
-    overflow-y: scroll;
   }
   .q__modal {
     height: 100vh;
@@ -96,6 +94,7 @@ export default {
   }
   .test__percent{
     font-size: 2rem;
+    padding-bottom: 3rem;
   }
   .coins{
     display: none;

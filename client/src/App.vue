@@ -319,7 +319,7 @@ export default {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  top: 0;
+  top: 20%;
 }
 
 @media screen and (max-width:820px) {

@@ -93,7 +93,6 @@ export default {
 <style scoped>
 .QuestionType {
   height: 100%;
-  overflow-y: scroll;
 }
 .question__text {
   font-size: 1rem!important;
@@ -115,6 +114,7 @@ export default {
   }
   .test__percent{
     font-size: 2rem;
+    padding-bottom: 3rem;
   }
   .coins{
     display: none;
@@ -167,7 +167,6 @@ hr {
 }
 .test__percent{
   text-align: center;
-
 }
 .back{
   background: linear-gradient(200.42deg, #FF758C 13.57%, #FF7EB3 98.35%);
