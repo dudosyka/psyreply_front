@@ -30,12 +30,10 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background: #00000042;
   padding-left: 20px;
   padding-right: 10px;
   padding-top: 5px;
   border-radius: 20px;
-  border: 1px solid #ffffff61;
 }
 .item__text{
   width: 25rem;

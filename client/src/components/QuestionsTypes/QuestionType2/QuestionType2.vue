@@ -90,6 +90,10 @@ export default {
 </script>
 
 <style scoped>
+.QuestionType {
+  height: 70%;
+  overflow-y: scroll;
+}
 .question__text {
   font-size: 1rem!important;
 }
@@ -103,6 +107,11 @@ export default {
 }
 
 @media screen and (max-width:820px) {
+  .q__modal {
+    overflow: scroll;
+    height: 100%;
+    min-height: 60%;
+  }
   .test__percent{
     font-size: 2rem;
   }

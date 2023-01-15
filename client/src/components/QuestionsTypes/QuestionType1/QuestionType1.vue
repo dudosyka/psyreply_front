@@ -62,6 +62,8 @@ export default {
   margin-bottom: 4em;
   position: relative;
   display: flex;
+  height: 70%;
+  overflow-y: scroll;
   align-items: center;
   justify-content: end;
   flex-direction: column;
@@ -73,6 +75,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
 }
 @media screen and (max-width:820px) {
   .QuestionType{
@@ -84,9 +87,15 @@ export default {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: auto;
+    height: 80vh;
+    overflow-y: scroll;
   }
-
+  .q__modal {
+    height: 100vh;
+  }
+  .q__logo {
+    padding-top: 5rem;
+  }
   .test__percent{
     font-size: 2rem;
   }

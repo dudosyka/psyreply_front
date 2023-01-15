@@ -62,10 +62,15 @@ export default {
 </script>
 
 <style scoped>
+.QuestionType {
+  height: 70%;
+  overflow-y: scroll;
+}
 @media screen and (max-width:820px) {
   .q__modal {
     height: 100%;
-    min-height: auto;
+    min-height: 10%;
+    overflow-y: scroll;
   }
   .question__text {
     font-size: 2.5rem!important;

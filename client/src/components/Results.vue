@@ -43,6 +43,9 @@ export default {
 }
 .modal {
   transition: all  .5s ease-in-out;
+  height: 100vh;
+  background: transparent!important;
+  border-color: transparent!important;
 }
 .r__list{
   margin-bottom: 5rem;

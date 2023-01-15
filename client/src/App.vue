@@ -260,7 +260,6 @@ export default {
   font-family: var(--font-rubik);
   font-size: calc(1vw + .2rem);
   color: var(--light);
-
   box-sizing: border-box;
 
   background-image: url('assets/img/bg.png');
@@ -306,6 +305,7 @@ export default {
 
 .before_test__title {
   margin-bottom: 1rem;
+  font-size: 18px;
 }
 
 .main__bottom {

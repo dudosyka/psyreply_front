@@ -31,7 +31,6 @@ export default {
 }
 @media screen and (max-width:820px) {
   .modal {
-
     background: linear-gradient(140.62deg, hsla(0, 0%, 100%, 0.25) 2.81%, hsla(0, 0%, 100%, 0.1) 100.82%);
     padding: 3.0625rem 3.0625rem  1.0625rem;
     box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
@@ -42,6 +41,7 @@ export default {
     border-bottom-left-radius: 0rem;
     border-bottom-right-radius: 0rem;
     min-width: auto;
+
   }
 }
 </style>
