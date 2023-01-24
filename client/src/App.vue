@@ -70,29 +70,8 @@
 <!--          второй вариант-->
           <transition name="opacity">
             <div v-if="step === 'gaming'">
-              <template v-if="countGames == 1">
-                <BirdGameView @first-game-ended = "step = 'after-test'"></BirdGameView>
-              </template>
-              <template v-if="countGames == 2">
-                <ClickGameView @second-game-ended = "step = 'after-test'"></ClickGameView>
-              </template>
-              <template v-if="countGames == 12">
-                <template v-if="birdCompl == false" >
-                  <BirdGameView @first-game-ended = "birdCompl = true"></BirdGameView>
-                </template>
-                <template v-if="birdCompl == true && clickerCompl == false">
-                  <ClickGameView @second-game-ended = "clickerCompl = true; step = 'after-test'"></ClickGameView>
-                </template>
-              </template>
-<!--              <template v-if="birdCompl == false" >-->
-<!--                <BirdGameView @first-game-ended = "birdCompl = true"></BirdGameView>-->
-<!--              </template>-->
-<!--              <template v-if="birdCompl == true && clickerCompl == false">-->
-<!--                <ClickGameView @second-game-ended = "clickerCompl = true"></ClickGameView>-->
-<!--              </template>-->
-<!--              <template v-if="flagBird === false && flagClicker === false">-->
-<!--                step === 'after-test'-->
-<!--              </template>-->
+              <BirdGameView v-if="!secondGame" @first-game-ended="gamesEnded"></BirdGameView>
+              <ClickGameView v-if="secondGame" @second-game-ended="gamesEnded"></ClickGameView>
             </div>
           </transition>
         </div>
@@ -122,11 +101,9 @@ import QuestionType1 from "@/components/QuestionsTypes/QuestionType1/QuestionTyp
 import QuestionType2 from "./components/QuestionsTypes/QuestionType2/QuestionType2";
 import QuestionType3 from "./components/QuestionsTypes/QuestionType3/QuestionType3";
 import Results from "./components/Results";
-import router from '@/router';
 import results from '@/components/Results';
 import BirdGameView from "./views/BirdGameView.vue";
 import ClickGameView from "./views/ClickGameView.vue";
-// import SwipeUpArrow from "@/components/UI/SwipeUpArrow.vue";
 
 export default {
   components:{
@@ -168,7 +145,8 @@ export default {
       questionNow: 0,
       step: null, //TODO: remove after test
       startTime: null,
-      endTime: null
+      endTime: null,
+      secondGame: false
     }
   },
   methods: {
@@ -181,6 +159,12 @@ export default {
     startTest() {
       this.step = 'testing'
       this.startTime = Date.now()
+    },
+    gamesEnded() {
+      if (this.secondGame || (!this.secondGame && this.blockOnPass.games.length === 1))
+        this.step = 'after-test'
+      else
+        this.secondGame = true;
     },
     nextQuestion(m) {
       const tests = this.blockOnPass.tests
@@ -206,21 +190,8 @@ export default {
         if(games.length == 0){
           this.step = 'after-test'
         } else {
-          if (games.includes(6) == true && games.includes(7) == false){
-            countGames = 1
-          }
-          if (games.includes(7) == true && games.includes(6) == false){
-            countGames = 2
-          }
-          if (games.includes(6) == true && games.includes(7) == true){
-            countGames = 12
-          }
-          // if(games.includes(6) == false){
-          //   birdCompl = true
-          // }
-          // if(games.includes(7) == false){
-          //   clickerCompl = true
-          // }
+          if (games[0].type_id == 6 && games.length == 1)
+            this.secondGame = true;
           this.step = 'gaming'
         }
 

@@ -124,6 +124,7 @@ export default createStore({
                 })
               })
               commit('updatePassedBlock', passedBlock)
+
               r.games = r.tests.filter((test)=>test.type_id == 6 || test.type_id == 7)
               r.tests = r.tests.map((test, id, array) => {
                 if (test.type_id === 2) {
@@ -137,7 +138,8 @@ export default createStore({
                   })
                   array[id].questions = questionGroups
                 }
-              }).filter((test)=>test.type_id != 6 || test.type_id != 7)
+                return test;
+              }).filter((test) => test.type_id != 6 && test.type_id != 7)
 
               commit('updateBlockOnPass', r)
 
