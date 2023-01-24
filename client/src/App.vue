@@ -67,6 +67,7 @@
               </template>
             </div>
           </transition>
+<!--          второй вариант-->
           <transition name="opacity">
             <div v-if="step === 'gaming'">
               <template v-if="countGames == 1">
