@@ -147,8 +147,8 @@ export default {
   methods: {
     shine(){
       $(".content").mousemove((e) => {
-        this.posX = e.pageX - 250;
-        this.posY = e.pageY - 200;
+        this.posX = e.pageX - 130;
+        this.posY = e.pageY - 180;
       });
 
       $(".content").click(() => {

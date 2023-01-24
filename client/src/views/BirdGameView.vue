@@ -12,7 +12,7 @@
         3. Мы зафиксируем скорость вашей реакции<br>
         4. В конце теста вы увидите свои результаты
       </p>
-      <a type="submit" id="submit" class="gradient-button">Начать</a>
+      <a type="submit" id="submit" class="gradient-button start-button">Начать</a>
     </div>
   </div>
   <div class="container">
@@ -398,5 +398,8 @@ hr {
 .img-bird {
   display: none;
   content:url("@/assets/games/img/bird.png");
+}
+.start-button{
+  cursor: pointer ;
 }
 </style>
