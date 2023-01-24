@@ -1,10 +1,10 @@
 <template>
   <ul class="list">
     <y-list-item
-      v-for="item in items"
+      v-for="item in filtredItems"
       :key="`${item.id}${item[keyOfName]}`"
       :selectable="selectable"
-      :editable="editable"
+      :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
       :active="item.active"
       @select="$emit('select', item)"
       @edit="$emit('edit', item)"
@@ -41,6 +41,18 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    filtredItems() {
+      const filteredArray = [];
+      const games = this.items.filter(el => {
+        return (el.type_id === 6 || el.type_id === 7)
+      })
+      const tests = this.items.filter(el => {
+        return !(el.type_id === 6 || el.type_id === 7)
+      })
+      return filteredArray.concat(games,tests)
+    }
   }
 }
 </script>
@@ -63,7 +75,6 @@ export default {
 }
 .elipce {
   box-sizing: border-box;
-
   position: absolute;
   width: 25px;
   height: 25px;

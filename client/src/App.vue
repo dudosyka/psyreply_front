@@ -67,6 +67,33 @@
               </template>
             </div>
           </transition>
+          <transition name="opacity">
+            <div v-if="step === 'gaming'">
+              <template v-if="countGames == 1">
+                <BirdGameView @first-game-ended = "step = 'after-test'"></BirdGameView>
+              </template>
+              <template v-if="countGames == 2">
+                <ClickGameView @second-game-ended = "step = 'after-test'"></ClickGameView>
+              </template>
+              <template v-if="countGames == 12">
+                <template v-if="birdCompl == false" >
+                  <BirdGameView @first-game-ended = "birdCompl = true"></BirdGameView>
+                </template>
+                <template v-if="birdCompl == true && clickerCompl == false">
+                  <ClickGameView @second-game-ended = "clickerCompl = true; step = 'after-test'"></ClickGameView>
+                </template>
+              </template>
+<!--              <template v-if="birdCompl == false" >-->
+<!--                <BirdGameView @first-game-ended = "birdCompl = true"></BirdGameView>-->
+<!--              </template>-->
+<!--              <template v-if="birdCompl == true && clickerCompl == false">-->
+<!--                <ClickGameView @second-game-ended = "clickerCompl = true"></ClickGameView>-->
+<!--              </template>-->
+<!--              <template v-if="flagBird === false && flagClicker === false">-->
+<!--                step === 'after-test'-->
+<!--              </template>-->
+            </div>
+          </transition>
         </div>
       </transition>
 
@@ -96,10 +123,14 @@ import QuestionType3 from "./components/QuestionsTypes/QuestionType3/QuestionTyp
 import Results from "./components/Results";
 import router from '@/router';
 import results from '@/components/Results';
+import BirdGameView from "./views/BirdGameView.vue";
+import ClickGameView from "./views/ClickGameView.vue";
 // import SwipeUpArrow from "@/components/UI/SwipeUpArrow.vue";
 
 export default {
   components:{
+    ClickGameView,
+    BirdGameView,
     // SwipeUpArrow,
     QuestionType1,QuestionType2,QuestionType3,Results
   },
@@ -152,6 +183,10 @@ export default {
     },
     nextQuestion(m) {
       const tests = this.blockOnPass.tests
+      const games = this.blockOnPass.games
+      let birdCompl = false
+      let clickerCompl = false
+      let countGames = 0
       const questions = tests[this.testNow].questions
 
       if (this.testNow !== tests.length) {
@@ -167,7 +202,26 @@ export default {
       if (this.testNow === tests.length) {
         this.testNow++
 
-        this.step = 'after-test'
+        if(games.length == 0){
+          this.step = 'after-test'
+        } else {
+          if (games.includes(6) == true && games.includes(7) == false){
+            countGames = 1
+          }
+          if (games.includes(7) == true && games.includes(6) == false){
+            countGames = 2
+          }
+          if (games.includes(6) == true && games.includes(7) == true){
+            countGames = 12
+          }
+          // if(games.includes(6) == false){
+          //   birdCompl = true
+          // }
+          // if(games.includes(7) == false){
+          //   clickerCompl = true
+          // }
+          this.step = 'gaming'
+        }
 
         this.endTime = Date.now()
         const timeOnPas = this.endTime - this.startTime

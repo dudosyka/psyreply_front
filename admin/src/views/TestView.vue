@@ -41,7 +41,9 @@ function update(data) {
   test.getAll({ filters: {  } })
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.tests = r)
+        res.json().then(r => {
+          data.tests = r
+        })
       }
     })
 }

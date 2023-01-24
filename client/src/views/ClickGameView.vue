@@ -85,7 +85,7 @@
     <div class="main" id="finalpage">
       <img class="psy_picture" src="@/assets/games/img/psy.png">
       <canvas id="line-chart"></canvas>
-      <a type="submit" id="submit3" class="gradient-button">Начать</a>
+      <a type="submit" id="submit3" class="gradient-button" @click="$emit('secondGameEnded')">Далее</a>
     </div>
   </div>
 </template>

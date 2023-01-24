@@ -30,7 +30,7 @@
       <canvas id="line-chart"> </canvas>
       <h2 class ="big_text">Расшифровка</h2>
       <p class="small_text">Мы измерили скорость вашей реакции и сравним ее с результатами тестов, для их корректировки</p>
-      <a type="success_1" id="success_1" class="gradient-button">пройти еще раз</a>
+      <a type="success_1" id="success_1" class="gradient-button" @click="$emit('firstGameEnded')">Далее</a>
 
     </div>
   </div>
@@ -161,9 +161,9 @@ export default {
                 document.querySelector(".container_click").style.height = "0vh" ;
                 document.querySelector(".container_click").style.width = "0vh" ;
                 document.getElementById("average").innerHTML = meaning;
-                document.querySelector("#success_1").onclick = function(){
-                  location.reload()
-                }
+                // document.querySelector("#success_1").onclick = function(){
+                //   location.reload()
+                // }
                 if (goodData.length >= 0){
 
                   //TODO: grafic
