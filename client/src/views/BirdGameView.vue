@@ -268,6 +268,7 @@ body{
   box-shadow: 0px 0px 100px #0bff76;
   position: fixed;
   z-index: 999;
+  left: 0rem;
 }
 
 .graf{
