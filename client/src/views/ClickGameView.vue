@@ -263,6 +263,8 @@ export default {
               document.querySelector("#app2").style.display = "none";
               document.querySelector(".secondbody").style.display = "flex"
               this.circles = [];
+              this.posX = 0;
+              this.posY = 0;
             }
         )
 //переход на 4 экран по кнопке + старт таймера + счет кликов
@@ -281,6 +283,8 @@ export default {
               document.querySelector(".secondbody").style.display = "none"
               document.querySelector(".thirdbody").style.display = "flex"
               this.circles = [];
+              this.posX = 0;
+              this.posY = 0;
             }
         )
 
@@ -302,6 +306,8 @@ export default {
               document.querySelector(".thirdbody").style.display = "none";
               document.querySelector(".finalbody").style.display = "flex"
               this.circles = [];
+              this.posX = 0;
+              this.posY = 0;
               new Chart(document.getElementById("line-chart"), {
                 type: 'line',
                 data: {

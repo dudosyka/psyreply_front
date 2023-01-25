@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from "@/views/HomeView";
-import BirdGameView from "@/views/BirdGameView";
-import ClickGameView from "@/views/ClickGameView";
 
 const routes = [
   {
@@ -10,16 +8,8 @@ const routes = [
   },
   {
     path: '/:view/:token',
-    component: HomeView,
-  },
-  // {
-  //   path: "/game/check/view",
-  //   component: BirdGameView,
-  // },
-  // {
-  //   path: "/second/game/check/view",
-  //   component: ClickGameView,
-  // }
+    component: HomeView
+  }
 ]
 
 const router = createRouter({
