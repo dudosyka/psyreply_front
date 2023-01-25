@@ -30,7 +30,7 @@
       <canvas id="line-chart"> </canvas>
       <h2 class ="big_text">Расшифровка</h2>
       <p class="small_text">Мы измерили скорость вашей реакции и сравним ее с результатами тестов, для их корректировки</p>
-      <a type="success_1" id="success_1" class="gradient-button" @click="$emit('firstGameEnded')">Далее</a>
+      <a type="success_1" id="success_1" class="gradient-button start-button" @click="$emit('firstGameEnded')">Далее</a>
 
     </div>
   </div>
@@ -43,7 +43,7 @@
         1. Перепройдите тест <br>
 
       </p>
-      <a type="losetry" id="losetry" class="gradient-button">Пройти еще раз</a>
+      <a type="losetry" id="losetry" class="gradient-button start-button">Пройти еще раз</a>
     </div>
   </div>
 </template>
@@ -271,17 +271,7 @@ body{
   left: 0rem;
 }
 
-.graf{
-  width: 70vw;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(86.16deg, rgba(255, 255, 255, 0.144) 11.14%, rgba(255, 255, 255, 0.0252) 113.29%);
-  border-radius: 29px;
-  padding: 1em;
-  border: 2px solid rgba(255, 255, 255, 0.38);
-}
+
 .main{
   /*width: 50vw;*/
   height: auto;
@@ -295,24 +285,7 @@ body{
   min-width: 60vw;
   min-height: 300px;
 }
-.gradient-button {
-  text-decoration: none;
-  display: inline-block;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  padding: 15px 15px;
-  margin: 10px 20px;
-  border-radius: 10px;
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
-  background-size: 200% auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, .1);
-  transition: .5s;
-  font-size: 1rem;
-}
+
 .gradient-button:hover {
   background-position: right center;
 }
@@ -323,24 +296,136 @@ body{
   align-items: center;
   height: auto;
   width: 250px;
-  margin-bottom: 20px;
+  margin-bottom: 2%;
   content:url("@/assets/games/img/psy.png") !important;
 }
-.big_text{
-  width: 100%;
-  color: aliceblue;
-  font-size: 1.2rem;
-  font-family: 'Rubik', sans-serif;
-  text-align: left;
 
+@media screen and (max-width:900px){
+  .big_text{
+    width: 100%;
+    color: aliceblue;
+    font-size: 2.2rem;
+    font-family: 'Rubik', sans-serif;
+    text-align: left;
+
+  }
+  .small_text {
+    width: 100%;
+    color: aliceblue;
+    font-size: 1.9rem;
+    font-family: 'Rubik', sans-serif;
+    padding: 2%;
+  }
+
+  .gradient-button {
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    padding: 15px 15px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
+    background-size: 200% auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+    transition: .5s;
+    font-size: 1.5rem;
+  }
+
+  .big_text_graf{
+    width: 100%;
+    color: aliceblue;
+    font-size: 2.2rem;
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+  }
+  .small_text_graf{
+    width: 100%;
+    color: aliceblue;
+    font-size: 2rem;
+    font-family: 'Rubik', sans-serif;
+    padding: 0.2em;
+    text-align: center;
+  }
+  .graf{
+    width: 70vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(86.16deg, rgba(255, 255, 255, 0.144) 11.14%, rgba(255, 255, 255, 0.0252) 113.29%);
+    border-radius: 29px;
+    padding: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.38);
+  }
 }
-.small_text{
-  width: 100%;
-  color: aliceblue;
-  font-size: 1rem;
-  font-family: 'Rubik', sans-serif;
-  padding: 20px;
 
+@media screen and (min-width:900px){
+  .big_text{
+    width: 100%;
+    color: aliceblue;
+    font-size: 1.4rem;
+    font-family: 'Rubik', sans-serif;
+    text-align: left;
+
+  }
+  .small_text{
+    width: 100%;
+    color: aliceblue;
+    font-size: 1.2rem;
+    font-family: 'Rubik', sans-serif;
+    padding: 2%;
+  }
+
+  .gradient-button {
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    padding: 15px 15px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
+    background-size: 200% auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+    transition: .5s;
+    font-size: 1rem;
+  }
+
+  .big_text_graf{
+    width: 100%;
+    color: aliceblue;
+    font-size: 1.2rem;
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+  }
+  .small_text_graf{
+    width: 100%;
+    color: aliceblue;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    padding: 0.2em;
+    text-align: center;
+  }
+  .graf{
+    width: 60vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(86.16deg, rgba(255, 255, 255, 0.144) 11.14%, rgba(255, 255, 255, 0.0252) 113.29%);
+    border-radius: 29px;
+    padding: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.38);
+  }
 }
 hr {
   width: 100%;
@@ -381,24 +466,12 @@ hr {
   min-width: 50%;
   padding-top: 0.5em;
 }
-.big_text_graf{
-  width: 100%;
-  color: aliceblue;
-  font-size: 1.2rem;
-  font-family: 'Rubik', sans-serif;
-  text-align: center;
-}
-.small_text_graf{
-  width: 100%;
-  color: aliceblue;
-  font-size: 1rem;
-  font-family: 'Rubik', sans-serif;
-  padding: 0.2em;
-  text-align: center;
-}
+
 .img-bird {
   display: none;
   content:url("@/assets/games/img/bird.png");
+  width: 37.5rem;
+  height: 37.5rem;
 }
 .start-button{
   cursor: pointer ;

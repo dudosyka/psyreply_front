@@ -13,7 +13,7 @@
         4. Вы будете видеть оставшееся время <br>
         5. В конце теста Вы увидите свои результаты
       </p>
-      <a type="submit" id="submit" class="gradient-button">Начать</a>
+      <a type="submit" id="submit" class="gradient-button start-button">Начать</a>
     </div>
   </div>
   <div class="rer">
@@ -38,8 +38,8 @@
         <span id="base-timer-label" class="base-timer__label">{{timeFormatted}}</span>
       </div>
     </div>
-    <div class="content">
-      <div v-for="circle in circles" :key="circle" class='circle' :style='`left:${posX}px;top:${posY}px`'></div>
+    <div class="content" :style='`left:${posX}px;top:${posY}px`'>
+      <div v-for="circle in circles" :key="circle" class='circle'></div>
     </div>
   </div>
   <div class="secondbody" >
@@ -58,7 +58,7 @@
         4. Вы будете видеть оставшееся время <br>
         5. В конце теста Вы увидите свои результаты
       </p>
-      <a type="submit1" id="submit1" class="gradient-button">Начать</a>
+      <a type="submit1" id="submit1" class="gradient-button start-button">Начать</a>
     </div>
   </div>
   <div class="thirdbody" >
@@ -77,7 +77,7 @@
         4. Вы будете видеть оставшееся время <br>
         5. В конце теста Вы увидите свои результаты
       </p>
-      <a type="submit" id="submit2" class="gradient-button">Начать</a>
+      <a type="submit" id="submit2" class="gradient-button start-button">Начать</a>
     </div>
   </div>
 
@@ -85,7 +85,7 @@
     <div class="mainaft" id="finalpage">
       <img class="psy_picture" src="@/assets/games/img/psy.png">
       <canvas id="line-chart"></canvas>
-      <a type="submit" id="submit3" class="gradient-button" @click="$emit('secondGameEnded')">Далее</a>
+      <a type="submit" id="submit3" class="gradient-button start-button" @click="$emit('secondGameEnded')">Далее</a>
     </div>
   </div>
 </template>
@@ -146,12 +146,9 @@ export default {
   },
   methods: {
     shine(){
-      $(".content").mousemove((e) => {
-        this.posX = e.pageX - 230;
-        this.posY = e.pageY - 180;
-      });
-
-      $(".content").click(() => {
+      $(".content").click((e) => {
+        this.posX = e.clientX - 50;
+        this.posY = e.clientY - 50;
         this.circles.push(1)
       });
 
@@ -360,6 +357,10 @@ export default {
     padding: 0;
   }
 
+  .start-button{
+    cursor: pointer ;
+  }
+
   body{
     background-image: url("@/assets/games/img/bg_main.jpg");
     user-select: none;
@@ -391,24 +392,7 @@ export default {
     min-height: 300px;
   }
 
-  .gradient-button {
-    text-decoration: none;
-    display: inline-block;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    padding: 15px 15px;
-    margin: 10px 20px;
-    border-radius: 10px;
-    font-family: 'Rubik', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
-    background-size: 200% auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
-    transition: .5s;
-    font-size: 1rem;
-  }
+
 
   .gradient-button:hover {
     background-position: right center;
@@ -424,22 +408,79 @@ export default {
     margin-bottom: 20px;
   }
 
-  .big_text{
-    width: 100%;
-    color: aliceblue;
-    font-size: 1.2rem;
-    font-family: 'Rubik', sans-serif;
-    text-align: left;
-  }
+  @media screen and (max-width:900px) {
+    .big_text {
+      width: 100%;
+      color: aliceblue;
+      font-size: 2.2rem;
+      font-family: 'Rubik', sans-serif;
+      text-align: left;
 
-  .small_text{
-    width: 100%;
-    color: aliceblue;
-    font-size: 1rem;
-    font-family: 'Rubik', sans-serif;
-    padding: 20px;
-  }
+    }
 
+    .small_text {
+      width: 100%;
+      color: aliceblue;
+      font-size: 1.9rem;
+      font-family: 'Rubik', sans-serif;
+      padding: 2%;
+    }
+
+    .gradient-button {
+      text-decoration: none;
+      display: inline-block;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      padding: 15px 15px;
+      margin: 10px 20px;
+      border-radius: 10px;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
+      background-size: 200% auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+      transition: .5s;
+      font-size: 1.5rem;
+    }
+  }
+    @media screen and (min-width:900px) {
+    .big_text {
+      width: 100%;
+      color: aliceblue;
+      font-size: 1.4rem;
+      font-family: 'Rubik', sans-serif;
+      text-align: left;
+
+    }
+
+    .small_text {
+      width: 100%;
+      color: aliceblue;
+      font-size: 1.2rem;
+      font-family: 'Rubik', sans-serif;
+      padding: 2%;
+    }
+      .gradient-button {
+        text-decoration: none;
+        display: inline-block;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        padding: 15px 15px;
+        margin: 10px 20px;
+        border-radius: 10px;
+        font-family: 'Rubik', sans-serif;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right, #ba0bff 0%, #ff8edf 51%, #a60bff 100%);
+        background-size: 200% auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+        transition: .5s;
+        font-size: 1rem;
+      }
+  }
   hr {
     width: 100%;
     border-color: rgba(255, 255, 255, 0.25);
@@ -559,8 +600,8 @@ export default {
   }
 
   .content {
-    height: 80vh;
-    width: 80vw;
+    height: 100vh;
+    width: 100%;
     position: fixed;
     text-align: center;
   }
