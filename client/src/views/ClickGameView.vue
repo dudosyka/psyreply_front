@@ -82,7 +82,7 @@
   </div>
 
   <div class="finalbody" >
-    <div class="main" id="finalpage">
+    <div class="mainaft" id="finalpage">
       <img class="psy_picture" src="@/assets/games/img/psy.png">
       <canvas id="line-chart"></canvas>
       <a type="submit" id="submit3" class="gradient-button" @click="$emit('secondGameEnded')">Далее</a>
@@ -147,7 +147,7 @@ export default {
   methods: {
     shine(){
       $(".content").mousemove((e) => {
-        this.posX = e.pageX - 130;
+        this.posX = e.pageX - 230;
         this.posY = e.pageY - 180;
       });
 
@@ -545,6 +545,17 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 1em;
+  }
+  .mainaft{
+    width: 70vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(86.16deg, rgba(255, 255, 255, 0.144) 11.14%, rgba(255, 255, 255, 0.0252) 113.29%);
+    border-radius: 29px;
+    padding: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.38);
   }
 
   .content {

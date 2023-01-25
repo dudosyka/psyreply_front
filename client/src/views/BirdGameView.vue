@@ -255,7 +255,7 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
-
+  width: 100%;
   position: relative;
   z-index: 1;
 }
@@ -271,7 +271,7 @@ body{
 }
 
 .graf{
-  width: 80vw;
+  width: 70vw;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -371,13 +371,13 @@ hr {
 }
 #wrapper{
   width: 100%;
-  height: auto;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-self: center;
-  min-width: 60vw;
+  min-width: 50%;
   padding-top: 0.5em;
 }
 .big_text_graf{
