@@ -10,7 +10,7 @@ export default class Company extends Request {
   }
 
   getGroups(company_id) {
-    return this.execute(`company/${company_id}/group`, "GET", false, res => res.json(), err => err);
+    return this.execute(`company/${company_id}/group`, "GET", false, res => res.json().then(data => data.body), err => err);
   }
 
   remove(company_id) {

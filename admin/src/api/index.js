@@ -18,7 +18,7 @@ class Error {
 }
 
 export default class Request {
-  host = 'https://api.psyreply.com'
+  host = 'https://api.beta.psyreply.com'
   endpoint = null
   id = null
 
@@ -63,15 +63,15 @@ export default class Request {
             resolve(onResolve(res))
           } else {
             switch (res.status) {
-              case 400: resolve(onResolve(new Error('не корректный запрос', res)))
+              case 400: resolve(onResolve(new Error('не корректный запрос', res.json().then(data => data.body))))
                 break
-              case 401: resolve(onResolve(new Error('не авоторизован', res)))
+              case 401: resolve(onResolve(new Error('не авоторизован', res.json().then(data => data.body))))
                 break
-              case 404: resolve(onResolve(new Error('не найдено', res)))
+              case 404: resolve(onResolve(new Error('не найдено', res.json().then(data => data.body))))
                 break
-              case 409: resolve(onResolve(new Error('не удалось произвести транзакцию', res)))
+              case 409: resolve(onResolve(new Error('не удалось произвести транзакцию', res.json().then(data => data.body))))
                 break
-              case 500: resolve(onResolve(new Error('Сервер не отвечает. Да, всё очень плохо', res)))
+              case 500: resolve(onResolve(new Error('Сервер не отвечает. Да, всё очень плохо', res.json().then(data => data.body))))
             }
           }
         })

@@ -105,7 +105,7 @@ function update(data) {
     results.getAll({ filters })
       .then(res => {
         if(res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             let results = []
             r.forEach(el => {
               const old = data.results.filter(a => a.id == el.id);
@@ -159,7 +159,7 @@ export default {
     company.getAllCompanies()
       .then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             r.forEach(el => {
               el.active = false
               this.companies.push(el)
@@ -288,7 +288,7 @@ export default {
         block.getAll({ filters: { company_id: this.filters.company_id } })
           .then(res => {
             if (res.ok) {
-              res.json().then(r => {
+              res.json().then(data => data.body).then(r => {
                 r.forEach(el => {
                   el.active = false
                   this.blocks.push(el)

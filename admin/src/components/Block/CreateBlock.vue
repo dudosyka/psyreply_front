@@ -65,7 +65,7 @@ export default {
       test.getAll({ filters: {  } })
           .then(res => {
             if (res.ok) {
-              res.json().then(r => this.tests = r)
+              res.json().then(r => this.tests = r.body)
             } else {
               this.$store.commit('openErrorPopup', res.msg())
             }

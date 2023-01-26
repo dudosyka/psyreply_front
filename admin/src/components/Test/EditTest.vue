@@ -45,7 +45,7 @@ function update(data) {
   test.get(data.id)
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.test = r)
+        res.json().then(r => data.test = r.body)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }
@@ -56,7 +56,7 @@ function update(data) {
     .then(res => {
       if (res.ok) {
         res.json().then(r => {
-          data.blocks = r.map(el => {
+          data.blocks = r.body.map(el => {
             el.name = (el.company) ? `(${el.company.name}) ` + el.name : `(Шаблон) ` + el.name
             return el;
           })

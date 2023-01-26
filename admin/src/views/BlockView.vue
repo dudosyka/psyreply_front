@@ -53,7 +53,7 @@ function update(data) {
   block.getAll({filters: { company_id: data.filter }})
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.blocks = r)
+        res.json().then(data => data.body).then(r => data.blocks = r)
       }
     })
 }
@@ -91,7 +91,7 @@ export default {
     company.getAllCompanies()
       .then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             r.forEach(el => {
               el.active = false
               this.companies.push(el)

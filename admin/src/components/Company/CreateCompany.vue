@@ -50,7 +50,7 @@ export default {
     block.getAll({ filters: { "company_id": null }})
       .then(res => {
         if (res.ok) {
-          res.json().then(r => this.blocks = r)
+          res.json().then(r => this.blocks = r.body)
         }
       })
   },
@@ -60,7 +60,7 @@ export default {
       block.getAll({ filters: { "company_id": null }})
         .then(res => {
           if (res.ok) {
-            res.json().then(r => this.blocks = r)
+            res.json().then(r => this.blocks = r.body)
           }
         })
     },

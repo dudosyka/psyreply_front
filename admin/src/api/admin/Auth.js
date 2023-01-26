@@ -19,10 +19,10 @@ Admin.auth = async function(email, password) {
       })
     })
       .then(async res => {
-        resolve(res)
-      })
-      .catch(err => {
-        resolve(err)
+        if (res.ok)
+          resolve(res.json().then(data => data.body))
+        else
+          reject(await res.json().then(data => data.body))
       })
   })
 }
@@ -41,7 +41,7 @@ Admin.authCode = async function(code) {
     })
       .then(async res => {
         const token = await res.json().then(r => {
-          localStorage.setItem('token', r.token)
+          localStorage.setItem('token', r.body.token)
         })
         resolve(res)
       })
@@ -56,7 +56,7 @@ Admin.fuckIn = async function() {
     fetch('')
       .then(async res => {
         const token = await res.json().then(r => {
-          localStorage.setItem('token', r.token)
+          localStorage.setItem('token', r.body.token)
         })
         resolve(res)
       })

@@ -24,7 +24,7 @@ export default {
     metric.getOne()
       .then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             r.map(el => {
               if (el.id == this.id) {
                 this.metricName = el.name

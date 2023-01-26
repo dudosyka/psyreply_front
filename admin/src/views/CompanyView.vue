@@ -69,7 +69,7 @@ export default {
     company.getOne()
       .then(res => {
         if (res.ok) {
-          res.json().then(r => this.companies = r)
+          res.json().then(data => data.body).then(r => this.companies = r)
         }
       })
   },
@@ -85,7 +85,7 @@ export default {
       company.getOne()
         .then(res => {
           if (res.ok) {
-            res.json().then(r => this.companies = r)
+            res.json().then(data => data.body).then(r => this.companies = r)
           }
         })
     },

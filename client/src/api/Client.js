@@ -1,10 +1,10 @@
 export default class Client {
-  origin = 'https://api.psyreply.com'
+  origin = 'https://api.beta.psyreply.com'
 
   execute(url, init) {
     return new Promise(resolve => {
       fetch(`${this.origin}${url}`, init)
-        .then(res => resolve(res))
+        .then(res => resolve(res.json().then(res => res.body)))
         .catch(err => resolve(err))
     })
   }

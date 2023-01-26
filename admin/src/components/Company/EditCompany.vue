@@ -91,7 +91,7 @@ function update(data) {
     .then(res => {
       if (res.ok) {
         res.json().then(r => {
-          for (let key in r) data.company[key] = r[key]
+          for (let key in r.body) data.company[key] = r.body[key]
         })
       }
     })
@@ -100,13 +100,13 @@ function update(data) {
   block.getAll({ filters: { "company_id": null }})
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.blocks = r)
+        res.json().then(r => data.blocks = r.body)
       }
     })
   block.getAll({ filters: { "company_id": data.companyId }})
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.company.blocks = r)
+        res.json().then(r => data.company.blocks = r.body)
       }
     })
 }

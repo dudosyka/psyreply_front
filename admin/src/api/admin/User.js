@@ -10,6 +10,6 @@ export default class User extends Request {
     async getAll(filters) {
         return this.execute('user/all', 'POST', {
             filters: filters
-        }, res => res.json(), err => err)
+        }, res => res.json().then(data => data.body), err => err)
     }
 }

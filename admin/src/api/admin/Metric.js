@@ -8,6 +8,6 @@ export default class Metric extends Request {
   async create(name) {
     return this.execute("metric", "POST", {
       name
-    }, res => res.json(), err => err);
+    }, res => res.json().then(data => data.body), err => err);
   }
 }

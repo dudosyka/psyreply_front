@@ -106,7 +106,7 @@ export default createStore({
       client.getBlock(token)
         .then(res => {
           if (res.ok) {
-            res.json().then(r => {
+            res.json().then(data => data.body).then(r => {
               const passedBlock = {
                 time_on_pass: 0,
                 tests: []
@@ -161,7 +161,7 @@ export default createStore({
       client.passBlock(state.passedBlock, token)
         .then(res => {
           if (res.ok) {
-            res.json().then(r => commit('updateUserId', r.user_id))
+            res.json().then(data => data.body).then(r => commit('updateUserId', r.user_id))
           }
         })
     },
@@ -174,7 +174,7 @@ export default createStore({
 
       client.getResults(token, userId).then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             commit('updateResults', r)
             commit('allResultsIsReady')
           })
@@ -189,7 +189,7 @@ export default createStore({
 
       client.getCurResults(token).then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(data => data.body).then(r => {
             commit('updateResults', r)
             commit('allResultsIsReady')
           })

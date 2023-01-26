@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "vue-cli-service build && scp -r ./dist/* root@45.91.8.241:/home/psyreply/web/client.psyreply.com/public_html"
+    "deploy": "vue-cli-service build && scp -r ./dist/* root@45.91.8.241:/home/psyreply/web/client.beta.psyreply.com/public_html"
   },
   "dependencies": {
     "apexcharts": "^3.36.3",

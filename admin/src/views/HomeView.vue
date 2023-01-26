@@ -29,16 +29,16 @@ export default {
     firstStep(formData) {
       if (formData.email === 'shut_up_and_let_me_in') {
         Admin.fuckIn()
-          .then(res => router.push('/company'))
+          .then(() => router.push('/company'))
       } else {
         Admin.auth(formData.email, formData.password)
-          .then(res => {
-            if (res.ok) {
-              this.step = 1
-            } else {
+          .then(() => {
+            this.step = 1
+          }).catch(err => {
+            console.log(err.status);
+            if (err.status === 403)
               this.$store.commit('openErrorPopup', 'Неверный логин или пароль, чайка')
-            }
-          })
+        })
       }
     },
     secondStep(formData) {

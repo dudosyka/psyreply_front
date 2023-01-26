@@ -70,7 +70,8 @@ function update(data) {
   block.get(data.id)
     .then(res => {
       if (res.ok) {
-        res.json().then(r => {
+        res.json().then(res => {
+          const r = res.body;
           data.block = r
           data.block.week = parseInt(data.block.week)
 
@@ -91,7 +92,7 @@ function update(data) {
   test.getAll({ filters: { "except_block": data.id } })
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.tests = r)
+        res.json().then(r => data.tests = r.body)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
         if (mainConf.projectState === ProjectState.dev)

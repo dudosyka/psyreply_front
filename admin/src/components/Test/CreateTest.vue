@@ -120,7 +120,8 @@ function update(data) {
     test.get(data.testId)
       .then(res => {
         if (res.ok) {
-          res.json().then(r => {
+          res.json().then(res => {
+            const r = res.body;
             data.test.type = r.type.id
             data.test.title = r.title
             data.test.formula = r.formula.match('\\[\\+(.*)\\]')[1]
@@ -146,7 +147,7 @@ function update(data) {
   metric.getOne()
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.metrics = r)
+        res.json().then(r => data.metrics = r.body)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }
@@ -155,7 +156,7 @@ function update(data) {
   types.getOne()
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.questionTypes = r)
+        res.json().then(r => data.questionTypes = r.body)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }
@@ -204,7 +205,7 @@ export default {
       metric.getOne()
           .then(res => {
             if (res.ok) {
-              res.json().then(r => this.metrics = r)
+              res.json().then(r => this.metrics = r.body)
             } else {
               this.$store.commit('openErrorPopup', res.msg())
             }

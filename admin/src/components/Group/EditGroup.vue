@@ -92,7 +92,7 @@ export default {
         console.log(this.group.id, users);
       group.removeUsers(this.group.id, users).then(res => {
         const company = new Company();
-        company.get(this.company.id, res => res.json()).then(company => {
+        company.get(this.company.id, res => res.json().then(data => data.body)).then(company => {
           this.$store.commit('setEditCompany', company);
           this.$store.commit('setEditGroup', company.groups.filter(el => el.id == this.group.id)[0])
           this.update();
@@ -109,7 +109,7 @@ export default {
         users
       }).then(res => {
         const company = new Company();
-        company.get(this.company.id, res => res.json()).then(company => {
+        company.get(this.company.id, res => res.json().then(data => data.body)).then(company => {
           this.$store.commit('setEditCompany', company);
           this.$store.commit('setEditGroup', company.groups.filter(el => el.id == this.group.id)[0])
           this.update();
@@ -120,7 +120,7 @@ export default {
       const group = new Group();
       group.remove(this.group.id).then(res => {
         const company = new Company();
-        company.get(this.company.id, res => res.json()).then(company => {
+        company.get(this.company.id, res => res.json().then(data => data.body)).then(company => {
           this.$store.commit('setEditCompany', company);
           this.$store.commit('setEditGroup', null)
           this.$emit('close');

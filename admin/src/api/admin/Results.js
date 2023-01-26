@@ -6,6 +6,6 @@ export default class Results extends Request {
   }
 
   getStat(ids) {
-    return this.execute('result/calculate/special', "POST", { ids }, res => res.json(), err => err);
+    return this.execute('result/calculate/special', "POST", { ids }, res => res.json().then(data => data.body), err => err);
   }
 }
