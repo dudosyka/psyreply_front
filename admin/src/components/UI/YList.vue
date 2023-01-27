@@ -1,11 +1,11 @@
 <template>
   <header v-if="pagination === true">
-    <YButton @click="previosPage" v-if="pageNumber >0">назад</YButton>
-    <YButton @click="nextPage" >вперед</YButton>
+    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
+    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
   </header>
   <ul class="list">
     <y-list-item
-      v-for="item in filtredItems"
+      v-for="item in filteredItems"
       :key="`${item.id}${item[keyOfName]}`"
       :selectable="selectable"
       :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
@@ -31,14 +31,18 @@ export default {
   data(){
     return {
       pageNumber: 0,
+      maxPage: 100,
     }
+  },
+  created() {
+    this.maxPage = Math.floor(this.items.length / this.pageSize);
   },
   props: {
     pagination: {
       type: Boolean,
       default: false
     },
-    size:{
+    pageSize:{
       type: Number,
       require: false,
       default: 5
@@ -68,7 +72,7 @@ export default {
     }
   },
   computed: {
-    filtredItems() {
+    filteredItems() {
       let pagination = this.pagination
       const filteredArray = [];
       const games = this.items.filter(el => {
@@ -80,17 +84,25 @@ export default {
       if (pagination === false){
         return filteredArray.concat(games,tests)
       }else{
-        const start = this.pageNumber * this.size, end = start + this.size
+        const start = this.pageNumber * this.pageSize, end = start + this.pageSize
         return filteredArray.concat(games,tests).slice(start,end)
       }
     },
+    showNext() {
+      return (this.pageNumber + 1 <= this.maxPage)
+    },
+    showPrev() {
+      return this.pageNumber > 0;
+    }
   },
   methods:{
     nextPage(){
-      this.pageNumber++;
+      if (this.showNext)
+        this.pageNumber++;
     },
-    previosPage(){
-      this.pageNumber--;
+    previousPage(){
+      if (this.showPrev)
+        this.pageNumber--;
     }
   },
 }
@@ -101,6 +113,9 @@ export default {
   display: grid;
   grid-gap: 1rem;
   list-style: none;
+}
+.hide-pagination {
+  color: #0bff76;
 }
 </style>
 
