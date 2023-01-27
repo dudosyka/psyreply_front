@@ -1,4 +1,8 @@
 <template>
+  <header v-if="pagination === true">
+    <YButton @click="previosPage" v-if="pageNumber >0">назад</YButton>
+    <YButton @click="nextPage" >вперед</YButton>
+  </header>
   <ul class="list">
     <y-list-item
       v-for="item in filtredItems"
@@ -10,14 +14,35 @@
       @edit="$emit('edit', item)"
     >
       {{showId ? `${item[showId]} ` : ""}} {{item[keyOfName]}}
+
     </y-list-item>
   </ul>
+
 </template>
 
 <script>
+
+import YButton from "@/components/UI/YButton.vue";
+import YCoolButton from "@/components/UI/YCoolButton.vue";
+
 export default {
   name: "YList",
+  components: {YCoolButton, YButton},
+  data(){
+    return {
+      pageNumber: 0,
+    }
+  },
   props: {
+    pagination: {
+      type: Boolean,
+      default: false
+    },
+    size:{
+      type: Number,
+      require: false,
+      default: 5
+    },
     items: {
       type: Array,
       default: [
@@ -44,6 +69,7 @@ export default {
   },
   computed: {
     filtredItems() {
+      let pagination = this.pagination
       const filteredArray = [];
       const games = this.items.filter(el => {
         return (el.type_id === 6 || el.type_id === 7)
@@ -51,9 +77,22 @@ export default {
       const tests = this.items.filter(el => {
         return !(el.type_id === 6 || el.type_id === 7)
       })
-      return filteredArray.concat(games,tests)
+      if (pagination === false){
+        return filteredArray.concat(games,tests)
+      }else{
+        const start = this.pageNumber * this.size, end = start + this.size
+        return filteredArray.concat(games,tests).slice(start,end)
+      }
+    },
+  },
+  methods:{
+    nextPage(){
+      this.pageNumber++;
+    },
+    previosPage(){
+      this.pageNumber--;
     }
-  }
+  },
 }
 </script>
 

@@ -7,6 +7,7 @@
       <y-modal v-if="window === 'main'" class="main__modal">
         <header class="header">
           <div class="header__select">
+
             <div v-if="blocks.length <= 1" class="heading header__heading">Результаты</div>
             <y-select
               v-else
@@ -14,6 +15,8 @@
               :selects="blocks"
               @select="updateBlocksSelect"
             />
+            <YButton @click="previosPage" v-if="pageNumber >0">назад</YButton>
+            <YButton @click="nextPage">вперед</YButton>
           </div>
           <div class="company__date__select">
             <y-select
@@ -47,7 +50,7 @@
         </div>
         <y-results-list v-if="results.length > 0">
           <y-results-list-item
-            v-for="result in results"
+            v-for="result in pagineteData"
             :name="result.block_title"
             :id="result.user.jetBotId"
             :username="result.user.login"
@@ -178,10 +181,19 @@ export default {
       filters: {},
       editBlock: null,
       haveResults: false,
-      onExport: []
+      onExport: [],
+      pageNumber: 0
     }
   },
   methods: {
+    nextPage(){
+      this.pageNumber++;
+      console.log(this.pageNumber)
+    },
+    previosPage(){
+      this.pageNumber--;
+      console.log(this.pageNumber)
+    },
     async result_selected(n) {
       if (n.active)
         n.active = false;
@@ -345,6 +357,10 @@ export default {
     }
   },
   computed: {
+    pagineteData(){
+      const start = this.pageNumber * 8, end = start + 8
+      return this.results.slice(start,end)
+    },
     answerMessage() {
       const filters = this.filters
       if ('createdAt' in filters && 'company_id' in filters && 'block_id' in filters) {

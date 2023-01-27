@@ -22,6 +22,8 @@
       key-of-name="title"
       :selectable="true"
       @select="selectTest"
+      :size="5"
+      :pagination="true"
     />
     <y-cool-button @click="saveBlock">Сохранить блок</y-cool-button>
   </y-modal>

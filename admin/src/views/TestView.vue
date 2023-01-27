@@ -15,6 +15,8 @@
           :items="tests"
           :editable="true"
           @edit="editTest"
+          :pagination="true"
+          :size="5"
         />
       </y-modal>
       <create-test
@@ -70,25 +72,8 @@ export default {
     )
     update(this)
   },
-  methods: {
-    createTest() {
-      this.$router.push('/test/create')
-      this.window = 'createTest'
-    },
-    editTest(n) {
-      this.$router.push('/test/edit')
-      this.editTestId = n.id
-      this.window = 'editTest'
-    },
-    close(toWindow) {
-      this.window = toWindow
-      if (toWindow == 'main') {
-        this.$router.push('/test')
-      }
-      this.$store.commit('clearNewTest')
-      update(this)
-    }
-  }
+
+
 }
 </script>
 

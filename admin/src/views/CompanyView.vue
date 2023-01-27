@@ -18,6 +18,8 @@
           :selectable="false"
           :editable="true"
           @edit="editCompany"
+          :pagination="true"
+          :size="3"
         />
       </y-modal>
       <create-company
