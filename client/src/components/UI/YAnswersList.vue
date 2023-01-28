@@ -82,7 +82,7 @@ export default {
   border-width: 2px;
   border-style: solid;
   width: 100%;
-  height: 30vh;
+  height: 37vh;
   overflow-y: scroll;
 }
 .overlay {
@@ -92,6 +92,7 @@ export default {
   z-index: 9999;
 }
 .list{
+
   height: 25rem;
   z-index: 1;
 }

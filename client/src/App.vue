@@ -343,7 +343,7 @@ export default {
 
 .question {
   left: 50%;
-  transform: translateX(-50%);
+  /*transform: translateX(-50%);*/
   top: 20%;
   height: 100%;
 }

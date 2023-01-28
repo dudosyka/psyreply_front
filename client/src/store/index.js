@@ -104,52 +104,48 @@ export default createStore({
       const token = localStorage.getItem('testToken')
 
       client.getBlock(token)
-        .then(res => {
-          if (res.ok) {
-            res.json().then(data => data.body).then(r => {
-              const passedBlock = {
-                time_on_pass: 0,
-                tests: []
-              }
-              r.tests.forEach(test => {
-                passedBlock.tests.push({
-                  test_id: test.id,
-                  answers: []
-                })
-                test.questions.forEach(question => {
-                  passedBlock.tests[passedBlock.tests.length - 1].answers.push({
-                    question_id: question.id,
-                    answer: []
-                  })
-                })
-              })
-              commit('updatePassedBlock', passedBlock)
-
-              r.games = r.tests.filter((test)=>test.type_id == 6 || test.type_id == 7)
-              r.tests = r.tests.map((test, id, array) => {
-                if (test.type_id === 2) {
-                  const questionGroups = []
-                  test.questions.forEach((el, id) => {
-                    if (id % 3 === 0) {
-                      questionGroups.push([el])
-                    } else {
-                      questionGroups[questionGroups.length - 1].push(el)
-                    }
-                  })
-                  array[id].questions = questionGroups
-                }
-                return test;
-              }).filter((test) => test.type_id != 6 && test.type_id != 7)
-
-              commit('updateBlockOnPass', r)
-
-              let answersCount = 0
-              r.tests.map(test => test.questions.map(q => answersCount++))
-              commit('setAnswersCount', answersCount)
-
-              commit('allDataIsReady')
-            })
+        .then(r => {
+          const passedBlock = {
+            time_on_pass: 0,
+            tests: []
           }
+          r.tests.forEach(test => {
+            passedBlock.tests.push({
+              test_id: test.id,
+              answers: []
+            })
+            test.questions.forEach(question => {
+              passedBlock.tests[passedBlock.tests.length - 1].answers.push({
+                question_id: question.id,
+                answer: []
+              })
+            })
+          })
+          commit('updatePassedBlock', passedBlock)
+
+          r.games = r.tests.filter((test)=>test.type_id == 6 || test.type_id == 7)
+          r.tests = r.tests.map((test, id, array) => {
+            if (test.type_id === 2) {
+              const questionGroups = []
+              test.questions.forEach((el, id) => {
+                if (id % 3 === 0) {
+                  questionGroups.push([el])
+                } else {
+                  questionGroups[questionGroups.length - 1].push(el)
+                }
+              })
+              array[id].questions = questionGroups
+            }
+            return test;
+          }).filter((test) => test.type_id != 6 && test.type_id != 7)
+
+          commit('updateBlockOnPass', r)
+
+          let answersCount = 0
+          r.tests.map(test => test.questions.map(q => answersCount++))
+          commit('setAnswersCount', answersCount)
+
+          commit('allDataIsReady')
         })
     },
 
@@ -160,9 +156,7 @@ export default createStore({
 
       client.passBlock(state.passedBlock, token)
         .then(res => {
-          if (res.ok) {
-            res.json().then(data => data.body).then(r => commit('updateUserId', r.user_id))
-          }
+          commit('updateUserId', res.user_id)
         })
     },
 
@@ -173,12 +167,8 @@ export default createStore({
       const userId = state.userId
 
       client.getResults(token, userId).then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            commit('updateResults', r)
-            commit('allResultsIsReady')
-          })
-        }
+        commit('updateResults', res)
+        commit('allResultsIsReady')
       })
     },
 
@@ -188,12 +178,8 @@ export default createStore({
       const token = localStorage.getItem('testToken')
 
       client.getCurResults(token).then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            commit('updateResults', r)
-            commit('allResultsIsReady')
-          })
-        }
+        commit('updateResults', res)
+        commit('allResultsIsReady')
       })
     },
 
@@ -204,13 +190,9 @@ export default createStore({
 
       client.changeTokenToUserToken(blockToken, state.userId)
         .then(res => {
-          if (res.ok) {
-            res.text().then(r => {
-              const token = r.split('/results/')[1]
-              localStorage.setItem('resultsToken', token)
-              dispatch('getResults')
-            })
-          }
+          const token = r.split('/results/')[1]
+          localStorage.setItem('resultsToken', token)
+          dispatch('getResults')
         })
 
     }
