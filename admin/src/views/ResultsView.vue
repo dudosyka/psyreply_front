@@ -15,8 +15,10 @@
               :selects="blocks"
               @select="updateBlocksSelect"
             />
-            <YButton @click="previosPage" v-if="pageNumber >0">назад</YButton>
-            <YButton @click="nextPage">вперед</YButton>
+            <div >
+              <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
+              <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
+            </div>
           </div>
           <div class="company__date__select">
             <y-select
@@ -182,17 +184,18 @@ export default {
       editBlock: null,
       haveResults: false,
       onExport: [],
-      pageNumber: 0
+      pageNumber: 0,
+      maxPage: 100,
     }
   },
   methods: {
     nextPage(){
-      this.pageNumber++;
-      console.log(this.pageNumber)
+      if (this.showNext)
+        this.pageNumber++;
     },
-    previosPage(){
-      this.pageNumber--;
-      console.log(this.pageNumber)
+    previousPage(){
+      if (this.showPrev)
+        this.pageNumber--;
     },
     async result_selected(n) {
       if (n.active)
@@ -361,6 +364,12 @@ export default {
       const start = this.pageNumber * 8, end = start + 8
       return this.results.slice(start,end)
     },
+    showNext() {
+      return (this.pageNumber  <= Math.floor(this.results.length / 8))
+    },
+    showPrev() {
+      return this.pageNumber > 0;
+    },
     answerMessage() {
       const filters = this.filters
       if ('createdAt' in filters && 'company_id' in filters && 'block_id' in filters) {
@@ -468,5 +477,7 @@ export default {
   flex-direction: row;
   align-items: center;
 }
-
+.hide-pagination {
+  color: rgb(255, 11, 56);
+}
 </style>

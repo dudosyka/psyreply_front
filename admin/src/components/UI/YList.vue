@@ -1,8 +1,4 @@
 <template>
-  <header v-if="pagination === true">
-    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
-    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
-  </header>
   <ul class="list">
     <y-list-item
       v-for="item in filteredItems"
@@ -17,7 +13,10 @@
 
     </y-list-item>
   </ul>
-
+  <footer v-if="pagination === true">
+    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
+    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
+  </footer>
 </template>
 
 <script>
@@ -115,7 +114,7 @@ export default {
   list-style: none;
 }
 .hide-pagination {
-  color: #0bff76;
+  color: rgb(255, 11, 56);
 }
 </style>
 

@@ -19,7 +19,7 @@
           :editable="true"
           @edit="editCompany"
           :pagination="true"
-          :size="3"
+          :page-size="4"
         />
       </y-modal>
       <create-company
