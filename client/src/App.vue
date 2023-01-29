@@ -1,28 +1,22 @@
 <template>
   <div class="main">
     <div class="main__bottom">
-      <transition name="fade">
-        <div v-if="allDataIsReady && step !== 'results'" class="bottom__container">
+        <div v-if="allDataIsReady && step !== 'results'" class="bottom__container animate__animated animate__fadeIn">
 <!--          <SwipeUpArrow v-if="step === 'before-test'"></SwipeUpArrow>-->
-          <transition name="fade">
             <template v-if="step === 'before-test'">
-              <y-modal class="before_test">
+              <y-modal class="before_test animate__animated animate__fadeIn">
                 <y-cool-button @click="startTest">Начать тестирование</y-cool-button>
               </y-modal>
             </template>
-          </transition>
 
-          <transition name="opacity">
-            <div v-if="step === 'testing'">
+            <div class="animate__animated animate__fadeIn" v-if="step === 'testing'">
               <template v-for="(test, test_arr_id) in blockOnPass.tests" :key="test.createdAt">
                 <template v-for="(question, question_arr_id) in test.questions" :key="`${question.createdAt}${question.id}`">
-                  <!--              TODO: change layout for transition animation -->
-                  <transition name="opacity">
-                    <template v-if="testNow === test_arr_id && questionNow === question_arr_id">
+                    <template class="animate__animated animate__fadeIn" v-if="testNow === test_arr_id && questionNow === question_arr_id">
                       <!--               One fom more  -->
                       <template v-if="test.type_id === 1">
                         <question-type3
-                          class="question"
+                          class="question animate__animated animate__fadeIn"
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
@@ -32,7 +26,7 @@
                       <!--                Yes Not ki -->
                       <template v-else-if="test.type_id === 2">
                         <question-type1
-                          class="question"
+                          class="question animate__animated animate__fadeIn"
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
@@ -43,7 +37,7 @@
                       <!--                NOTE: just check 'more' attribute -->
                       <template v-else-if="test.type_id === 3">
                         <question-type3
-                          class="question"
+                          class="question animate__animated animate__fadeIn"
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
@@ -54,7 +48,7 @@
                       <template v-else-if="test.type_id === 4">
                         <!--                  Range -->
                         <question-type2
-                          class="question"
+                          class="question animate__animated animate__fadeIn"
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
@@ -62,36 +56,26 @@
                         />
                       </template>
                     </template>
-                  </transition>
                 </template>
               </template>
             </div>
-          </transition>
 <!--          второй вариант-->
-          <transition name="opacity">
-            <div v-if="step === 'gaming'">
+            <div class="animate__animated animate__fadeIn" v-if="step === 'gaming'">
               <BirdGameView v-if="!secondGame" @first-game-ended="gamesEnded"></BirdGameView>
               <ClickGameView v-if="secondGame" @second-game-ended="gamesEnded"></ClickGameView>
             </div>
-          </transition>
         </div>
-      </transition>
 
-      <transition name="fade">
-        <!--        TODO: do beautiful-->
-        <template v-if="step === 'after-test'">
-          <y-modal class="before_test">
+        <template class="animate__animated animate__fadeIn" v-if="step === 'after-test'">
+          <y-modal class="before_test animate__animated animate__fadeIn">
             <h2 class="before_test__title">Тест пройден</h2>
             <y-cool-button @click="getCurResults">Посмотреть результаты</y-cool-button>
           </y-modal>
         </template>
-      </transition>
 
-      <transition name="fade">
-        <template v-if="allResultsIsReady">
-          <results v-if="step === 'results'" />
+        <template class="animate__animated animate__fadeIn" v-if="allResultsIsReady">
+          <results class="animate__animated animate__fadeIn" v-if="step === 'results'" />
         </template>
-      </transition>
     </div>
     <router-view></router-view>
   </div>

@@ -13,9 +13,9 @@
 
     </y-list-item>
   </ul>
-  <footer v-if="pagination === true">
-    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
-    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
+  <footer class="container-fluid footer-container" v-if="pagination === true">
+    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">Назад</YButton>
+    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">Далее</YButton>
   </footer>
 </template>
 
@@ -114,7 +114,15 @@ export default {
   list-style: none;
 }
 .hide-pagination {
-  color: rgb(255, 11, 56);
+  color: white;
+  opacity: 0.2;
+}
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  padding-top: 1rem;
 }
 </style>
 

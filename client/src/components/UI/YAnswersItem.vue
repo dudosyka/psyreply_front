@@ -37,7 +37,7 @@ export default {
 }
 .item__text{
   width: 25rem;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   padding-top: 5px;
   padding-bottom: 10px;
 }
@@ -70,5 +70,13 @@ hr {
   padding-top: 5px;
   border-radius: 20px;
   border: 1px solid #ffffff61;
+}
+@media screen and (max-width:820px){
+  .item__text{
+    width: 25rem;
+    font-size: 2.9rem;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
 }
 </style>

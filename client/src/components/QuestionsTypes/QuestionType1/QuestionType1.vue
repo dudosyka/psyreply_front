@@ -142,12 +142,7 @@ hr {
 
 }
 .back{
-  background: linear-gradient(200.42deg, #FF758C 13.57%, #FF7EB3 98.35%);
-  filter: blur(50px);
-  width: 25rem;
-  height: 4rem;
-  margin-top: -4rem;
-  z-index: -9999999;
+display: none;
 }
 .coins__img{
   margin-right:0.5rem ;

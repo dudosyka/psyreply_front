@@ -46,6 +46,7 @@ export default {
   height: 100vh;
   background: transparent!important;
   border-color: transparent!important;
+  box-shadow: none!important;
 }
 .r__list{
   margin-bottom: 5rem;

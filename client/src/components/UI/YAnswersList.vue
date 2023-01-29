@@ -96,4 +96,18 @@ export default {
   height: 25rem;
   z-index: 1;
 }
+@media screen and (max-width:820px){
+  .modal {
+    background: linear-gradient(140.62deg, hsla(0, 0%, 100%, 0.07) 2.81%, hsla(0, 0%, 100%, 0.07) 100.82%);
+    padding: 3.6rem 3.6rem  3.6rem 3.6rem;
+    box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
+    border-radius: 3rem;
+    border-color: var(--light-opacity);
+    border-width: 2px;
+    border-style: solid;
+    width: 100%;
+    height: 32vh;
+    overflow-y: scroll;
+  }
+}
 </style>

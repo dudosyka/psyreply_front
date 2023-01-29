@@ -91,8 +91,6 @@ export default {
   border-top: rgba(255, 255, 255, 0.5);
   border-right:rgba(255, 255, 255, 0) ;
   border-left: rgba(255, 255, 255, 0);
-
-
 }
 .block__item{
   display: flex;

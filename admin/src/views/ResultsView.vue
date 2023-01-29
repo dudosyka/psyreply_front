@@ -15,10 +15,6 @@
               :selects="blocks"
               @select="updateBlocksSelect"
             />
-            <div >
-              <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">назад</YButton>
-              <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">вперед</YButton>
-            </div>
           </div>
           <div class="company__date__select">
             <y-select
@@ -65,6 +61,10 @@
             @select="result_selected(result)"
             :active="result.active"
           />
+          <div class="container-fluid footer-container">
+            <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">Назад</YButton>
+            <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">Далее</YButton>
+          </div>
         </y-results-list>
         <p class="new__results" v-else>
           {{ answerMessage }}
@@ -76,9 +76,11 @@
             @close="closeEditWindow"
           />
       </y-modal>
+
       <y-modal v-if="window === 'stat'">
 
       </y-modal>
+
     </main>
   </div>
 </template>
@@ -421,6 +423,7 @@ export default {
 }
 .main__modal {
   display: grid;
+  padding-bottom: 2rem;
   grid-gap: 2.5625rem;
 }
 
@@ -457,9 +460,18 @@ export default {
   text-align: center;
   align-items: center;
   font-size: 2rem;
-
 }
-
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  padding-top: 1rem;
+}
+.hide-pagination {
+  color: white!important;
+  opacity: 0.2;
+}
 .filters {
   width: 100%;
   display: flex;
