@@ -190,7 +190,7 @@ export default createStore({
 
       client.changeTokenToUserToken(blockToken, state.userId)
         .then(res => {
-          const token = r.split('/results/')[1]
+          const token = res.split('/results/')[1]
           localStorage.setItem('resultsToken', token)
           dispatch('getResults')
         })
