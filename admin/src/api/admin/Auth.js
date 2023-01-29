@@ -19,6 +19,7 @@ Admin.auth = async function(email, password) {
       })
     })
       .then(async res => {
+        console.log(res);
         if (res.ok)
           resolve(res.json().then(data => data.body))
         else
