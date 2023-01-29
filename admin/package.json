@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "vue-cli-service build && scp -r ./dist/* root@45.91.8.241:/root/domains/malinka.psyreply.com"
+    "deploy": "vue-cli-service build && scp -r ./dist/* root@45.91.8.241:/root/domains/malinka.beta.psyreply.com"
   },
   "dependencies": {
     "axios": "^1.2.0",
