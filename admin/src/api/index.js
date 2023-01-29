@@ -18,7 +18,7 @@ class Error {
 }
 
 export default class Request {
-  host = 'https://api.beta.psyreply.com'
+  host = 'https://api.psyreply.com'
   endpoint = null
   id = null
 

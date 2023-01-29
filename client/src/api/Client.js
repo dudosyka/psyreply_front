@@ -1,5 +1,5 @@
 export default class Client {
-  origin = 'https://api.beta.psyreply.com'
+  origin = 'https://api.psyreply.com'
 
   execute(url, init) {
     console.log(url)
