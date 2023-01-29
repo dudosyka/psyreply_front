@@ -126,7 +126,7 @@ export default {
     async generateBlockToken() {
       const block = new Block();
       await block.generateToken(this.block).then(res => {
-        window.prompt("Нажмите Ctrl+C", res);
+        window.prompt("Нажмите Ctrl+C", JSON.parse(res).body);
       });
     },
     update() {
