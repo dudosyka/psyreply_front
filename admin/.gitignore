@@ -2,6 +2,7 @@
 node_modules
 /dist
 /src/api/api.conf.js
+/upload.sh
 
 
 # local env files
