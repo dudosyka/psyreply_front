@@ -23,6 +23,7 @@
             :selectable="true"
             :items="company.blocks"
             @select="selectRemoveBlock"
+            :pagination="true"
         />
         <y-cool-button @click="removeBlock">Удалить блок из {{ company.name }}</y-cool-button>
       </y-modal>
@@ -36,6 +37,7 @@
             :items="blocks"
             :selectable="true"
             @select="selectAddBlock"
+            :pagination="true"
         />
         <y-cool-button @click="addBlocks">Добавить блок в {{ company.name }}</y-cool-button>
       </y-modal>
@@ -48,6 +50,7 @@
             :selectable="true"
             :items="company.groups"
             @select="selectGroup"
+            :pagination="true"
         />
         <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
       </y-modal>

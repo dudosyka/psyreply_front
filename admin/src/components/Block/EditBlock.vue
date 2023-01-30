@@ -32,6 +32,7 @@
         :items="block.tests"
         :selectable="true"
         @select="selectAddTest"
+        :pagination="true"
       />
       <y-cool-button @click="removeTests">Удалить тест из блока</y-cool-button>
     </y-modal>
@@ -45,6 +46,7 @@
         @select="selectRemoveTest"
         :items="tests"
         key-of-name="title"
+        :pagination="true"
       />
       <y-cool-button @click="addTests">Добавить в блок</y-cool-button>
     </y-modal>

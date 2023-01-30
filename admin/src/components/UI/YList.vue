@@ -84,12 +84,12 @@ export default {
       const tests = this.items.filter(el => {
         return !(el.type_id === 6 || el.type_id === 7)
       })
+      console.log(this.items, tests, games)
       if (pagination === false){
         return filteredArray.concat(games,tests)
-      }else{
+      } else {
         const start = this.pageNumber * this.pageSize, end = start + this.pageSize
         return filteredArray.concat(games,tests).slice(start,end)
-
       }
     },
     showNext() {
