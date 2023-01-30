@@ -34,10 +34,14 @@ export default {
     }
   },
   created() {
-    this.maxPage = Math.floor(this.items.length / this.pageSize);
+    this.maxPage = Math.ceil(this.items.length / this.pageSize);
   },
   props: {
     pagination: {
+      type: Boolean,
+      default: false
+    },
+    paginationBlock:{
       type: Boolean,
       default: false
     },
@@ -85,10 +89,14 @@ export default {
       }else{
         const start = this.pageNumber * this.pageSize, end = start + this.pageSize
         return filteredArray.concat(games,tests).slice(start,end)
+
       }
     },
     showNext() {
-      return (this.pageNumber + 1 <= this.maxPage)
+      if (this.paginationBlock === false){
+        return (this.pageNumber < this.maxPage -1)
+      }else
+      return (this.pageNumber  <= this.maxPage +1 )
     },
     showPrev() {
       return this.pageNumber > 0;

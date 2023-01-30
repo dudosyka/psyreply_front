@@ -26,7 +26,8 @@
           @edit="editBlock"
           :items="blocks"
           :pagination="true"
-          :page-size="3"
+          :pagination-block="true"
+          :page-size="4"
         />
       </y-modal>
       <create-block

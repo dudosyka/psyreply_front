@@ -367,7 +367,7 @@ export default {
       return this.results.slice(start,end)
     },
     showNext() {
-      return (this.pageNumber  <= Math.floor(this.results.length / 8))
+      return (this.pageNumber  <Math.floor(this.results.length / 8))
     },
     showPrev() {
       return this.pageNumber > 0;

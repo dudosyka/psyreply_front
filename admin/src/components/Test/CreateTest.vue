@@ -156,7 +156,7 @@ function update(data) {
   types.getOne()
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.questionTypes = r.body)
+        res.json().then(r => data.questionTypes = r.body.filter(el=> el.id != 6 && el.id != 7))
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }
