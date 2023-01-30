@@ -24,6 +24,7 @@
       @select="selectTest"
       :size="5"
       :pagination="true"
+      :pagination-block="true"
     />
     <y-cool-button @click="saveBlock">Сохранить блок</y-cool-button>
   </y-modal>
@@ -63,20 +64,30 @@ export default {
   },
   methods: {
     updateTestList() {
+      const selected = this.$store.getters.blockCreate.selectedTests;
       const test = new Test()
       test.getAll({ filters: {  } })
           .then(res => {
             if (res.ok) {
-              res.json().then(r => this.tests = r.body)
+              res.json().then(r => this.tests = r.body.map(el => {
+                if (selected.includes(el.id)) {
+                  el.active = true;
+                }
+                return el;
+              }))
             } else {
               this.$store.commit('openErrorPopup', res.msg())
             }
           })
     },
     createTest() {
+      this.$store.commit('blockCreateSetTests', this.tests.filter(el => el.active).map(el => el.id));
       this.window = 'createTest';
     },
-    createTestClosed() {
+    createTestClosed(createdTestId) {
+      const selected = this.$store.getters.blockCreate.selectedTests;
+      selected.push(createdTestId)
+      this.$store.commit('blockCreateSetTests', selected);
       this.window = 'main'
       this.updateTestList()
     },
@@ -114,6 +125,7 @@ export default {
       const block = new Block()
       block.create('', body)
         .then(res => {
+          this.$store.commit('blockCreateSetTests', []);
           if (mainConf.projectState === ProjectState.dev)
             console.log(res)
           if (res.ok) {

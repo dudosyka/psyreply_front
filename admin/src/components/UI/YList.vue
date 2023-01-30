@@ -93,10 +93,15 @@ export default {
       }
     },
     showNext() {
-      if (this.paginationBlock === false){
-        return (this.pageNumber < this.maxPage -1)
-      }else
-      return (this.pageNumber  <= this.maxPage +1 )
+      let filteredArray = []
+      const games = this.items.filter(el => {
+        return (el.type_id === 6 || el.type_id === 7)
+      })
+      const tests = this.items.filter(el => {
+        return !(el.type_id === 6 || el.type_id === 7)
+      })
+      const start = (this.pageNumber + 1) * this.pageSize, end = start + this.pageSize
+      return (filteredArray.concat(games,tests).slice(start,end).length > 0)
     },
     showPrev() {
       return this.pageNumber > 0;

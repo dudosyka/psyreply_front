@@ -346,9 +346,11 @@ export default {
         test.create('', body)
           .then(res => {
             if (res.ok) {
-              this.$store.commit('openPopup', 'Тест успешно сохранён')
-              this.$store.commit('clearNewTest')
-              this.$emit('close')
+              res.json().then(r => {
+                this.$store.commit('openPopup', 'Тест успешно сохранён')
+                this.$store.commit('clearNewTest')
+                this.$emit('close', r.body.id)
+              });
             } else {
               this.$store.commit('openErrorPopup', res.msg())
             }

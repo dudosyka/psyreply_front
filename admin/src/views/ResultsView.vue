@@ -188,6 +188,7 @@ export default {
       onExport: [],
       pageNumber: 0,
       maxPage: 100,
+      pageSize: 8,
     }
   },
   methods: {
@@ -363,11 +364,12 @@ export default {
   },
   computed: {
     pagineteData(){
-      const start = this.pageNumber * 8, end = start + 8
+      const start = this.pageNumber * this.pageSize, end = start + this.pageSize
       return this.results.slice(start,end)
     },
     showNext() {
-      return (this.pageNumber  <Math.floor(this.results.length / 8))
+      const start = (this.pageNumber + 1) * this.pageSize, end = start + this.pageSize
+      return (this.results.slice(start,end).length > 0)
     },
     showPrev() {
       return this.pageNumber > 0;

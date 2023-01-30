@@ -20,6 +20,8 @@
         :selectable="true"
         :items="blocks"
         @select="selectBlocks"
+        :pagination="true"
+        :page-size="5"
       />
       <y-cool-button @click="addToBlock">Добавить в блок</y-cool-button>
     </y-modal>

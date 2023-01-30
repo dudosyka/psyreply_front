@@ -22,6 +22,9 @@ export default createStore({
       questionsCount: 0,
       questions: []
     },
+    newBlock: {
+      selectedTests: []
+    },
     results: {
       editBlock: null
     },
@@ -53,6 +56,9 @@ export default createStore({
     },
     popup(state) {
       return state.app.popup
+    },
+    blockCreate(state) {
+      return state.newBlock;
     }
   },
   mutations: {
@@ -148,6 +154,9 @@ export default createStore({
     },
     setEditGroup(state, group) {
       state.group = group;
+    },
+    blockCreateSetTests(state, tests) {
+      state.newBlock.selectedTests = tests;
     }
   },
   actions: {
