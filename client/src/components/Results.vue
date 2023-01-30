@@ -7,10 +7,16 @@
     </div>
     <div class="r__list">
       <y-results-item
+        v-if="resultsData.metrics.length"
         v-for="metric in resultsData.metrics"
         :key="metric.name"
         :metric="metric"
       />
+      <template v-else>
+        <h3 class="no-one-result">
+          Вы пока не прошли ни одного теста.
+        </h3>
+      </template>
     </div>
   </y-modal>
 </div>
@@ -57,5 +63,10 @@ export default {
   justify-content: center;
   align-items: end;
   margin-top: 2rem;
+}
+.no-one-result {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 5rem;
 }
 </style>

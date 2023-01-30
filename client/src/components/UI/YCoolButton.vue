@@ -39,7 +39,6 @@ export default {
 }
 @media screen and (max-width:820px){
   .button_cool {
-    padding: 2.09375rem 1.5rem;
     background: linear-gradient(200.42deg, #844FFC 13.57%, #491EB8 98.35%);
     box-shadow: -10px 19px 20px rgba(43, 9, 120, 0.35);
     border-radius: 2rem;

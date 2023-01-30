@@ -42,6 +42,9 @@ export default {
       default: false
     }
   },
+  created() {
+    console.log(this.questionArrId);
+  },
   computed: {
     questionData() {
       const coordinates = {

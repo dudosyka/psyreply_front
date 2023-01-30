@@ -110,6 +110,8 @@ export default createStore({
             tests: []
           }
           r.tests.forEach(test => {
+            if (test.type_id == 6 || test.type_id == 7)
+              return;
             passedBlock.tests.push({
               test_id: test.id,
               answers: []
