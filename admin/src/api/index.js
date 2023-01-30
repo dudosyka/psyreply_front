@@ -1,5 +1,6 @@
 import Admin from '@/api/admin/Auth';
 import mainConf, {ProjectState} from "../../../main.conf";
+import apiConf from "@/api/api.conf";
 
 
 class Error {
@@ -18,7 +19,7 @@ class Error {
 }
 
 export default class Request {
-  host = 'https://api.beta.psyreply.com'
+  host = apiConf.endpoint
   endpoint = null
   id = null
 

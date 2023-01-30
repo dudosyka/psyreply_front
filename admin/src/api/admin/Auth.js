@@ -1,4 +1,3 @@
-import config from '@/api/index';
 import Request from '@/api/index';
 
 const req = new Request

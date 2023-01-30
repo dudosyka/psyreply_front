@@ -1,5 +1,7 @@
+import apiConf from "@/api/api.conf";
+
 export default class Client {
-  origin = 'https://api.beta.psyreply.com'
+  origin = apiConf.endpoint
 
   execute(url, init) {
     console.log(url)

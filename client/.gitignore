@@ -2,6 +2,7 @@
 node_modules
 /dist
 dist.zip
+/src/api/api.conf.js
 
 
 # local env files
