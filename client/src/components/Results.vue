@@ -7,7 +7,7 @@
     </div>
     <div class="r__list">
       <y-results-item
-        v-if="resultsData.metrics.length"
+        v-if="Object.keys(resultsData.metrics).length"
         v-for="metric in resultsData.metrics"
         :key="metric.name"
         :metric="metric"
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     resultsData() {
-      return this.$store.getters.results
+      return this.$store.getters.results;
     },
   }
 }
