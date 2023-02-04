@@ -38,7 +38,7 @@
       <h6 class="company-name">AGAVA</h6>
       <div class="container company-img"></div>
       <h6 class="company-name-separator">| </h6>
-      <a class="exit" href="#">Выход</a>
+      <buttom @click.prevent="exit" class="exit" href="#">Выход</buttom>
     </div>
     <!--    Правая колонка с аватаркой компании кончилась-->
   </div>
@@ -68,10 +68,17 @@
 
 <script>
 import StatsBlock from "@/components/StatsBlock.vue";
+import router from "@/router";
 
 export default {
   name: "ContainerBlock",
-  components: {StatsBlock}
+  components: {StatsBlock},
+  methods:{
+    exit(){
+      router.push('/')
+      console.log(localStorage)
+    }
+  }
 }
 </script>
 

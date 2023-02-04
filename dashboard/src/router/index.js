@@ -4,15 +4,16 @@ import LogInView from '../views/LogInView.vue';
 
 const routes = [
   {
+    path: '/',
+    name: 'login',
+    component: LogInView
+  },
+  {
     path: '/home',
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/',
-    name: 'login',
-    component: LogInView
-  }
+
 ]
 
 const router = createRouter({
