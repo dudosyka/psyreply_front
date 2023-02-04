@@ -127,7 +127,7 @@ export default {
     return {
       testNow: 0,
       questionNow: 0,
-      step: null, //TODO: remove after test
+      step: 'before-test', //TODO: remove after test
       startTime: null,
       endTime: null,
       secondGame: false

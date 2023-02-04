@@ -19,8 +19,10 @@ export default {
 
 /*Переменные с цветами для элементов*/
 :root {
-  --acrylic-blur-dark: rgba(16 18 27 / 40%); /*Прозрачный фон всех элементов*/
-  --border-dark: rgba(113 119 144 / 25%); /*Обводка*/
+  --acrylic-blur-dark: rgb(7 8 12 / 53%);
+  --acrylic-blur-light: rgb(19 21 32 / 49%);/*Прозрачный фон всех элементов*/
+  --border-dark: rgba(113 119 144 / 25%);
+  --border-light: rgb(113 119 144 / 12%);/*Обводка*/
   --content-bg-dark: rgb(146 151 179 / 13%); /*Второй фон для всех элементов*/
   --inactive-color: rgb(113 119 144 / 78%); /*Цвет неактивных ссылок*/
   --active-color: #faf9fb; /*Цвет активных ссылок*/

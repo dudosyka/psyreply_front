@@ -10,7 +10,19 @@
       <span class="logo-subtext" data-v-c1beedde="">| Dashboard</span>
     </div>
     <!--    Левая колонка с логотипом Reply кончилась-->
+    <!--    Правая колонка с аватаркой компании-->
+    <div class="col company">
+      <h6 class="company-name">AGAVA</h6>
+      <div class="container company-img"></div>
+      <h6 class="company-name-separator">| </h6>
+      <a class="exit" href="#">Выход</a>
+    </div>
+    <!--    Правая колонка с аватаркой компании кончилась-->
+  </div>
+  <!--  Ряд с хедером кончился-->
 
+
+  <div class="row buttons-area">
     <!--    Центральная колонка с группами-->
     <div class="col groups">
       <div class="group-item">
@@ -42,26 +54,12 @@
     </div>
     <!--    Правая колонка с аватаркой компании кончилась-->
   </div>
-  <!--  Ряд с хедером кончился-->
-
-
-  <div class="row buttons-area">
-    <h4 class="group-heading">Название метрик</h4>
-    <!--    Центральная колонка с группами-->
-    <div class="col metrics">
-      <a class="metrics-button" href="#">Все метрики</a>
-      <a class="metrics-button" href="#">Метрика 1</a>
-      <a class="metrics-button" href="#">Метрика 2</a>
-      <a class="metrics-button" href="#">Метрика 3</a>
-      <a class="metrics-button" href="#">Метрика 4</a>
-    </div>
-    <!--    Центральная колонка с группами кончилась-->
-
-    <div class="row stats" data-masonry='{"percentPosition": true }'>
-      <StatsBlock id="1" />
-    </div>
-    <div class="footer-area"></div>
-  </div>
+  <div class="row stats">
+  <StatsBlock id="1" />
+</div>
+  <div class="row footer-area">
+  <button class="btn btn-primary results-button"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
+</div>
 </div>
 <!--  Основной контейнер кончился-->
 </template>
@@ -83,17 +81,81 @@ export default {
 </script>
 
 <style scoped>
+.row.footer-area {
+  width: 100%;
+  padding-top: 1rem;
+  margin-left: 0.025rem;
+  margin-right: 0.025rem;
+  padding-bottom: 1rem;
+  justify-content: center;
+  border-top: 1px solid;
+  border-color: var(--border-light);
+
+}
+.results-button {
+
+}
+.results-button {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  color: var(--inactive-color);
+  text-transform: none;
+  width: 20vw;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.5rem;
+
+}
+.results-button:hover {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.results-button:focus {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.results-button:active {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.results-button:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.results-button:active {
+  background: transparent!important;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
 .img-test {
   max-width: 30%;
 }
 /*Общие стили контейнера*/
 .container-fluid {
-  background: var(--acrylic-blur-dark);
+  background: var(--acrylic-blur-light);
   backdrop-filter: blur(20px);
   border-radius: 30px;
   height: 80vh;
   max-width: 90vw;
   margin-left: 1rem;
+  padding-left: 0;
+  padding-right: 0;
   margin-right: 1rem;
   width: auto;
   overflow-y: hidden!important;
@@ -108,11 +170,11 @@ export default {
 }
 .row.buttons-area {
   width: 100%;
-  margin-top: 1rem;
+  padding-top: 1rem;
   margin-left: 0.025rem;
   margin-right: 0.025rem;
   border-bottom: 1px solid;
-  border-color: var(--border-dark);
+  border-color: var(--border-light);
   padding-bottom: 1rem;
 }
 .group-heading {
@@ -128,15 +190,22 @@ export default {
   border-radius: 30px;
 }
 .row.stats {
-  overflow-y: scroll;
+  overflow-y: hidden;
   margin-top: 0;
+  height: 100%;
+  min-height: 60vh;
+  padding-left: 1rem;
 }
 /*Стили хедера*/
 .header-area {
+  width: 100%;
+  background: var(--acrylic-blur-dark);
+  padding-top: 1rem;
+  margin-left: 0.025rem;
+  margin-right: 0.025rem;
   border-bottom: 1px solid;
   border-color: var(--border-dark);
-  padding-top: 1.3rem;
-  padding-bottom: 1.3rem;
+  padding-bottom: 1rem;
 }
 .logo-box {
   display: flex;
@@ -144,7 +213,7 @@ export default {
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
-  margin-left: 2.5rem;
+  margin-left: 1.7rem;
 }
 .logo {
   width: 2rem;
@@ -165,12 +234,13 @@ export default {
 /*Стили для групп*/
 .groups {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
   flex-direction: row;
   gap: 1rem;
   width: 70vw;
+  margin-left: 1rem;
 }
 .menu-link {
   text-decoration: none;
