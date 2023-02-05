@@ -23,6 +23,7 @@ import '@/api/api.conf'
 import Admin from "@/api/auth";
 import router from "@/router";
 import Results from "@/api/getResult";
+import Group from "@/api/getGroupId";
 
 
 export default {
@@ -35,9 +36,12 @@ export default {
   },
   methods:{
     submit(){
+
       Admin.auth(this.email, this.password).then(()=>router.push('/home'))
       console.log(localStorage.getItem('token'))
-      console.log(Results.get(localStorage.getItem('token')))
+      Group.getId(localStorage.getItem('token'))
+      console.log(`группа ${localStorage.getItem('groupId')}`)
+      Results.get(localStorage.getItem('token'),localStorage.getItem('groupId'))
     },
   }
 }

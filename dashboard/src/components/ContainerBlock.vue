@@ -15,7 +15,7 @@
       <h6 class="company-name">AGAVA</h6>
       <div class="container company-img"></div>
       <h6 class="company-name-separator">| </h6>
-      <a class="exit" href="#">Выход</a>
+      <a class="exit" @click.prevent="exit" href="#">Выход</a>
     </div>
     <!--    Правая колонка с аватаркой компании кончилась-->
   </div>
@@ -44,15 +44,6 @@
 
     </div>
     <!--    Центральная колонка с группами кончилась-->
-
-    <!--    Правая колонка с аватаркой компании-->
-    <div class="col company">
-      <h6 class="company-name">AGAVA</h6>
-      <div class="container company-img"></div>
-      <h6 class="company-name-separator">| </h6>
-      <buttom @click.prevent="exit" class="exit" href="#">Выход</buttom>
-    </div>
-    <!--    Правая колонка с аватаркой компании кончилась-->
   </div>
   <div class="row stats">
   <StatsBlock id="1" />

@@ -1,15 +1,21 @@
 <template>
   <div class="container-fluid metric-box">
     <div class="container-fluid heading">
-      <h5 class="metric-name">Метрика</h5><button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+      <h5 class="metric-name">Метрика</h5>
+      <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
     </div>
-    <img class="test-img" src="../assets/test_graph.png">
+    <ReaChart></ReaChart>
   </div>
+
 </template>
 
 <script>
+import ReaChart from "@/components/ReaChart.vue";
 export default {
-  name: "StatsBlock"
+  name: "StatsBlock",
+  components:{
+    ReaChart
+  }
 }
 </script>
 

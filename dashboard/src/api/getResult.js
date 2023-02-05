@@ -3,12 +3,13 @@ import apiConf from "@/api/api.conf";
 
 const Results = {}
 
-Results.get = async function(token){
+Results.get = async function(token,groupId){
     const headers = {
         "Authorization": `Bearer ${token}`,
     };
     console.log('данные получены')
-    const req = axios.get(`${apiConf.endpoint}/company/stat/82/11`,{headers})
+    const req = axios.get(`${apiConf.endpoint}/company/stat/${groupId}`,{headers})
+    console.log(req)
     return req
 }
 export default Results
