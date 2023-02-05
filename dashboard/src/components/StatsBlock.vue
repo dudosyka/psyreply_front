@@ -1,10 +1,10 @@
 <template>
-  <div class="container-fluid metric-box">
+  <div class="container-fluid metric-box animate__animated animate__flipInX">
     <div class="container-fluid heading">
       <h5 class="metric-name">Метрика</h5>
       <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
     </div>
-    <ReaChart></ReaChart>
+    <ReaChart class="chart-box"></ReaChart>
   </div>
 
 </template>
@@ -20,9 +20,16 @@ export default {
 </script>
 
 <style scoped>
+.chart-box {
+  padding-top: 2rem;
+  padding-right: 1rem;
+}
 .container-fluid.metric-box {
   padding-top: 1rem;
-  margin-top: 3rem;
+  margin-top: 0;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgb(7 18 25 / 13%);
   padding-bottom: 1rem;
   width: auto;
   height: auto;
@@ -85,5 +92,8 @@ export default {
   border-radius: 50%;
   border: none;
   color: rgba(255, 255, 255, 1);
+}
+.animate__flipInX {
+  animation-delay: 0.5s;
 }
 </style>

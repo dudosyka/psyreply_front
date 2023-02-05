@@ -5,6 +5,11 @@
 <!--          <SwipeUpArrow v-if="step === 'before-test'"></SwipeUpArrow>-->
             <template v-if="step === 'before-test'">
               <y-modal class="before_test animate__animated animate__fadeIn">
+                <p class="before_test_text"><h3 class="before_test_heading">Добро пожаловать в Reply,<br> cистему диагностики состояния. </h3><br>
+
+                  Впереди Вас ждет небольшой опрос, после которого Вы получите результаты в виде графического отчета и рекомендации от вашего психолога-куратора.<br><br>
+                  Прочитайте каждый вопрос и выбирайте максимально близкий ответ из всех предложенных. Лучше, если вы будете отвечать быстро, а не обдумывать тщательно каждый ответ.<br><br>
+                  <span class="disclaimer">Доступ к данным вашего опроса будет только у Вас и у психолога-куратора Reply.</span></p>
                 <y-cool-button @click="startTest">Начать тестирование</y-cool-button>
               </y-modal>
             </template>
@@ -276,7 +281,24 @@ export default {
   background-size: cover;
   background-attachment: fixed;
 }
-
+.before_test_text {
+  font-size: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  width: 50vw;
+  text-align: left;
+}
+.disclaimer {
+  font-style: italic;
+  color: #ffffff66;
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+.before_test_heading {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  padding-bottom: 2rem;
+  text-align: left
+}
 *,
 ::before,
 ::after {
@@ -308,7 +330,6 @@ export default {
   justify-content: center;
   align-items: center;
   /* TODO: remove important */
-  margin-top: 5rem;
   padding: 2rem !important;
   width: min-content;
 }
@@ -333,12 +354,23 @@ export default {
 }
 
 @media screen and (max-width:820px) {
-  .before_test {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    top: auto;
+  .before_test_text {
+    font-size: 2rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    width: 87vw;
+    text-align: left;
+  }
+  .disclaimer {
+    font-style: italic;
+    color: #ffffff66;
+    font-weight: 400;
+    font-size: 1.7rem;
+  }
+  .before_test_heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    padding-bottom: 2rem;
+    text-align: left
   }
   .question {
     position: fixed;

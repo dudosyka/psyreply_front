@@ -74,6 +74,7 @@ export default {
 <style scoped>
 .row.footer-area {
   width: 100%;
+  background: rgb(7 8 12 / 25%);
   padding-top: 1rem;
   margin-left: 0.025rem;
   margin-right: 0.025rem;
@@ -139,8 +140,9 @@ export default {
 }
 /*Общие стили контейнера*/
 .container-fluid {
-  background: var(--acrylic-blur-light);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(7, 18, 25, 0.75);
   border-radius: 30px;
   height: 80vh;
   max-width: 90vw;
@@ -150,8 +152,7 @@ export default {
   margin-right: 1rem;
   width: auto;
   overflow-y: hidden!important;
-  border: 1px solid;
-  border-color: var(--border-dark);
+  border: 1px solid rgba(255, 255, 255, 0.125);
   margin-top: 6rem;
   display: flex;
   overflow-x:hidden;
@@ -186,11 +187,14 @@ export default {
   height: 100%;
   min-height: 60vh;
   padding-left: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 /*Стили хедера*/
 .header-area {
   width: 100%;
-  background: var(--acrylic-blur-dark);
+  background: rgb(7 8 12 / 26%);;
   padding-top: 1rem;
   margin-left: 0.025rem;
   margin-right: 0.025rem;

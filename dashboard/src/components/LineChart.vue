@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <apexcharts width="500" height="400" type="bar" :options="chartOptions" :series="series"></apexcharts>
+    <apexcharts width="500" height="400" :options="chartOptions"></apexcharts>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import VueApexCharts from "vue3-apexcharts";
 
 export default {
-  name: 'ReaChart',
+  name: 'LineChart',
   components: {
     apexcharts: VueApexCharts,
   },
@@ -16,7 +16,7 @@ export default {
     return {
       chartOptions: {
         chart: {
-          type: "bar",
+          type: "line",
           id: 'basic-bar',
           toolbar: {
             autoSelected: "pan",

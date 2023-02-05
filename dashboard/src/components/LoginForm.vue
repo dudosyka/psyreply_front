@@ -4,7 +4,7 @@
       <img class="avatar" src="../assets/boshki.jpg"/>
       <div class="mb-3 input-area animate__animated animate__shakeX">
         <label for="exampleInputPassword1" class="form-label company-name">Имя компании</label>
-        <input type="text" class="form-control password " id="exampleInputemail1" v-model="email" placeholder="Введите логин ...">
+        <input type="text" class="form-control password login" id="exampleInputemail1" v-model="email" placeholder="Введите логин ...">
         <input type="password" class="form-control password " id="exampleInputpassword1" v-model="password" placeholder="Введите пароль ...">
       </div>
       <button @click.prevent = 'submit' class="btn btn-primary">Войти</button>
@@ -94,6 +94,7 @@ export default {
   border-color: var(--border-dark);
   border-radius: 0.5rem;
   color: white;
+  margin-top: 1rem;
   text-align: center;
   backdrop-filter: blur(10px)!important;
 }
