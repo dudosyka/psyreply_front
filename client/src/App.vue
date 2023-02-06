@@ -229,6 +229,47 @@ export default {
   display: none;
 }
 
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #B8C0C2 #323232;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 7px;
+  max-height: 70vh;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  height: 70vh;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  margin-right: 2rem;
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #323232;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #323232;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #323232;
+}
+
 /* TODO: fix layout for animation */
 
 .slide-leave-active,
