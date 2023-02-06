@@ -45,7 +45,7 @@
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
-  <div class="row stats">
+  <div class="row stats" data-masonry='{"percentPosition": true }'>
   <StatsBlock id="1" />
 </div>
   <div class="row footer-area">

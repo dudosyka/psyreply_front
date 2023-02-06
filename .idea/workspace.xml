@@ -5,23 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031c68a5-8992-4897-b65a-4b802eeb5ca1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/UI/YCoolButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/YCoolButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/UI/YModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/YModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/assets/bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/assets/bg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/src/components/ContainerBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/ContainerBlock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/LineChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/LineChart.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/ReaChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/ReaChart.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/StatsBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/StatsBlock.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,23 +38,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/yan/Документы/Projects/psyreply2.0_front/dashboard/src/components",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/yan/Документы/Projects/psyreply2.0_front/dashboard/src/components&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/dashboard/src/components" />
@@ -73,7 +74,10 @@
       <workItem from="1675506567880" duration="399000" />
       <workItem from="1675507110518" duration="1017000" />
       <workItem from="1675533811585" duration="4427000" />
-      <workItem from="1675607867214" duration="14885000" />
+      <workItem from="1675607867214" duration="15821000" />
+      <workItem from="1675629639353" duration="476000" />
+      <workItem from="1675633965970" duration="3000" />
+      <workItem from="1675634556127" duration="5807000" />
     </task>
     <servers />
   </component>
