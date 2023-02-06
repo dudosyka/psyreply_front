@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="main__bottom">
-        <div v-if="allDataIsReady && step !== 'results'" class="bottom__container animate__animated animate__fadeIn">
+        <div v-if="allDataIsReady && step !== 'results' && step !== 'after-test'" class="bottom__container animate__animated animate__fadeIn">
 <!--          <SwipeUpArrow v-if="step === 'before-test'"></SwipeUpArrow>-->
             <template v-if="step === 'before-test'">
               <y-modal class="before_test animate__animated animate__fadeIn">
