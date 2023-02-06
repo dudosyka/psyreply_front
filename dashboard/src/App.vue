@@ -80,12 +80,14 @@ html, body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   width: 100vw;
+
   height: 100vh;
   position: fixed;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-content: center;
   flex-direction: row;
   z-index: 1;
 }

@@ -46,8 +46,13 @@
     <!--    Центральная колонка с группами кончилась-->
   </div>
   <div class="row stats" data-masonry='{"percentPosition": true }'>
-  <StatsBlock id="1" />
-</div>
+    <div class="col">
+      <StatsBlock id="1" />
+    </div>
+    <div class="col">
+      <StatsBlock id="2" />
+    </div>
+  </div>
   <div class="row footer-area">
   <button class="btn btn-primary results-button"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
 </div>
@@ -146,14 +151,11 @@ export default {
   border-radius: 30px;
   height: 80vh;
   max-width: 90vw;
-  margin-left: 1rem;
   padding-left: 0;
   padding-right: 0;
-  margin-right: 1rem;
   width: auto;
   overflow-y: hidden!important;
   border: 1px solid rgba(255, 255, 255, 0.125);
-  margin-top: 6rem;
   display: flex;
   overflow-x:hidden;
   flex-direction: column;
@@ -183,13 +185,15 @@ export default {
 }
 .row.stats {
   overflow-y: hidden;
-  margin-top: 0;
-  height: 100%;
-  min-height: 60vh;
-  padding-left: 1rem;
+  width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin-left: 0.025rem;
+  margin-right: 0.025rem;
+  height: 100%!important;
+  padding-bottom: 1rem;
 }
 /*Стили хедера*/
 .header-area {

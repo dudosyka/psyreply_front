@@ -26,5 +26,8 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
 }
 </style>
