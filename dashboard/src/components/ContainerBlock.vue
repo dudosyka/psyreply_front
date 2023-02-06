@@ -55,10 +55,10 @@
 <!--  </div>-->
 
   <div class="container stats">
-    <div class="col stats-col">
+    <div class="col stats-col main">
       <StatsBlock id="1" />
     </div>
-    <div class="col stats-col">
+    <div class="col stats-col second">
       <StatsBlock2 />
       <StatsBlock2 />
     </div>
@@ -181,6 +181,19 @@ export default {
   display: flex;
   align-items: center;
   height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+.stats-col.main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+}
+.stats-col.second {
+  
 }
 .row.footer-area {
   width: 100%;

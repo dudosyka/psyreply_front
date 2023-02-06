@@ -1,5 +1,5 @@
 <template>
-  <div class="metric-box animate__animated animate__flipInX">
+  <div class="container metric-box animate__animated animate__flipInX">
     <div class="container-fluid heading">
       <h5 class="metric-name">Тревога</h5>
       <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
@@ -24,12 +24,14 @@ export default {
   padding-top: 2rem;
   padding-right: 1rem;
 }
-.metric-box {
+.container.metric-box {
   padding-top: 1rem;
   margin-top: 0;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: rgb(7 18 25 / 13%);
+  border: 1px solid var(--border-light);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: rgb(7 18 25 / 50%);
   padding-bottom: 1rem;
   width: auto;
   height: auto;
