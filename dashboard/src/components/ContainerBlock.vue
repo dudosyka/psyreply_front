@@ -45,12 +45,13 @@
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
-  <div class="row stats" data-masonry='{"percentPosition": true }'>
-    <div class="col">
+  <div class="container stats">
+    <div class="col stats-col">
       <StatsBlock id="1" />
     </div>
-    <div class="col">
-      <StatsBlock id="2" />
+    <div class="col stats-col">
+      <StatsBlock2 />
+      <StatsBlock2 />
     </div>
   </div>
   <div class="row footer-area">
@@ -63,10 +64,11 @@
 <script>
 import StatsBlock from "@/components/StatsBlock.vue";
 import router from "@/router";
+import StatsBlock2 from "@/components/StatsBlock2.vue";
 
 export default {
   name: "ContainerBlock",
-  components: {StatsBlock},
+  components: {StatsBlock2, StatsBlock},
   methods:{
     exit(){
       router.push('/')
@@ -77,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+.stats-col {
+  display: flex;
+  align-items: center;
+}
 .row.footer-area {
   width: 100%;
   background: rgb(7 8 12 / 25%);
@@ -183,7 +189,7 @@ export default {
   height: auto;
   border-radius: 30px;
 }
-.row.stats {
+.container.stats {
   overflow-y: hidden;
   width: 100%;
   display: flex;

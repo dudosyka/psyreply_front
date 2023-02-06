@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <apexcharts width="500" height="400" :options="chartOptions"></apexcharts>
+    <apexcharts type="area" width="260" height="200" :options="chartOptions" :series="series"></apexcharts>
   </div>
 </template>
 
@@ -22,6 +22,9 @@ export default {
             autoSelected: "pan",
             show: false
           },
+        },
+        dataLabels: {
+          enabled: false
         },
         plotOptions: {
           bar: {
@@ -50,22 +53,18 @@ export default {
           clipMarkers: false,
           yaxis: {
             lines: {
-              show: true
+              show: false
             }
           }
         },
-        markers: {
-          size: 5,
-          colors: ["#000524"],
-          strokeColor: "#00BAEC",
-          strokeWidth: 3
-        },
         tooltip: {
+          show: false,
           theme: "dark"
         },
         xaxis: {
           categories: ["1/02", "8/02", "15/02", "1994", 1995, 1996, 1997, 1998],
           labels: {
+            show: false,
             style: {
               colors: "rgba(232,237,255,0.58)",
             }
@@ -74,27 +73,27 @@ export default {
         yaxis: {
           categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
           labels: {
+            show: false,
             style: {
               colors: "rgba(232,237,255,0.58)",
             }
           }
         },
         legend: {
-          show: true,
+          show: false,
           labels: {
             colors: ["rgb(113 119 144 / 100%)"],
             useSeriesColors: false
           },
         },
       },
-        series: [{
-          name: 'Предыдущий замер',
-          data: [30, 91, 150],
-        },
-        {
-          name: 'Текущий замер',
-          data: [50, 60, 130]
-        }],
+      series: [{
+        name: 'series1',
+        data: [31, 40, 28, 51, 42, 109, 100]
+      }, {
+        name: 'series2',
+        data: [11, 32, 45, 32, 34, 52, 41]
+      }],
     }
   },
 }
