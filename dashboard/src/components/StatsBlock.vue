@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid metric-box animate__animated animate__flipInX">
-    <div class="container-fluid heading">
+  <div class="metric-box animate__animated animate__flipInX col">
+    <div class="heading">
       <h5 class="metric-name">Метрика</h5>
       <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
     </div>
@@ -24,7 +24,7 @@ export default {
   padding-top: 2rem;
   padding-right: 1rem;
 }
-.container-fluid.metric-box {
+.metric-box {
   padding-top: 1rem;
   margin-top: 0;
   backdrop-filter: blur(16px) saturate(180%);
@@ -37,7 +37,7 @@ export default {
   overflow-x: hidden!important;
   overflow-y: hidden!important;
 }
-.container-fluid.heading {
+.heading {
   background: transparent;
   width: 100%;
   height: auto;

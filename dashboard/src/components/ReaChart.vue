@@ -1,7 +1,5 @@
 <template>
-  <div class="example">
-    <apexcharts width="500" height="400" type="bar" :options="chartOptions" :series="series"></apexcharts>
-  </div>
+  <apexcharts width="500" height="400" type="bar" :options="chartOptions" :series="series"></apexcharts>
 </template>
 
 <script>

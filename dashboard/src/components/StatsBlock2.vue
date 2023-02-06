@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid metric-box animate__animated animate__flipInX">
+  <div class="metric-box animate__animated animate__flipInX">
     <div class="container-fluid heading">
       <h5 class="metric-name">Тревога</h5>
       <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
@@ -24,7 +24,7 @@ export default {
   padding-top: 2rem;
   padding-right: 1rem;
 }
-.container-fluid.metric-box {
+.metric-box {
   padding-top: 1rem;
   margin-top: 0;
   backdrop-filter: blur(16px) saturate(180%);

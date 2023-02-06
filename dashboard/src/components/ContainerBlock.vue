@@ -45,6 +45,15 @@
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
+
+<!--  <div class="row h-100 align-items-center align-self-center">-->
+<!--&lt;!&ndash;    <VueApexCharts class="col container-fluid" width="500" height="400" type="bar" :options="chartOptions" :series="series"></VueApexCharts>&ndash;&gt;-->
+<!--    <VueApexCharts class="col" width="500" height="400" type="bar" :options="chartOptions" :series="series"></VueApexCharts>-->
+<!--    <StatsBlock id="1"></StatsBlock>-->
+<!--&lt;!&ndash;    <StatsBlock id="1"></StatsBlock>&ndash;&gt;-->
+<!--&lt;!&ndash;    <StatsBlock id="1"></StatsBlock>&ndash;&gt;-->
+<!--  </div>-->
+
   <div class="container stats">
     <div class="col stats-col">
       <StatsBlock id="1" />
@@ -62,13 +71,98 @@
 </template>
 
 <script>
-import StatsBlock from "@/components/StatsBlock.vue";
 import router from "@/router";
+import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
 
 export default {
   name: "ContainerBlock",
   components: {StatsBlock2, StatsBlock},
+  data() {
+    return {
+      chartOptions: {
+        chart: {
+          type: "bar",
+          id: 'basic-bar',
+          toolbar: {
+            autoSelected: "pan",
+            show: false
+          },
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 5,
+            borderRadiusApplication: "end",
+          }
+        },
+        colors:['#263f4b', "#2f89ff"],
+        fill: {
+          type: "gradient",
+          gradient: {
+            type: "vertical",
+            shade: "dark",
+            shadeIntensity: 1,
+            opacityFrom: 1,
+            opacityTo: 1,
+            inverseColors: false,
+            stops: [0, 100],
+          }
+        },
+        stroke: {
+          width: 1
+        },
+        grid: {
+          borderColor: "#282828",
+          clipMarkers: false,
+          yaxis: {
+            lines: {
+              show: true
+            }
+          }
+        },
+        markers: {
+          size: 5,
+          colors: ["#000524"],
+          strokeColor: "#00BAEC",
+          strokeWidth: 3
+        },
+        tooltip: {
+          theme: "dark"
+        },
+        xaxis: {
+          categories: ["1/02", "8/02", "15/02", "1994", 1995, 1996, 1997, 1998],
+          labels: {
+            style: {
+              colors: "rgba(232,237,255,0.58)",
+            }
+          }
+        },
+        yaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+          labels: {
+            style: {
+              colors: "rgba(232,237,255,0.58)",
+            }
+          }
+        },
+        legend: {
+          show: true,
+          labels: {
+            colors: ["rgb(113 119 144 / 100%)"],
+            useSeriesColors: false
+          },
+        },
+      },
+      series: [{
+        name: 'Предыдущий замер',
+        data: [30, 91, 150],
+      },
+        {
+          name: 'Текущий замер',
+          data: [50, 60, 130]
+        }],
+    }
+  },
   methods:{
     exit(){
       router.push('/')
@@ -79,9 +173,14 @@ export default {
 </script>
 
 <style scoped>
+.my-row {
+  display: flex;
+  flex-direction: row;
+}
 .stats-col {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 .row.footer-area {
   width: 100%;
