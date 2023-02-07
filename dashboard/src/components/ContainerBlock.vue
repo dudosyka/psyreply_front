@@ -53,6 +53,17 @@
       <StatsBlock2 />
       <StatsBlock2 />
     </div>
+    <div class="col stats-col third">
+      <div class="container sidebar">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <div>
+            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i> Залупа</h6>
+            <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
+          </div>
+        </div>
+        <div class="hr"></div>
+      </div>
+    </div>
   </div>
   <div class="row footer-area">
   <button class="btn btn-primary results-button"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
@@ -90,13 +101,63 @@ export default {
     metrics() {
       const metricItems = this.$store.getters.selectedGroupMetrics;
       console.log(metricItems);
-      return metricItems;
+      return [metricItems[0]];
     }
   }
 }
 </script>
 
 <style scoped>
+.hr {
+  width: 100%;
+  border-bottom: 1px solid;
+  border-color: var(--border-dark)!important;
+}
+.alert-heading {
+  border-bottom: 1px solid;
+  padding-bottom: 1rem;
+  border-color: var(--border-dark)!important;
+}
+.alert-text {
+  margin-bottom: 0;
+}
+.info-icon {
+  color: rgba(255, 255, 255, 0.65);
+}
+.alert {
+  text-align: left;
+  border-color: var(--border-dark)!important;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid;
+  background: rgb(7 8 12 / 26%);
+  margin: 1rem;
+}
+
+.container.sidebar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+  flex-direction: column;
+}
+.stats-col.third {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  position: sticky;
+  flex-direction: column;
+  justify-content: center;
+  right: 0;
+  background: rgb(7 8 12 / 25%);
+  border-radius: 1rem 0rem 0rem 1rem;
+  border-color: rgba(255, 255, 255, 0.125);
+  border-left: 1px solid rgba(255, 255, 255, 0.125);
+  height: 100%;
+  max-height: 66.5vh;
+  width: 20rem;
+}
 .my-row {
   display: flex;
   flex-direction: row;
@@ -117,7 +178,10 @@ export default {
   align-content: space-between;
 }
 .stats-col.second {
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0.625rem;
 }
 .row.footer-area {
   width: 100%;
@@ -229,13 +293,16 @@ export default {
   overflow-y: hidden;
   width: 100%;
   display: flex;
+  gap: 2.5rem;
   align-items: center;
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
+  padding-bottom: 0;
+  padding-right: 0;
   padding-left: 1rem;
   margin-left: 0.025rem;
   margin-right: 0.025rem;
   height: 100%!important;
-  padding-bottom: 1rem;
+  padding-bottom: 0;
 }
 /*Стили хедера*/
 .header-area {

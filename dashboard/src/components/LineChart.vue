@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <apexcharts type="area" width="260" height="100" :options="chartOptions" :series="series"></apexcharts>
+    <apexcharts type="area" width="260" height="150" :options="chartOptions" :series="series"></apexcharts>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
             borderRadiusApplication: "end",
           }
         },
-        colors:['#263f4b', "#2f89ff"],
+        colors:["#2f89ff"],
         fill: {
           type: "gradient",
           gradient: {
@@ -90,9 +90,6 @@ export default {
       series: [{
         name: 'series1',
         data: [31, 40, 28, 51, 42, 109, 100]
-      }, {
-        name: 'series2',
-        data: [11, 32, 45, 32, 34, 52, 41]
       }],
     }
   },
