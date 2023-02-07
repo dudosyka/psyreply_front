@@ -25,12 +25,8 @@ export default {
     },
     chartOptions() {
       const categories = this.values.map(el => {
-        //TODO: Rewrite after backend fix....
-        if (el.data) {
-          return el.data.split('T')[0].split('-')[2] + "/" + el.data.split('T')[0].split('-')[1]
-        } else {
           return el.date.split('T')[0].split('-')[2] + "/" + el.date.split('T')[0].split('-')[1]
-        }
+
       })
       return {
         chart: {

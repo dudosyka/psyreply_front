@@ -32,7 +32,7 @@ export default class ApiResolver {
                 reject(new ApiError('forbidden'));
             else if (err.response.data.status === 400)
                 reject(new ApiError('bad', err.response.data.body));
-            else if (err.response.data.statu === 404)
+            else if (err.response.data.status === 404)
                 reject(new ApiError('not found'))
         })));
     }

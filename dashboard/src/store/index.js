@@ -9,7 +9,7 @@ export default createStore({
     state:{
         token: localStorage.getItem('token') || null,
         groups: [],
-        selectedGroup: null,
+        selectedGroup: {},
         screen: 'main',
         metricLabels: {}
     },

@@ -83,8 +83,23 @@ export default {
   data() {
     return {}
   },
+  created() {
+      //TODO reload pak
+      //metricsToWeek
+    this.$store.dispatch('auth', { email: this.email, password: this.password }).then(() => {
+      const groups = this.$store.getters.groups;
+      console.log(groups);
+      this.$store.dispatch('selectGroup', 0).then((selectedGroup) => {
+        console.log(selectedGroup.metricsToWeek)
+        const metrics = this.$store.getters.selectedGroupMetrics;
+        console.log(metrics);
+      });
+    })
+    },
   methods:{
     exit(){
+      this.$store.state.token = null
+      localStorage.removeItem('token')
       router.push('/')
       console.log(localStorage)
     },
@@ -101,7 +116,7 @@ export default {
     metrics() {
       const metricItems = this.$store.getters.selectedGroupMetrics;
       console.log(metricItems);
-      return [metricItems[0]];
+      return metricItems;
     }
   }
 }
