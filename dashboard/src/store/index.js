@@ -23,12 +23,6 @@ export default createStore({
         selectedGroupMetrics(state) {
             return state.selectedGroup.metricsToWeek;
         },
-        getStatMetricItem: (state) => ({ key, metricItem }) => {
-            return {
-                values: [...metricItem],
-                label: state.metricLabels[key]
-            }
-        }
     },
     actions: {
         async auth({ commit, state, dispatch }, { email, password }) {
@@ -67,8 +61,16 @@ export default createStore({
             metrics.forEach(el => {
                 metricsLabels[el.id] = el.name;
             });
-            commit('setSelectedGroup', groupStat);
+
+            groupStat.metricsToWeek = Object.keys(groupStat.metricsToWeek).map(el => {
+                return {
+                    label: metricsLabels[el],
+                    values: [...groupStat.metricsToWeek[el]]
+                }
+            });
+
             commit('setMetricLabels', metricsLabels);
+            commit('setSelectedGroup', groupStat);
 
             return groupStat;
         },

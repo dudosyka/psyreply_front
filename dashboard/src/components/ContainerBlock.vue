@@ -21,42 +21,33 @@
   </div>
   <!--  Ряд с хедером кончился-->
 
-
   <div class="row buttons-area">
     <!--    Центральная колонка с группами-->
     <div class="col groups">
-      <div class="group-item">
-        <a class="menu-link" href="#">Общая</a>
+      <div class="group-item" v-for="(group, index) in groups" :key="`${Date.now()}${group.id}`">
+        <a class="menu-link" @click.prevent="selectGroup(index)">{{ group.name }}</a>
       </div>
-      <div class="group-item">
-        <a class="menu-link" href="#">Key Staff</a>
-      </div>
-      <div class="group-item">
-        <i class="fa-solid fa-circle negative-badge"></i>
-        <a class="menu-link" href="#">Группа 1</a>
-      </div>
-      <div class="group-item">
-        <a class="menu-link" href="#">Группа 2</a>
-      </div>
-      <div class="group-item">
-        <a class="menu-link" href="#">Группа 3</a>
-      </div>
+<!--      <div class="group-item">-->
+<!--        <a class="menu-link" href="#">Key Staff</a>-->
+<!--      </div>-->
+<!--      <div class="group-item">-->
+<!--        <i class="fa-solid fa-circle negative-badge"></i>-->
+<!--        <a class="menu-link" href="#">Группа 1</a>-->
+<!--      </div>-->
+<!--      <div class="group-item">-->
+<!--        <a class="menu-link" href="#">Группа 2</a>-->
+<!--      </div>-->
+<!--      <div class="group-item">-->
+<!--        <a class="menu-link" href="#">Группа 3</a>-->
+<!--      </div>-->
 
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
 
-<!--  <div class="row h-100 align-items-center align-self-center">-->
-<!--&lt;!&ndash;    <VueApexCharts class="col container-fluid" width="500" height="400" type="bar" :options="chartOptions" :series="series"></VueApexCharts>&ndash;&gt;-->
-<!--    <VueApexCharts class="col" width="500" height="400" type="bar" :options="chartOptions" :series="series"></VueApexCharts>-->
-<!--    <StatsBlock id="1"></StatsBlock>-->
-<!--&lt;!&ndash;    <StatsBlock id="1"></StatsBlock>&ndash;&gt;-->
-<!--&lt;!&ndash;    <StatsBlock id="1"></StatsBlock>&ndash;&gt;-->
-<!--  </div>-->
-
   <div class="container stats">
-    <div class="col stats-col main">
-      <StatsBlock id="1" />
+    <div class="col stats-col main" v-for="metric in metrics" :key="`${Date.now()}${metric.label}`">
+      <StatsBlock :metricItem="metric" />
     </div>
     <div class="col stats-col second">
       <StatsBlock2 />
@@ -79,94 +70,27 @@ export default {
   name: "ContainerBlock",
   components: {StatsBlock2, StatsBlock},
   data() {
-    return {
-      chartOptions: {
-        chart: {
-          type: "bar",
-          id: 'basic-bar',
-          toolbar: {
-            autoSelected: "pan",
-            show: false
-          },
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 5,
-            borderRadiusApplication: "end",
-          }
-        },
-        colors:['#263f4b', "#2f89ff"],
-        fill: {
-          type: "gradient",
-          gradient: {
-            type: "vertical",
-            shade: "dark",
-            shadeIntensity: 1,
-            opacityFrom: 1,
-            opacityTo: 1,
-            inverseColors: false,
-            stops: [0, 100],
-          }
-        },
-        stroke: {
-          width: 1
-        },
-        grid: {
-          borderColor: "#282828",
-          clipMarkers: false,
-          yaxis: {
-            lines: {
-              show: true
-            }
-          }
-        },
-        markers: {
-          size: 5,
-          colors: ["#000524"],
-          strokeColor: "#00BAEC",
-          strokeWidth: 3
-        },
-        tooltip: {
-          theme: "dark"
-        },
-        xaxis: {
-          categories: ["1/02", "8/02", "15/02", "1994", 1995, 1996, 1997, 1998],
-          labels: {
-            style: {
-              colors: "rgba(232,237,255,0.58)",
-            }
-          }
-        },
-        yaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-          labels: {
-            style: {
-              colors: "rgba(232,237,255,0.58)",
-            }
-          }
-        },
-        legend: {
-          show: true,
-          labels: {
-            colors: ["rgb(113 119 144 / 100%)"],
-            useSeriesColors: false
-          },
-        },
-      },
-      series: [{
-        name: 'Предыдущий замер',
-        data: [30, 91, 150],
-      },
-        {
-          name: 'Текущий замер',
-          data: [50, 60, 130]
-        }],
-    }
+    return {}
   },
   methods:{
     exit(){
       router.push('/')
       console.log(localStorage)
+    },
+    selectGroup(groupIndex) {
+      this.$store.dispatch('selectGroup', groupIndex);
+    }
+  },
+  computed: {
+    groups() {
+      const groups = this.$store.getters.groups;
+      console.log(groups)
+      return groups;
+    },
+    metrics() {
+      const metricItems = this.$store.getters.selectedGroupMetrics;
+      console.log(metricItems);
+      return metricItems;
     }
   }
 }
@@ -193,7 +117,7 @@ export default {
   align-content: space-between;
 }
 .stats-col.second {
-  
+
 }
 .row.footer-area {
   width: 100%;
@@ -468,5 +392,6 @@ export default {
 .group-item {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 </style>

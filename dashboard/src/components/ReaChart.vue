@@ -10,9 +10,29 @@ export default {
   components: {
     apexcharts: VueApexCharts,
   },
-  data: function() {
-    return {
-      chartOptions: {
+  props: {
+    values: Array
+  },
+  computed: {
+    series() {
+      console.log(this.values[0]);
+      return [
+        {
+          name: 'Текущий замер',
+          data: this.values.map(el => el.value)
+        }
+      ];
+    },
+    chartOptions() {
+      const categories = this.values.map(el => {
+        //TODO: Rewrite after backend fix....
+        if (el.data) {
+          return el.data.split('T')[0].split('-')[2] + "/" + el.data.split('T')[0].split('-')[1]
+        } else {
+          return el.date.split('T')[0].split('-')[2] + "/" + el.date.split('T')[0].split('-')[1]
+        }
+      })
+      return {
         chart: {
           type: "bar",
           id: 'basic-bar',
@@ -27,7 +47,7 @@ export default {
             borderRadiusApplication: "end",
           }
         },
-        colors:['#263f4b', "#2f89ff"],
+        colors:["#2f89ff", '#263f4b'],
         fill: {
           type: "gradient",
           gradient: {
@@ -62,7 +82,7 @@ export default {
           theme: "dark"
         },
         xaxis: {
-          categories: ["1/02", "8/02", "15/02", "1994", 1995, 1996, 1997, 1998],
+          categories,
           labels: {
             style: {
               colors: "rgba(232,237,255,0.58)",
@@ -84,15 +104,7 @@ export default {
             useSeriesColors: false
           },
         },
-      },
-        series: [{
-          name: 'Предыдущий замер',
-          data: [30, 91, 150],
-        },
-        {
-          name: 'Текущий замер',
-          data: [50, 60, 130]
-        }],
+      }
     }
   },
 }

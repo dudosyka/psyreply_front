@@ -1,10 +1,10 @@
 <template>
   <div class="container metric-box animate__animated animate__flipInX col">
     <div class="heading">
-      <h5 class="metric-name">Метрика</h5>
+      <h5 class="metric-name">{{ metricItem.label }}</h5>
       <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
     </div>
-    <ReaChart class="chart-box"></ReaChart>
+    <ReaChart :values="metricItem.values" class="chart-box"></ReaChart>
   </div>
 
 </template>
@@ -15,6 +15,9 @@ export default {
   name: "StatsBlock",
   components:{
     ReaChart
+  },
+  props: {
+    metricItem: Object
   }
 }
 </script>

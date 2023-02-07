@@ -38,10 +38,8 @@ export default {
         this.$store.dispatch('selectGroup', 0).then((selectedGroup) => {
           console.log(selectedGroup)
           const metrics = this.$store.getters.selectedGroupMetrics;
-          const key = Object.keys(metrics)[0];
-          const metricItem = metrics[key];
-          const graphicData = this.$store.getters.getStatMetricItem({key, metricItem});
-          console.log(graphicData);
+          console.log(metrics[0]);
+          this.$router.push('/home');
         });
       }).catch(err => {
         if (err.message == 'forbidden')
