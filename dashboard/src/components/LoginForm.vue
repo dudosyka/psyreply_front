@@ -1,7 +1,7 @@
 <template>
   <div class="container container-fluid animate__animated animate__fadeIn">
     <div class="container-fluid">
-      <img class="avatar" src="../assets/boshki.jpg"/>
+      <img class="avatar" src="../assets/boshki.jpg" alt="boshki"/>
       <div class="mb-3 input-area animate__animated animate__shakeX">
         <label for="exampleInputPassword1" class="form-label company-name">Имя компании</label>
         <input type="text" class="form-control password login" id="exampleInputemail1" v-model="email" placeholder="Введите логин ...">
@@ -20,10 +20,6 @@
 
 <script>
 import '@/api/api.conf'
-import Admin from "@/api/auth";
-import router from "@/router";
-import Results from "@/api/getResult";
-import Group from "@/api/getGroupId";
 
 
 export default {
@@ -36,12 +32,27 @@ export default {
   },
   methods:{
     submit(){
-
-      Admin.auth(this.email, this.password).then(()=>router.push('/home'))
-      console.log(localStorage.getItem('token'))
-      Group.getId(localStorage.getItem('token'))
-      console.log(`группа ${localStorage.getItem('groupId')}`)
-      Results.get(localStorage.getItem('token'),localStorage.getItem('groupId'))
+      this.$store.dispatch('auth', { email: this.email, password: this.password }).then(() => {
+        const groups = this.$store.getters.groups;
+        console.log(groups);
+        this.$store.dispatch('selectGroup', 0).then((selectedGroup) => {
+          console.log(selectedGroup)
+          const metrics = this.$store.getters.selectedGroupMetrics;
+          const key = Object.keys(metrics)[0];
+          const metricItem = metrics[key];
+          const graphicData = this.$store.getters.getStatMetricItem({key, metricItem});
+          console.log(graphicData);
+        });
+      }).catch(err => {
+        if (err.message == 'forbidden')
+          //TODO: Run input animation
+          alert('Failed credentials');
+      });
+      // Admin.auth(this.email, this.password).then(()=>router.push('/home'))
+      // console.log(localStorage.getItem('token'))
+      // Group.getId(localStorage.getItem('token'))
+      // console.log(`группа ${localStorage.getItem('groupId')}`)
+      // Results.get(localStorage.getItem('token'),localStorage.getItem('groupId'))
     },
   }
 }

@@ -1,21 +1,11 @@
-import axios from "axios";
+import ApiResolver from "@/api/ApiResolver";
 
-import apiConf from "@/api/api.conf";
+export default class Auth extends ApiResolver {
+    constructor() {
+        super('auth');
+    }
 
-
-const Admin = {}
-
-Admin.auth = async function(email,password){
-    console.log('регистрация успешна')
-    const req = axios.post(`${apiConf.endpoint}/auth/dash`,{"email" : email, "password" : password})
-    req.then(localStorage.setItem('token',(await req).data.body.token))
-    return req
+    async auth(email, password) {
+        return await this.unauthenticatedRequest('dash', 'POST', { email, password }).then(body => body.token);
+    }
 }
-Admin.checkAuth = function () {
-    const token = localStorage.getItem('token')
-    return token != null
-}
-Admin.getToken = function (){
-    return localStorage.getItem('token')
-}
-export default Admin
