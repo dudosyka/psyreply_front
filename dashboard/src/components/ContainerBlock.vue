@@ -42,27 +42,37 @@
 <!--      </div>-->
 
     </div>
+    <div class="col notification">
+      <h6 class="notification-btn-heading">Нет новых уведомлений</h6>
+      <button class="btn btn-success notification-btn"><i class="fa-solid fa-bell"></i></button>
+    </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
 
   <div class="container stats">
-    <div class="col stats-col main" v-for="metric in metrics" :key="`${Date.now()}${metric.label}`">
+    <div class="container sidebar animate__animated animate__slideInRight">
+      <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <div>
+          <div class="col notification-text-heading">
+            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i> Залупа</h6>
+            <button class="btn btn-close-white"><i class="fa-solid fa-xmark close"></i></button>
+          </div>
+          <div class="col">
+            <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto stats-col main" v-for="metric in metrics" :key="`${Date.now()}${metric.label}`">
       <StatsBlock :metricItem="metric" />
     </div>
     <div class="col stats-col second">
       <StatsBlock2 />
       <StatsBlock2 />
     </div>
-    <div class="col stats-col third">
-      <div class="container sidebar">
-        <div class="alert alert-primary d-flex align-items-center" role="alert">
-          <div>
-            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i> Залупа</h6>
-            <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
-          </div>
-        </div>
-        <div class="hr"></div>
-      </div>
+    <div class="col stats-col second">
+      <StatsBlock2 />
+      <StatsBlock2 />
     </div>
   </div>
   <div class="row footer-area">
@@ -122,15 +132,114 @@ export default {
 </script>
 
 <style scoped>
+.notification-btn {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.29);
+}
+.notification-btn:hover {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 50%;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.notification-btn:focus {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 50%;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.btn-close-white {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.29);
+}
+.btn-close-white:hover {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 50%;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.btn-close-white:focus {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 50%;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.btn-close-white:active {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 1);
+}
+.btn-close-white:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 1);
+}
+.notification-btn:active {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 1);
+}
+.notification-btn:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 1);
+}
+.notification-btn:active {
+  background: transparent!important;
+  box-shadow: none;
+  border-radius: 50%;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.notification-btn-heading {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  color: var(--inactive-color);
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.col.notification {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 .hr {
   width: 100%;
   border-bottom: 1px solid;
   border-color: var(--border-dark)!important;
 }
-.alert-heading {
+.notification-text-heading {
   border-bottom: 1px solid;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
   border-color: var(--border-dark)!important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.alert-heading {
+  margin: 0;
 }
 .alert-text {
   margin-bottom: 0;
@@ -143,13 +252,21 @@ export default {
   border-color: var(--border-dark)!important;
   color: rgba(255, 255, 255, 0.65);
   border: 1px solid;
-  background: rgb(7 8 12 / 26%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 1rem;
+  min-width: 15vw;
+  background: rgb(7 8 12 / 80%);
   margin: 1rem;
 }
 
 .container.sidebar {
-  height: 100%;
   display: flex;
+  position: fixed;
+  z-index: 99999;
+  width: 20rem;
+  top: 8rem;
+  right: 0;
   align-items: center;
   justify-content: flex-start;
   padding-left: 0;
@@ -164,10 +281,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   right: 0;
-  background: rgb(7 8 12 / 25%);
-  border-radius: 1rem 0rem 0rem 1rem;
-  border-color: rgba(255, 255, 255, 0.125);
-  border-left: 1px solid rgba(255, 255, 255, 0.125);
+  background: transparent;
   height: 100%;
   max-height: 66.5vh;
   width: 20rem;
@@ -305,6 +419,7 @@ export default {
 }
 .container.stats {
   overflow-y: hidden;
+  overflow-x: hidden;
   width: 100%;
   display: flex;
   gap: 2.5rem;
