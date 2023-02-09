@@ -12,8 +12,8 @@
     <!--    Левая колонка с логотипом Reply кончилась-->
     <!--    Правая колонка с аватаркой компании-->
     <div class="col company">
-      <h6 class="company-name">AGAVA</h6>
-      <div class="container company-img"></div>
+      <h6 class="company-name">{{this.$store.getters.companyName}} </h6>
+      <div class="container company-img" style="{ backgroundImage: 'url(' + 'https://files.psyreply.com/' + '{{this.$store.getters.companyLogo}}' + ')' }"> </div>
       <h6 class="company-name-separator">| </h6>
       <a class="exit" @click.prevent="exit" href="#">Выход</a>
     </div>
@@ -50,12 +50,13 @@
   </div>
 
   <div class="container stats">
-    <div class="container sidebar animate__animated animate__slideInRight">
+    <button @click.prevent = "open_bor" class="ttttt" v-if="this.showContext === false">dssd </button>
+    <div class="container sidebar animate__animated animate__slideInRight" v-if="this.showContext === true">
       <div class="alert alert-primary d-flex align-items-center" role="alert">
         <div>
           <div class="col notification-text-heading">
-            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i> Залупа</h6>
-            <button class="btn btn-close-white"><i class="fa-solid fa-xmark close"></i></button>
+            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>Метрики</h6>
+            <button class="btn btn-close-white" @click.prevent = "close_bor"><i class="fa-solid fa-xmark close"></i></button>
           </div>
           <div class="col">
             <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
@@ -86,13 +87,16 @@
 
 import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
+import * as url from "url";
 
-
+(`https://files.psyreply.com/{this.$store.getters.companyLogo}`)
 export default {
   name: "ContainerBlock",
   components: {StatsBlock2, StatsBlock},
   data() {
-    return {}
+    return {
+      showContext: true
+    }
   },
   created() {
       //TODO reload pak
@@ -108,9 +112,21 @@ export default {
     })
     },
   methods:{
+    url() {
+      return url
+    },
     exit(){
       this.$store.dispatch('exit')
 
+    },
+    open_bor(){
+      console.log('залупа открыта')
+      this.showContext = true
+    },
+    close_bor(){
+      console.log('залупа закрыта')
+      // document.querySelector('.container.sidebar').style.display = 'none'
+      this.showContext = false
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
@@ -512,7 +528,7 @@ export default {
   margin-right: 2.5rem;
 }
 .company-img {
-  background-image: url("@/assets/company_logo.png");
+  /*background-image: url('https://files.psyreply.com/${this.$store.getters.companyLogo}');*/
   background-size: contain;
   background-repeat: no-repeat;
   width: 2rem;
@@ -589,5 +605,8 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+.ttttt{
+  display: flex;
 }
 </style>

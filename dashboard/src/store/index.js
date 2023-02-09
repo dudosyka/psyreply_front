@@ -13,7 +13,8 @@ export default createStore({
         selectedGroup: {},
         screen: 'main',
         metricLabels: {},
-        companyName: null
+        companyName: null,
+        companyLogo: null,
     },
     getters: {
         groups(state) {
@@ -27,16 +28,25 @@ export default createStore({
         },
         companyName(state){
             return state.companyName
+        },
+        companyLogo(state){
+            return state.companyLogo
         }
     },
     actions: {
         async companyName({commit}){
             const companyname = new CompanyName();
             return await companyname.getCompanyName().then(res => {
-                commit('setCompanyName', res);
+                commit('setCompanyName', res.name);
                 return res;
             });
-
+        },
+        async companyLogo({commit}){
+            const companylogo = new CompanyName();
+            return await companylogo.getCompanyName().then(res => {
+                commit('setCompanyLogo', res.logo);
+                return res;
+            })
         },
         async exit({commit}){
             router.push('/')
@@ -113,6 +123,10 @@ export default createStore({
         },
         setCompanyName(state, name){
             state.companyName = name;
+        },
+        setCompanyLogo(state,logo){
+            state.companyLogo = logo;
+
         }
 
     }
