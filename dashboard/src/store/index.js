@@ -3,7 +3,8 @@ import Auth from "@/api/Auth";
 import Company from "@/api/Company";
 import Stat from "@/api/Stat";
 import {Metric} from "@/api/Metric";
-
+import router from '@/router'
+import CompanyName from "@/api/CompanyName";
 
 export default createStore({
     state:{
@@ -11,7 +12,8 @@ export default createStore({
         groups: [],
         selectedGroup: {},
         screen: 'main',
-        metricLabels: {}
+        metricLabels: {},
+        companyName: null
     },
     getters: {
         groups(state) {
@@ -23,15 +25,32 @@ export default createStore({
         selectedGroupMetrics(state) {
             return state.selectedGroup.metricsToWeek;
         },
+        companyName(state){
+            return state.companyName
+        }
     },
     actions: {
+        async companyName({commit}){
+            const companyname = new CompanyName();
+            return await companyname.getCompanyName().then(res => {
+                commit('setCompanyName', res);
+                return res;
+            });
+
+        },
+        async exit({commit}){
+            router.push('/')
+            localStorage.clear()
+            commit('clearToken')
+
+        },
         async auth({ commit, state, dispatch }, { email, password }) {
+            const api = new Auth();
             if (state.token) {
+                console.log(state.token,'complete token')
                 await dispatch('getGroups')
                 return true;
             }
-
-            const api = new Auth();
             return await api.auth(email, password).then(async token => {
                 commit('setToken', token);
                 await dispatch('getGroups')
@@ -88,7 +107,14 @@ export default createStore({
         },
         setMetricLabels(state, metrics) {
             state.metricLabels = metrics;
+        },
+        clearToken(state){
+            state.token = null
+        },
+        setCompanyName(state, name){
+            state.companyName = name;
         }
+
     }
 
 })

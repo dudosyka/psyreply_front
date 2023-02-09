@@ -51,6 +51,7 @@ export default {
       // Group.getId(localStorage.getItem('token'))
       // console.log(`группа ${localStorage.getItem('groupId')}`)
       // Results.get(localStorage.getItem('token'),localStorage.getItem('groupId'))
+      this.$store.dispatch('companyName').then(console.log('commmmmmp',this.$store.getters.companyName))
     },
   }
 }

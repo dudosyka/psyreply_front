@@ -73,9 +73,10 @@
 </template>
 
 <script>
-import router from "@/router";
+
 import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
+
 
 export default {
   name: "ContainerBlock",
@@ -98,10 +99,8 @@ export default {
     },
   methods:{
     exit(){
-      this.$store.state.token = null
-      localStorage.removeItem('token')
-      router.push('/')
-      console.log(localStorage)
+      this.$store.dispatch('exit')
+
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
@@ -116,7 +115,7 @@ export default {
     metrics() {
       const metricItems = this.$store.getters.selectedGroupMetrics;
       console.log(metricItems);
-      return metricItems;
+      return [metricItems[0]];
     }
   }
 }
