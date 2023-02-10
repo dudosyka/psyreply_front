@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <apexcharts type="area" width="260" height="150" @legendClick="legendClick" :options="chartOptions" :series="series"></apexcharts>
+    <apexcharts type="area" width="260" height="150" :options="chartOptions" :series="series"></apexcharts>
   </div>
 </template>
 
@@ -17,30 +17,17 @@ export default {
   },
   created() {
   },
-  methods: {
-    seriesIndexToMetric(index) {
-      return this.values[index].index;
-    },
-    legendClick(chartContext, seriesIndex) {//, config) {
-      this.$store.commit('removeMetricSelection');
-      setTimeout(() => {
-        this.$store.dispatch('selectMetric', this.seriesIndexToMetric(seriesIndex));
-      }, 0);
-    },
-  },
   computed: {
     series() {
       return this.values.map(el => {
         return {
+          id: el.index,
           name: el.label,
           data: el.values.map(el => el.value)
         }
       })
     },
     chartOptions() {
-      console.log(this.values.length);
-      // const categoriesX = this.values[0].map(el => el.date.split('T')[0].split('-')[2] + "/" + el.date.split('T')[0].split('-')[1]);
-
       return {
         chart: {
           zoom: {
@@ -72,15 +59,15 @@ export default {
             borderRadiusApplication: "end",
           }
         },
-        colors:["#ec74e7", "#0c39df"].reverse(),
+        colors:["#ec74e7", "#009dff"].reverse(),
         fill: {
           type: "gradient",
           gradient: {
             type: "vertical",
             shade: "dark",
             shadeIntensity: 1,
-            opacityFrom: 0,
-            opacityTo: 0,
+            opacityFrom: 0.8,
+            opacityTo: 0.5,
             inverseColors: false,
             stops: [0, 100],
           }
@@ -143,12 +130,9 @@ export default {
           onItemClick: {
             toggleDataSeries: false
           },
-          showForSingleSeries: true,
-          showForNullSeries: true,
-          showForZeroSeries: true,
-          onClick(test) {
-            console.log(test);
-          }
+          showForSingleSeries: false,
+          showForNullSeries: false,
+          showForZeroSeries: false
         },
       }
     },

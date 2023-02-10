@@ -15,21 +15,15 @@ export default {
   },
   data() {
     return {
-      show: true,
     }
   },
   created() {
-    console.log("Chart created");
-    setInterval(() => {
-      this.show = !this.show;
-    }, 3000);
   },
   computed: {
     showContext() {
       return this.show;
     },
     series() {
-      console.log(this.values[0]);
       return [
         {
           name: 'Текущий замер',

@@ -62,17 +62,12 @@
           <div class="col-md-auto stats-col main">
             <Transition
                 enter-active-class="animate__animated animate__flipInX"
-                leave-active-class="animate__animated animate__flipOutX"
             >
-            <template v-if="selectedMetric">
-              <StatsBlock :metricItem="selectedMetric" />
-            </template>
-            <template v-else-if="selectedMetric === false">
-                  <div class="container" >
-                    <img class="placeholder" src="../assets/chart-placeholder.png" />
-                    <h4 class="placeholder-heading" style="width: 500px">Выберите метрику</h4>
-                  </div>
-            </template>
+              <StatsBlock key="1" v-if="selectedMetric" :metricItem="selectedMetric" />
+              <div class="container" key="2" v-else-if="selectedMetric === false">
+                <img alt="YanGPT fake" class="placeholder" src="../assets/chart-placeholder.png" />
+                <h4 class="placeholder-heading" style="width: 500px">Выберите метрику</h4>
+              </div>
             </Transition>
           </div>
       <div class="row small-metrics">
@@ -83,10 +78,10 @@
           <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
         </div>
         <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[2]" :key="Date.now()+metric.label" />
         </div>
         <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
         </div>
       </div>
 
@@ -130,20 +125,15 @@ export default {
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
-    },
-    selectMetric(index) {
-      this.$store.dispatch('selectMetric', index);
     }
   },
   computed: {
     groups() {
       const groups = this.$store.getters.groups;
-      console.log(groups)
       return groups;
     },
     selectedMetric() {
       const check = this.$store.getters.selectedMetric;
-      console.log("CHECK!: ", check);
       return check;
     },
     metrics() {
@@ -151,6 +141,10 @@ export default {
       if (!metricItems)
         return false;
       const results = [
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
         {index: 0, label: "", values: []},
         {index: 0, label: "", values: []},
         {index: 0, label: "", values: []},
@@ -190,10 +184,11 @@ export default {
           }
         }
       });
-      console.log(results);
       return [
           [ results[0], results[1] ],
-          [ results[3], results[2] ]
+          [ results[3], results[2] ],
+          [ results[4], results[5] ],
+          [ results[7], results[6] ]
       ];
 
     },

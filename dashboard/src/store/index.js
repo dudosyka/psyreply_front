@@ -31,6 +31,7 @@ export default createStore({
             return false;
         },
         selectedMetric(state) {
+            console.log("selected")
             return state.selectedMetric;
         },
         companyName(state){
@@ -67,7 +68,6 @@ export default createStore({
         },
         async auth({ commit, state }, { email, password }) {
             const api = new Auth();
-            console.log(state);
             if (state.token) {
                 return true;
             }
@@ -113,7 +113,8 @@ export default createStore({
 
             return groupStat;
         },
-        selectMetric({commit}, metricIndex) {
+        selectMetric({state, commit}, metricIndex) {
+            state.isMetricSelected = true;
             commit('selectMetric', metricIndex);
         }
     },
@@ -144,6 +145,7 @@ export default createStore({
         selectMetric(state, metricIndex) {
             console.log(state.selectedGroup.metricsToWeek[metricIndex]);
             state.selectedMetric = state.selectedGroup.metricsToWeek[metricIndex];
+            console.log('set')
         },
         removeMetricSelection(state) {
             state.selectedMetric = null;

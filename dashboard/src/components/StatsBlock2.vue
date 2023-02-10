@@ -2,11 +2,11 @@
   <Transition
       enter-active-class="animate__animated animate__flipInX"
   >
-    <template v-if='true'>
-      <div class="container metric-box">
+    <template v-if="metric.values.length">
+      <div class="container metric-box" @click="selectMetric">
         <div class="container heading">
           <h5 class="metric-name">{{ metric.label }}</h5>
-          <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+          <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
         </div>
         <LineChart :values="metric.values" class="chart-box"></LineChart>
       </div>
@@ -20,6 +20,17 @@ export default {
   name: "StatsBlock2",
   components:{
     LineChart,
+  },
+  methods: {
+    async selectMetric() {
+      this.$store.commit('removeMetricSelection');
+      setTimeout(() => {
+        this.$store.dispatch('selectMetric', this.metric.values[0].index);
+      }, 0);
+    },
+    openInfoModal() {
+      console.log(111);
+    }
   },
   props: {
     metric: Object
