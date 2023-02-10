@@ -38,15 +38,14 @@
   </div>
 
   <Transition
-    enter-active-class="animate__animated animate__slideInRight"
-    leave-active-class="animate__animated animate__bounceOutRight"
+    enter-active-class="animate__animated animate__fadeIn"
+    leave-active-class="animate__animated animate__fadeOut"
   >
     <template v-if="showContext === true">
-      <div class="container sidebar">
         <div class="alert alert-primary d-flex align-items-center" role="alert">
           <div>
             <div class="col notification-text-heading">
-              <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>Метрики</h6>
+              <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>  Метрики</h6>
               <button class="btn btn-close-white" @click = "toggle_bor"><i class="fa-solid fa-xmark close"></i></button>
             </div>
             <div class="col">
@@ -54,33 +53,43 @@
             </div>
           </div>
         </div>
-      </div>
     </template>
   </Transition>
 
 
   <div class="container stats">
     <template v-if="metrics">
-      <Transition
-          enter-active-class="animate__animated animate__flipInX"
-      >
-        <template v-if="selectedMetric">
           <div class="col-md-auto stats-col main">
-            <StatsBlock :metricItem="selectedMetric" />
+            <Transition
+                enter-active-class="animate__animated animate__flipInX"
+                leave-active-class="animate__animated animate__flipOutX"
+            >
+            <template v-if="selectedMetric">
+              <StatsBlock :metricItem="selectedMetric" />
+            </template>
+            <template v-else-if="selectedMetric === false">
+                  <div class="container" >
+                    <img class="placeholder" src="../assets/chart-placeholder.png" />
+                    <h4 class="placeholder-heading" style="width: 500px">Выберите метрику</h4>
+                  </div>
+            </template>
+            </Transition>
           </div>
-        </template>
-        <template v-else-if="selectedMetric === false">
-          <div class="container metric-box col">
-            <h2 style="width: 500px">Select metric!</h2>
-          </div>
-        </template>
-      </Transition>
-      <div class="col stats-col second">
-        <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
+      <div class="row small-metrics">
+        <div class="col stats-col second">
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
+        </div>
+        <div class="col stats-col second">
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+        </div>
+        <div class="col stats-col second">
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+        </div>
+        <div class="col stats-col second">
+          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+        </div>
       </div>
-      <div class="col stats-col second">
-        <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
-      </div>
+
     </template>
   </div>
   <div class="row footer-area">
@@ -196,6 +205,36 @@ export default {
 </script>
 
 <style scoped>
+.placeholder {
+  background-color: transparent;
+  position: relative;
+  max-width: 500px;
+  min-width: 200px;
+  width: auto;
+  z-index: 1;
+}
+.placeholder-heading {
+  position: fixed;
+  z-index: 999;
+  bottom: 21rem;
+  opacity: 0.8;
+  left: 10rem;
+  max-width: 20rem;
+  background: rgb(7 8 12 / 25%);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 0;
+  border: 1px solid var(--border-light);
+  border-radius: 1rem;
+}
+.row.small-metrics {
+  display: flex;
+  overflow-x: scroll;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+}
 .notification-btn {
   background: transparent;
   box-shadow: none;
@@ -313,6 +352,11 @@ export default {
 }
 .alert {
   text-align: left;
+  position: fixed;
+  top: 8.5rem;
+  max-width: 18rem;
+  z-index: 9999;
+  right: 0;
   border-color: var(--border-dark)!important;
   color: rgba(255, 255, 255, 0.65);
   border: 1px solid;
@@ -324,19 +368,19 @@ export default {
   margin: 1rem;
 }
 
-.container.sidebar {
-  display: flex;
-  position: fixed;
-  z-index: 99999;
-  width: 20rem;
-  top: 8rem;
-  right: 0;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 0;
-  padding-right: 0;
-  flex-direction: column;
-}
+/*.container.sidebar {*/
+/*  display: flex;*/
+/*  position: fixed;*/
+/*  z-index: 99999;*/
+/*  width: 20rem;*/
+/*  top: 8rem;*/
+/*  right: 0;*/
+/*  align-items: center;*/
+/*  justify-content: flex-start;*/
+/*  padding-left: 0;*/
+/*  padding-right: 0;*/
+/*  flex-direction: column;*/
+/*}*/
 .stats-col.third {
   display: flex;
   gap: 0;
@@ -365,15 +409,29 @@ export default {
   display: flex;
   align-items: center;
   height: 100%;
+  min-height: 100%;
+  min-width: 600px;
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+  max-width: 33vw;
   flex-direction: column;
+  z-index: 9999;
+  margin-right: 0.7rem;
   justify-content: center;
   align-content: space-between;
+  border-right: 1px solid;
+  border-color: var(--border-light);
+  background: rgb(7 8 12 / 26%);
+  padding-left: 2rem;
+  box-shadow: 10px 0px 44px rgba(0, 0, 0, 0.3);
+  padding-right: 2rem;
 }
 .stats-col.second {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  gap: 0.625rem;
+  gap: 2.625rem;
 }
 .row.footer-area {
   width: 100%;
@@ -447,11 +505,10 @@ export default {
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background: rgba(7, 18, 25, 0.75);
   border-radius: 30px;
-  height: 80vh;
-  max-width: 90vw;
+  height: 90vh;
+  width: 90vw!important;
   padding-left: 0;
   padding-right: 0;
-  width: auto;
   overflow-y: hidden!important;
   border: 1px solid rgba(255, 255, 255, 0.125);
   display: flex;
@@ -484,14 +541,16 @@ export default {
 .container.stats {
   overflow-y: hidden;
   overflow-x: hidden;
+  /*padding-top: 1rem!important;*/
+  /*padding-bottom: 1rem!important;*/
   width: 100%;
+  min-width: 100%;
   display: flex;
-  gap: 2.5rem;
   align-items: center;
   /* padding-top: 1rem; */
   padding-bottom: 0;
   padding-right: 0;
-  padding-left: 1rem;
+  padding-left: 0;
   margin-left: 0.025rem;
   margin-right: 0.025rem;
   height: 100%!important;

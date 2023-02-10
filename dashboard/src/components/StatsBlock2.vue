@@ -4,7 +4,7 @@
   >
     <template v-if='true'>
       <div class="container metric-box">
-        <div class="container-fluid heading">
+        <div class="container heading">
           <h5 class="metric-name">{{ metric.label }}</h5>
           <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
         </div>
@@ -25,6 +25,7 @@ export default {
     metric: Object
   }
 }
+
 </script>
 
 <style scoped>
@@ -47,7 +48,7 @@ export default {
   overflow-x: hidden!important;
   overflow-y: hidden!important;
 }
-.container-fluid.heading {
+.container.heading {
   background: transparent;
   width: 100%;
   height: auto;
@@ -105,5 +106,8 @@ export default {
 }
 .animate__flipInX {
   animation-delay: 0.5s;
+}
+h5 {
+  font-size: 1rem;
 }
 </style>

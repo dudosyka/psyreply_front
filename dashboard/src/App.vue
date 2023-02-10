@@ -36,42 +36,44 @@ html, body {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #B8C0C2 #323232;
+  scrollbar-color: rgba(184, 192, 194, 0.47) rgba(50, 50, 50, 0.29);
 }
 
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
-  width: 7px;
-  max-height: 70vh;
+  width: 1rem;
+  max-height: .5vh;
+  margin-left: 1rem;
 }
 *::-webkit-scrollbar-track {
   border-radius: 5px;
-  height: 70vh;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-  margin-right: 2rem;
+  height: 1vh;
+  margin-left: 3.5rem;
+  margin-right: 4rem;
+  padding-top: 2rem;
+  margin-top: 3rem!important;
   background-color: #323232;
 }
 
 *::-webkit-scrollbar-track:hover {
-  background-color: #323232;
+  background-color: rgba(50, 50, 50, 0.29);
 }
 
 *::-webkit-scrollbar-track:active {
-  background-color: #323232;
+  background-color: rgba(50, 50, 50, 0.29);
 }
 
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #B8C0C2;
+  background-color: rgba(184, 192, 194, 0.47);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #B8C0C2;
+  background-color: rgba(184, 192, 194, 0.47);
 }
 
 *::-webkit-scrollbar-thumb:active {
-  background-color: #B8C0C2;
+  background-color: rgba(184, 192, 194, 0.47);
 }
 .container-fluid {
   background-image: url('@/assets/bg.png');

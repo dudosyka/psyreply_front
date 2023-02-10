@@ -57,7 +57,7 @@ export default {
             borderRadiusApplication: "end",
           }
         },
-        colors:["#2f89ff", '#263f4b'],
+        colors:["#009dff"],
         fill: {
           type: "gradient",
           gradient: {
