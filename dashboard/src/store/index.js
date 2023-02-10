@@ -10,6 +10,7 @@ export default createStore({
         token: localStorage.getItem('token') || null,
         groups: null,
         selectedGroup: null,
+        selectedGroupId: null,
         screen: 'main',
         metricLabels: {},
         companyName: null,
@@ -64,7 +65,6 @@ export default createStore({
             router.push('/')
             localStorage.removeItem('token')
             commit('clearToken')
-
         },
         async auth({ commit, state }, { email, password }) {
             const api = new Auth();
@@ -80,6 +80,11 @@ export default createStore({
         async getGroups({ commit }) {
             const company = new Company();
             return await company.getGroups().then(res => {
+                console.log(res[0])
+                res.unshift({
+                    id: null,
+                    name: "Общее"
+                });
                 commit('setGroups', res);
                 return res;
             });
@@ -94,7 +99,28 @@ export default createStore({
             });
             commit('setMetricLabels', metricsLabels);
         },
-        async selectGroup({ state, commit }, groupIndex) {
+        async processGroupStat({commit, state}, groupStat) {
+            groupStat.metricsToWeek = Object.keys(groupStat.metricsToWeek).map(el => {
+                const values = groupStat.metricsToWeek[el];
+                if (values.length <= 1) {
+                    values.unshift({
+                        zero: true,
+                        week: values[0].week,
+                        value: 0,
+                        date: values[0].date
+                    });
+                }
+                return {
+                    label: state.metricLabels[el],
+                    values: [...values]
+                }
+            });
+
+            commit('setSelectedGroup', groupStat);
+
+            return groupStat;
+        },
+        async selectGroup({ state, dispatch }, groupIndex) {
             const groupId = state.groups[groupIndex].id;
 
             const stat = new Stat();
@@ -102,16 +128,17 @@ export default createStore({
                 return res;
             });
 
-            groupStat.metricsToWeek = Object.keys(groupStat.metricsToWeek).map(el => {
-                return {
-                    label: state.metricLabels[el],
-                    values: [...groupStat.metricsToWeek[el]]
-                }
+            state.selectedGroupId = groupId;
+
+            return await dispatch('processGroupStat', groupStat);
+        },
+        async selectGroupOld({ state, dispatch }) {
+            const stat = new Stat();
+            const groupStat = await stat.getGroupStatOld(state.selectedGroupId).then(async res => {
+                return res;
             });
 
-            commit('setSelectedGroup', groupStat);
-
-            return groupStat;
+            return await dispatch('processGroupStat', groupStat);
         },
         selectMetric({state, commit}, metricIndex) {
             state.isMetricSelected = true;

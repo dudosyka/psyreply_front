@@ -8,4 +8,7 @@ export default class Stat extends ApiResolver {
     getGroupStat(id) {
         return this.request(id, 'GET');
     }
+    getGroupStatOld(id) {
+        return this.request(`${id}/all`, 'GET');
+    }
 }

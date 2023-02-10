@@ -27,12 +27,12 @@ export default {
       return [
         {
           name: 'Текущий замер',
-          data: this.values.map(el => el.value)
+          data: this.values.filter(el => !el.zero).map(el => el.value)
         }
       ];
     },
     chartOptions() {
-      const categories = this.values.map(el => {
+      const categories = this.values.filter(el => !el.zero).map(el => {
           return el.date.split('T')[0].split('-')[2] + "/" + el.date.split('T')[0].split('-')[1]
 
       })
