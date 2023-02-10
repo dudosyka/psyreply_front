@@ -13,7 +13,7 @@
     <!--    Правая колонка с аватаркой компании-->
     <div class="col company">
       <h6 class="company-name">{{this.$store.getters.companyName}} </h6>
-      <div class="container company-img" style="{ backgroundImage: 'url(' + 'https://files.psyreply.com/' + '{{this.$store.getters.companyLogo}}' + ')' }"> </div>
+      <div class="container company-img" :style="{ backgroundImage: `url('https://files.psyreply.com/${logoUrl}')` }"> </div>
       <h6 class="company-name-separator">| </h6>
       <a class="exit" @click.prevent="exit" href="#">Выход</a>
     </div>
@@ -44,13 +44,12 @@
     </div>
     <div class="col notification">
       <h6 class="notification-btn-heading">Нет новых уведомлений</h6>
-      <button class="btn btn-success notification-btn"><i class="fa-solid fa-bell"></i></button>
+      <button class="btn btn-success notification-btn" @click.prevent = "open_bor" v-if="this.showContext === false"><i class="fa-solid fa-bell"></i></button>
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
 
   <div class="container stats">
-    <button @click.prevent = "open_bor" class="ttttt" v-if="this.showContext === false">dssd </button>
     <div class="container sidebar animate__animated animate__slideInRight" v-if="this.showContext === true">
       <div class="alert alert-primary d-flex align-items-center" role="alert">
         <div>
@@ -68,6 +67,7 @@
       <StatsBlock :metricItem="metric" />
     </div>
     <div class="col stats-col second">
+
       <StatsBlock2 />
       <StatsBlock2 />
     </div>
@@ -89,7 +89,7 @@ import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
 import * as url from "url";
 
-(`https://files.psyreply.com/{this.$store.getters.companyLogo}`)
+// (`https://files.psyreply.com/{this.$store.getters.companyLogo}`)
 export default {
   name: "ContainerBlock",
   components: {StatsBlock2, StatsBlock},
@@ -141,8 +141,11 @@ export default {
     metrics() {
       const metricItems = this.$store.getters.selectedGroupMetrics;
       console.log(metricItems);
-      return [metricItems[0]];
-    }
+      return metricItems;
+    },
+    logoUrl() {
+      return this.$store.getters.companyLogo;
+}
   }
 }
 </script>
@@ -606,7 +609,5 @@ export default {
   align-items: center;
   cursor: pointer;
 }
-.ttttt{
-  display: flex;
-}
+
 </style>
