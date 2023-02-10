@@ -1,6 +1,6 @@
 <template>
 <!--  Основной контейнер-->
-<div class="container-fluid animate__animated animate__fadeIn">
+<div class="container-fluid">
   <!--  Ряд с хедером-->
   <div class="row header-area">
     <!--    Левая колонка с логотипом Reply-->
@@ -24,57 +24,64 @@
   <div class="row buttons-area">
     <!--    Центральная колонка с группами-->
     <div class="col groups">
-      <div class="group-item" v-for="(group, index) in groups" :key="`${Date.now()}${group.id}`">
-        <a class="menu-link" @click.prevent="selectGroup(index)">{{ group.name }}</a>
-      </div>
-<!--      <div class="group-item">-->
-<!--        <a class="menu-link" href="#">Key Staff</a>-->
-<!--      </div>-->
-<!--      <div class="group-item">-->
-<!--        <i class="fa-solid fa-circle negative-badge"></i>-->
-<!--        <a class="menu-link" href="#">Группа 1</a>-->
-<!--      </div>-->
-<!--      <div class="group-item">-->
-<!--        <a class="menu-link" href="#">Группа 2</a>-->
-<!--      </div>-->
-<!--      <div class="group-item">-->
-<!--        <a class="menu-link" href="#">Группа 3</a>-->
-<!--      </div>-->
-
+      <template v-if="groups">
+        <div class="group-item" v-for="(group, index) in groups" :key="`${Date.now()}${group.id}`">
+          <a class="menu-link" @click.prevent="selectGroup(index)">{{ group.name }}</a>
+        </div>
+      </template>
     </div>
     <div class="col notification">
       <h6 class="notification-btn-heading">Нет новых уведомлений</h6>
-      <button class="btn btn-success notification-btn" @click.prevent = "open_bor" v-if="this.showContext === false"><i class="fa-solid fa-bell"></i></button>
+      <button class="btn btn-success notification-btn" @click="toggle_bor"><i class="fa-solid fa-bell"></i></button>
     </div>
     <!--    Центральная колонка с группами кончилась-->
   </div>
 
-  <div class="container stats">
-    <div class="container sidebar animate__animated animate__slideInRight" v-if="this.showContext === true">
-      <div class="alert alert-primary d-flex align-items-center" role="alert">
-        <div>
-          <div class="col notification-text-heading">
-            <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>Метрики</h6>
-            <button class="btn btn-close-white" @click.prevent = "close_bor"><i class="fa-solid fa-xmark close"></i></button>
-          </div>
-          <div class="col">
-            <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
+  <Transition
+    enter-active-class="animate__animated animate__slideInRight"
+    leave-active-class="animate__animated animate__bounceOutRight"
+  >
+    <template v-if="showContext === true">
+      <div class="container sidebar">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <div>
+            <div class="col notification-text-heading">
+              <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>Метрики</h6>
+              <button class="btn btn-close-white" @click = "toggle_bor"><i class="fa-solid fa-xmark close"></i></button>
+            </div>
+            <div class="col">
+              <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-auto stats-col main" v-for="metric in metrics" :key="`${Date.now()}${metric.label}`">
-      <StatsBlock :metricItem="metric" />
-    </div>
-    <div class="col stats-col second">
+    </template>
+  </Transition>
 
-      <StatsBlock2 />
-      <StatsBlock2 />
-    </div>
-    <div class="col stats-col second">
-      <StatsBlock2 />
-      <StatsBlock2 />
-    </div>
+
+  <div class="container stats">
+    <template v-if="metrics">
+      <Transition
+          enter-active-class="animate__animated animate__flipInX"
+      >
+        <template v-if="selectedMetric">
+          <div class="col-md-auto stats-col main">
+            <StatsBlock :metricItem="selectedMetric" />
+          </div>
+        </template>
+        <template v-else-if="selectedMetric === false">
+          <div class="container metric-box col">
+            <h2 style="width: 500px">Select metric!</h2>
+          </div>
+        </template>
+      </Transition>
+      <div class="col stats-col second">
+        <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
+      </div>
+      <div class="col stats-col second">
+        <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+      </div>
+    </template>
   </div>
   <div class="row footer-area">
   <button class="btn btn-primary results-button"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
@@ -89,27 +96,17 @@ import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
 import * as url from "url";
 
-// (`https://files.psyreply.com/{this.$store.getters.companyLogo}`)
 export default {
   name: "ContainerBlock",
   components: {StatsBlock2, StatsBlock},
   data() {
     return {
-      showContext: true
+      showContext: false
     }
   },
-  created() {
-      //TODO reload pak
-      //metricsToWeek
-    this.$store.dispatch('auth', { email: this.email, password: this.password }).then(() => {
-      const groups = this.$store.getters.groups;
-      console.log(groups);
-      this.$store.dispatch('selectGroup', 0).then((selectedGroup) => {
-        console.log(selectedGroup.metricsToWeek)
-        const metrics = this.$store.getters.selectedGroupMetrics;
-        console.log(metrics);
-      });
-    })
+  async created() {
+    const isApplicationLoaded = await this.$store.dispatch('loadApplication')
+    if (!isApplicationLoaded) this.$router.push("/");
     },
   methods:{
     url() {
@@ -119,17 +116,14 @@ export default {
       this.$store.dispatch('exit')
 
     },
-    open_bor(){
-      console.log('залупа открыта')
-      this.showContext = true
-    },
-    close_bor(){
-      console.log('залупа закрыта')
-      // document.querySelector('.container.sidebar').style.display = 'none'
-      this.showContext = false
+    toggle_bor(){
+      this.showContext = !this.showContext;
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
+    },
+    selectMetric(index) {
+      this.$store.dispatch('selectMetric', index);
     }
   },
   computed: {
@@ -138,10 +132,61 @@ export default {
       console.log(groups)
       return groups;
     },
+    selectedMetric() {
+      const check = this.$store.getters.selectedMetric;
+      console.log("CHECK!: ", check);
+      return check;
+    },
     metrics() {
       const metricItems = this.$store.getters.selectedGroupMetrics;
-      console.log(metricItems);
-      return metricItems;
+      if (!metricItems)
+        return false;
+      const results = [
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
+        {index: 0, label: "", values: []},
+      ];
+      function checkIsAllEqual() {
+        let firstLength = results[0].values.length;
+        for (const item of results) {
+          if (item.values.length != firstLength)
+            return false;
+        }
+        return true;
+      }
+      let max = 0;
+      metricItems.forEach((item, index) => {
+        for (const res of results) {
+          if (checkIsAllEqual()) {
+            item.index = index;
+            res.values.push(item);
+            if (res.label == "") {
+              res.label = item.label
+            } else {
+              res.label += ` | ${item.label}`
+            }
+            max++;
+            return;
+          }
+          if (res.values.length < max) {
+            item.index = index;
+            res.values.push(item);
+            if (res.label == "") {
+              res.label = item.label
+            } else {
+              res.label += ` | ${item.label}`
+            }
+            return;
+          }
+        }
+      });
+      console.log(results);
+      return [
+          [ results[0], results[1] ],
+          [ results[3], results[2] ]
+      ];
+
     },
     logoUrl() {
       return this.$store.getters.companyLogo;
@@ -531,7 +576,6 @@ export default {
   margin-right: 2.5rem;
 }
 .company-img {
-  /*background-image: url('https://files.psyreply.com/${this.$store.getters.companyLogo}');*/
   background-size: contain;
   background-repeat: no-repeat;
   width: 2rem;

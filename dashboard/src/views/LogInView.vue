@@ -11,7 +11,14 @@ export default {
   name: 'LogInView',
   components: {
     LoginForm,
-  }
+  },
+  async created() {
+    const isAuthorized = await this.$store.dispatch('auth', {email: null, password: null}).catch(err => {
+      console.log(err);
+    });
+    if (isAuthorized)
+      this.$router.push('/home');
+  },
 }
 </script>
 <style scoped>

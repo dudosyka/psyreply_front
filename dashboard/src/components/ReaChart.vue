@@ -13,7 +13,21 @@ export default {
   props: {
     values: Array
   },
+  data() {
+    return {
+      show: true,
+    }
+  },
+  created() {
+    console.log("Chart created");
+    setInterval(() => {
+      this.show = !this.show;
+    }, 3000);
+  },
   computed: {
+    showContext() {
+      return this.show;
+    },
     series() {
       console.log(this.values[0]);
       return [
@@ -86,6 +100,8 @@ export default {
           }
         },
         yaxis: {
+          min: 0,
+          max: 100,
           categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
           labels: {
             style: {
@@ -105,3 +121,46 @@ export default {
   },
 }
 </script>
+
+<style>
+  .col.notification {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .hr {
+    width: 100%;
+    border-bottom: 1px solid;
+    border-color: var(--border-dark)!important;
+  }
+  .notification-text-heading {
+    border-bottom: 1px solid;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-color: var(--border-dark)!important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .alert-heading {
+    margin: 0;
+  }
+  .alert-text {
+    margin-bottom: 0;
+  }
+  .info-icon {
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .alert {
+    text-align: left;
+    border-color: var(--border-dark)!important;
+    color: rgba(255, 255, 255, 0.65);
+    border: 1px solid;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 1rem;
+    min-width: 15vw;
+    background: rgb(7 8 12 / 80%);
+    margin: 1rem;
+  }
+</style>

@@ -1,12 +1,11 @@
 <template>
-  <div class="container metric-box animate__animated animate__flipInX col">
-    <div class="heading">
-      <h5 class="metric-name">{{ metricItem.label }}</h5>
-      <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+    <div class="container metric-box col">
+      <div class="heading">
+        <h5 class="metric-name">{{ metricItem.label }}</h5>
+        <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+      </div>
+      <ReaChart :values="metricItem.values" class="chart-box"></ReaChart>
     </div>
-    <ReaChart :values="metricItem.values" class="chart-box"></ReaChart>
-  </div>
-
 </template>
 
 <script>

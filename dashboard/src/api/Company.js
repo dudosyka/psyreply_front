@@ -8,4 +8,8 @@ export default class Company extends ApiResolver {
     async getGroups() {
         return await this.request('stat/groups', 'GET');
     }
+
+    async getCompanyName() {
+        return await this.request('dash/get', 'GET');
+    }
 }

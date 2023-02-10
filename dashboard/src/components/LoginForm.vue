@@ -1,11 +1,11 @@
 <template>
-  <div class="container container-fluid animate__animated animate__fadeIn">
+  <div  v-on:keyup="keyHandler($event)" class="container container-fluid animate__animated animate__fadeIn">
     <div class="container-fluid">
       <img class="avatar" src="../assets/boshki.jpg" alt="boshki"/>
       <div class="mb-3 input-area animate__animated animate__shakeX">
         <label for="exampleInputPassword1" class="form-label company-name">Имя компании</label>
-        <input type="text" class="form-control password login" id="exampleInputemail1" v-model="email" placeholder="Введите логин ...">
-        <input type="password" class="form-control password " id="exampleInputpassword1" v-model="password" placeholder="Введите пароль ...">
+        <input type="text" class="form-control password login" id="exampleInputemail1" v-model="email" placeholder="Введите логин ..." @change="submit">
+        <input type="password" class="form-control password " id="exampleInputpassword1" v-model="password" placeholder="Введите пароль ..." @change="submit">
       </div>
       <button @click.prevent = 'submit' class="btn btn-primary">Войти</button>
       <div class="logo-box">
@@ -31,28 +31,18 @@ export default {
     }
   },
   methods:{
+    keyHandler(event) {
+      if (event.code == 'Enter')
+        this.submit();
+    },
     submit(){
       this.$store.dispatch('auth', { email: this.email, password: this.password }).then(() => {
-        const groups = this.$store.getters.groups;
-        console.log(groups);
-        this.$store.dispatch('selectGroup', 0).then((selectedGroup) => {
-          console.log(selectedGroup)
-          const metrics = this.$store.getters.selectedGroupMetrics;
-          console.log(metrics[0]);
-          this.$router.push('/home');
-        });
+        this.$router.push('/home');
       }).catch(err => {
         if (err.message == 'forbidden')
-          //TODO: Run input animation
+            //TODO: Run input animation
           alert('Failed credentials');
       });
-      // Admin.auth(this.email, this.password).then(()=>router.push('/home'))
-      // console.log(localStorage.getItem('token'))
-      // Group.getId(localStorage.getItem('token'))
-      // console.log(`группа ${localStorage.getItem('groupId')}`)
-      // Results.get(localStorage.getItem('token'),localStorage.getItem('groupId'))
-      this.$store.dispatch('companyName')
-      this.$store.dispatch('companyLogo')
 
     },
   }

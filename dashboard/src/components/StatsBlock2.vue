@@ -1,12 +1,17 @@
 <template>
-  <div class="container metric-box animate__animated animate__flipInX">
-    <div class="container-fluid heading">
-      <h5 class="metric-name">Тревога</h5>
-      <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
-    </div>
-    <LineChart class="chart-box"></LineChart>
-  </div>
-
+  <Transition
+      enter-active-class="animate__animated animate__flipInX"
+  >
+    <template v-if='true'>
+      <div class="container metric-box">
+        <div class="container-fluid heading">
+          <h5 class="metric-name">{{ metric.label }}</h5>
+          <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+        </div>
+        <LineChart :values="metric.values" class="chart-box"></LineChart>
+      </div>
+    </template>
+  </Transition>
 </template>
 
 <script>
@@ -15,6 +20,9 @@ export default {
   name: "StatsBlock2",
   components:{
     LineChart,
+  },
+  props: {
+    metric: Object
   }
 }
 </script>

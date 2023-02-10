@@ -4,27 +4,34 @@ import Company from "@/api/Company";
 import Stat from "@/api/Stat";
 import {Metric} from "@/api/Metric";
 import router from '@/router'
-import CompanyName from "@/api/CompanyName";
 
 export default createStore({
     state:{
         token: localStorage.getItem('token') || null,
-        groups: [],
-        selectedGroup: {},
+        groups: null,
+        selectedGroup: null,
         screen: 'main',
         metricLabels: {},
         companyName: null,
         companyLogo: null,
+        selectedMetric: false,
     },
     getters: {
         groups(state) {
-            return state.groups;
+            if (state.groups)
+                return state.groups;
+            return false;
         },
         selectedGroup(state) {
             return state.selectedGroup;
         },
         selectedGroupMetrics(state) {
-            return state.selectedGroup.metricsToWeek;
+            if (state.selectedGroup)
+                return state.selectedGroup.metricsToWeek;
+            return false;
+        },
+        selectedMetric(state) {
+            return state.selectedMetric;
         },
         companyName(state){
             return state.companyName
@@ -34,36 +41,38 @@ export default createStore({
         }
     },
     actions: {
-        async companyName({commit}){
-            const companyname = new CompanyName();
-            return await companyname.getCompanyName().then(res => {
+        async loadApplication({dispatch}) {
+            dispatch("auth", {email: null, password: null}).catch(() => {
+                return false;
+            });
+            await dispatch('getGroups')
+            await dispatch("getMetricsLabels")
+            await dispatch("selectGroup", 0);
+            await dispatch("company");
+            return true;
+        },
+        async company({commit}){
+            const company = new Company();
+            return await company.getCompanyName().then(res => {
                 commit('setCompanyName', res.name);
+                commit('setCompanyLogo', res.logo);
                 return res;
             });
         },
-        async companyLogo({commit}){
-            const companylogo = new CompanyName();
-            return await companylogo.getCompanyName().then(res => {
-                commit('setCompanyLogo', res.logo);
-                return res;
-            })
-        },
         async exit({commit}){
             router.push('/')
-            localStorage.clear()
+            localStorage.removeItem('token')
             commit('clearToken')
 
         },
-        async auth({ commit, state, dispatch }, { email, password }) {
+        async auth({ commit, state }, { email, password }) {
             const api = new Auth();
+            console.log(state);
             if (state.token) {
-                console.log(state.token,'complete token')
-                await dispatch('getGroups')
                 return true;
             }
             return await api.auth(email, password).then(async token => {
                 commit('setToken', token);
-                await dispatch('getGroups')
             }).catch(err => {
                throw err;
             });
@@ -75,6 +84,16 @@ export default createStore({
                 return res;
             });
         },
+        async getMetricsLabels({commit}) {
+            const metric = new Metric();
+            const metrics = await metric.getAll();
+
+            const metricsLabels = {};
+            metrics.forEach(el => {
+                metricsLabels[el.id] = el.name;
+            });
+            commit('setMetricLabels', metricsLabels);
+        },
         async selectGroup({ state, commit }, groupIndex) {
             const groupId = state.groups[groupIndex].id;
 
@@ -83,26 +102,20 @@ export default createStore({
                 return res;
             });
 
-            const metric = new Metric();
-            const metrics = await metric.getAll();
-
-            const metricsLabels = {};
-            metrics.forEach(el => {
-                metricsLabels[el.id] = el.name;
-            });
-
             groupStat.metricsToWeek = Object.keys(groupStat.metricsToWeek).map(el => {
                 return {
-                    label: metricsLabels[el],
+                    label: state.metricLabels[el],
                     values: [...groupStat.metricsToWeek[el]]
                 }
             });
 
-            commit('setMetricLabels', metricsLabels);
             commit('setSelectedGroup', groupStat);
 
             return groupStat;
         },
+        selectMetric({commit}, metricIndex) {
+            commit('selectMetric', metricIndex);
+        }
     },
     mutations: {
         setToken(state, token) {
@@ -114,6 +127,7 @@ export default createStore({
         },
         setSelectedGroup(state, group) {
             state.selectedGroup = group;
+            state.selectedMetric = false;
         },
         setMetricLabels(state, metrics) {
             state.metricLabels = metrics;
@@ -126,9 +140,14 @@ export default createStore({
         },
         setCompanyLogo(state,logo){
             state.companyLogo = logo;
-
-        }
-
+        },
+        selectMetric(state, metricIndex) {
+            console.log(state.selectedGroup.metricsToWeek[metricIndex]);
+            state.selectedMetric = state.selectedGroup.metricsToWeek[metricIndex];
+        },
+        removeMetricSelection(state) {
+            state.selectedMetric = null;
+        },
     }
 
 })
