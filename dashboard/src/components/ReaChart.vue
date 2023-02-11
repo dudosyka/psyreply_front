@@ -65,11 +65,12 @@ export default {
           gradient: {
             type: "vertical",
             shade: "dark",
+            gradientToColors: ["#07121f"],
             shadeIntensity: 1,
             opacityFrom: 1,
             opacityTo: 1,
             inverseColors: false,
-            stops: [0, 100],
+            stops: [0, 90],
           }
         },
         stroke: {

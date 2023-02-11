@@ -17,9 +17,11 @@
 <script>
 import Admin from '@/api/admin/Auth'
 import router from '@/router';
+import YModal from "@/components/UI/YModal.vue";
 
 export default {
   name: 'HomeView',
+  components: {YModal},
   data() {
     return {
       step: 0
@@ -62,6 +64,7 @@ export default {
 .main {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 2rem;

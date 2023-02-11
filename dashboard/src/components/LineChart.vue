@@ -62,6 +62,7 @@ export default {
           gradient: {
             type: "vertical",
             shade: "dark",
+            gradientToColors: ["#07121f"],
             shadeIntensity: 1,
             opacityFrom: 0.8,
             opacityTo: 0.5,
