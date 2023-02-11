@@ -66,6 +66,7 @@ export default {
 .highlighted {
   box-shadow: 0px 0px 53px #00a1ff30;
   border: 1px solid #3b71caad;
+  border-radius: 10px;
 }
 .container.metric-box:hover {
   box-shadow: 0px 0px 53px #00a1ff30;

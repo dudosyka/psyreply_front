@@ -45,11 +45,11 @@
         <div class="alert alert-primary d-flex align-items-center" role="alert">
           <div>
             <div class="col notification-text-heading">
-              <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>  Метрики</h6>
+              <h6 class="alert-heading"><i class="fa-sharp fa-solid fa-circle-info info-icon"></i>  Уведомления</h6>
               <button class="btn btn-close-white" @click = "toggle_bor"><i class="fa-solid fa-xmark close"></i></button>
             </div>
             <div class="col">
-              <p class="alert-text">Залупа вам пизда ахаха вам пизда залупа залупа кота Бориса.</p>
+              <p class="alert-text">Нет уведомлений</p>
             </div>
           </div>
         </div>
