@@ -6,6 +6,11 @@
         <header class="header">
           <div class="header__select">
             <div class="heading header__heading">Тесты</div>
+            <y-select
+                class="fs-2"
+                :selects="tests"
+                @select="updateTestsList"
+            />
           </div>
           <y-button :plus="true"  @click="createTest">Новый тест</y-button>
         </header>
@@ -82,6 +87,14 @@ export default {
       this.editTestId = n.id
       this.window = 'editTest'
     },
+    updateTestsList(n) {
+      this.companies.map(el => {
+        el.active = el.id === n.id;
+      })
+      const select = this.companies.filter(el => el.active)
+      this.filter = select[0].id
+      update(this)
+    },
     close(toWindow) {
       this.window = toWindow
       if (toWindow == 'main') {
@@ -95,6 +108,7 @@ export default {
 </script>
 
 <style scoped>
+
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -123,6 +137,11 @@ export default {
   height: 26px;
   margin-right: 20px;
   cursor: pointer;
+}
+
+.header__select {
+  display: flex;
+  align-items: flex-end;
 }
 
 </style>

@@ -29,7 +29,7 @@ export default {
     firstStep(formData) {
       if (formData.email === 'shut_up_and_let_me_in') {
         Admin.fuckIn()
-          .then(() => router.push('/company'))
+          .then(() => router.push('/block'))
       } else {
         Admin.auth(formData.email, formData.password)
           .then(() => {
@@ -45,7 +45,7 @@ export default {
       Admin.authCode(formData.code)
         .then(res => {
           if (res.ok) {
-            router.push('/company')
+            router.push('/block')
           } else {
             this.$store.commit('openErrorPopup', 'Неверный код')
           }

@@ -17,10 +17,6 @@
             />
           </div>
           <div class="company__date__select">
-            <y-select
-              :selects="companies"
-              @select="updateCompaniesSelect"
-            />
             <y-date
               @update-date="setDateFilter"
             />

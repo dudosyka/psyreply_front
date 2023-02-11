@@ -11,11 +11,11 @@
               <option style="color: black" :value="null">Без фильтра</option>
               <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
             </select>-->
-            <y-select
-                class="fs-2"
-              :selects="companies"
-              @select="updateBlocksList"
-            />
+<!--            <y-select-->
+<!--                class="fs-2"-->
+<!--              :selects="companies"-->
+<!--              @select="updateBlocksList"-->
+<!--            />-->
           </div>
           <y-button :plus="true" @click="createBlock">Новый блок</y-button>
         </header>

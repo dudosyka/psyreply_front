@@ -9,7 +9,6 @@
       <router-link to="/block" active-class="nav__link_active" class="link nav__link">Блоки</router-link>
       <router-link to="/test" active-class="nav__link_active" class="link nav__link">Тесты</router-link>
       <router-link to="/results" active-class="nav__link_active" class="link nav__link">Результаты</router-link>
-      <router-link to="/company" active-class="nav__link_active" class="link nav__link">Компании</router-link>
     </nav>
   </article>
 </template>
