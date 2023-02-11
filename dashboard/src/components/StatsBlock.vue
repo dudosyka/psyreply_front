@@ -37,7 +37,7 @@ export default {
   padding-bottom: 1rem;
   width: auto;
   height: auto;
-  max-height: 50vh;
+  max-height: 53vh;
   overflow-x: hidden!important;
   overflow-y: hidden!important;
 }

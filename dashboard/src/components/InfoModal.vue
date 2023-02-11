@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid modal-overlay animate__animated animate__fadeIn">
+  <div class="container-fluid modal-overlay animate__animated animate__fadeIn" @click="close">
     <div class="container modal-body animate__animated animate__slideInUp">
       <div class="row">
         <h3 class="modal-heading">Описание</h3>
-        <button class="btn"><i class="fa-solid fa-xmark close"></i></button>
+        <button class="btn" @click="close"><i class="fa-solid fa-xmark close"></i></button>
       </div>
       <p class="modal-text"> {{getDescription}}
       </p>
@@ -14,6 +14,11 @@
 <script>
 export default {
   name: "InfoModal",
+  methods:{
+    close(){
+      this.$store.dispatch('closeInfoModal')
+    }
+  },
   computed:{
     getDescription(){
       const data = this.$store.getters.showedInfoModalData
