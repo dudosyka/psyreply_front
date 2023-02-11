@@ -3,7 +3,7 @@
       enter-active-class="animate__animated animate__flipInX"
   >
     <template v-if="metric.values.length">
-      <div class="container metric-box" @click="selectMetric">
+      <div class="container metric-box highlighted" @click="selectMetric">
         <div class="container heading">
           <h5 class="metric-name">{{ metric.label.name }}</h5>
           <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
@@ -56,12 +56,17 @@ export default {
   flex-direction: column;
   background: rgb(7 18 25 / 50%);
   padding-bottom: 1rem;
+  box-shadow: none;
   width: auto;
   height: auto;
   max-height: 50vh;
   overflow-x: hidden!important;
   overflow-y: hidden!important;
   transition: 0.3s;
+}
+.highlighted {
+  box-shadow: 0px 0px 53px #00a1ff30;
+  border: 1px solid #3b71caad;
 }
 .container.metric-box:hover {
   box-shadow: 0px 0px 53px #00a1ff30;
