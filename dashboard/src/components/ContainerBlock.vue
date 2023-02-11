@@ -66,7 +66,7 @@
               <StatsBlock key="1" v-if="selectedMetric" :metricItem="selectedMetric" />
               <div class="container" key="2" v-else-if="selectedMetric === false">
                 <img alt="YanGPT fake" class="placeholder" src="../assets/chart-placeholder.png" />
-                <h4 class="placeholder-heading" style="width: 500px">Выберите метрику</h4>
+                <h4 class="placeholder-heading" style="width: 500px" @click="showAnimation">Выберите метрику</h4>
               </div>
             </Transition>
           </div>
@@ -114,6 +114,12 @@ export default {
     if (!isApplicationLoaded) this.$router.push("/");
     },
   methods:{
+    showAnimation(){
+      this.$store.commit('showAnimationTrue')
+      setTimeout(() => {
+        this.$store.commit('showAnimationFalse')
+      }, "1000")
+    },
     url() {
       return url
     },
@@ -204,6 +210,14 @@ export default {
 </script>
 
 <style scoped>
+*{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .placeholder {
   background-color: transparent;
   position: relative;

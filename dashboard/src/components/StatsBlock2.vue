@@ -1,14 +1,13 @@
 <template>
   <Transition
-      enter-active-class="animate__animated animate__flipInX"
-  >
-    <template v-if="metric.values.length">
-      <div class="container metric-box highlighted" @click="selectMetric">
+      enter-active-class="animate__animated animate__flipInX" >
+    <template v-if="metric.values.length" >
+      <div class="container metric-box highlighted"  @click="selectMetric">
         <div class="container heading">
           <h5 class="metric-name">{{ metric.label.name }}</h5>
           <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
         </div>
-        <LineChart :values="metric.values" class="chart-box"></LineChart>
+        <LineChart :values="metric.values" class="chart-box" :class="{'highlighted  animate__animated animate__zoomIn': this.$store.getters.showedAnimations}"></LineChart>
       </div>
     </template>
   </Transition>
