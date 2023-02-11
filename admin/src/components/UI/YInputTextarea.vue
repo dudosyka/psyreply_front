@@ -1,29 +1,18 @@
 <template>
-  <input
-    v-if="type === 'number'"
-    :max="max"
-    :min="min"
+  <textarea
     @input="$emit('update:modelValue', $event.target.value)"
     class="input"
     :type="type"
     :placeholder="placeholder"
     :value="modelValue"
     :disabled="disabled"
-  >
-  <input
-    v-else
-    @input="$emit('update:modelValue', $event.target.value)"
-    class="input"
-    :type="type"
-    :placeholder="placeholder"
-    :value="modelValue"
-    :disabled="disabled"
-  >
+    :rows="rows"
+  ></textarea>
 </template>
 
 <script>
 export default {
-  name: "YInput",
+  name: "YInputTextarea",
   props: {
     placeholder: {
       type: String,
@@ -41,6 +30,9 @@ export default {
     },
     disabled: {
       default: false,
+    },
+    rows: {
+      default: 10,
     },
     modelValue: [String, Number]
   },

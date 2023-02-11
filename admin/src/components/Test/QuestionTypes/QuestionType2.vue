@@ -1,23 +1,24 @@
 <template>
   <article class="question">
     <span class="question__id">{{listId}}</span>
-    <y-input @input="giveData" v-model="question.title" />
+    <y-input :disabled="!editable" @input="giveData" v-model="question.title" />
     <div class="question__coins">
       <label class="label">Баллы “Да”</label>
-      <y-input @input="giveData" v-model="question.answers[0].value" class="question__input" />
+      <y-input :disabled="!editable" @input="giveData" v-model="question.answers[0].value" class="question__input" />
       <label class="label">Баллы “Нет”</label>
-      <y-input @input="giveData" v-model="question.answers[1].value" class="question__input" />
+      <y-input :disabled="!editable" @input="giveData" v-model="question.answers[1].value" class="question__input" />
       <label class="label">Монеты</label>
-      <y-input @input="giveData" v-model="question.coins" class="question__input" />
+      <y-input :disabled="!editable" @input="giveData" v-model="question.coins" class="question__input" />
     </div>
-    <y-button @click="$emit('remove')" class="question__del">X</y-button>
+    <y-button v-if="editable" @click="$emit('remove')" class="question__del">X</y-button>
+    <span v-else></span>
   </article>
 </template>
 
 <script>
 export default {
   name: "QuestionType2",
-  props: ['questionId'],
+  props: {'questionId': Number, editable: { default: false, type: Boolean }},
   methods: {
     giveData() {
       this.$store.commit('editQuestion', {

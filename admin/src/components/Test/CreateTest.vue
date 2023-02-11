@@ -5,10 +5,9 @@
         <y-left-arrow-button v-if="testId === -1" @click="close" />
         <h1 class="heading">{{ title }}</h1>
       </header>
-
       <article class="main"> <!-- We can use main единожды !-->
         <div class="main__input_coins">
-          <y-input v-model="test.title" placeholder="Название теста..."/>
+          <y-input :disabled="!editable" v-model="test.title" placeholder="Название теста..."/>
           <div class="coins">
             <img src="@/assets/img/coins.svg" alt="">
             <div class="count">{{ coins }}</div>
@@ -18,29 +17,40 @@
         <div class="types">
           <div class="type__test">
             <div class="type__test__title">Тип теста</div>
-            <y-mini-button
-                class="type__test__type"
+            <template
                 v-for="type of questionTypes"
                 :key="`${type.id}${type.name}`"
-                :active="type.id === test.type"
-                @click="selectLabel('type', type.id)"
             >
-              {{ type.name }}
-            </y-mini-button>
+              <y-mini-button
+                  class="type__test__type"
+                  :active="type.id === test.type"
+                  @click="selectLabel('type', type.id)"
+                  :disabled="!editable"
+                  v-if="type.id === test.type || editable"
+              >
+                {{ type.name }}
+              </y-mini-button>
+            </template>
           </div>
           <div class="type__test">
             <div class="type__test__title">Тип метрики</div>
-            <y-mini-button
-                class="type__test__type"
+            <template
                 v-for="metric of metrics"
                 :key="`${metric.id}${metric.name}`"
-                :active="metric.id === test.metric"
-                @click="selectLabel('metric', metric.id)"
             >
-              {{ metric.name }}
-            </y-mini-button>
-
+              <y-mini-button
+                  class="type__test__type"
+                  :active="metric.id === test.metric"
+                  @click="selectLabel('metric', metric.id)"
+                  :disabled="!editable"
+                  @contextmenu.prevent="openRemoveMetricPopUp(metric.id)"
+                  v-if="metric.id === test.metric || editable"
+              >
+                {{ metric.name }}
+              </y-mini-button>
+            </template>
             <y-mini-button
+                v-if="editable"
                 class="type__test__type"
                 @click="createMetric"
             >
@@ -61,24 +71,25 @@
 
           <template v-for="(question, id) in questions" :key="`${id}${question.id}`">
             <question
+                :editable="editable"
                 :question-id="id"
                 :type="test.type"
                 @remove="removeQuestion(id)"
             />
           </template>
 
-          <y-cool-button @click="addQuestion">Добавить вопрос</y-cool-button>
+          <y-cool-button v-if="editable" @click="addQuestion">Добавить вопрос</y-cool-button>
 
           <div class="type__test">
             <div class="type__test__title">Формула</div>
-            <y-input class="w-50" v-model="test.formula" /> <br>
-            <div class="formula_controls">
+            <y-input :disabled="!editable" class="w-50" v-model="test.formula" /> <br>
+            <div v-if="editable" class="formula_controls">
               <y-button class="formula_control" @click="autoFormula">Сумма по всем вопросам</y-button>
 <!--              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>-->
             </div>
           </div>
 
-          <y-cool-button @click="saveTest">Сохранить тест</y-cool-button>
+          <y-cool-button v-if="editable" @click="saveTest">Сохранить тест</y-cool-button>
         </template>
 
         <div v-else class="questions__list">
@@ -136,29 +147,33 @@ function update(data) {
             data.$store.commit('fillQuestions', r.questions)
           })
         } else {
-          this.$store.commit('openErrorPopup', res.msg())
+          data.$store.commit('openErrorPopup', res.msg())
           if (mainConf.projectState === ProjectState.dev)
             console.log(res)
         }
       })
   }
 
-  const metric = new Metric
-  metric.getOne()
+  const metric = new Metric();
+  metric.getAll()
     .then(res => {
       if (res.ok) {
-        res.json().then(r => data.metrics = r.body)
+        console.log(res);
+        res.json().then(r => {
+          data.metrics = r.body
+          console.log(data.metrics);
+        })
       } else {
-        this.$store.commit('openErrorPopup', res.msg())
+        data.$store.commit('openErrorPopup', res)
       }
     })
-  const types = new QuestionType
+  const types = new QuestionType();
   types.getOne()
     .then(res => {
       if (res.ok) {
         res.json().then(r => data.questionTypes = r.body.filter(el=> el.id != 6 && el.id != 7))
       } else {
-        this.$store.commit('openErrorPopup', res.msg())
+        data.$store.commit('openErrorPopup', res.msg())
       }
     })
 }
@@ -179,6 +194,10 @@ export default {
     title: {
       type: String,
       default: 'Новый тест'
+    },
+    editable: {
+      type: Boolean,
+      default: true
     }
   },
   data(){
@@ -200,9 +219,23 @@ export default {
     update(this)
   },
   methods: {
+    openRemoveMetricPopUp(metricId) {
+      console.log(metricId);
+      this.$store.commit("openWarnPopup", {
+        message: "Вы хотите удалить эту метрику?",
+        acceptCallback: () => {
+          const metric = new Metric();
+          metric.remove(metricId).then(() => {
+            this.updateMetricList();
+            this.$store.commit('openPopup', "Метрика успешно удалена!")
+          });
+
+        }
+      })
+    },
     updateMetricList() {
       const metric = new Metric()
-      metric.getOne()
+      metric.getAll()
           .then(res => {
             if (res.ok) {
               res.json().then(r => this.metrics = r.body)

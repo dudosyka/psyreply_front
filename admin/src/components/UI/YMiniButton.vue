@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="{ 'button_active': active }">
+  <button :disabled="disabled" class="button" :class="{ 'button_active': active }">
     <slot></slot>
   </button>
 </template>
@@ -8,7 +8,11 @@
 export default {
   name: "YMiniButton",
   props: {
-    active: Boolean
+    active: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>

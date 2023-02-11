@@ -3,11 +3,13 @@
     v-if="type === 1 || type === 3 || type === 4 || type === 5"
     :question-id="questionId"
     @remove="$emit('remove')"
+    :editable="editable"
   />
   <question-type2
     v-else-if="type === 2"
     :question-id="questionId"
     @remove="$emit('remove')"
+    :editable="editable"
   />
   <hr>
 </template>
@@ -22,10 +24,14 @@ export default {
     QuestionType1, QuestionType2
   },
   emits: ['remove'],
-  props: [
-    'questionId',
-    'type'
-  ],
+  props: {
+    'questionId': Number,
+    'type': Number,
+    editable: {
+      type: Boolean,
+      default: false
+    }
+  },
 }
 </script>
 

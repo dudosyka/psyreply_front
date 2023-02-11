@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid modal-overlay animate__animated animate__fadeIn" @click="close">
+  <div class="container-fluid modal-overlay" @click="close">
     <div class="container modal-body animate__animated animate__slideInUp">
       <div class="row">
         <h3 class="modal-heading">Описание</h3>

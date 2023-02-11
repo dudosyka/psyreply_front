@@ -5,9 +5,17 @@ export default class Metric extends Request {
     super('metric', id);
   }
 
-  async create(name) {
+  async getAll() {
+    return this.execute('metric/available', "GET", false, res => res, err => err)
+  }
+
+  async create(name, description) {
     return this.execute("metric", "POST", {
-      name
+      name, description
     }, res => res.json().then(data => data.body), err => err);
   }
+
+   async remove(metricId) {
+    return await this.execute(`metric/${metricId}`, 'DELETE', false, res => res, err => err);
+   }
 }

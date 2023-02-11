@@ -8,9 +8,8 @@
         <header class="header">
           <div class="header__select">
 
-            <div v-if="blocks.length <= 1" class="heading header__heading">Результаты</div>
+            <div class="heading header__heading">Результаты</div>
             <y-select
-              v-else
               font-size="2"
               :selects="blocks"
               @select="updateBlocksSelect"
@@ -95,30 +94,32 @@ import YCoolButton from "@/components/UI/YCoolButton";
 import Stat from "@/api/admin/Stat";
 
 function update(data) {
-    const results = new Results()
-    let options = data.filters;
-    const { week, ...filters } = options;
+  const results = new Results()
+  let options = data.filters;
+  const { week, ...filters } = options;
 
-    if (data.filters.week != "")
-      filters.week = week;
+  if (data.filters.week != "")
+    filters.week = week;
 
-    results.getAll({ filters })
-      .then(res => {
-        if(res.ok) {
-          res.json().then(data => data.body).then(r => {
-            let results = []
-            r.forEach(el => {
-              const old = data.results.filter(a => a.id == el.id);
-              if (old.length)
-                el.active = old[0].active;
-              results.push(el)
-            })
-            data.results = results;
+  console.log(filters);
+
+  results.getAll({ filters })
+    .then(res => {
+      if(res.ok) {
+        res.json().then(data => data.body).then(r => {
+          let results = []
+          r.forEach(el => {
+            const old = data.results.filter(a => a.id == el.id);
+            if (old.length)
+              el.active = old[0].active;
+            results.push(el)
           })
-        } else {
-          data.$store.commit('openErrorPopup', 'Не удалось загрузить результаты')
-        }
-      })
+          data.results = results;
+        })
+      } else {
+        data.$store.commit('openErrorPopup', 'Не удалось загрузить результаты')
+      }
+    })
 }
 
 export default {
@@ -149,24 +150,44 @@ export default {
           update(this)
         }
     )
-    update(this)
-    this.companies.push({ })
-    this.companies.forEach(el => el['active'] = false)
-    this.companies[0]['name'] = 'Все компании'
-    this.companies[0]['id'] = null
-    this.companies[0]['active'] = true
-    const company = new Company()
-    company.getAllCompanies()
-      .then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            r.forEach(el => {
-              el.active = false
-              this.companies.push(el)
+    const data = this;
+    data.blocks = []
+    const block = new Block()
+    data.blocks.push({ })
+    data.blocks.forEach(el => el['active'] = false)
+    data.blocks[0]['name'] = 'Все блоки'
+    data.blocks[0]['id'] = null
+    data.blocks[0]['active'] = true
+    block.getAll({ filters: {  } })
+        .then(res => {
+          if (res.ok) {
+            res.json().then(data => data.body).then(r => {
+              r.forEach(el => {
+                el.active = false
+                data.blocks.push(el)
+              })
             })
-          })
+          } else {
+            this.$store.commit('openErrorPopup', 'Не удалось загрузить блоки компании')
+          }
+        })
+
+    const company = new Company();
+    company.getGroups().then(res => {
+      data.groups = res.map(el => {
+        return {
+          active: false,
+          name: el.name,
+          id: el.id
         }
       })
+      data.groups.push({
+        active: true,
+        name: "Группа",
+        id: 0
+      })
+    })
+    update(this)
   },
   data() {
     return {
@@ -250,97 +271,40 @@ export default {
 
       this.onExport = onExport;
     },
-    getCompanyGroups() {
-      const company = new Company();
-      company.getGroups(this.filters.company_id).then(res => {
-        this.groups = res.map(el => {
-          return {
-            active: false,
-            name: el.name,
-            id: el.id
-          }
-        })
-        this.groups.push({
-          active: true,
-          name: "Группа",
-          id: 0
-        })
-      })
-    },
 
     updateGroupSelect(n) {
-      for (let i = 0; i < this.groups.length; i++) {
-        if (this.groups[i].id == n.id) {
+      for (const element of this.groups) {
+        if (element.id == n.id) {
           this.filters.group_id = n.id;
-          this.groups[i].active = true;
+          element.active = true;
         } else {
-          if (this.groups[i].active)
-            this.groups[i].active = false;
+          if (element.active)
+            element.active = false;
         }
       }
+
       update(this);
     },
 
-    updateCompaniesSelect(n) {
-      this.companies.map(el => {
-        el.active = el.id === n.id;
-      })
-      const select = this.companies.filter(el => el.active)
-
-      if (select[0].id) {
-        this.filters = {
-          company_id: select[0].id
-        }
-      } else {
-        delete this.filters.company_id
-      }
-
-
-      if (this.filters.company_id) {
-        this.blocks = []
-        const block = new Block()
-        this.blocks.push({ })
-        this.blocks.forEach(el => el['active'] = false)
-        this.blocks[0]['name'] = 'Все блоки'
-        this.blocks[0]['id'] = null
-        this.blocks[0]['active'] = true
-        block.getAll({ filters: { company_id: this.filters.company_id } })
-          .then(res => {
-            if (res.ok) {
-              res.json().then(data => data.body).then(r => {
-                r.forEach(el => {
-                  el.active = false
-                  this.blocks.push(el)
-                })
-              })
-            } else {
-              this.$store.commit('openErrorPopup', 'Не удалось загрузить блоки компании')
-            }
-          })
-      } else {
-        delete this.filters.block_id
-        this.blocks = []
-      }
-
-      this.getCompanyGroups();
-      update(this)
-    },
-
     updateBlocksSelect(n) {
-      this.blocks.map(el => {
+      this.blocks = this.blocks.map(el => {
         el.active = el.id === n.id;
-      })
+        return el;
+      });
 
-      const select = this.blocks.filter(el => el.active)
+      console.log(this.blocks)
+
+      const select = this.blocks.filter(el => el.id === n.id);
 
       if (select[0].id) {
         this.filters.week = "";
         this.filters.block_id = select[0].id
       } else {
+        console.log(111);
         delete this.filters.block_id
       }
 
-      update(this)
+      update(this);
     },
 
     openEditWindow(obj) {

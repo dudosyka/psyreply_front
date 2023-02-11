@@ -2,7 +2,12 @@
   <div class="container-fluid animate__animated animate__fadeIn">
   </div>
   <router-view />
-  <info-modal v-if="getShowInfoModal"></info-modal>
+  <Transition
+    enter-active-class="animate__animated animate__fadeIn"
+    leave-active-class="animate__animated animate__fadeOut"
+    >
+    <info-modal v-if="getShowInfoModal"></info-modal>
+  </Transition>
 </template>
 
 <script>

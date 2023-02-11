@@ -3,27 +3,27 @@
     <y-modal class="modal">
       <header class="header">
         <y-left-arrow-button @click="$emit('close')" />
-        <h1 class="heading">Добавить ответы</h1>
+        <h1 class="heading">{{ editable ? "Добавить ответы" : "Просмотр ответов" }}</h1>
       </header>
 
       <template v-if="answers.length > 0">
         <article v-for="(answer, id) of answers" class="answers__add" >
-          <y-input @input="giveData(answer, id)" v-model="answer.title" placeholder="Введите ответ"></y-input>
+          <y-input :disabled="!editable" @input="giveData(answer, id)" v-model="answer.title" placeholder="Введите ответ"></y-input>
           <div class="question__coins">
             <label class="label">Баллы за ответ</label>
-            <y-input @input="giveData(answer, id)" v-model="answer.value" class="question__input" />
+            <y-input :disabled="!editable" @input="giveData(answer, id)" v-model="answer.value" class="question__input" />
           </div>
-          <y-button @click="removeAnswer(id)" class="question__del">X</y-button>
+          <y-button v-if="editable" @click="removeAnswer(id)" class="question__del">X</y-button>
         </article>
       </template>
 
       <hr/>
 
-      <div class="anw__add__button">
+      <div class="anw__add__button" v-if="editable">
         <button @click="addAnswer" class="plus">+</button>
       </div>
 
-      <y-cool-button @click="$emit('close')">Сохранить и вернтуься</y-cool-button>
+      <y-cool-button v-if="editable" @click="$emit('close')">Сохранить и вернтуься</y-cool-button>
     </y-modal>
   </article>
 </template>
@@ -31,9 +31,13 @@
 <script>
 export default {
   name: "AddAnswers",
-  props: [
-    'questionId'
-  ],
+  props: {
+    questionId: Number,
+    editable: {
+      default: false,
+      type: Boolean
+    }
+  },
   methods: {
     addAnswer() {
       const answer = {}

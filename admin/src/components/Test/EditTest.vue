@@ -3,12 +3,13 @@
     <y-popup-warn></y-popup-warn>
     <header class="header">
       <y-left-arrow-button @click="close" />
-      <h1>Редактирование: {{test.title}}</h1>
+      <h1>{{ test.company_id == null ? "Просмотр" : "Редактирование" }}: {{test.title}}</h1>
     </header>
 
     <create-test
       :test-id="id"
       :title="test.title"
+      :editable="test.company_id != null"
     />
 
     <y-modal class="block" v-if="blocks.length > 0">
@@ -26,7 +27,7 @@
       <y-cool-button @click="addToBlock">Добавить в блок</y-cool-button>
     </y-modal>
 
-    <y-modal class="block">
+    <y-modal class="block" v-if="test.company_id != null">
       <h2 class="heading">Опасная зона</h2>
       <y-cool-button @click="removeTest">Удалить тест</y-cool-button>
     </y-modal>
@@ -45,9 +46,10 @@ import YPopup from "@/components/UI/YPopup.vue";
 function update(data) {
   const test = new Test()
   test.get(data.id)
-    .then(res => {
+    .then(async res => {
       if (res.ok) {
-        res.json().then(r => data.test = r.body)
+        await res.json().then(r => data.test = r.body)
+        console.log(data.test)
       } else {
         this.$store.commit('openErrorPopup', res.msg())
       }

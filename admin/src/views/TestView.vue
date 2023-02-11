@@ -1,4 +1,5 @@
 <template>
+  <y-popup-warn></y-popup-warn>
   <div class="wrapper">
     <y-left-side-bar />
     <main class="main">
@@ -8,7 +9,7 @@
             <div class="heading header__heading">Тесты</div>
             <y-select
                 class="fs-2"
-                :selects="tests"
+                :selects="testsCategories"
                 @select="updateTestsList"
             />
           </div>
@@ -42,6 +43,7 @@ import CreateTest from "@/components/Test/CreateTest";
 import EditTest from '@/components/Test/EditTest';
 
 import Test from '@/api/admin/Test'
+import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 
 function update(data) {
   const test = new Test()
@@ -49,21 +51,54 @@ function update(data) {
     .then(res => {
       if (res.ok) {
         res.json().then(data => data.body).then(r => {
-          data.tests = r
+          console.log(r);
+          data.tests = r;
+          data.testsAll = [...data.tests]
+
+          const n = data.testsCategories.filter(el => el.active)[0];
+
+          data.tests = data.testsAll.filter(el => {
+            if (n.type == 0)
+              return el;
+            if (n.type == 1 && el.company_id == null)
+              return el;
+            if (n.type == 2 && el.company_id != null)
+              return el;
+          })
         })
       }
     })
+
 }
 
 export default {
   name: "TestView",
   components: {
+    YPopupWarn,
     CreateTest, EditTest
   },
   data() {
     return {
       window: 'main',
+      testsAll: [],
       tests: [],
+      testsCategories: [
+        {
+          type: 0,
+          name: "Без фильтра",
+          active: true,
+        },
+        {
+          type: 1,
+          name: "Общие тесты",
+          active: false,
+        },
+        {
+          type: 2,
+          name: "Мои тесты",
+          active: false,
+        }
+      ],
       editTestId: null
     }
   },
@@ -88,12 +123,23 @@ export default {
       this.window = 'editTest'
     },
     updateTestsList(n) {
-      this.companies.map(el => {
-        el.active = el.id === n.id;
+      this.testsCategories = this.testsCategories.map(el => {
+        let active = false;
+        if (el.type == n.type)
+          active = true;
+        return {
+          ...el,
+          active
+        }
       })
-      const select = this.companies.filter(el => el.active)
-      this.filter = select[0].id
-      update(this)
+      this.tests = this.testsAll.filter(el => {
+        if (n.type == 0)
+          return el;
+        if (n.type == 1 && el.company_id == null)
+          return el;
+        if (n.type == 2 && el.company_id != null)
+          return el;
+      })
     },
     close(toWindow) {
       this.window = toWindow
