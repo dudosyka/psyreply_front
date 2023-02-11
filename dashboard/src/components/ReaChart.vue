@@ -39,6 +39,13 @@ export default {
       return {
         chart: {
           type: "bar",
+          dropShadow: {
+            enabled: true,
+            top: 0,
+            left: 0,
+            blur: 3,
+            opacity: 0.5
+          },
           id: 'basic-bar',
           toolbar: {
             autoSelected: "pan",
@@ -49,6 +56,7 @@ export default {
           bar: {
             borderRadius: 5,
             borderRadiusApplication: "end",
+            columnWidth: "20%",
           }
         },
         colors:["#009dff"],

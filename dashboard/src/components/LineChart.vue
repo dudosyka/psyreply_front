@@ -33,22 +33,19 @@ export default {
           zoom: {
             enabled: false
           },
+          dropShadow: {
+            enabled: true,
+            top: 0,
+            left: 0,
+            blur: 3,
+            opacity: 0.5
+          },
           type: "line",
           id: 'basic-bar',
           toolbar: {
             autoSelected: "pan",
             show: false
           },
-          dropShadow: {
-            enabled: false,
-            enabledOnSeries: undefined,
-            top: 0,
-            left: 0,
-            blur: 3,
-            color: '#d100ff',
-            opacity: 0.35
-          }
-
         },
         dataLabels: {
           enabled: false
