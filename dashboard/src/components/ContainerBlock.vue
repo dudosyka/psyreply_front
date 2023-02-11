@@ -427,13 +427,13 @@ export default {
   padding-right: 2rem;
 }
 .shadow-col {
-  background: rgb(7 8 12 / 26%);
+  background: transparent;
   margin-top: 0;
   padding-top: 0;
   height: 100%;
   z-index: 9999;
-  box-shadow: -5px 0px 44px rgba(4, 4, 4, 0.3);
-  width: 30px;
+  box-shadow: 40px 0px 40px 40px rgb(0, 0, 0, 40%);
+  width: 0.01px;
 }
 .stats-col.second {
   display: flex;
