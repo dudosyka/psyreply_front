@@ -2,13 +2,24 @@
   <div class="container-fluid animate__animated animate__fadeIn">
   </div>
   <router-view />
+  <info-modal v-if="getShowInfoModal"></info-modal>
 </template>
 
 <script>
 
+import InfoModal from "@/components/InfoModal.vue";
+
 export default {
   name: 'App',
   components: {
+    InfoModal
+
+  },
+  computed:{
+    getShowInfoModal(){
+      const show = this.$store.getters.showedInfoModal
+      return show
+    }
   }
 }
 </script>

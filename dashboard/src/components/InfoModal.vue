@@ -1,11 +1,8 @@
 <template>
   <div class="container-fluid modal-overlay animate__animated animate__fadeIn">
     <div class="container modal-body animate__animated animate__slideInUp">
-      <h3 class="modal-heading">Заголовок</h3>
-      <p class="modal-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt volutpat nisl. Ut ornare nisl nec augue vestibulum vulputate. Suspendisse sed ipsum non ante viverra venenatis. Suspendisse elementum accumsan mauris vitae fringilla. Morbi interdum odio blandit, consectetur enim in, mollis ante. Etiam felis lacus, tempus at odio eu, vulputate accumsan leo. Donec in est libero. Nunc dolor tortor, vulputate eget ex tincidunt, luctus pulvinar nunc. Nullam imperdiet ullamcorper sapien, et pellentesque risus dictum et. Duis sit amet purus eget nunc iaculis lacinia a eu magna. Maecenas et placerat mauris. Ut varius velit in odio pharetra tincidunt et vitae urna. Quisque facilisis urna et nibh accumsan, eu mollis urna molestie. Fusce feugiat blandit tellus.
-
-        Aenean eget ante non felis cursus ornare vitae vitae orci. Phasellus bibendum ipsum a justo rutrum, quis gravida ex cursus. Aenean ornare egestas vulputate. Integer ut odio sagittis enim commodo tincidunt vel sed nibh. Proin dignissim aliquam mauris ac sodales. Donec pretium vulputate vehicula. Quisque bibendum odio nec nunc placerat commodo. Donec id dapibus quam, mollis tincidunt enim. Nunc eget mattis risus. Aliquam vulputate neque vel vulputate volutpat. Nullam euismod vestibulum mauris, non semper libero rutrum quis. Etiam congue justo non turpis condimentum, sed viverra ligula commodo. Praesent eleifend nulla est, et finibus ligula dignissim viverra. Nam sagittis nibh sem, efficitur finibus nulla vehicula vitae. In dignissim sem sed diam mattis, nec malesuada quam lobortis.
-
+      <h3 class="modal-heading">Описание</h3>
+      <p class="modal-text"> {{getDescription}}
       </p>
     </div>
   </div>
@@ -13,7 +10,13 @@
 
 <script>
 export default {
-  name: "InfoModal"
+  name: "InfoModal",
+  computed:{
+    getDescription(){
+      const data = this.$store.getters.showedInfoModalData
+      return data.description
+    },
+  }
 }
 </script>
 

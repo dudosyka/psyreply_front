@@ -16,6 +16,8 @@ export default createStore({
         companyName: null,
         companyLogo: null,
         selectedMetric: false,
+        showInfoModal: false,
+        showInfoModalData: null
     },
     getters: {
         groups(state) {
@@ -40,6 +42,12 @@ export default createStore({
         },
         companyLogo(state){
             return state.companyLogo
+        },
+        showedInfoModal(state){
+            return state.showInfoModal
+        },
+        showedInfoModalData(state){
+            return state.showInfoModalData
         }
     },
     actions: {
@@ -65,6 +73,14 @@ export default createStore({
             router.push('/')
             localStorage.removeItem('token')
             commit('clearToken')
+        },
+        async closeInfoModal({commit}){
+          commit('closeShowInfoModal')
+        },
+        async openInfoModal({state,commit},metric){
+            state.showInfoModal = true
+            commit('setInfoModalData',state.metricLabels[metric])
+            console.log()
         },
         async auth({ commit, state }, { email, password }) {
             const api = new Auth();
@@ -95,7 +111,10 @@ export default createStore({
 
             const metricsLabels = {};
             metrics.forEach(el => {
-                metricsLabels[el.id] = el.name;
+                metricsLabels[el.id] = {
+                    name: el.name,
+                    description: el.description
+                };
             });
             commit('setMetricLabels', metricsLabels);
         },
@@ -107,12 +126,13 @@ export default createStore({
                         zero: true,
                         week: values[0].week,
                         value: 0,
-                        date: values[0].date
+                        date: values[0].date,
                     });
                 }
                 return {
                     label: state.metricLabels[el],
-                    values: [...values]
+                    values: [...values],
+                    metricId: parseInt(el)
                 }
             });
 
@@ -177,6 +197,15 @@ export default createStore({
         removeMetricSelection(state) {
             state.selectedMetric = null;
         },
+        setInfoModalData(state,data){
+            state.showInfoModalData = data;
+        },
+        openShowInfoModal(state){
+          state.showInfoModal = true
+        },
+        closeShowInfoModal(state){
+            state.showInfoModal = false
+        }
     }
 
 })
