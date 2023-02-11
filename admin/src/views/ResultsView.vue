@@ -38,13 +38,9 @@
                 :selects="groups"
                 @select="updateGroupSelect"
             />
-            <y-cool-button v-if="filters.week != null && filters.week != ''">
-              <export-excel
-                  :data = "onExport">
-                Статистика по выбранным
-              </export-excel>
-            </y-cool-button>
           </div>
+          <button class="button" @click="statByWholeBlock()" v-if="filters.week != null && filters.week != ''">По всему блоку</button>
+          <button class="button" @click="statByGroup()" v-if="filters.week != null && filters.week != '' && filters.group_id">По всей группе</button>
         </div>
         <y-results-list v-if="results.length > 0">
           <y-results-list-item
@@ -57,10 +53,10 @@
             :valid="result.approved"
             :date="result.createdAt"
             @edit="openEditWindow(result)"
-            :selectable="filters.week != null && filters.week != ''"
-            @select="result_selected(result)"
             :active="result.active"
           />
+          <!--            :selectable="filters.week != null && filters.week != ''"-->
+          <!--            @select="result_selected(result)"-->
           <div class="container-fluid footer-container">
             <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">Назад</YButton>
             <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">Далее</YButton>
@@ -100,6 +96,7 @@ import Block from '@/api/admin/Block';
 import YList from "@/components/UI/YList";
 import YListItem from "@/components/UI/YListItem";
 import YCoolButton from "@/components/UI/YCoolButton";
+import Stat from "@/api/admin/Stat";
 
 function update(data) {
     const results = new Results()
@@ -192,6 +189,14 @@ export default {
     }
   },
   methods: {
+    statByWholeBlock() {
+      const stat = new Stat();
+      stat.saveWholeBlock(this.filters.block_id, this.filters.week);
+    },
+    statByGroup() {
+      const stat = new Stat();
+      stat.saveGroup(this.filters.block_id, this.filters.week, this.filters.group_id);
+    },
     nextPage(){
       if (this.showNext)
         this.pageNumber++;
@@ -414,6 +419,35 @@ export default {
 </script>
 
 <style scoped>
+
+.button {
+  font-size: 1.25rem;
+  color: var(--light);
+  padding: 0.3rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.16);
+  white-space: nowrap;
+  max-width: 13vw;
+  border-radius: 0.5rem;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+.button:hover {
+  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
+  box-shadow: -10px 11px 20px rgba(221, 126, 255, 0.35);
+  color: var(--light);
+  font-weight: 500;
+  transition: all .3s ease-in-out;
+}
+.button:focus {
+  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
+  box-shadow: -10px 11px 20px rgba(221, 126, 255, 0.35);
+  color: var(--light);
+  font-weight: 500;
+  transition: all .3s ease-in-out;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;

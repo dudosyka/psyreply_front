@@ -4,8 +4,6 @@
     <y-left-side-bar />
     <main class="main">
       <y-modal v-if="window === 'main'" class="main__modal">
-        <button class="button">По всему блоку</button>
-        <button class="button">По всей группе</button>
         <header class="header">
           <div class="header__select">
             <div class="heading header__heading">Компании</div>
@@ -105,31 +103,6 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  font-size: 1.25rem;
-  color: var(--light);
-  padding: 0.3rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0);
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.16);
-  white-space: nowrap;
-  max-width: 13vw;
-  border-radius: 0.5rem;
-}
-.button:hover {
-  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
-  box-shadow: -10px 11px 20px rgba(221, 126, 255, 0.35);
-  color: var(--light);
-  font-weight: 500;
-  transition: background .3s ease-in-out;
-}
-.button:focus {
-  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
-  box-shadow: -10px 11px 20px rgba(221, 126, 255, 0.35);
-  color: var(--light);
-  font-weight: 500;
-  transition: background .3s ease-in-out;
-}
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
