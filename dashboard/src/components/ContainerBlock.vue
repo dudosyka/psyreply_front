@@ -59,7 +59,7 @@
 
   <div class="container stats">
     <template v-if="metrics">
-          <div class="col-md-auto stats-col main">
+      <div class="col-md-auto stats-col main">
             <Transition
                 enter-active-class="animate__animated animate__flipInX"
             >
@@ -84,7 +84,8 @@
           <StatsBlock2 :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
         </div>
       </div>
-
+      <div class="col-md-auto shadow-col">
+      </div>
     </template>
   </div>
   <div class="row footer-area">
@@ -424,6 +425,15 @@ export default {
   padding-left: 2rem;
   box-shadow: 10px 0px 44px rgba(0, 0, 0, 0.3);
   padding-right: 2rem;
+}
+.shadow-col {
+  background: rgb(7 8 12 / 26%);
+  margin-top: 0;
+  padding-top: 0;
+  height: 100%;
+  z-index: 9999;
+  box-shadow: -5px 0px 44px rgba(4, 4, 4, 0.3);
+  width: 30px;
 }
 .stats-col.second {
   display: flex;
