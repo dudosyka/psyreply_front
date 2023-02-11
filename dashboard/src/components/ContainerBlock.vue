@@ -230,6 +230,7 @@ export default {
   display: flex;
   overflow-x: scroll;
   flex-direction: row;
+  height: 100%;
   flex-wrap: nowrap;
   padding-bottom: 1rem;
   padding-left: 1rem;

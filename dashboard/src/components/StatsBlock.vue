@@ -25,16 +25,17 @@ export default {
 .chart-box {
   padding-top: 2rem;
   padding-right: 1rem;
+  padding-bottom: 2rem;
 }
 .container.metric-box {
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   margin-top: 0;
   border: 1px solid var(--border-light);
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   background: rgb(7 18 25 / 50%);
-  padding-bottom: 1rem;
+  padding-bottom: 5rem;
   width: auto;
   height: auto;
   max-height: 53vh;
