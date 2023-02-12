@@ -16,13 +16,14 @@ export default {
     values: Array
   },
   created() {
+
   },
   computed: {
     series() {
       return this.values.map(el => {
         return {
           id: el.index,
-          name: el.label,
+          name: el.label.name,
           data: el.values.map(el => el.value)
         }
       })

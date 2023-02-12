@@ -1,0 +1,171 @@
+<template>
+  <y-popup-warn></y-popup-warn>
+  <div class="wrapper">
+    <y-left-side-bar />
+    <main class="main">
+      <y-modal class="block">
+        <header>
+          <h2 class="heading">Управление группами компании</h2>
+        </header>
+        <y-list
+            key-of-name="name"
+            :selectable="true"
+            :items="company.groups"
+            @select="selectGroup"
+            :pagination="true"
+        />
+        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
+      </y-modal>
+      <create-group
+          v-if="window === 'createGroup'"
+          @close="update"
+      >
+      </create-group>
+      <edit-group
+          v-if="window === 'editGroup'"
+          @close="update"
+      >
+      </edit-group>
+    </main>
+  </div>
+</template>
+
+<script>
+import CreateBlock from '@/components/Block/CreateBlock';
+import EditBlock from '@/components/Block/EditBlock';
+
+import Block from '@/api/admin/Block';
+import Company from '@/api/admin/Company';
+import YPopupWarn from "@/components/UI/YPopupWarn";
+
+function update(data) {
+  const block = new Block()
+  block.getAll({filters: { company_id: data.filter }})
+    .then(res => {
+      if (res.ok) {
+        res.json().then(data => data.body).then(r => data.blocks = r)
+      }
+    })
+}
+
+export default {
+  name: "UsersView",
+  components: {
+    YPopupWarn,
+    CreateBlock, EditBlock
+  },
+  data() {
+    return {
+      window: 'main',
+      blocks: [],
+      editBlockId: null,
+      companies: [],
+      filter: null
+    }
+  },
+  created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if (toParams.after === '')
+            this.window = 'main'
+        }
+    )
+    update(this)
+    const company = new Company()
+    this.companies.push({ })
+    this.companies.forEach(el => el['active'] = false)
+    this.companies[0]['name'] = 'Шаблоны'
+    this.companies[0]['id'] = null
+    this.companies[0]['active'] = true
+    company.getAllCompanies()
+      .then(res => {
+        if (res.ok) {
+          res.json().then(data => data.body).then(r => {
+            r.forEach(el => {
+              el.active = false
+              this.companies.push(el)
+            })
+          })
+        }
+      })
+  },
+  methods: {
+    editBlock(n){
+      this.$router.push('/block/edit')
+      this.window = 'editBlock'
+      this.editBlockId = n.id
+    },
+    createBlock() {
+      this.$router.push('/block/create')
+      this.window = 'createBlock'
+    },
+    updateBlocksList(n) {
+      this.companies.map(el => {
+        el.active = el.id === n.id;
+      })
+      const select = this.companies.filter(el => el.active)
+      this.filter = select[0].id
+      update(this)
+    },
+    close() {
+      this.$router.push('/block')
+      this.window = 'main'
+
+      this.companies.map(el => el.active = false)
+      this.companies.map(el => {
+        el.active = el.id === null;
+      })
+      this.filter = null
+      update(this)
+    },
+  }
+}
+</script>
+
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  width: 100%;
+}
+
+.main {
+  padding: 4.125rem;
+}
+.main__modal {
+  display: grid;
+  grid-gap: 2.5625rem;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto min-content;
+}
+.header__select{
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: left;
+
+}
+
+
+.header__heading{
+  margin-right: 0.5rem;
+
+  font-size:2rem;
+}
+.header__arrow__button img{
+  width: 26px;
+  height: 26px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.fs-2 {
+  font-size: 1.3rem;
+}
+
+</style>

@@ -2,7 +2,7 @@
     <div class="container metric-box col">
       <div class="heading">
         <h5 class="metric-name">{{ metricItem.label.name }}</h5>
-        <button class="btn btn-primary info"><i class="fa-solid fa-circle-question"></i></button>
+        <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
       </div>
       <ReaChart :values="metricItem.values" class="chart-box"></ReaChart>
     </div>
@@ -14,6 +14,11 @@ export default {
   name: "StatsBlock",
   components:{
     ReaChart
+  },
+  methods:{
+    openInfoModal() {
+      this.$store.dispatch('openInfoModal', this.metricItem.metricId)
+    }
   },
   props: {
     metricItem: Object

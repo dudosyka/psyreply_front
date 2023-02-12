@@ -21,6 +21,12 @@ const routes = [
     meta: { requiresAuth: true, authPage: false }
   },
   {
+    path: '/users:after(.*)',
+    name: 'users',
+    component: () => import('@/views/UsersView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/test:after(.*)',
     name: 'test',
     component: () => import('@/views/TestView'),

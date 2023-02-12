@@ -17,7 +17,8 @@ export default createStore({
         companyLogo: null,
         selectedMetric: false,
         showInfoModal: false,
-        showInfoModalData: null
+        showInfoModalData: null,
+        showAnimation: false
     },
     getters: {
         groups(state) {
@@ -48,6 +49,9 @@ export default createStore({
         },
         showedInfoModalData(state){
             return state.showInfoModalData
+        },
+        showedAnimations(state){
+            return state.showAnimation
         }
     },
     actions: {
@@ -205,6 +209,12 @@ export default createStore({
         },
         closeShowInfoModal(state){
             state.showInfoModal = false
+        },
+        showAnimationTrue(state){
+          state.showAnimation = true
+        },
+        showAnimationFalse(state){
+            state.showAnimation = false
         }
     }
 

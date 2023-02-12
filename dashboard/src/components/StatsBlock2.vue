@@ -1,9 +1,8 @@
 <template>
   <Transition
-      enter-active-class="animate__animated animate__flipInX"
-  >
-    <template v-if="metric.values.length">
-      <div class="container metric-box highlighted" @click="selectMetric">
+      enter-active-class="animate__animated animate__flipInX" >
+    <template v-if="metric.values.length" >
+      <div class="container metric-box"  @click="selectMetric" :class="{'highlighted': this.$store.getters.showedAnimations}">
         <div class="container heading">
           <h5 class="metric-name">{{ metric.label.name }}</h5>
           <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
@@ -21,7 +20,6 @@ import LineChart from "@/components/LineChart.vue";
 export default {
   name: "StatsBlock2",
   components:{
-
     LineChart,
   },
   methods: {
@@ -65,8 +63,9 @@ export default {
   transition: 0.3s;
 }
 .highlighted {
-  box-shadow: 0px 0px 53px #00a1ff30;
-  border: 1px solid #3b71caad;
+  box-shadow: 0px 0px 53px #00a1ff30!important;
+  border: 1px solid #3b71caad!important;
+  border-radius: 10px!important;
 }
 .container.metric-box:hover {
   box-shadow: 0px 0px 53px #00a1ff30;
