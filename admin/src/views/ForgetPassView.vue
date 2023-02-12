@@ -8,8 +8,7 @@
           <div class="form__box">
             <y-input v-model.trim="formData.email" class="box__input" type="email"/>
           </div>
-          <router-link to="/forget/code" class="btn btn__login">Подтвердить</router-link>
-          <a class="resend">Отправить повторно</a>
+          <button class="btn btn__login">Подтвердить</button>
         </form>
       </div>
     </y-modal>
@@ -18,7 +17,7 @@
 
 <script>
 import YModal from "@/components/UI/YModal.vue";
-
+ ///forget/code
 export default {
   name: "ForgetPassView",
   components: {YModal},

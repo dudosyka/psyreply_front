@@ -1,4 +1,6 @@
 import Request from '@/api/index';
+import axios from "axios";
+import apiConf from "@/api/api.conf";
 
 const req = new Request
 
@@ -71,6 +73,43 @@ Admin.checkAuth = function() {
 
 Admin.getToken = function() {
   return localStorage.getItem('token')
+}
+
+Admin.reg = function (fd) {
+  axios.post( 'https://api.beta.psyreply.com/auth/signup',
+      fd,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+  ).then((res) => {
+    localStorage.setItem("token", res.data.body.token);
+  }).catch(err => {
+    if (err.response.status === 409) {
+      alert('Ошибка! Такой логин или почта уже зарегестрированы в системе!');
+    }
+  });
+}
+
+Admin.forgetPasswordFirst = function (login) {
+  return new Promise((resolve) => {
+    axios.post(`${apiConf.endpoint}/repass/first`, { login }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+  })
+}
+
+Admin.forgetPasswordSecond = function (code, newPassword) {
+  return new Promise((resolve) => {
+    axios.post(`${apiConf.endpoint}/repass/second`, { code, newPassword }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+  })
 }
 
 export default Admin

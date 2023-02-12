@@ -7,7 +7,7 @@
     </form>
     <div class="form__box">
       <label class="box__lable">Логотип компании (загрузка картинки)</label>
-      <y-input class="box__input" type="file" v-model.trim="formData.file" />
+      <input class="box__input" type="file" @change="getFile($event)" />
     </div>
     <div class="form__box">
       <label class="box__lable">E-mail администратора</label>
@@ -30,6 +30,8 @@
 
 <script>
 import axios from "axios";
+import Admin from "@/api/admin/Auth";
+import Auth from "@/api/admin/Auth";
 export default {
   name: "YFormRegistration",
   data() {
@@ -47,6 +49,10 @@ export default {
 
   },
   methods: {
+    getFile(event) {
+      console.log(event);
+      this.formData.file = event.target.files[0];
+    },
     submit() {
       let form_data = new FormData();
       form_data.append('email', this.formData.email)
@@ -54,16 +60,11 @@ export default {
       form_data.append('companyName', this.formData.name)
       form_data.append('password', this.formData.password)
       form_data.append('file',this.formData.file)
-      axios.post( 'https://api.beta.psyreply.com/auth/signup',
-          form_data,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }
-      ).then(console.log('good'))
-      // axios.post('https://api.beta.psyreply.com/auth/signup', form_data, ).then(console.log('good'))
-      // console.log('submit', this.formData.file)
+
+      if (!this.formData.file)
+        alert('Ошибка! Загрузите логотип компании!');
+
+      Admin.reg(form_data);
     }
   }
 }
