@@ -29,9 +29,7 @@
 </template>
 
 <script>
-import axios from "axios";
 import Admin from "@/api/admin/Auth";
-import Auth from "@/api/admin/Auth";
 export default {
   name: "YFormRegistration",
   data() {
@@ -50,7 +48,6 @@ export default {
   },
   methods: {
     getFile(event) {
-      console.log(event);
       this.formData.file = event.target.files[0];
     },
     submit() {
