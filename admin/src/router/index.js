@@ -9,6 +9,19 @@ const routes = [
     meta: { requiresAuth: false, authPage: true }
   },
   {
+    path: '/forget',
+    name: 'forget',
+    component: () => import('@/views/ForgetPassView.vue'),
+    meta: { requiresAuth: false, authPage: true }
+  },
+  {
+    path: '/forget/code',
+    name: 'forgetcode',
+    component: () => import('@/views/ForgetPassCodeView.vue'),
+    meta: { requiresAuth: false, authPage: true }
+  },
+
+  {
     path: '/signup',
     name: 'sign-up',
     component: () => import('@/views/RegView.vue'),
@@ -55,7 +68,8 @@ const routes = [
     name: 'mailing',
     component: () => import('@/views/MailingView.vue'),
     meta: { requiresAuth: true }
-  }
+  },
+
 ]
 
 const router = createRouter({

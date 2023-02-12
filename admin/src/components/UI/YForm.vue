@@ -11,6 +11,7 @@
     </div>
     <div class="form__button">
       <button @click.prevent="submit" class="btn btn__login">Войти</button>
+      <router-link to="/forget" class="btn btn__forget">Забыли пароль?</router-link>
     </div>
   </form>
 </div>
@@ -36,6 +37,19 @@ export default {
 </script>
 
 <style>
+.btn__forget {
+  text-align: center!important;
+  align-self: center!important;
+  background: transparent;
+  border-radius: 12px;
+  color: white;
+  width: 100%;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  text-decoration: underline;
+  font-size: 13px;
+}
 .form__box {
   color: white;
   display: flex;
@@ -69,6 +83,8 @@ input.box__input:focus {
 }
 .form__button{
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
 }
 .btn__login {
   text-align: center;
