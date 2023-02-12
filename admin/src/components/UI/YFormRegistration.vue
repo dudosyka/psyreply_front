@@ -63,6 +63,10 @@ export default {
 
       Admin.reg(form_data).then(() => {
         this.$router.push("/block");
+      }).catch(err => {
+        if (err.response.status === 409) {
+          alert('Ошибка! Такой логин или почта уже зарегестрированы в системе!');
+        }
       });
     }
   }

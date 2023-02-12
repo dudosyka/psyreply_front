@@ -76,19 +76,20 @@ Admin.getToken = function() {
 }
 
 Admin.reg = function (fd) {
-  return axios.post( 'https://api.beta.psyreply.com/auth/signup',
-      fd,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+  return new Promise((resolve, reject) => {
+    axios.post( 'https://api.beta.psyreply.com/auth/signup',
+        fd,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      }
-  ).then((res) => {
-    localStorage.setItem("token", res.data.body.token);
-  }).catch(err => {
-    if (err.response.status === 409) {
-      alert('Ошибка! Такой логин или почта уже зарегестрированы в системе!');
-    }
+    ).then((res) => {
+      localStorage.setItem("token", res.data.body.token);
+      resolve(true);
+    }).catch(err => {
+      reject(err);
+    });
   });
 }
 
