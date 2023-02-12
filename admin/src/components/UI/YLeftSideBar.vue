@@ -10,12 +10,22 @@
       <router-link to="/test" active-class="nav__link_active" class="link nav__link">Тесты</router-link>
       <router-link to="/results" active-class="nav__link_active" class="link nav__link">Результаты</router-link>
     </nav>
+    <div></div>
+    <nav class="side_bar__nav">
+      <router-link @click="logout()" class="link nav__link" to="/">Выйти</router-link>
+    </nav>
   </article>
 </template>
 
 <script>
 export default {
-  name: "YLeftSideBar"
+  name: "YLeftSideBar",
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('/');
+    }
+  }
 }
 </script>
 
@@ -29,6 +39,9 @@ export default {
   background: linear-gradient(140.62deg, rgba(255, 255, 255, 0.25) 2.81%, rgba(255, 255, 255, 0.1) 100.82%);
   box-shadow: 0 4px 52px rgba(143, 0, 255, 0.11);
   border-radius: 0 1rem 1rem 0;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto 1fr auto;
 }
 .side_bar__header {
   display: grid;

@@ -48,7 +48,6 @@ import CreateBlock from '@/components/Block/CreateBlock';
 import EditBlock from '@/components/Block/EditBlock';
 
 import Block from '@/api/admin/Block';
-import Company from '@/api/admin/Company';
 import YPopupWarn from "@/components/UI/YPopupWarn";
 
 function update(data) {
@@ -85,23 +84,6 @@ export default {
         }
     )
     update(this)
-    const company = new Company()
-    this.companies.push({ })
-    this.companies.forEach(el => el['active'] = false)
-    this.companies[0]['name'] = 'Шаблоны'
-    this.companies[0]['id'] = null
-    this.companies[0]['active'] = true
-    company.getAllCompanies()
-      .then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            r.forEach(el => {
-              el.active = false
-              this.companies.push(el)
-            })
-          })
-        }
-      })
   },
   methods: {
     editBlock(n){

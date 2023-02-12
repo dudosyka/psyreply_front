@@ -57,6 +57,8 @@ function update(data) {
 
           const n = data.testsCategories.filter(el => el.active)[0];
 
+          console.log(data.tests);
+          console.log(r);
           data.tests = data.testsAll.filter(el => {
             if (n.type == 0)
               return el;

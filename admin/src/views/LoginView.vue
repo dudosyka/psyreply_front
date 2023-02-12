@@ -20,7 +20,7 @@ import router from '@/router';
 import YModal from "@/components/UI/YModal.vue";
 
 export default {
-  name: 'HomeView',
+  name: 'LoginView',
   components: {YModal},
   data() {
     return {
