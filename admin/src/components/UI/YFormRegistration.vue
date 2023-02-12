@@ -1,10 +1,10 @@
 <template>
 <div class="YForm">
   <form @submit.prevent>
-    <div class="form__box">
+    <form class="form__box" id="form">
       <label class="box__lable">Название компании</label>
       <y-input class="box__input" v-model.trim="formData.name" />
-    </div>
+    </form>
     <div class="form__box">
       <label class="box__lable">Логотип компании (загрузка картинки)</label>
       <y-input class="box__input" type="file" v-model.trim="formData.file" />
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "YFormRegistration",
   data() {
@@ -42,9 +43,27 @@ export default {
       }
     }
   },
+  created() {
+
+  },
   methods: {
     submit() {
-      this.$emit('submit', this.formData)
+      let form_data = new FormData();
+      form_data.append('email', this.formData.email)
+      form_data.append('login', this.formData.login)
+      form_data.append('companyName', this.formData.name)
+      form_data.append('password', this.formData.password)
+      form_data.append('file',this.formData.file)
+      axios.post( 'https://api.beta.psyreply.com/auth/signup',
+          form_data,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+      ).then(console.log('good'))
+      // axios.post('https://api.beta.psyreply.com/auth/signup', form_data, ).then(console.log('good'))
+      // console.log('submit', this.formData.file)
     }
   }
 }

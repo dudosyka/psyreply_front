@@ -29,13 +29,15 @@ export default createStore({
       editBlock: null
     },
     company: {
-
     },
     group: {
-
-    }
+    },
+    signUpData: [],
   },
   getters: {
+    getSignUpData(state){
+      return state.signUpData
+    },
     editBlock(state) {
       return state.results.editBlock
     },
@@ -161,7 +163,6 @@ export default createStore({
   },
   actions: {
     createGroup() {
-
     }
   },
   modules: {
