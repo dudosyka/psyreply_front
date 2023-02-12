@@ -64,32 +64,62 @@
                 enter-active-class="animate__animated animate__flipInX"
             >
               <StatsBlock key="1" v-if="selectedMetric" :metricItem="selectedMetric" />
-              <div class="container" key="2" v-else-if="selectedMetric === false">
+              <div class="container" key="2" v-else-if="selectedMetric === false" @click="showAnimation">
                 <img alt="YanGPT fake" class="placeholder" src="../assets/chart-placeholder.png" />
-                <h4 class="placeholder-heading" style="width: 500px" @click="showAnimation">Выберите метрику</h4>
+                <h4 class="placeholder-heading" style="width: 500px">Выберите метрику</h4>
               </div>
             </Transition>
           </div>
       <div class="row small-metrics">
-        <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
-        </div>
-        <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
-        </div>
-        <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[2]" :key="Date.now()+metric.label" />
-        </div>
-        <div class="col stats-col second">
-          <StatsBlock2 :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
-        </div>
+          <div class="col stats-col second">
+            <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
+          </div>
+          <div class="col stats-col second">
+            <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+          </div>
+          <div class="col stats-col second">
+            <StatsBlock2 :metric="metric" v-for="metric in metrics[2]" :key="Date.now()+metric.label" />
+          </div>
+          <div class="col stats-col second">
+            <StatsBlock2 :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
+          </div>
       </div>
       <div class="col-md-auto shadow-col">
       </div>
     </template>
   </div>
+  <Transition
+      enter-active-class="animate__animated animate__fadeIn"
+      leave-active-class="animate__animated animate__fadeOut"
+  >
+    <template v-if="showLink === true">
+      <div class="alert-link d-flex align-items-center" role="alert">
+        <div class="row link-content">
+          <div class="col notification-link-heading">
+            <h6 class="alert-heading link-heading">Ссылка на группу готова!</h6>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              <input
+                  class="form-control link-input"
+                  id="formControlReadonly"
+                  type="text"
+                  value="https://dashboard.psyreply.com/14882280148822801488228014882280"
+                  readonly
+              />
+            </div>
+            <p class="link-description">Нажмите на ссылку, чтобы скопировать</p>
+
+          </div>
+        </div>
+      </div>
+    </template>
+  </Transition>
   <div class="row footer-area">
-  <button class="btn btn-primary results-button" @click="loadOld"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
+    <button class="btn btn-primary results-button share-button" @click = "toggle_link"><i class="fa-solid fa-share-from-square"></i> Поделиться группой</button>
+    <div class="col notification">
+      <button class="btn btn-primary results-button" @click="loadOld"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
+    </div>
 </div>
 </div>
 <!--  Основной контейнер кончился-->
@@ -106,7 +136,8 @@ export default {
   components: {StatsBlock2, StatsBlock},
   data() {
     return {
-      showContext: false
+      showContext: false,
+      showLink: false
     }
   },
   async created() {
@@ -118,7 +149,7 @@ export default {
       this.$store.commit('showAnimationTrue')
       setTimeout(() => {
         this.$store.commit('showAnimationFalse')
-      }, "1000")
+      }, "250")
     },
     url() {
       return url
@@ -129,6 +160,9 @@ export default {
     },
     toggle_bor(){
       this.showContext = !this.showContext;
+    },
+    toggle_link() {
+      this.showLink = !this.showLink;
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
@@ -210,6 +244,68 @@ export default {
 </script>
 
 <style scoped>
+*::selection {
+  background-color: rgba(0, 189, 255, 0.56);
+  color: #fff;
+}
+.notification-link-heading {
+  border-bottom: 1px solid;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-color: var(--border-dark)!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.link-heading {
+  text-align: center;
+}
+.link-description {
+  color: var(--inactive-color);
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.link-input {
+  background: var(--acrylic-blur-light)!important;
+  color: white!important;
+  width: 100%!important;
+  max-width: 25rem!important;
+}
+.link-content {
+  width: 100%;
+  min-width: 21vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.alert-link {
+  text-align: left;
+  position: fixed;
+  bottom: 3rem;
+  max-width: 27rem;
+  width: 100%;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  z-index: 9999;
+  left: 0;
+  border-color: var(--border-dark)!important;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 1rem;
+  min-width: 15vw;
+  background: rgb(7 8 12 / 80%);
+  margin: 1rem;
+}
+.share-button {
+  max-width: 12vw;
+}
 *{
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -223,6 +319,7 @@ export default {
   position: relative;
   max-width: 500px;
   min-width: 200px;
+  cursor: default;
   width: auto;
   z-index: 1;
 }
@@ -242,10 +339,11 @@ export default {
 }
 .row.small-metrics {
   display: flex;
-  overflow-x: scroll;
-  flex-direction: row;
   height: 100%;
   flex-wrap: nowrap;
+  padding-right: 2rem;
+  flex-direction: row;
+  overflow-x: scroll;
   padding-bottom: 1rem;
   padding-left: 1rem;
 }
@@ -368,7 +466,8 @@ export default {
   text-align: left;
   position: fixed;
   top: 8.5rem;
-  max-width: 18rem;
+  min-width: 10vw;
+  width: auto;
   z-index: 9999;
   right: 0;
   border-color: var(--border-dark)!important;
@@ -377,7 +476,6 @@ export default {
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-radius: 1rem;
-  min-width: 15vw;
   background: rgb(7 8 12 / 80%);
   margin: 1rem;
 }

@@ -9,9 +9,8 @@ import store from './store'
 import 'animate.css';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import MasonryWall from '@yeger/vue-masonry-wall'
 
 library.add(fas)
 
-createApp(App).use(store).use(router).use(MasonryWall).use(VueRouter).component('fa', FontAwesomeIcon).mount('#app')
+createApp(App).use(store).use(router).use(VueRouter).component('fa', FontAwesomeIcon).mount('#app')
 
