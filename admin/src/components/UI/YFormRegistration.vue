@@ -61,7 +61,9 @@ export default {
       if (!this.formData.file)
         alert('Ошибка! Загрузите логотип компании!');
 
-      Admin.reg(form_data);
+      Admin.reg(form_data).then(() => {
+        this.$router.push("/block");
+      });
     }
   }
 }

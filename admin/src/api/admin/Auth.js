@@ -76,7 +76,7 @@ Admin.getToken = function() {
 }
 
 Admin.reg = function (fd) {
-  axios.post( 'https://api.beta.psyreply.com/auth/signup',
+  return axios.post( 'https://api.beta.psyreply.com/auth/signup',
       fd,
       {
         headers: {
