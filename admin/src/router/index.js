@@ -42,7 +42,19 @@ const routes = [
     path: '/results:after(.*)',
     name: 'results',
     component: () => import('@/views/ResultsView'),
-    meta: { requiresAuth: true, authPage: false }
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/mailing:after(.*)',
+    name: 'mailing',
+    component: () => import('@/views/MailingView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/mailing:after(.*)',
+    name: 'mailing',
+    component: () => import('@/views/MailingView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
