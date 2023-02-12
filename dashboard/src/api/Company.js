@@ -12,4 +12,8 @@ export default class Company extends ApiResolver {
     async getCompanyName() {
         return await this.request('dash/get', 'GET');
     }
+
+    async getShare(groups){
+        return await this.request('stat/share', 'POST', {groups})
+    }
 }

@@ -18,13 +18,17 @@ export default createStore({
         selectedMetric: false,
         showInfoModal: false,
         showInfoModalData: null,
-        showAnimation: false
+        showAnimation: false,
+        shareToken: null,
     },
     getters: {
         groups(state) {
             if (state.groups)
                 return state.groups;
             return false;
+        },
+        selectedGroupId(state){
+            return state.selectedGroupId
         },
         selectedGroup(state) {
             return state.selectedGroup;
@@ -52,6 +56,9 @@ export default createStore({
         },
         showedAnimations(state){
             return state.showAnimation
+        },
+        shareToken(state){
+          return state.shareToken
         }
     },
     actions: {
@@ -72,6 +79,13 @@ export default createStore({
                 commit('setCompanyLogo', res.logo);
                 return res;
             });
+        },
+        async createShareToken({commit,state}){
+            const company = new Company()
+            return await company.getShare([state.selectedGroupId]).then(res =>{
+                commit('setShareToken', res)
+                return res
+            })
         },
         async exit({commit}){
             router.push('/')
@@ -175,9 +189,11 @@ export default createStore({
             state.token = token;
         },
         setGroups(state, groups) {
+            console.log(groups)
             state.groups = groups;
         },
         setSelectedGroup(state, group) {
+            console.log(group)
             state.selectedGroup = group;
             state.selectedMetric = false;
         },
@@ -205,16 +221,19 @@ export default createStore({
             state.showInfoModalData = data;
         },
         openShowInfoModal(state){
-          state.showInfoModal = true
+          state.showInfoModal = true;
         },
         closeShowInfoModal(state){
-            state.showInfoModal = false
+            state.showInfoModal = false;
         },
         showAnimationTrue(state){
-          state.showAnimation = true
+          state.showAnimation = true;
         },
         showAnimationFalse(state){
-            state.showAnimation = false
+            state.showAnimation = false;
+        },
+        setShareToken(state, token){
+            state.shareToken = token;
         }
     }
 

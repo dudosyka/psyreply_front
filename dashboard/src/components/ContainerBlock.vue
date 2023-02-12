@@ -1,6 +1,6 @@
 <template>
 <!--  Основной контейнер-->
-<div class="container-fluid">
+<div class="container-fluid" @click=" closeShareModal">
   <!--  Ряд с хедером-->
   <div class="row header-area">
     <!--    Левая колонка с логотипом Reply-->
@@ -93,30 +93,32 @@
       leave-active-class="animate__animated animate__fadeOut"
   >
     <template v-if="showLink === true">
-      <div class="alert-link d-flex align-items-center" role="alert">
-        <div class="row link-content">
-          <div class="col notification-link-heading">
+      <div class="alert-link d-flex align-items-center"   v-if="showLinkModal">
+        <div class="row link-content" >
+          <div class="col notification-link-heading" v-if="showLinkShare">
             <h6 class="alert-heading link-heading">Ссылка на группу готова!</h6>
           </div>
-          <div class="col">
+          <div class="col notification-link-heading" v-if="showLinkShare === false">
+            <h6 class="alert-heading link-heading">Текущей группой нельзя поделиться</h6>
+          </div>
+          <div class="col" v-if="showLinkShare">
             <div class="form-outline">
               <input
                   class="form-control link-input"
                   id="formControlReadonly"
                   type="text"
-                  value="https://dashboard.psyreply.com/14882280148822801488228014882280"
+                  v-model=sharetext
                   readonly
               />
             </div>
             <p class="link-description">Нажмите на ссылку, чтобы скопировать</p>
-
           </div>
         </div>
       </div>
     </template>
   </Transition>
   <div class="row footer-area">
-    <button class="btn btn-primary results-button share-button" @click = "toggle_link"><i class="fa-solid fa-share-from-square"></i> Поделиться группой</button>
+    <button class="btn btn-primary results-button share-button" @click.stop = "toggle_link"><i class="fa-solid fa-share-from-square"></i> Поделиться группой</button>
     <div class="col notification">
       <button class="btn btn-primary results-button" @click="loadOld"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
     </div>
@@ -137,7 +139,9 @@ export default {
   data() {
     return {
       showContext: false,
-      showLink: false
+      showLink: false,
+      showLinkModal: false,
+      sharetext: `https://dashboard.psyreply.com/${this.$store.getters.shareToken}`
     }
   },
   async created() {
@@ -145,6 +149,14 @@ export default {
     if (!isApplicationLoaded) this.$router.push("/");
     },
   methods:{
+    showShareModal(){
+      this.showLinkModal = true
+      console.log(this.sharetext)
+    },
+    closeShareModal(){
+      this.showLinkModal = false
+      console.log(this.showLinkModal)
+    },
     showAnimation(){
       this.$store.commit('showAnimationTrue')
       setTimeout(() => {
@@ -163,6 +175,7 @@ export default {
     },
     toggle_link() {
       this.showLink = !this.showLink;
+      this.showShareModal()
     },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
@@ -172,8 +185,16 @@ export default {
     }
   },
   computed: {
+    showLinkShare(){
+      const ver = this.$store.getters.selectedGroupId != null
+      if (ver == true){
+        return this
+      }else
+        return false
+    },
     groups() {
       const groups = this.$store.getters.groups;
+      this.$store.dispatch('createShareToken')
       return groups;
     },
     selectedMetric() {
