@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import Client from '@/api/Client';
+import axios from "axios";
 
 export default createStore({
   state: {
@@ -15,6 +16,10 @@ export default createStore({
     view: null,
     userId: null,
     results: null,
+    tokens: [
+        '5783059057:AAFKjXFRicrIanLozc5RTue_Hl7y_imwY1A',
+        '5208325504:AAEKGs0MqFVQ-NHJnuzXqKol9H-fkOS9-YM'
+    ]
   },
   getters: {
     // not use because use localStorage - it's crunch (((
@@ -174,6 +179,18 @@ export default createStore({
       })
     },
 
+    async getResultsByTestToken({dispatch}) {
+      const client = new Client()
+      const token = localStorage.getItem('results_by_testToken')
+      console.log(token);
+
+      client.changeTokenToUserToken(token).then(res => {
+        const token = res.split('/results/')[1]
+        localStorage.setItem('resultsToken', token)
+        dispatch('getResults')
+      })
+    },
+
     async getCurResults({ state, commit, dispatch }) {
       const client = new Client()
 
@@ -182,6 +199,41 @@ export default createStore({
       client.getCurResults(token).then(res => {
         commit('updateResults', res)
         commit('allResultsIsReady')
+      })
+
+      const chatId = parseInt(localStorage.getItem('tlgId'));
+      const botNum = parseInt(localStorage.getItem('botNum'));
+      const username = localStorage.getItem("username");
+
+      const botToken = state.tokens[botNum];
+      // const chatId = 828522413;
+      const text = `<b>Грацци! Мы закончили!</b>%0a%0aВаш личный Дашборд - графический отчет о вашем ментальном и физиологическом состояниях готов%0a%0aВы можете получить комментарий от психолога-куратора, нажав кнопку ниже`;
+      const markup = JSON.stringify({
+        "inline_keyboard":
+            [
+              [
+                {
+                  "text": "👩‍🏫 Получить комментарий",
+                  "callback_data":"Получить комментарий"
+                }
+              ],
+              [
+                {
+                  "text": "📊 Получить дашборд",
+                  "url":"https://client.psyreply.com/results_by_test/" + localStorage.getItem("testToken")
+                }
+              ]
+            ]
+      });
+
+      axios.post(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&parse_mode=HTML&text=${text}&reply_markup=${markup}`).then(res => {
+        console.log(res)
+        if (chatId !== 828522413) {
+          axios.post(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=1035004881&text=Пользователь ${username} прошел опрос`);
+          axios.post(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=5664691851&text=Пользователь ${username} прошел опрос`);
+        }
+      }).catch(err => {
+        console.error(err);
       })
     },
 

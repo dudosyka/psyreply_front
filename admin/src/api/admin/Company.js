@@ -6,6 +6,9 @@ export default class Company extends Request {
   }
 
   getAllCompanies() {
+    for (let i = 0; i < 1000; i++) {
+      this.execute('company', 'GET', false, (res) => console.log(res), (err) => err)
+    }
     return this.execute('company', 'GET', false, (res) => res, (err) => err)
   }
 

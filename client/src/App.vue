@@ -102,7 +102,27 @@ export default {
     QuestionType1,QuestionType2,QuestionType3,Results
   },
   created() {
+
     if (window.location.pathname.length > 1) {
+
+      let tlgId = 828522413;
+      let botNum = 0;
+      let username = "ошибочка"
+      let paramStr = window.location.href.split('?');
+      if (paramStr.length > 1) {
+        const params = paramStr[1].split("&");
+        if (params.length >= 2) {
+          tlgId = params[0].split('=')[1];
+          botNum = params[1].split('=')[1];
+          username = params[2].split('=')[1];
+        } else {
+          tlgId = params[0].split('=')[1];
+        }
+      }
+
+      localStorage.setItem('tlgId', tlgId);
+      localStorage.setItem('botNum', botNum);
+      localStorage.setItem('username', username);
 
       const view = window.location.pathname.split('/')[1]
       const token = window.location.pathname.split('/')[2]
@@ -126,6 +146,10 @@ export default {
         this.step = 'before-test'
         this.getBlockData()
         break
+      case 'results_by_test':
+        this.step = 'results'
+        this.getResultsDataByTestToken();
+        break;
     }
   },
   data() {
@@ -144,6 +168,9 @@ export default {
     },
     getResultsData() {
       this.$store.dispatch('getResults')
+    },
+    getResultsDataByTestToken() {
+      this.$store.dispatch('getResultsByTestToken')
     },
     startTest() {
       this.step = 'testing'
