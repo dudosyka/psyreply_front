@@ -72,16 +72,16 @@
           </div>
       <div class="row small-metrics">
           <div class="col stats-col second">
-            <StatsBlock2 :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
+            <SmallStatsBlock :metric="metric" v-for="metric in metrics[0]" :key="Date.now()+metric.label" />
           </div>
           <div class="col stats-col second">
-            <StatsBlock2 :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
+            <SmallStatsBlock :metric="metric" v-for="metric in metrics[1]" :key="Date.now()+metric.label" />
           </div>
           <div class="col stats-col second">
-            <StatsBlock2 :metric="metric" v-for="metric in metrics[2]" :key="Date.now()+metric.label" />
+            <SmallStatsBlock :metric="metric" v-for="metric in metrics[2]" :key="Date.now()+metric.label" />
           </div>
           <div class="col stats-col second">
-            <StatsBlock2 :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
+            <SmallStatsBlock :metric="metric" v-for="metric in metrics[3]" :key="Date.now()+metric.label" />
           </div>
       </div>
       <div class="col-md-auto shadow-col">
@@ -101,7 +101,7 @@
             <h6 class="alert-heading link-heading">Текущей группой нельзя поделиться</h6>
           </div>
           <div class="col" v-if="showLinkShare">
-            <div class="form-outline">
+            <div class="form-outline" :class="{'highlighted': highlightShareLink}">
               <input
                   class="form-control link-input"
                   id="formControlReadonly"
@@ -129,17 +129,18 @@
 <script>
 
 import StatsBlock from "@/components/StatsBlock.vue";
-import StatsBlock2 from "@/components/StatsBlock2.vue";
+import SmallStatsBlock from "@/components/SmallStatsBlock.vue";
 import * as url from "url";
 import apiConf from "@/api/api.conf";
 
 export default {
   name: "ContainerBlock",
-  components: {StatsBlock2, StatsBlock},
+  components: {SmallStatsBlock, StatsBlock},
   data() {
     return {
       showContext: false,
       showLinkModal: false,
+      highlightShareLink: false,
     }
   },
   async created() {
@@ -177,16 +178,15 @@ export default {
     },
     copyShareText() {
       navigator.clipboard.writeText(this.shareText);
+      this.highlightShareLink = true;
+      setTimeout(() => {
+        this.highlightShareLink = false;
+      }, 1000);
     }
   },
   computed: {
     showLinkShare(){
       return (!!this.$store.getters.selectedGroupId && !this.$store.getters.partialData);
-      // const ver = this.$store.getters.selectedGroupId != null
-      // if (ver == true){
-      //   return this
-      // }else
-      //   return false
     },
     groups() {
       const groups = this.$store.getters.groups;
@@ -263,6 +263,9 @@ export default {
 </script>
 
 <style scoped>
+.form-outline {
+  transition-duration: 0.5s;
+}
 *::selection {
   background-color: rgba(0, 189, 255, 0.56);
   color: #fff;
@@ -324,6 +327,10 @@ export default {
 }
 .share-button {
   max-width: 12vw;
+}
+.highlighted {
+  box-shadow: 0px 0px 53px rgba(59, 202, 138, 0.68) !important;
+  border-radius: 10px!important;
 }
 *{
   -webkit-touch-callout: none;

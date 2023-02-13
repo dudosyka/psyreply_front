@@ -56,7 +56,7 @@ export default {
           bar: {
             borderRadius: 5,
             borderRadiusApplication: "end",
-            columnWidth: "20%",
+            columnWidth: this.values.filter(el => !el.zero).length == 1 ? "20%" : "80%",
           }
         },
         colors:["#009dff"],

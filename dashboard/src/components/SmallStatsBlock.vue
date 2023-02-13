@@ -18,7 +18,7 @@
 import LineChart from "@/components/LineChart.vue";
 // import apiConf from "@/api/api.conf";
 export default {
-  name: "StatsBlock2",
+  name: "SmallStatsBlock",
   components:{
     LineChart,
   },
