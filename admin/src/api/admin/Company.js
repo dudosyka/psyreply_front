@@ -16,4 +16,25 @@ export default class Company extends Request {
   remove(company_id) {
     return this.execute(`company/${company_id}`, 'DELETE', false, res => res, err => err);
   }
+
+  isBotCreated(isCreated) {
+    // return this.execute()
+    return isCreated;
+  }
+
+  createBot(date) {
+
+  }
+
+  getMailings() {
+    return [];
+  }
+
+  getBlocks(mailingId) {
+    return [];
+  }
+
+  getMessages(mailingBlockId) {
+    return [];
+  }
 }

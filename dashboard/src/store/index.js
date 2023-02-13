@@ -8,6 +8,7 @@ import router from '@/router'
 export default createStore({
     state:{
         token: localStorage.getItem('token') || null,
+        partialData: localStorage.getItem('parted') || null,
         groups: null,
         selectedGroup: null,
         selectedGroupId: null,
@@ -39,7 +40,6 @@ export default createStore({
             return false;
         },
         selectedMetric(state) {
-            console.log("selected")
             return state.selectedMetric;
         },
         companyName(state){
@@ -58,14 +58,19 @@ export default createStore({
             return state.showAnimation
         },
         shareToken(state){
-          return state.shareToken
+          return state.shareToken;
+        },
+        partialData(state) {
+            return state.partialData;
         }
     },
     actions: {
-        async loadApplication({dispatch}) {
+        async loadApplication({dispatch, state}) {
             dispatch("auth", {email: null, password: null}).catch(() => {
                 return false;
             });
+            state.partialData = !!localStorage.getItem('parted');
+            console.log(state.partialData);
             await dispatch('getGroups')
             await dispatch("getMetricsLabels")
             await dispatch("selectGroup", 0);
@@ -82,7 +87,7 @@ export default createStore({
         },
         async createShareToken({commit,state}){
             const company = new Company()
-            return await company.getShare([state.selectedGroupId]).then(res =>{
+            return await company.getShare([state.selectedGroupId]).then(res => {
                 commit('setShareToken', res)
                 return res
             })
@@ -111,14 +116,16 @@ export default createStore({
                throw err;
             });
         },
-        async getGroups({ commit }) {
+        async getGroups({ commit, state }) {
             const company = new Company();
             return await company.getGroups().then(res => {
                 console.log(res[0])
-                res.unshift({
-                    id: null,
-                    name: "Общее"
-                });
+                console.log(state.partialData);
+                if (!state.partialData)
+                    res.unshift({
+                        id: null,
+                        name: "Общее"
+                    });
                 commit('setGroups', res);
                 return res;
             });
@@ -167,6 +174,9 @@ export default createStore({
             });
 
             state.selectedGroupId = groupId;
+
+            if (groupId && !state.partialData)
+                await dispatch('createShareToken')
 
             return await dispatch('processGroupStat', groupStat);
         },

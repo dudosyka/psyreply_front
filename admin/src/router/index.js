@@ -86,7 +86,7 @@ router.beforeEach((to, from) => {
   }
   if (Admin.checkAuth() && to.meta.authPage) {
     return {
-      path: "/block",
+      path: "/block"
     }
   }
 })

@@ -37,6 +37,7 @@ export default {
     },
     submit(){
       this.$store.dispatch('auth', { email: this.email, password: this.password }).then(() => {
+        localStorage.removeItem('parted');
         this.$router.push('/home');
       }).catch(err => {
         if (err.message == 'forbidden')

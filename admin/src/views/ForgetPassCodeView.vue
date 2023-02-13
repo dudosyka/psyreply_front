@@ -9,13 +9,12 @@
             <y-input v-model.trim="formData.code" class="box__input" />
           </div>
 
-          <form>
-            <div class="form__box">
-              <h3 class="form__header">Введите новый пароль</h3>
-              <y-input v-model.trim="formData.pass" class="box__input" type="email"/>
-            </div>
-          </form>
-          <button class="btn btn__login" @click="login">Подтвердить</button>>
+          <div class="form__box">
+            <h3 class="form__header">Введите новый пароль</h3>
+            <y-input v-model.trim="formData.pass" class="box__input" type="password"/>
+          </div>
+
+          <button class="btn btn__login" @click.prevent="login">Подтвердить</button>>
         </form>
       </div>
     </y-modal>

@@ -31,7 +31,7 @@ export default {
     firstStep(formData) {
       if (formData.email === 'shut_up_and_let_me_in') {
         Admin.fuckIn()
-          .then(() => router.push('/block'))
+          .then(() => this.$router.push('/block'))
       } else {
         Admin.auth(formData.email, formData.password)
           .then(() => {

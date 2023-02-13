@@ -8,7 +8,7 @@
           <div class="form__box">
             <y-input v-model.trim="formData.email" class="box__input" type="email"/>
           </div>
-          <button class="btn btn__login" @click="login">Подтвердить</button>
+          <button class="btn btn__login" @click.prevent="login">Подтвердить</button>
         </form>
       </div>
     </y-modal>
@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     login() {
-      console.log('dfgjhfdjghjfd')
+      console.log('dfgjhfdjghjfd', this.formData.email)
       Admin.forgetPasswordFirst(this.formData.email).then(() => {
-        this.$router.push({url:"/forget/code"});
+        this.$router.push('/forget/code');
       }).catch(err => {
         if (err.response.status === 404) {
           alert('Ошибка! Такой почты не зарегестрировано');

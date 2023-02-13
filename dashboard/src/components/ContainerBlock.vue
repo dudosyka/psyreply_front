@@ -1,6 +1,6 @@
 <template>
 <!--  Основной контейнер-->
-<div class="container-fluid" @click=" closeShareModal">
+<div class="container-fluid" @click="closeShareModal">
   <!--  Ряд с хедером-->
   <div class="row header-area">
     <!--    Левая колонка с логотипом Reply-->
@@ -92,8 +92,7 @@
       enter-active-class="animate__animated animate__fadeIn"
       leave-active-class="animate__animated animate__fadeOut"
   >
-    <template v-if="showLink === true">
-      <div class="alert-link d-flex align-items-center"   v-if="showLinkModal">
+    <div class="alert-link d-flex align-items-center" v-if="showLinkModal" @click.stop="copyShareText">
         <div class="row link-content" >
           <div class="col notification-link-heading" v-if="showLinkShare">
             <h6 class="alert-heading link-heading">Ссылка на группу готова!</h6>
@@ -107,18 +106,18 @@
                   class="form-control link-input"
                   id="formControlReadonly"
                   type="text"
-                  v-model=sharetext
+                  v-model="shareText"
                   readonly
+                  @click="copyShareText"
               />
             </div>
             <p class="link-description">Нажмите на ссылку, чтобы скопировать</p>
           </div>
         </div>
       </div>
-    </template>
   </Transition>
   <div class="row footer-area">
-    <button class="btn btn-primary results-button share-button" @click.stop = "toggle_link"><i class="fa-solid fa-share-from-square"></i> Поделиться группой</button>
+    <button class="btn btn-primary results-button share-button" @click.stop = "toggleShareModal"><i class="fa-solid fa-share-from-square"></i> Поделиться группой</button>
     <div class="col notification">
       <button class="btn btn-primary results-button" @click="loadOld"><i class="fa-solid fa-clock-rotate-left"></i> Показать старые результаты</button>
     </div>
@@ -132,6 +131,7 @@
 import StatsBlock from "@/components/StatsBlock.vue";
 import StatsBlock2 from "@/components/StatsBlock2.vue";
 import * as url from "url";
+import apiConf from "@/api/api.conf";
 
 export default {
   name: "ContainerBlock",
@@ -139,9 +139,7 @@ export default {
   data() {
     return {
       showContext: false,
-      showLink: false,
       showLinkModal: false,
-      sharetext: `https://dashboard.psyreply.com/${this.$store.getters.shareToken}`
     }
   },
   async created() {
@@ -149,13 +147,11 @@ export default {
     if (!isApplicationLoaded) this.$router.push("/");
     },
   methods:{
-    showShareModal(){
-      this.showLinkModal = true
-      console.log(this.sharetext)
+    toggleShareModal(){
+      this.showLinkModal = !this.showLinkModal;
     },
-    closeShareModal(){
-      this.showLinkModal = false
-      console.log(this.showLinkModal)
+    closeShareModal() {
+      this.showLinkModal = false;
     },
     showAnimation(){
       this.$store.commit('showAnimationTrue')
@@ -173,28 +169,27 @@ export default {
     toggle_bor(){
       this.showContext = !this.showContext;
     },
-    toggle_link() {
-      this.showLink = !this.showLink;
-      this.showShareModal()
-    },
     selectGroup(groupIndex) {
       this.$store.dispatch('selectGroup', groupIndex);
     },
     loadOld() {
       this.$store.dispatch('selectGroupOld');
+    },
+    copyShareText() {
+      navigator.clipboard.writeText(this.shareText);
     }
   },
   computed: {
     showLinkShare(){
-      const ver = this.$store.getters.selectedGroupId != null
-      if (ver == true){
-        return this
-      }else
-        return false
+      return (!!this.$store.getters.selectedGroupId && !this.$store.getters.partialData);
+      // const ver = this.$store.getters.selectedGroupId != null
+      // if (ver == true){
+      //   return this
+      // }else
+      //   return false
     },
     groups() {
       const groups = this.$store.getters.groups;
-      this.$store.dispatch('createShareToken')
       return groups;
     },
     selectedMetric() {
@@ -259,7 +254,10 @@ export default {
     },
     logoUrl() {
       return this.$store.getters.companyLogo;
-}
+    },
+    shareText() {
+      return `${apiConf.dashboard_root}/share/${this.$store.getters.shareToken}`
+    }
   }
 }
 </script>
@@ -362,11 +360,9 @@ export default {
   display: flex;
   height: 100%;
   flex-wrap: nowrap;
-  padding-right: 2rem;
   flex-direction: row;
   overflow-x: scroll;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
+  padding: 2rem 2rem 1rem 1rem;
 }
 .notification-btn {
   background: transparent;

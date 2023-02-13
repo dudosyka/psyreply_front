@@ -32,6 +32,7 @@ export default createStore({
     },
     group: {
     },
+    currentEmail: "",
     signUpData: [],
   },
   getters: {
@@ -61,9 +62,15 @@ export default createStore({
     },
     blockCreate(state) {
       return state.newBlock;
+    },
+    currentEmail(state) {
+      return state.currentEmail;
     }
   },
   mutations: {
+    setCurrentEmail(state, currentEmail) {
+      state.currentEmail = currentEmail;
+    },
     setEditBlock(state, block) {
       state.results.editBlock = block
     },
