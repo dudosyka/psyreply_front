@@ -3,140 +3,104 @@
   <div class="wrapper">
     <y-left-side-bar />
     <main class="main">
-      <y-modal v-if="window === 'main'" class="main__modal">
+      <!--
+        Внутри этого template должна быть верстка касающаяся дефолт вида окна рассылок
+        Тут должен быть список рассылок см. листочек с обсуждения
+      -->
+      <template v-if="window === 'main'" >
         <header class="header">
           <div class="header__select">
             <div class="heading header__heading">Рассылки</div>
-<!--            <select style="color: white" v-model="filter" @change="updateBlocksList">
-              <option style="color: black" :value="null">Без фильтра</option>
-              <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
-            </select>-->
-<!--            <y-select-->
-<!--                class="fs-2"-->
-<!--              :selects="companies"-->
-<!--              @select="updateBlocksList"-->
-<!--            />-->
           </div>
           <y-button :plus="true" @click="createBlock">Новая рассылка</y-button>
         </header>
-<!--        U can add "items" props to list component. It must be array -->
-        <y-list
-          key-of-name="name"
-          :editable="true"
-          @edit="editBlock"
-          :items="blocks"
-          :pagination="true"
-          :pagination-block="true"
-          :page-size="4"
+        Список рассылок
+      </template>
+
+      <!--
+        Внутри этого template можно делать верстку касающуюся момента
+        когда мы впервые сюда зашли и хотим привязать бота.
+      -->
+      <template v-if="window === 'createBot'">
+        <CreateMailingBot></CreateMailingBot>
+      </template>
+
+      <!--
+        Внутри этого template можно делать верстку касающуюся
+        создания новой рассылки
+
+        Можешь как они сделать отдельный компонент, можешь прямо тут просто внутри template накидать всё
+      -->
+      <template v-if="window === 'createMailing'">
+        <create-mailing
+            @close="close"
         />
-      </y-modal>
-      <create-mailing
-        v-if="window === 'createMailing'"
-        @close="close"
-      />
-      <edit-mailing
-        :id="editBlockId"
-        v-if="window === 'editMailing'"
-        @close="close"
-      />
+      </template>
+
+      <!--
+        Внутри этого template можно делать верстку касающуюся
+        редактирования существующей рассылки
+
+        Логика та же: либо отдельный компонент, либо прям тут
+      -->
+      <template v-if="window === 'editMailing'">
+        <edit-mailing
+            :id="2"
+            @close="close"
+        />
+      </template>
+
     </main>
   </div>
 </template>
 
 <script>
-import CreateBlock from '@/components/Block/CreateBlock';
-import EditBlock from '@/components/Block/EditBlock';
-
-import Block from '@/api/admin/Block';
-import Company from '@/api/admin/Company';
 import YPopupWarn from "@/components/UI/YPopupWarn";
 import CreateMailing from "@/components/Mailing/CreateMailing.vue";
 import EditMailing from "@/components/Mailing/EditMailing.vue";
-
-function update(data) {
-  const block = new Block()
-  // block.getAll({filters: { company_id: data.filter }})
-  //   .then(res => {
-  //     if (res.ok) {
-  //       res.json().then(data => data.body).then(r => data.blocks = r)
-  //     }
-  //   })
-}
+import CreateMailingBot from "@/components/Mailing/CreateMailingBot.vue";
 
 export default {
-  name: "BlockView",
+  name: "MailingView",
   components: {
+    CreateMailingBot,
     EditMailing,
     CreateMailing,
     YPopupWarn,
-    CreateBlock,
-    EditBlock
   },
   data() {
     return {
       window: 'main',
-      blocks: [{id: 1488, name: "salkdjsa"}],
-      editBlockId: null,
-      companies: [],
-      filter: null
     }
   },
   created() {
-    this.$watch(
-        () => this.$route.params,
-        (toParams, previousParams) => {
-          if (toParams.after === '')
-            this.window = 'main'
-        }
-    )
-    update(this)
-    const company = new Company()
-    this.companies.push({ })
-    this.companies.forEach(el => el['active'] = false)
-    this.companies[0]['name'] = 'Шаблоны'
-    this.companies[0]['id'] = null
-    this.companies[0]['active'] = true
-    company.getAllCompanies()
-      .then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            r.forEach(el => {
-              el.active = false
-              this.companies.push(el)
-            })
-          })
-        }
-      })
+    // Вот эта тема должна следить за изменениями url и на основе этого типо изменять контент
+    // Я эту штуку отключаю, можешь просто руками задать соответствующий window который тебе нужен в данный момент
+    // Вот список значений window
+    // main - дефолт страница (список рассылок)
+    // createBot - Создание бота (первый вход)
+    // createMailing - Создание рассылок
+    // editMailing - Редактирование рассылок
+    this.window = 'main';
+    // this.$watch(
+    //     () => this.$route.params,
+    //     (toParams, previousParams) => {
+    //       if (toParams.after === '')
+    //         this.window = 'main'
+    //     }
+    // )
   },
   methods: {
-    editBlock(n){
-      this.$router.push('/mailing/edit')
-      this.window = 'editMailing'
-      this.editBlockId = n.id
-    },
-    createBlock() {
-      this.$router.push('/mailing/create')
-      this.window = 'createMailing'
-    },
-    updateBlocksList(n) {
-      this.companies.map(el => {
-        el.active = el.id === n.id;
-      })
-      const select = this.companies.filter(el => el.active)
-      this.filter = select[0].id
-      update(this)
-    },
+    // Этот метод обрабатывает закрытие Мишиных компонентов
+    // Он будет открывать дефолт окно при закрытии одного из них
+    // Для того чтобы он работал в компоненте, должен быть какой то элемент
+    // В котором задан клик @click="$emit('close')"
+    // А в вызове компонента надо прописать @close='close'
+    // см. Как это работает в Мишиных компонентах
+    // Если хочешь можешь также сделать в своих ну или просто всегда руками меняй window внутри created
     close() {
-      this.$router.push('/mailing')
-      this.window = 'main'
-
-      this.companies.map(el => el.active = false)
-      this.companies.map(el => {
-        el.active = el.id === null;
-      })
-      this.filter = null
-      update(this)
-    },
+      this.window = 'main';
+    }
   }
 }
 </script>
