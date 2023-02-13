@@ -125,6 +125,7 @@ export default {
   display: grid;
   grid-gap: 1rem;
   list-style: none;
+  width: 100%;
 }
 .hide-pagination {
   color: white;
@@ -133,6 +134,8 @@ export default {
 .footer-container {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  max-height: 6vh;
   justify-content: space-between;
   border-top: 1px solid rgba(255, 255, 255, 0.13);
   padding-top: 1rem;

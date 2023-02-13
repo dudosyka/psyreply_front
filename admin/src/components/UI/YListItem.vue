@@ -15,7 +15,7 @@
       @click="$emit('edit')"
       class="options"
     >
-      <img v-if="editable" src="@/assets/img/options.svg">
+      <img class="settings-icon" v-if="editable" src="@/assets/img/options.svg">
     </div>
   </li>
 </template>
@@ -44,13 +44,16 @@ export default {
 </script>
 
 <style scoped>
+.settings-icon {
+  width: 1rem;
+}
 .elipce {
-  width: 25px;
-  height: 25px;
-  background: linear-gradient(155.31deg, rgba(255, 255, 255, 0.5) 12.33%, rgba(255, 255, 255, 0) 34.31%, rgba(255, 255, 255, 0) 52.66%, rgba(255, 255, 255, 0.54) 74.67%);
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.15);
   background-blend-mode: overlay;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 .elipce:hover {
   cursor: pointer;
@@ -61,7 +64,7 @@ export default {
 .name{
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 16px;
   line-height: 100%;
   color: #FFFFFF;
   text-overflow: ellipsis;
@@ -74,12 +77,13 @@ export default {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   justify-content: start;
+  max-height: 3rem;
   grid-gap: 2rem;
-  background: linear-gradient(140.62deg, hsla(0, 0%, 100%, 0.25) 2.81%, hsla(0, 0%, 100%, 0.1) 100.82%);
+  background: var(--acrylic-blur-light)!important;
   box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
-  border-radius: 1rem;
-  border-color: var(--light-opacity);
-  border-width: 2px;
+  border-radius: 0.5rem;
+  border-color: var(--border-dark);
+  border-width: 1px;
   border-style: solid;
 }
 .list__item_not_settings {
@@ -93,8 +97,9 @@ export default {
   background: rgba(255, 255, 255, 0.16);
   display: flex;
   align-items: center;
+  max-height: 2.7rem;
   height: 100%;
-  border-radius: 0px 14px 14px 0px;
+  border-radius: 0rem 0.4rem 0.4rem 0rem;
 }
 .options:hover {
   cursor: pointer;

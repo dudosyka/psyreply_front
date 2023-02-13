@@ -6,7 +6,7 @@
       <y-modal v-if="window === 'main'" class="main__modal">
         <header class="header">
           <div class="header__select">
-            <div class="heading header__heading">Блоки</div>
+            <h2 class="heading header__heading">Блоки</h2>
 <!--            <select style="color: white" v-model="filter" @change="updateBlocksList">
               <option style="color: black" :value="null">Без фильтра</option>
               <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
@@ -126,16 +126,26 @@ export default {
 }
 
 .main {
-  padding: 4.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main__modal {
-  display: grid;
+  display: flex;
+  width: 60vw;
+  height: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   grid-gap: 2.5625rem;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header {
   display: grid;
   grid-template-columns: auto min-content;
+  max-height: 4rem;
+  width: 100%;
 }
 .header__select{
   cursor: pointer;
@@ -143,14 +153,11 @@ export default {
   flex-direction: row;
   align-items: baseline;
   justify-content: left;
-
+  max-height: 4rem;
 }
 
 
 .header__heading{
-  margin-right: 0.5rem;
-
-  font-size:2rem;
 }
 .header__arrow__button img{
   width: 26px;

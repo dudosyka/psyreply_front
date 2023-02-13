@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button type="button" class="btn btn-outline-secondary">
     <slot></slot>
     <span v-if="plus" class="button__symbol">+</span>
   </button>
@@ -23,19 +23,39 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  font-size: 1.25rem;
-  color: var(--light);
-  padding: .3rem 1rem;
-  border-radius: .875rem;
-  border: 1px solid rgba(255, 255, 255, 0);
-  border-top-color: rgba(255, 255, 255, 0.5);
-  border-bottom-color: rgba(255, 255, 255, 0.54);
-  background: rgba(255, 255, 255, 0.16);
-  white-space: nowrap;
+.btn {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  color: var(--inactive-color);
+  text-transform: none;
+  width: 7vw;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.5rem;
+  transition: 0.3s;
 }
-.button:hover {
-  cursor: pointer;
+.btn:hover {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+..btn:focus {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+}
+.btn:active {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  color: rgba(255, 255, 255, 1);
 }
 .button__symbol {
   margin-left: .6rem;

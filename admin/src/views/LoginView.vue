@@ -63,11 +63,18 @@ export default {
 }
 .main {
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
+  padding: 3.0625rem 3.0625rem 3.5625rem;
+}
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
 </style>
 
