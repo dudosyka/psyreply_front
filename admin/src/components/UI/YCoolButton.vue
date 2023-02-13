@@ -1,5 +1,5 @@
 <template>
-  <button class="button button_cool">
+  <button class="btn">
     <slot></slot>
   </button>
 </template>
@@ -11,14 +11,19 @@ export default {
 </script>
 
 <style scoped>
-.button_cool {
-  padding: 1.09375rem 1rem;
-  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
-  box-shadow: -10px 11px 20px rgba(221, 126, 255, 0.35);
-  border-radius: .75rem;
-  font-size: 1.0625rem;
-  color: var(--light);
-  font-weight: 500;
+.btn {
+  background: linear-gradient(200.42deg, #B275FF 13.57%, #C247ED 98.35%);
+  box-shadow: none;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  text-transform: none;
+  width: 10vw;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.5rem;
   transition: background .3s ease-in-out;
 }
 .button_cool:hover {

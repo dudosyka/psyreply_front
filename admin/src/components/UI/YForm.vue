@@ -80,6 +80,7 @@ input.box__input:focus {
 .box__lable{
   margin-top: 15px;
   font-size:18px;
+  text-align: center;
 }
 .form__button{
   margin-top: 40px;
@@ -93,6 +94,7 @@ input.box__input:focus {
   border-radius: 12px;
   color: white;
   width: 60%;
+  height: 5vh;
   margin-left: 20%;
   margin-right: 20%;
   padding: 18px 16px;

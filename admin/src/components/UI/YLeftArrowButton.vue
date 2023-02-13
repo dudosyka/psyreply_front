@@ -11,8 +11,9 @@ export default {
 <style scoped>
 .button {
   background: url("@/assets/img/arrow.svg") no-repeat;
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
 }
 .button:hover {
   cursor: pointer;

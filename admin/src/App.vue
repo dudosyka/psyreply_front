@@ -28,6 +28,13 @@ export default {
   font-family: var(--font-rubik);
   font-size: calc(.5vw + .5rem);
   color: var(--light);
+  --acrylic-blur-dark: rgb(7 8 12 / 53%);
+  --acrylic-blur-light: rgba(17, 25, 40, 0.75);/*Прозрачный фон всех элементов*/
+  --border-dark: rgba(113 119 144 / 25%);
+  --border-light: rgb(113 119 144 / 12%);/*Обводка*/
+  --content-bg-dark: rgb(146 151 179 / 13%); /*Второй фон для всех элементов*/
+  --inactive-color: rgb(113 119 144 / 78%); /*Цвет неактивных ссылок*/
+  --active-color: #faf9fb; /*Цвет активных ссылок*/
   box-sizing: border-box;
   background-image: url('@/assets/img/bg.png');
   background-size: cover;
