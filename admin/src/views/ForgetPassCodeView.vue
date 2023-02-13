@@ -12,10 +12,10 @@
           <form>
             <div class="form__box">
               <h3 class="form__header">Введите новый пароль</h3>
-              <y-input v-model.trim="formData.email" class="box__input" type="email"/>
+              <y-input v-model.trim="formData.pass" class="box__input" type="email"/>
             </div>
           </form>
-          <router-link to="/forget/code" class="btn btn__login">Подтвердить</router-link>
+          <button class="btn btn__login" @click="login">Подтвердить</button>>
         </form>
       </div>
     </y-modal>
@@ -24,6 +24,7 @@
 
 <script>
 import YModal from "@/components/UI/YModal.vue";
+import Admin from "@/api/admin/Auth";
 
 export default {
   name: "ForgetPassCodeView",
@@ -31,13 +32,20 @@ export default {
   data() {
     return {
       formData: {
-        code: null
+        code: null,
+        pass: null
       }
     }
   },
   methods: {
-    submit() {
-      this.$emit('submit', this.formData)
+    login() {
+      Admin.forgetPasswordSecond(this.formData.code, this.formData.pass).then(()=>{
+        this.$router.push('/')
+      }).catch(err =>{
+        if (err.response.status === 404) {
+          alert('Ошибка! Неверный код!');
+        }
+      })
     }
   }
 }

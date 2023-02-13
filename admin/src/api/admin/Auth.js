@@ -94,21 +94,21 @@ Admin.reg = function (fd) {
 }
 
 Admin.forgetPasswordFirst = function (login) {
-  return new Promise((resolve) => {
+  return new Promise((resolve,reject) => {
     axios.post(`${apiConf.endpoint}/repass/first`, { login }).then(res => {
-      console.log(res);
+      resolve(true);
     }).catch(err => {
-      console.log(err);
+      reject(err);
     })
   })
 }
 
 Admin.forgetPasswordSecond = function (code, newPassword) {
-  return new Promise((resolve) => {
+  return new Promise((resolve,reject) => {
     axios.post(`${apiConf.endpoint}/repass/second`, { code, newPassword }).then(res => {
-      console.log(res);
+      resolve(true)
     }).catch(err => {
-      console.log(err);
+      reject(err)
     })
   })
 }

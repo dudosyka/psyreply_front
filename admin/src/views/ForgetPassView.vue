@@ -8,7 +8,7 @@
           <div class="form__box">
             <y-input v-model.trim="formData.email" class="box__input" type="email"/>
           </div>
-          <button class="btn btn__login">Подтвердить</button>
+          <button class="btn btn__login" @click="login">Подтвердить</button>
         </form>
       </div>
     </y-modal>
@@ -17,6 +17,7 @@
 
 <script>
 import YModal from "@/components/UI/YModal.vue";
+import Admin from "@/api/admin/Auth";
  ///forget/code
 export default {
   name: "ForgetPassView",
@@ -29,8 +30,15 @@ export default {
     }
   },
   methods: {
-    submit() {
-      this.$emit('submit', this.formData)
+    login() {
+      console.log('dfgjhfdjghjfd')
+      Admin.forgetPasswordFirst(this.formData.email).then(() => {
+        this.$router.push({url:"/forget/code"});
+      }).catch(err => {
+        if (err.response.status === 404) {
+          alert('Ошибка! Такой почты не зарегестрировано');
+        }
+      })
     }
   }
 }
