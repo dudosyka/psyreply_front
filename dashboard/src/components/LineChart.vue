@@ -16,7 +16,6 @@ export default {
     values: Array
   },
   created() {
-
   },
   computed: {
     width(){
