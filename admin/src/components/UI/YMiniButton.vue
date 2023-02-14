@@ -29,6 +29,7 @@ export default {
   max-height: fit-content;
   color: white;
   min-height: 2rem;
+  max-height: fit-content;
   text-transform: none;
   max-width: 15vw;
   width: 12vw;
@@ -48,6 +49,7 @@ export default {
   color: white;
   max-height: fit-content;
   min-height: 2rem;
+  max-height: fit-content;
   text-transform: none;
   max-width: 15vw;
   padding-top: 0.5rem!important;
@@ -66,6 +68,7 @@ export default {
   border-radius: 0.5rem;
   color: white;
   min-height: 2rem;
+  max-height: fit-content;
   text-transform: none;
   max-width: 15vw;
   width: 12vw;
@@ -83,6 +86,7 @@ export default {
   border-radius: 0.5rem;
   color: white;
   min-height: 2rem;
+  max-height: fit-content;
   text-transform: none;
   width: 12vw;
   max-height: fit-content;
@@ -102,14 +106,23 @@ export default {
   border-radius: 0.5rem;
   color: white;
   min-height: 2rem;
+  max-height: fit-content;
   text-transform: none;
   width: 12vw;
   max-width: 15vw;
-  padding-top: 0.5rem!important;
-  padding-bottom: 0.5rem!important;
-  padding-left: 0.7rem!important;
-  padding-right: 0.7rem!important;
+  padding: 0.5rem 0.7rem !important;
   margin-left: 0.5rem!important;
   transition: background .3s ease-in-out;
+}
+.type__test__type > *,
+.type__test__type > *:after,
+.type__test__type > *:before {
+  display: none !important;
+}
+::before {
+  display: none;
+}
+::after {
+  display: none;
 }
 </style>

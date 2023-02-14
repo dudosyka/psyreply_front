@@ -18,6 +18,14 @@
                   v-for="type of questionTypes"
                   :key="`${type.id}${type.name}`"
               >
+<!--                <button-->
+<!--                    class=""-->
+<!--                    @click="selectLabel('type', type.id)"-->
+<!--                    :disabled="!editable"-->
+<!--                    v-if="type.id === test.type || editable"-->
+<!--                >-->
+<!--                  {{ type.name }}-->
+<!--                </button>-->
                 <y-mini-button
                     class="type__test__type"
                     :active="type.id === test.type"
@@ -476,8 +484,8 @@ export default {
   margin-bottom: 1rem;
 }
 .type__test__type {
-  margin-right: .5rem;
-  margin-bottom: .5rem;
+  /*margin-right: .5rem;*/
+  /*margin-bottom: .5rem;*/
 }
 .type__test__type:last-child {
   margin-right: 0;

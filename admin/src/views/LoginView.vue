@@ -10,6 +10,16 @@
         v-else-if="step === 1"
         @submit="secondStep"
       />
+      <y-modal
+        v-else-if="step === 2"
+      >
+        <h2>Выберите компанию для входа</h2>
+        <select @change="companySelected" v-model="selectedCompany" class="select">
+          <option :key="Date.now() + company.id + company.name" v-for="company in companies" :value="company.id">
+            {{ company.name }}
+          </option>
+        </select>
+      </y-modal>
     </y-modal>
   </div>
 </template>
@@ -18,13 +28,17 @@
 import Admin from '@/api/admin/Auth'
 import router from '@/router';
 import YModal from "@/components/UI/YModal.vue";
+import YFormContent from "@/components/UI/YFormContent.vue";
+import Company from "@/api/admin/Company";
 
 export default {
   name: 'LoginView',
-  components: {YModal},
+  components: {YFormContent, YModal},
   data() {
     return {
-      step: 0
+      step: 0,
+      companies: [],
+      selectedCompany: null,
     }
   },
   methods: {
@@ -43,15 +57,33 @@ export default {
         })
       }
     },
-    secondStep(formData) {
-      Admin.authCode(formData.code)
+    async secondStep(formData) {
+      await Admin.authCode(formData.code)
         .then(res => {
           if (res.ok) {
-            router.push('/block')
+            return;
           } else {
             this.$store.commit('openErrorPopup', 'Неверный код')
           }
+        });
+
+      const checkSuper = await Admin.checkSuper();
+
+      if (checkSuper) {
+        this.step = 2;
+        const company = new Company();
+        company.getAllCompanies().then(res => {
+          res.json().then(r => {
+            this.companies = r.body;
+          })
         })
+      } else {
+        this.$router.push('/block');
+      }
+    },
+    async companySelected() {
+      await Admin.superLogin(this.selectedCompany);
+      this.$router.push('/block');
     }
   }
 }
@@ -75,6 +107,12 @@ export default {
   flex-direction: column;
   align-items: center;
   align-content: center;
+}
+.select {
+  width: 100%;
+  height: 30px;
+  font-size: 1rem;
+  color: white;
 }
 </style>
 
