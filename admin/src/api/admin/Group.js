@@ -5,8 +5,8 @@ export default class Group extends Request {
         super('group');
     }
 
-    async create(company_id, data) {
-        return await this.execute(`company/${company_id}/group`, 'POST', data, res => res.json().then(data => data.body), err => err);
+    async create(data) {
+        return await this.execute(`company/create/group`, 'POST', data, res => res.json().then(data => data.body), err => err);
     }
 
     async update(group_id, data) {

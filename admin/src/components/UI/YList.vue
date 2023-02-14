@@ -9,7 +9,7 @@
       @select="$emit('select', item)"
       @edit="$emit('edit', item)"
     >
-      {{showId ? `${item[showId]} ` : ""}} {{item[keyOfName]}}
+      {{showId ? (item[showId]) ? `${item[showId]} ` : 'Администратор' : ""}} {{item[keyOfName]}}
 
     </y-list-item>
   </ul>

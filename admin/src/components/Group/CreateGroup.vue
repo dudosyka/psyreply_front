@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <y-left-arrow-button @click="$emit('close')" />
-    <h1>Создание новой группы в {{company.name}}</h1>
+    <h1>Создание новой группы</h1>
   </header>
   <y-modal
     class="block"
@@ -37,7 +37,6 @@ export default {
   name: "CreateGroup",
   data() {
     return {
-      company: {},
       group: {
         name: "",
         users: []
@@ -48,11 +47,10 @@ export default {
   async created() {
     if (mainConf.projectState === ProjectState.dev)
       console.log(this.$store.state.company.name);
-    this.company = this.$store.state.company;
 
     const user = new User();
     this.users = (await user.getAll({
-      except_company_id: this.company.id
+      byCompany: true,
     })).map(el => {
       el.active = false;
       return el;
@@ -64,9 +62,11 @@ export default {
       n.active = !n.active;
     },
     create() {
+      console.log('clicked');
       const group = new Group();
       this.group.users = this.users.filter(el => el.active).map(el => parseInt(el.id));
-      group.create(this.company.id, this.group).then(res => {
+      group.create(this.group).then(res => {
+        console.log(res)
         this.$emit('close');
       });
     }

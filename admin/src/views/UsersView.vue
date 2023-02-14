@@ -3,27 +3,27 @@
   <div class="wrapper">
     <y-left-side-bar />
     <main class="main">
-      <y-modal class="block">
+      <y-modal class="block" v-if="window === 'main'">
         <header>
           <h2 class="heading">Управление группами компании</h2>
         </header>
-        <y-list
-            key-of-name="name"
-            :selectable="true"
-            :items="company.groups"
-            @select="selectGroup"
-            :pagination="true"
+        <y-list  v-if="groups.length"
+                 key-of-name="name"
+                 :selectable="true"
+                 :items="groups"
+                 @select="selectGroup"
+                 :pagination="true"
         />
         <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
       </y-modal>
       <create-group
           v-if="window === 'createGroup'"
-          @close="update"
+          @close="close"
       >
       </create-group>
       <edit-group
           v-if="window === 'editGroup'"
-          @close="update"
+          @close="close"
       >
       </edit-group>
     </main>
@@ -31,36 +31,24 @@
 </template>
 
 <script>
-import CreateBlock from '@/components/Block/CreateBlock';
-import EditBlock from '@/components/Block/EditBlock';
-
-import Block from '@/api/admin/Block';
 import Company from '@/api/admin/Company';
 import YPopupWarn from "@/components/UI/YPopupWarn";
+import CreateGroup from "@/components/Group/CreateGroup.vue";
+import EditGroup from "@/components/Group/EditGroup.vue";
 
 function update(data) {
-  const block = new Block()
-  block.getAll({filters: { company_id: data.filter }})
-    .then(res => {
-      if (res.ok) {
-        res.json().then(data => data.body).then(r => data.blocks = r)
-      }
-    })
 }
 
 export default {
   name: "UsersView",
   components: {
     YPopupWarn,
-    CreateBlock, EditBlock
+    CreateGroup, EditGroup
   },
   data() {
     return {
       window: 'main',
-      blocks: [],
-      editBlockId: null,
-      companies: [],
-      filter: null
+      groups: []
     }
   },
   created() {
@@ -71,54 +59,30 @@ export default {
             this.window = 'main'
         }
     )
-    update(this)
-    const company = new Company()
-    this.companies.push({ })
-    this.companies.forEach(el => el['active'] = false)
-    this.companies[0]['name'] = 'Шаблоны'
-    this.companies[0]['id'] = null
-    this.companies[0]['active'] = true
-    company.getAllCompanies()
-      .then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            r.forEach(el => {
-              el.active = false
-              this.companies.push(el)
-            })
-          })
-        }
-      })
+
+    this.window = 'main';
+
+    const company = new Company();
+
+    company.getGroups().then(r => {
+      this.groups = r;
+    });
   },
   methods: {
-    editBlock(n){
-      this.$router.push('/block/edit')
-      this.window = 'editBlock'
-      this.editBlockId = n.id
-    },
-    createBlock() {
-      this.$router.push('/block/create')
-      this.window = 'createBlock'
-    },
-    updateBlocksList(n) {
-      this.companies.map(el => {
-        el.active = el.id === n.id;
-      })
-      const select = this.companies.filter(el => el.active)
-      this.filter = select[0].id
-      update(this)
-    },
     close() {
-      this.$router.push('/block')
+      this.$router.push('/users')
+      const company = new Company();
+      company.getGroups().then(r => {
+        this.groups = r;
+      });
       this.window = 'main'
-
-      this.companies.map(el => el.active = false)
-      this.companies.map(el => {
-        el.active = el.id === null;
-      })
-      this.filter = null
-      update(this)
     },
+    selectGroup() {
+      console.log(1111);
+    },
+    addGroup() {
+      this.window = 'createGroup';
+    }
   }
 }
 </script>
