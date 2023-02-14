@@ -571,6 +571,8 @@ export default {
   z-index: 9999;
   box-shadow: 40px 0px 40px 40px rgb(0, 0, 0, 40%);
   width: 0.01px;
+  position: fixed;
+  right: 0;
 }
 .stats-col.second {
   display: flex;
