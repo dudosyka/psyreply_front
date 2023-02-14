@@ -53,6 +53,29 @@ Admin.authCode = async function(code) {
   })
 }
 
+Admin.checkSuper = async function () {
+  return axios.get(`${apiConf.endpoint}/auth/super/check`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+  }).then(r => {
+    return true;
+  }).catch(err => {
+    return false;
+  })
+}
+
+Admin.superLogin = async function (companyId) {
+  return await axios.post(`${apiConf.endpoint}/auth/super/auth/${companyId}`, {}, { headers: { 'Content-Type': "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}` } }).then(r => {
+    localStorage.setItem("token", r.data.body.token);
+    return true;
+  }).catch(() => {
+    return false;
+  })
+}
+
 Admin.fuckIn = async function() {
   return new Promise((resolve) => {
     axios.post(`${apiConf.endpoint}/auth`, {email: "shut_up_and_let_me_in", password: "123"}, { headers: { 'Content-Type': "application/json" } }).then(r => {

@@ -206,13 +206,15 @@ export default {
     }
   },
   methods: {
-    statByWholeBlock() {
+    async statByWholeBlock() {
       const stat = new Stat();
-      stat.saveWholeBlock(this.filters.block_id, this.filters.week);
+      await stat.saveWholeBlock(this.filters.block_id, this.filters.week);
+      this.$store.commit('openPopup', 'Статистика успешно выгружена!');
     },
     statByGroup() {
       const stat = new Stat();
       stat.saveGroup(this.filters.block_id, this.filters.week, this.filters.group_id);
+      this.$store.commit('openPopup', 'Статистика успешно выгружена!');
     },
     nextPage(){
       if (this.showNext)
