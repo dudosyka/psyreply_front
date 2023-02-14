@@ -18,11 +18,15 @@ export default {
 </script>
 
 <style scoped>
+.ripple-surface {
+  max-height: 2rem!important;
+}
 .btn {
   background: transparent;
   box-shadow: none;
   border: 1px solid var(--border-dark);
   border-radius: 0.5rem;
+  max-height: fit-content;
   color: white;
   min-height: 2rem;
   text-transform: none;
@@ -42,6 +46,7 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 0.5rem;
   color: white;
+  max-height: fit-content;
   min-height: 2rem;
   text-transform: none;
   max-width: 15vw;
@@ -55,6 +60,7 @@ export default {
 }
 .btn:active {
   background: mediumvioletred;
+  max-height: fit-content;
   box-shadow: none;
   border: 1px solid var(--border-dark);
   border-radius: 0.5rem;
@@ -79,6 +85,7 @@ export default {
   min-height: 2rem;
   text-transform: none;
   width: 12vw;
+  max-height: fit-content;
   max-width: 15vw;
   padding-top: 0.5rem!important;
   padding-bottom: 0.5rem!important;
@@ -89,6 +96,7 @@ export default {
 }
 .button_active {
   background: mediumvioletred;
+  max-height: fit-content;
   box-shadow: none;
   border: 1px solid var(--border-dark);
   border-radius: 0.5rem;
