@@ -1,5 +1,5 @@
 <template>
-  <apexcharts width="500" height="400" type="bar" :options="chartOptions" :series="series"></apexcharts>
+  <apexcharts :width="width" :height="height" type="bar" :options="chartOptions" :series="series"></apexcharts>
 </template>
 
 <script>
@@ -13,6 +13,7 @@ export default {
   props: {
     values: Array
   },
+
   data() {
     return {
     }
@@ -20,6 +21,24 @@ export default {
   created() {
   },
   computed: {
+    width(){
+      let width = '500'
+      if (window.innerHeight == 768){
+        width = '500'
+      }else if(window.innerHeight == 720){
+        width = '500'
+      }
+      return width
+    },
+    height(){
+      let height = '300'
+      if (window.innerHeight == 768){
+        height = '300'
+      }else if(window.innerHeight == 720){
+        height = '270'
+      }
+      return height
+    },
     showContext() {
       return this.show;
     },

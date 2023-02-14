@@ -35,17 +35,20 @@ export default {
   padding-right: 0.5rem;
   margin-left: 0.5rem;
   transition: 0.3s;
+  max-height: fit-content;
 }
 .btn:hover {
   background: transparent;
   box-shadow: none;
   border-radius: 0;
   border: none;
+  max-height: fit-content;
   color: rgba(255, 255, 255, 1);
 }
 ..btn:focus {
   background: transparent;
   box-shadow: none;
+  max-height: fit-content;
   border-radius: 0;
   border: none;
   color: rgba(255, 255, 255, 1);
@@ -53,6 +56,7 @@ export default {
 .btn:active {
   background: transparent;
   box-shadow: none;
+  max-height: fit-content;
   border-radius: 0;
   border: none;
   color: rgba(255, 255, 255, 1);

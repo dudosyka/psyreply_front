@@ -111,7 +111,8 @@
                   @click="copyShareText"
               />
             </div>
-            <p class="link-description">Нажмите на ссылку, чтобы скопировать</p>
+            <p class="link-description" v-if="!copyLink">Нажмите на ссылку, чтобы скопировать</p>
+            <p class="link-description" v-if="copyLink">Ссылка скопирована</p>
           </div>
         </div>
       </div>
@@ -141,6 +142,7 @@ export default {
       showContext: false,
       showLinkModal: false,
       highlightShareLink: false,
+      copyLink: false
     }
   },
   async created() {
@@ -153,6 +155,7 @@ export default {
     },
     closeShareModal() {
       this.showLinkModal = false;
+      this.copyLink = false
     },
     showAnimation(){
       this.$store.commit('showAnimationTrue')
@@ -177,6 +180,7 @@ export default {
       this.$store.dispatch('selectGroupOld');
     },
     copyShareText() {
+      this.copyLink = true
       navigator.clipboard.writeText(this.shareText);
       this.highlightShareLink = true;
       setTimeout(() => {

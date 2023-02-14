@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <apexcharts type="area" width="260" height="150" :options="chartOptions" :series="series"></apexcharts>
+    <apexcharts type="area" :width="width" :height="height" :options="chartOptions" :series="series"></apexcharts>
   </div>
 </template>
 
@@ -19,6 +19,24 @@ export default {
 
   },
   computed: {
+    width(){
+      let width = '260'
+      if (window.innerHeight == 768){
+        width = '200'
+      }else if(window.innerHeight == 720){
+        width = '180'
+      }
+      return width
+    },
+    height(){
+      let height = '150'
+      if (window.innerHeight == 768){
+        height = '90'
+      }else if(window.innerHeight == 720){
+        height = '270'
+      }
+      return height
+    },
     series() {
       return this.values.map(el => {
         return {
