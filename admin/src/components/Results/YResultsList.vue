@@ -16,4 +16,5 @@ export default {
   grid-gap: 1rem;
   list-style: none;
 }
+
 </style>

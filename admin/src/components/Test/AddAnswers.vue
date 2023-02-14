@@ -13,7 +13,7 @@
             <label class="label">Баллы за ответ</label>
             <y-input :disabled="!editable" @input="giveData(answer, id)" v-model="answer.value" class="question__input" />
           </div>
-          <y-button v-if="editable" @click="removeAnswer(id)" class="question__del">X</y-button>
+          <y-button v-if="editable" @click="removeAnswer(id)" class="question__del"><i class="fa-solid fa-trash"></i></y-button>
         </article>
       </template>
 
@@ -94,6 +94,20 @@ export default {
 .heading {
   font-size: 1.5rem;
 }
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
 .answers__add{
   display: grid;
   grid-template-columns: 60% 1fr 1fr;
@@ -102,7 +116,7 @@ export default {
   grid-gap: 1.875rem;
 }
 .label {
-  font-size: 1.5rem !important;
+  font-size: 1.1rem !important;
   margin-right: 12px;
 }
 .question__coins {
@@ -115,8 +129,13 @@ export default {
   padding: .3em;
 }
 .question__del {
-  color: red;
-  width: min-content;
+  color: white;
+  padding: 0.3rem;
+  background: rgba(255, 0, 89, 1);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
 }
 hr {
   margin-top: 30px;
@@ -125,7 +144,7 @@ hr {
   border-left: 0px solid white;
   border-right: 0px solid white;
   border-bottom: 0px solid white;
-  border-top: 1px solid rgba(255, 255, 255, 0.52);
+  border-top: 1px solid var(--border-dark);
 }
 .anw__add__button{
   display: flex;

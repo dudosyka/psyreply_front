@@ -2,7 +2,7 @@
   <div class="tabel__item">
     <h2 class="item__metric">{{ metricName }}</h2>
     <h3 class="item__status">{{ oldValue }}</h3>
-    <y-input @input="changeValue" :value="value" type="text"/>
+    <y-input class="input" @input="changeValue" :value="value" type="text"/>
   </div>
 </template>
 
@@ -49,12 +49,22 @@ export default {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
   align-items: center;
-
-
-
 }
 .item__metric{
-  color:  rgba(255, 255, 255, 0.66);
+  color:  rgba(255, 255, 255, 1);
 }
-
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
 </style>

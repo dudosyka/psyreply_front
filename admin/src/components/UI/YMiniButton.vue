@@ -1,5 +1,5 @@
 <template>
-  <button :disabled="disabled" class="button" :class="{ 'button_active': active }">
+  <button :disabled="disabled" class="btn" :class="{ 'button_active': active }">
     <slot></slot>
   </button>
 </template>
@@ -18,22 +18,90 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  font-size: 1.25rem;
-  color: var(--light);
-  padding: .3rem 1rem;
-  border-radius: .4rem;
-  border: 1px solid rgba(255, 255, 255, 0);
-  border-top-color: rgba(255, 255, 255, 0.5);
-  border-bottom-color: rgba(255, 255, 255, 0.54);
-  background: rgba(255, 255, 255, 0.16);
-  white-space: nowrap;
+.btn {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  color: white;
+  min-height: 2rem;
+  text-transform: none;
+  max-width: 15vw;
+  width: 12vw;
+  padding-top: 0.5rem!important;
+  padding-bottom: 0.5rem!important;
+  padding-left: 0.7rem!important;
+  padding-right: 0.7rem!important;
+  margin-left: 0.5rem;
+  transition: all .3s;
 }
-.button:hover {
+.btn:hover {
   cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 0.5rem;
+  color: white;
+  min-height: 2rem;
+  text-transform: none;
+  max-width: 15vw;
+  padding-top: 0.5rem!important;
+  padding-bottom: 0.5rem!important;
+  padding-left: 0.7rem!important;
+  padding-right: 0.7rem!important;
+  margin-left: 0.5rem;
+  width: 12vw;
+  transition: background .3s ease-in-out;
+}
+.btn:active {
+  background: mediumvioletred;
+  box-shadow: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  color: white;
+  min-height: 2rem;
+  text-transform: none;
+  max-width: 15vw;
+  width: 12vw;
+  padding-top: 0.5rem!important;
+  padding-bottom: 0.5rem!important;
+  padding-left: 0.7rem!important;
+  padding-right: 0.7rem!important;
+  margin-left: 0.5rem;
+  transition: background .3s ease-in-out;
+}
+.btn:focus {
+  background: mediumvioletred;
+  box-shadow: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  color: white;
+  min-height: 2rem;
+  text-transform: none;
+  width: 12vw;
+  max-width: 15vw;
+  padding-top: 0.5rem!important;
+  padding-bottom: 0.5rem!important;
+  padding-left: 0.7rem!important;
+  padding-right: 0.7rem!important;
+  margin-left: 0.5rem!important;
+  transition: background .3s ease-in-out;
 }
 .button_active {
-  background: linear-gradient(200.42deg, #B275FF 13.57%, #DD7EFF 98.35%);
+  background: mediumvioletred;
+  box-shadow: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  color: white;
+  min-height: 2rem;
+  text-transform: none;
+  width: 12vw;
+  max-width: 15vw;
+  padding-top: 0.5rem!important;
+  padding-bottom: 0.5rem!important;
+  padding-left: 0.7rem!important;
+  padding-right: 0.7rem!important;
+  margin-left: 0.5rem!important;
+  transition: background .3s ease-in-out;
 }
-
 </style>

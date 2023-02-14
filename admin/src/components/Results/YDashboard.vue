@@ -3,7 +3,7 @@
     <header class="header">
       <div class="header__select">
         <y-left-arrow-button @click="$emit('close')" />
-        <h1 class="heading header__heading">{{ block.block_title }}</h1>
+        <h2 class="heading header__heading">{{ block.block_title }}</h2>
       </div>
 
         <div @click="openClientDash" class="dash__button">
@@ -19,8 +19,8 @@
       <div class="date">{{ formattedDate }}</div>
       <div class="line"></div>
       <div class="passage">
-        <p>Время прохождения: </p>
-        <p class="passage__user" :class="{ 'passage__user_bad': !isTimeValid }">{{ timeOnPass }}</p>
+        <p class="time">Время прохождения: </p>
+        <p class="passage__user" :class="{ 'passage__user_bad': !isTimeVauserlid }">{{ timeOnPass }}</p>
         <span class="slash"> /
       </span><p class="passage__test">{{ time }}</p>
       </div>
@@ -42,7 +42,9 @@
             :class="{ 'elipse__bad': !approved }"></div>
           <p>Результаты {{ approved ? "" : "не" }} валидны</p>
         </div>
-      <y-cool-button @click="updateBlock"><h1>Сохранить изменения</h1></y-cool-button>
+      <div class="row save">
+        <y-cool-button @click="updateBlock" class="btn save-button">Сохранить изменения</y-cool-button>
+      </div>
     </div>
 
   </div>
@@ -143,15 +145,37 @@ export default {
 </script>
 
 <style scoped>
+.save {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
 .dash__button{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--acrylic-blur-light)!important;
+  border: 1px solid var(--border-dark);
   border-radius: 14px;
   padding: 1rem;
   cursor: pointer;
+}
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
 }
 .dash__button__title{
   margin-right: 0.5rem;
@@ -163,17 +187,31 @@ export default {
   justify-content: space-between;
 }
 .header__select{
-  display: grid;
+  display: flex;
   grid-template-columns: auto max-content;
   justify-content: left;
   grid-gap: 1rem;
+  align-items: center;
 }
 .user{
   display: flex;
   align-items: center;
   justify-content: left;
+}
+.username {
   opacity: 0.5;
-
+}
+.id {
+  opacity: 0.5;
+}
+.date {
+  opacity: 0.5;
+}
+.slash {
+  opacity: 0.5;
+}
+.passage__test {
+  opacity: 0.5;
 }
 .line{
   margin-left: 0.5rem;
@@ -188,7 +226,9 @@ export default {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
-
+.time {
+  opacity: 0.5;
+}
 table{
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.26);
@@ -217,11 +257,13 @@ hr {
 }
 .passage__user{
   margin-left: 0.5rem;
-  color: rgba(0, 255, 25, 0.66);
+  color: rgba(0, 255, 25, 1);
+  opacity: 100%!important;
 
 }
 .passage__user_bad{
   color:red;
+  opacity: 100%!important;
 }
 
 .elipce{
@@ -238,5 +280,22 @@ hr {
   display: flex;
   align-items: center;
 }
-
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.item__metric {
+  color: white;
+  opacity: 100%;
+}
 </style>

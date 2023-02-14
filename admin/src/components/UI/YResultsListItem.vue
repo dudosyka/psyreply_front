@@ -84,13 +84,10 @@ export default {
   display: grid;
   grid-template-columns: 1fr 0.25fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr;
   align-items: center;
-  background: rgba(255, 255, 255, 0.17);
-  border-radius: 0.875rem;
+  background: var(--acrylic-blur-light)!important;
+  border-radius: 0.5rem;
   padding-left: 1rem;
-  border-bottom: rgba(255, 255, 255, 0.5);
-  border-top: rgba(255, 255, 255, 0.5);
-  border-right:rgba(255, 255, 255, 0) ;
-  border-left: rgba(255, 255, 255, 0);
+  border: 1px solid var(--border-dark);
 }
 .block__item{
   display: flex;
@@ -102,7 +99,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   margin-left: 1rem;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   line-height: 100%;
   color: #FFFFFF;
 }

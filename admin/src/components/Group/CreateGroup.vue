@@ -1,21 +1,18 @@
 <template>
-  <header class="header">
-    <y-left-arrow-button @click="$emit('close')" />
-    <h1>Создание новой группы</h1>
-  </header>
+
   <y-modal
     class="block"
   >
-    <header>
-      <h2 class="heading">Основная информация</h2>
+    <header class="header">
+    <y-left-arrow-button @click="$emit('close')" />
+    <h2>Создание новой группы</h2>
+  </header>
+    <header class="header">
+      <h3 class="heading">Основная информация</h3>
     </header>
     <y-input placeholder="Название" v-model.trim="group.name" />
-  </y-modal>
-  <y-modal
-    class="block"
-  >
-    <header>
-      <h2 class="heading">Добавление пользователей в группу</h2>
+    <header class="header">
+      <h3 class="heading">Добавление пользователей в группу</h3>
     </header>
     <y-list
         :items="users"
@@ -24,8 +21,9 @@
         :selectable="true"
         @select="selectUser"
     />
+    <y-cool-button @click="create">Сохранить</y-cool-button>
   </y-modal>
-  <y-cool-button @click="create">Сохранить</y-cool-button>
+
 </template>
 
 <script>
@@ -76,13 +74,29 @@ export default {
 
 <style scoped>
   .header {
-    display: grid;
+    display: flex;
     grid-template-columns: auto max-content;
-    justify-content: left;
+    justify-content: flex-start;
     grid-gap: 1rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border-dark);
+    padding-bottom: 1rem;
+    margin-bottom:  1rem;
+    width: 100%;
   }
-  .block {
-    display: grid;
-    grid-gap: .5rem;
+
+  .input {
+    background: var(--acrylic-blur-light)!important;
+    height: 3vh;
+    width: 100%;
+    text-align: left;
+    padding-left: 2rem;
+  }
+  .input:hover {
+    background: var(--acrylic-blur-light)!important;
+    height: 3vh;
+    width: 100%;
+    text-align: left;
+    padding-left: 2rem;
   }
 </style>

@@ -8,9 +8,9 @@
         <header class="header">
           <div class="header__select">
 
-            <div class="heading header__heading">Результаты</div>
+            <h2 class="heading header__heading">Результаты</h2>
             <y-select
-              font-size="2"
+              font-size="1"
               :selects="blocks"
               @select="updateBlocksSelect"
             />
@@ -53,8 +53,8 @@
           <!--            :selectable="filters.week != null && filters.week != ''"-->
           <!--            @select="result_selected(result)"-->
           <div class="container-fluid footer-container">
-            <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}">Назад</YButton>
-            <YButton @click="nextPage" :class="{'hide-pagination': !showNext}">Далее</YButton>
+            <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
+            <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
           </div>
         </y-results-list>
         <p class="new__results" v-else>
@@ -379,7 +379,12 @@ export default {
 </script>
 
 <style scoped>
-
+.next {
+  color: white;
+}
+.prev {
+  color: white;
+}
 .button {
   font-size: 1.25rem;
   color: var(--light);
@@ -416,16 +421,20 @@ export default {
 
 .main {
   padding: 4.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main__modal {
   display: grid;
-  padding-bottom: 2rem;
+  width: 70vw;
   grid-gap: 2.5625rem;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: auto min-content;
+  display: flex;
+  width: 95%;
+  justify-content: space-between;
 }
 .header__select{
   cursor: pointer;
@@ -434,10 +443,6 @@ export default {
   align-items: baseline;
   justify-content: left;
 
-}
-.header__heading{
-  margin-right: 0.5rem;
-  font-size:2rem;
 }
 .header__arrow__button img{
   width: 26px;

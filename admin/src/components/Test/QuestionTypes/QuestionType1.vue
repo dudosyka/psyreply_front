@@ -1,17 +1,24 @@
 <template>
   <article class="question">
     <span class="question__id">{{listId}}</span>
-    <y-input :disabled="!editable" @input="giveData" v-model="question.title" />
-   <div class="question__title__add">
-    <h3>Ответы</h3>
-     <button @click="questionEditAnswers" class="question__add plus">+</button>
-   </div>
-    <y-button v-if="editable" @click="$emit('remove')" class="question__del">X</y-button>
-    <span v-else></span>
-
     <label>
-      Монеты <y-input :disabled="!editable" @input="giveData" v-model="question.coins" />
+      <h4 class="label">Заголовок вопроса</h4>
+      <y-input :disabled="!editable" @input="giveData" v-model="question.title" />
     </label>
+    <label>
+      <h4 class="label">Монеты</h4>
+      <y-input :disabled="!editable" @input="giveData" v-model="question.coins" />
+    </label>
+   <div class="question__title__add">
+    <h4>Ответы</h4>
+     <button @click="questionEditAnswers" class="question__add plus">+</button>
+     <y-button v-if="editable" @click="$emit('remove')" class="question__del"><i class="fa-solid fa-trash"></i></y-button>
+     <span v-else></span>
+   </div>
+
+
+
+
 
     <add-answers
       :editable="editable"
@@ -69,22 +76,36 @@ export default {
 </script>
 
 <style scoped>
+.label {
+  margin-bottom: 1rem;
+  margin-left: 0.3rem;
+}
 .question {
   display: grid;
-  grid-template-columns: auto auto auto min-content;
+  grid-template-columns: 2vw 40vw auto auto;
   grid-gap: 1.3rem;
   align-items: center;
+  margin-top: 1rem;
 }
 .question__id {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .question__del {
-  color: red;
-  width: min-content;
+  color: white;
+  padding: 0.3rem;
+  background: rgba(255, 0, 89, 1);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+}
+.question__del:hover {
+  cursor: pointer;
 }
 .question__title__add{
   display: flex;
+  padding-top: 2rem;
   flex-direction: row;
   align-items: center;
 }
@@ -106,6 +127,19 @@ export default {
   text-align: center;
   color: #FFFFFF;
   cursor: pointer;
-
+}
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
 }
 </style>

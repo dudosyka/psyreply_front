@@ -6,7 +6,7 @@
       <y-modal v-if="window === 'main'" class="main__modal">
         <header class="header">
           <div class="header__select">
-            <div class="heading header__heading">Компании</div>
+            <h2 class="heading header__heading">Компании</h2>
           </div>
           <y-button :plus="true" @click="createCompany">Новая компания</y-button>
         </header>

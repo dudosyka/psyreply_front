@@ -44,6 +44,7 @@
       <y-modal class="block">
         <header>
           <h2 class="heading">Управление группами компании</h2>
+          <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
         </header>
         <y-list
             key-of-name="name"
@@ -52,7 +53,7 @@
             @select="selectGroup"
             :pagination="true"
         />
-        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
+
       </y-modal>
     </template>
     <create-group

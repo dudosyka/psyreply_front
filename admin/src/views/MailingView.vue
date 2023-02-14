@@ -10,7 +10,7 @@
       <template v-if="window === 'main'" >
         <header class="header">
           <div class="header__select">
-            <div class="heading header__heading">Рассылки</div>
+            <h2 class="heading header__heading">Рассылки</h2>
           </div>
           <y-button :plus="true" @click="createBlock">Новая рассылка</y-button>
         </header>
@@ -114,9 +114,13 @@ export default {
 
 .main {
   padding: 4.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main__modal {
   display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
 }
 

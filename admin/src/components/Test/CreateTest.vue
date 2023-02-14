@@ -8,32 +8,30 @@
       <article class="main"> <!-- We can use main единожды !-->
         <div class="main__input_coins">
           <y-input :disabled="!editable" v-model="test.title" placeholder="Название теста..."/>
-          <div class="coins">
-            <img src="@/assets/img/coins.svg" alt="">
-            <div class="count">{{ coins }}</div>
-          </div>
         </div>
 
         <div class="types">
           <div class="type__test">
-            <div class="type__test__title">Тип теста</div>
-            <template
-                v-for="type of questionTypes"
-                :key="`${type.id}${type.name}`"
-            >
-              <y-mini-button
-                  class="type__test__type"
-                  :active="type.id === test.type"
-                  @click="selectLabel('type', type.id)"
-                  :disabled="!editable"
-                  v-if="type.id === test.type || editable"
+            <h6 class="type__test__title">Тип теста</h6>
+            <div class="row">
+              <template
+                  v-for="type of questionTypes"
+                  :key="`${type.id}${type.name}`"
               >
-                {{ type.name }}
-              </y-mini-button>
-            </template>
+                <y-mini-button
+                    class="type__test__type"
+                    :active="type.id === test.type"
+                    @click="selectLabel('type', type.id)"
+                    :disabled="!editable"
+                    v-if="type.id === test.type || editable"
+                >
+                  {{ type.name }}
+                </y-mini-button>
+              </template>
+            </div>
           </div>
-          <div class="type__test">
-            <div class="type__test__title">Тип метрики</div>
+          <div class="type__metrics">
+            <h6 class="type__test__title">Тип метрики</h6>
             <template
                 v-for="metric of metrics"
                 :key="`${metric.id}${metric.name}`"
@@ -65,6 +63,7 @@
         <div class="header__plus">
           <h2 class="heading">Вопросы</h2>
           <y-cool-button v-if="questions.length <= 0" class="ml-1" @click="addQuestion">Добавить вопрос</y-cool-button>
+
         </div>
 
         <template v-if="questions.length > 0">
@@ -77,19 +76,21 @@
                 @remove="removeQuestion(id)"
             />
           </template>
-
-          <y-cool-button v-if="editable" @click="addQuestion">Добавить вопрос</y-cool-button>
+          <div class="row center-button">
+           <y-cool-button v-if="editable" @click="addQuestion">Добавить вопрос</y-cool-button>
+          </div>
 
           <div class="type__test">
-            <div class="type__test__title">Формула</div>
+            <h4 class="type__test__title">Формула</h4>
             <y-input :disabled="!editable" class="w-50" v-model="test.formula" /> <br>
             <div v-if="editable" class="formula_controls">
-              <y-button class="formula_control" @click="autoFormula">Сумма по всем вопросам</y-button>
+              <y-button class="formula_control" @click="autoFormula"><i class="fa-solid fa-plus"></i> Сумма по всем вопросам</y-button>
 <!--              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>-->
             </div>
           </div>
-
-          <y-cool-button v-if="editable" @click="saveTest">Сохранить тест</y-cool-button>
+          <div class="row center-button">
+            <y-cool-button v-if="editable" @click="saveTest">Сохранить тест</y-cool-button>
+          </div>
         </template>
 
         <div v-else class="questions__list">
@@ -425,12 +426,21 @@ export default {
 </script>
 
 <style scoped>
+.center-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .header {
-  display: grid;
-  grid-template-columns: auto 1fr min-content;
-  grid-gap: 2rem;
-  justify-content: start;
+  display: flex;
+  grid-template-columns: auto max-content;
+  justify-content: flex-start;
+  grid-gap: 1rem;
   align-items: center;
+  border-bottom: 1px solid var(--border-dark);
+  padding-bottom: 1rem;
+  margin-bottom:  1rem;
+  width: 100%;
 }
 .coins{
   display: grid;
@@ -450,18 +460,20 @@ export default {
   margin-top: 70px;
   margin-bottom: 40px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: stretch;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 .types__test{
-  display: grid;
-  grid-template-columns: repeat(4,9rem);
+  display: flex;
+  flex-direction: column;
   grid-gap: 1rem;
 }
 .type__test__title{
   font-size: 1rem;
   margin-right: .5rem;
+  margin-bottom: 1rem;
 }
 .type__test__type {
   margin-right: .5rem;
@@ -508,13 +520,13 @@ export default {
 }
 
 hr {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   min-width: 30vw;
-  border-left: 0px solid white;
-  border-right: 0px solid white;
-  border-bottom: 0px solid white;
-  border-top: 1px solid rgba(255, 255, 255, 0.52);
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-top: 1px solid var(--border-light);
 }
 
 .ml-1 {
@@ -535,6 +547,28 @@ hr {
 
 .formula_control {
   margin-right: 2rem;
+  min-width: 15vw;
 }
-
+.input {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.input:hover {
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+.questions {
+  width: 100%;
+}
+.header__plus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>

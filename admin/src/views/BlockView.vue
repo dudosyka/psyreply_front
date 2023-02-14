@@ -126,19 +126,15 @@ export default {
 }
 
 .main {
+  padding: 4.125rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .main__modal {
-  display: flex;
-  width: 60vw;
-  height: auto;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .header {

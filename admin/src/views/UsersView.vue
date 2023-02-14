@@ -4,8 +4,9 @@
     <y-left-side-bar />
     <main class="main">
       <y-modal class="block" v-if="window === 'main'">
-        <header>
+        <header class="header">
           <h2 class="heading">Управление группами компании</h2>
+          <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
         </header>
         <y-list  v-if="groups.length"
                  key-of-name="name"
@@ -14,7 +15,7 @@
                  @select="selectGroup"
                  :pagination="true"
         />
-        <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
+
       </y-modal>
       <create-group
           v-if="window === 'createGroup'"
@@ -96,15 +97,20 @@ export default {
 
 .main {
   padding: 4.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.main__modal {
+.modal.block {
   display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: auto min-content;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 .header__select{
   cursor: pointer;
