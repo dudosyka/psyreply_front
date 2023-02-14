@@ -15,6 +15,9 @@ export default {
   components:{
     ReaChart
   },
+  created() {
+  console.log(window.innerWidth)
+    },
   methods:{
     openInfoModal() {
       this.$store.dispatch('openInfoModal', this.metricItem.metricId)
