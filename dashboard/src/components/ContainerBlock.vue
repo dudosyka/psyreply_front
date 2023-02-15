@@ -134,7 +134,7 @@ import StatsBlock from "@/components/StatsBlock.vue";
 import SmallStatsBlock from "@/components/SmallStatsBlock.vue";
 import * as url from "url";
 import apiConf from "@/api/api.conf";
-import SmallPopup from "@/components/smallPopup.vue";
+import SmallPopup from "@/components/SmallPopup.vue";
 
 export default {
   name: "ContainerBlock",

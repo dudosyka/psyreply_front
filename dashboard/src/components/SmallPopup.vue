@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "smallPopup"
+  name: "SmallPopup"
 }
 </script>
 
