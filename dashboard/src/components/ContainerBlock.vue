@@ -113,6 +113,7 @@
             </div>
             <p class="link-description" v-if="!copyLink">Нажмите на ссылку, чтобы скопировать</p>
             <p class="link-description" v-if="copyLink">Ссылка скопирована</p>
+            <small-popup v-if="highlightShareLink"></small-popup>
           </div>
         </div>
       </div>
@@ -133,10 +134,11 @@ import StatsBlock from "@/components/StatsBlock.vue";
 import SmallStatsBlock from "@/components/SmallStatsBlock.vue";
 import * as url from "url";
 import apiConf from "@/api/api.conf";
+import SmallPopup from "@/components/SmallPopup.vue";
 
 export default {
   name: "ContainerBlock",
-  components: {SmallStatsBlock, StatsBlock},
+  components: {SmallPopup, SmallStatsBlock, StatsBlock},
   data() {
     return {
       showContext: false,
@@ -186,6 +188,7 @@ export default {
       setTimeout(() => {
         this.highlightShareLink = false;
       }, 1000);
+
     }
   },
   computed: {
