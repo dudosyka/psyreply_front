@@ -82,7 +82,7 @@ i {
   column-gap: 0rem;
 }
 .QuestionType {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 q__logo {
   padding-top: 0!important;
@@ -123,7 +123,7 @@ YIcon {
     column-gap: 0rem;
   }
   .QuestionType {
-    overflow-y: scroll;
+    overflow-y: hidden;
   }
   q__logo {
     padding-top: 0!important;
