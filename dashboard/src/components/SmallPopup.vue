@@ -14,7 +14,7 @@
 
   </template>
 <script>
-export default {Ссылка скопирована
+export default {
   name: "SmallPopup"
 }
 </script>
