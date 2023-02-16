@@ -72,9 +72,11 @@ export default {
 /*Стили кнопки*/
 .btn {
   background: transparent;
-  border: 1px solid;
   border-color: transparent;
   font-weight: 400;
+  box-shadow: none;
+  border: 1px solid var(--border-dark);
+  text-transform: capitalize;
 }
 .btn:hover {
   background: var(--acrylic-blur-dark);
