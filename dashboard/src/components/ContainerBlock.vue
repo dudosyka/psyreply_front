@@ -112,7 +112,7 @@
           <div class="col notification-link-heading" v-if="showLinkShare">
             <h6 class="alert-heading link-heading">Ссылка на группу готова!</h6>
           </div>
-          <div class="col notification-link-heading" v-if="showLinkShare === false">
+          <div class="col notification-link-heading wrong-group" v-if="showLinkShare === false">
             <h6 class="alert-heading link-heading">Текущей группой нельзя поделиться</h6>
           </div>
           <div class="col" v-if="showLinkShare">
@@ -127,7 +127,7 @@
               />
             </div>
             <p class="link-description" v-if="!copyLink">Нажмите на ссылку, чтобы скопировать</p>
-            <p class="link-description" v-if="copyLink">Ссылка скопирована</p>
+            <p class="link-description success" v-if="copyLink">Ссылка скопирована</p>
             <small-popup v-if="highlightShareLink"></small-popup>
           </div>
         </div>
@@ -286,6 +286,14 @@ export default {
 </script>
 
 <style scoped>
+.wrong-group {
+  border-bottom: none!important;
+  margin-bottom: 0!important;
+  padding-bottom: 0!important;
+}
+.success {
+  color: limegreen!important;
+}
 .preloader-box {
   padding-top: 1rem;
   margin-top: 0;
