@@ -1,7 +1,7 @@
 <template>
   <div  v-on:keyup="keyHandler($event)" class="container container-fluid animate__animated animate__fadeIn">
     <div class="container-fluid">
-      <img class="avatar" src="../assets/boshki.jpg" alt="boshki"/>
+      <img class="avatar" src="../assets/placeholder.jpg" alt="boshki"/>
       <div class="mb-3 input-area animate__animated animate__shakeX">
         <label for="exampleInputPassword1" class="form-label company-name">Имя компании</label>
         <input type="text" class="form-control password login" id="exampleInputemail1" v-model="email" placeholder="Введите логин ..." @change="submit">
