@@ -18,6 +18,8 @@ export default {
     testArrId: Number,
     questionArrId: Number,
   },
+  methods: {
+  },
   computed: {
     questionData() {
       const coordinates = {

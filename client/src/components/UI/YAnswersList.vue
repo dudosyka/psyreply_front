@@ -5,7 +5,7 @@
       <div class="list">
       <y-answers-item
           v-for="(answer, answer_arr_id) in answers"
-          :active="(selectedAnswer.includes(answer.id))"
+          :active="(selectedAnswer.includes(answer.id)) || checkSelection(answer.id)"
           :last="answer.last"
           @click="selectAnswer(answer.id)"
       >{{ answer.title }}</y-answers-item>
@@ -50,6 +50,9 @@ export default {
       }
       this.$store.commit('selectAnswer', data)
     },
+    checkSelection(id) {
+      return this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer.includes(id);
+    }
   },
   computed: {
     answers() {

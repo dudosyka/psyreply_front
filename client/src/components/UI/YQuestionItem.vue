@@ -8,7 +8,7 @@
         v-for="answer in answers"
         :key="answer.id"
         @click="selectAnswer(answer.id)"
-        :active="(selectedAnswer[0] === answer.id)"
+        :active="(selectedAnswer[0] === answer.id) || checkSelection(answer.id)"
       >{{answer.title}}</y-button>
    </div>
  </div>
@@ -20,7 +20,7 @@ export default {
   props: {
     testArrId: Number,
     questionArrId: Number,
-    questionId: Number
+    questionId: Number,
   },
   data() {
     return {
@@ -37,6 +37,11 @@ export default {
         answer: this.selectedAnswer
       }
       this.$store.commit('selectAnswer', data)
+      this.checkSelection(id)
+    },
+    checkSelection(id) {
+      console.log('CHECK SELECTION', id, );
+      return this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionId + this.questionArrId * 3].answer.includes(id);
     }
   },
   computed: {

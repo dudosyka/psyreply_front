@@ -90,6 +90,9 @@ export default createStore({
     answersPassedIncrement(state) {
       state.answersPassed++
     },
+    answersPassedDecrement(state) {
+      state.answersPassed--
+    },
     setAnswersCount(state, data) {
       state.answersCount = data
     },

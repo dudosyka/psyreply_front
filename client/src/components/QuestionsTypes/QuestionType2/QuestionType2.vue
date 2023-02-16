@@ -1,6 +1,6 @@
 <template>
   <div class="QuestionType">
-    <y-icon class="q__logo" />
+    <y-icon @click="$emit('prev')" class="q__logo" />
     <div class="questions">
       <p class="question__status">{{ questionData.title }}</p>
       <hr>
@@ -9,6 +9,7 @@
           :min="answer.min"
           :max="answer.max"
           :step="1"
+          :value="selectedAnswer"
           v-model.number="selectedAnswer"
       />
       <y-cool-button
@@ -35,6 +36,7 @@
 
 <script>
 import YQuestionsList from "../../UI/YQuestionsList";
+
 export default {
   name: "QuestionType2",
   components: {YQuestionsList},
@@ -45,9 +47,19 @@ export default {
   },
   data() {
     return {
-      selectedAnswer: null,
-      haveAnswer: false
+      haveAnswer: false,
+      selectedAnswer: null
     }
+  },
+  created() {
+    const answer = this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer;
+    console.log(answer);
+    if (answer.length) {
+      this.selectedAnswer = answer[0] - 1;
+    } else {
+      this.selectedAnswer = null;
+    }
+    console.log()
   },
   computed: {
     questionData() {
@@ -76,6 +88,7 @@ export default {
   },
   watch: {
     selectedAnswer(newValue, oldValue) {
+      console.log(newValue);
       if (typeof newValue === 'number') {
         this.haveAnswer = true
         const data = {

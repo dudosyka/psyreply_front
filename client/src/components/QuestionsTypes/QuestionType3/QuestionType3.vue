@@ -1,6 +1,6 @@
 <template>
   <div class="QuestionType">
-    <y-icon class="q__logo" />
+    <y-icon @click="$emit('prev')" class="q__logo" />
     <div class="questions">
       <p class="question__text">{{questionData.title}}</p>
       <y-answers-list

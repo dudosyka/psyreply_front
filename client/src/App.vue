@@ -25,6 +25,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
+                          @prev="prevQuestion({test_arr_id, question_arr_id})"
                           @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
@@ -35,6 +36,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
+                          @prev="prevQuestion({test_arr_id, question_arr_id})"
                           @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
@@ -47,6 +49,7 @@
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
                           :more="true"
+                          @prev="prevQuestion({test_arr_id, question_arr_id})"
                           @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
@@ -57,6 +60,7 @@
                           :test-arr-id="test_arr_id"
                           :question-arr-id="question_arr_id"
                           :passed="percentOfPass"
+                          @prev="prevQuestion({test_arr_id, question_arr_id})"
                           @next="nextQuestion({test_arr_id, question_arr_id})"
                         />
                       </template>
@@ -182,7 +186,23 @@ export default {
       else
         this.secondGame = true;
     },
+    prevQuestion(m) {
+      console.log(m)
+      const tests = this.blockOnPass.tests
+      const games = this.blockOnPass.games
+      const questions = tests[this.testNow].questions
+
+      if (this.questionNow !== 0) {
+        this.questionNow -= 1
+        this.$store.commit('answersPassedDecrement')
+      } else if (this.testNow !== 0) {
+        this.testNow--
+        this.questionNow = this.blockOnPass.tests[this.testNow].questions.length - 1
+        this.$store.commit('answersPassedDecrement')
+      }
+    },
     nextQuestion(m) {
+      console.log(m);
       const tests = this.blockOnPass.tests
       const games = this.blockOnPass.games
       let birdCompl = false

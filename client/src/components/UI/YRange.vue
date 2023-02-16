@@ -4,6 +4,7 @@
     :step="step"
     :max="max"
     :min="min"
+    :ref="'range'"
     @input="$emit('update:modelValue', $event.target.value)"
   >
 </template>
@@ -17,6 +18,10 @@ export default {
     min: Number,
     step: Number,
     value: Number
+  },
+  mounted() {
+    // console.log(this.$refs.range.value = this);
+    this.$refs.range.value = this.value;
   }
 }
 </script>
