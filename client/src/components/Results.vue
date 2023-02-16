@@ -32,6 +32,17 @@ export default {
   },
   computed: {
     resultsData() {
+      if (localStorage.getItem('botNum') == "0" && !this.$store.getters.results.part) {
+        const results = this.$store.getters.results;
+        for (const metric in results.metrics) {
+          if (results.metrics[metric].values.length < 3)
+            results.metrics[metric].values.unshift(56)
+
+          if (results.metrics[metric].values.length < 3)
+            results.metrics[metric].values.unshift(89)
+        }
+        return results;
+      }
       return this.$store.getters.results;
     },
   }

@@ -34,7 +34,7 @@ export default {
   }
   input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-    background-image: url("https://malinka.psyreply.com/img/range.png");
+    background-image: url("https://admin.psyreply.com/img/range.png");
     height: 27px;
     width: 27px;
   }
@@ -50,7 +50,7 @@ input[type=range]{
 }
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none !important;
-  background-image: url("https://malinka.psyreply.com/img/range.svg");
+  background-image: url("https://admin.psyreply.com/img/range.svg");
   height: 27px;
   width: 27px;
 }

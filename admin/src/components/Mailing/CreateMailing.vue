@@ -31,7 +31,6 @@
 export default {
   name: "CreateMailing",
   components: {
-    CreateTest
   },
   emits: ['close'],
   data() {

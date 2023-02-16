@@ -124,6 +124,13 @@ export default {
         data.push({ x: key, y: values[key] })
       }
 
+      // if (localStorage.getItem('botNum') == "0") {
+      //   data.unshift({ x: 2, y: 23 })
+      //   data.unshift({ x: 3, y: 43 })
+      // }
+
+      // console.log('data', data)
+
       series.push({ data })
 
       return series

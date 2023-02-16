@@ -12,7 +12,7 @@
           <div class="header__select">
             <h2 class="heading header__heading">Рассылки</h2>
           </div>
-          <y-button :plus="true" @click="createBlock">Новая рассылка</y-button>
+          <y-button :plus="true" @click="createMailing">Новая рассылка</y-button>
         </header>
         Список рассылок
       </template>
@@ -100,6 +100,10 @@ export default {
     // Если хочешь можешь также сделать в своих ну или просто всегда руками меняй window внутри created
     close() {
       this.window = 'main';
+    },
+    createMailing() {
+      this.window = 'createMailing'
+      this.window = 'createMailing'
     }
   }
 }
