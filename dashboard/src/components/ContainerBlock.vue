@@ -824,6 +824,11 @@ export default {
   border-bottom: 2px solid #ff0088;
   font-weight: 500;
 }
+.menu-link-active {
+  color: var(--active-color);
+  border-bottom: 2px solid #0080ff;
+  font-weight: 500;
+}
 
 /*Стили аватарки компании*/
 .company {
