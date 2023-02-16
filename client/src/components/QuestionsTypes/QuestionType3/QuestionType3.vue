@@ -1,6 +1,13 @@
 <template>
   <div class="QuestionType">
-    <y-icon @click="$emit('prev')" class="q__logo" />
+    <div class="row header-row">
+      <div class="col-2">
+        <i @click="$emit('prev')" class="fa-solid fa-arrow-left"></i>
+      </div>
+      <div class="col-8">
+        <y-icon @click="$emit('prev')" class="q__logo" />
+      </div>
+    </div>
     <div class="questions">
       <p class="question__text">{{questionData.title}}</p>
       <y-answers-list
@@ -31,8 +38,11 @@
 </template>
 
 <script>
+import YIcon from "@/components/UI/YIcon.vue";
+
 export default {
   name: "QuestionType3",
+  components: {YIcon},
   props: {
     testArrId: Number,
     questionArrId: Number,
@@ -66,12 +76,64 @@ export default {
 </script>
 
 <style scoped>
+.col-8 {
+  margin-right: 15rem;
+}
+i {
+  font-size: 1.5rem;
+}
+.header-row {
+  width: 100%;
+  display: flex;
+  gap: 11;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  row-gap: 0rem;
+  column-gap: 0rem;
+}
+.QuestionType {
+  overflow-y: scroll;
+}
+q__logo {
+  padding-top: 0!important;
+  margin-bottom: 0!important;
+}
+YIcon {
+  padding-top: 0!important;
+  margin-bottom: 0!important;
+}
+
 .QuestionType {
   height: 100%;
 }
 @media screen and (max-width:820px) {
+  .col-8 {
+    margin-right: 6rem;
+  }
+  i {
+  font-size: 3rem;
+}
+  .header-row {
+    width: 100%;
+    display: flex;
+    gap: 11;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    row-gap: 0rem;
+    column-gap: 0rem;
+  }
   .QuestionType {
     overflow-y: scroll;
+  }
+  q__logo {
+    padding-top: 0!important;
+    margin-bottom: 0!important;
+  }
+  YIcon {
+    padding-top: 0!important;
+    margin-bottom: 0!important;
   }
   .q__modal {
     height: 100%;

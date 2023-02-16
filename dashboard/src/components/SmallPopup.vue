@@ -1,18 +1,20 @@
-
 <template>
-    <div class="container-fluid modal-overlay" >
-      <div class="container modal-body animate__animated animate__slideInUp">
+    <div class="container-fluid modal-overlay">
+      <Transition enter-active-class="animate__animated animate__slideInUp" leave-active-class="animate__animated animate__slideOutDown">
+      <div class="container modal-body">
         <div class="row">
-          <h3 class="modal-heading">Уведомление</h3>
+          <h5 class="modal-heading">Уведомление</h5>
         </div>
-        <p class="modal-text"> Ссылка скопирована
+        <p class="modal-text">
+        Lorem ipsum dolor sit amet.
         </p>
       </div>
+      </Transition>
     </div>
-  </template>
 
+  </template>
 <script>
-export default {
+export default {Ссылка скопирована
   name: "SmallPopup"
 }
 </script>
@@ -29,11 +31,11 @@ export default {
 .row {
   display: flex;
   justify-content: space-between;
-  width: 10%;
+  width: 100%;
   border-bottom: 1px solid;
   border-color: var(--border-dark);
   margin-bottom: 1rem;
-  padding-bottom: 1rem;
+
 }
 .btn {
   background: transparent;
@@ -73,33 +75,35 @@ export default {
   color: rgba(255, 255, 255, 1);
 }
 .modal-text {
-  text-align: left;
+  text-align: center;
+  font-weight: 400;
 }
 .modal-heading {
-  text-align: left;
-  width: 10%;
-  max-width: 30vw;
+  text-align: center;
 }
 .container.modal-body {
   background-color: #000000b8;
   display: flex;
   flex-direction: column;
-  padding: 3rem;
+  align-items: center;
+  padding: 0.5rem;
+  text-align: center;
   width: 20%;
   max-width: 50vw;
   height: auto;
   /* min-height: 31vh; */
   max-height: 18vh;
   border: 1px solid var(--border-dark);
-  border-radius: 30px;
+  border-radius: 1rem;
   justify-content: center;
 }
 .container-fluid.modal-overlay {
-  background-color: rgba(0, 0, 0, 0.4) !important;
-  backdrop-filter: blur(10px);
+  background-color: transparent;
+  border: none;
+  backdrop-filter: none;
   background-image: none;
   width: 30vw;
-  height: 18vh;
+  height: auto;
   overflow: hidden;
   position: fixed;
   top: 0;

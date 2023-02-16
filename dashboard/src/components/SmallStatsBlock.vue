@@ -3,11 +3,21 @@
       enter-active-class="animate__animated animate__flipInX" >
     <template v-if="metric.values.length" >
       <div class="container metric-box"  @click="selectMetric" :class="{'highlighted': this.$store.getters.showedAnimations}">
-        <div class="container heading">
-          <h5 class="metric-name">{{ metric.label.name }}</h5>
-          <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
+        <div class="content-wrapper">
+          <content-loader class="container preloader-box" v-if="!realGraph"  viewBox="0 0 236 109"
+                          :speed="2"
+                          primaryColor="#051626"
+                          secondaryColor="#27363f" width="260" height="150">
+            <path d="M 4 107 c 79.8 0 148.2 -61.95 228 -61.95 V 107" />
+            <path d="M 4 107 c 79.8 0 148.2 -61.95 228 -61.95" /></content-loader>
+          <div v-else class="container content">
+            <div class="container heading">
+              <h5 class="metric-name">{{ metric.label.name }}</h5>
+              <button class="btn btn-primary info" @click.stop="openInfoModal"><i class="fa-solid fa-circle-question"></i></button>
+            </div>
+            <LineChart :values="metric.values" class="chart-box"></LineChart>
+          </div>
         </div>
-        <LineChart :values="metric.values" class="chart-box"></LineChart>
       </div>
     </template>
   </Transition>
@@ -16,11 +26,13 @@
 
 <script>
 import LineChart from "@/components/LineChart.vue";
+import { ContentLoader } from 'vue-content-loader';
 // import apiConf from "@/api/api.conf";
 export default {
   name: "SmallStatsBlock",
   components:{
     LineChart,
+    ContentLoader
   },
   methods: {
     async selectMetric() {
@@ -36,14 +48,25 @@ export default {
   props: {
     metric: Object
   },
+  data() {
+    return {
+      realGraph: false
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.realGraph = true}, 1500);
+  }
 }
 
 </script>
 
 <style scoped>
+.content {
+  display: flex;
+  flex-direction: column;
+}
 .chart-box {
-  padding-top: 2rem;
-  padding-right: 1rem;
 }
 .container.metric-box {
   padding-top: 1rem;
@@ -53,6 +76,22 @@ export default {
   display: flex;
   flex-direction: column;
   background: rgb(7 18 25 / 50%);
+  padding-bottom: 1rem;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  max-height: 50vh;
+  overflow-x: hidden!important;
+  overflow-y: hidden!important;
+  transition: 0.3s;
+}
+.preloader-box {
+  padding-top: 1rem;
+  margin-top: 0;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
   padding-bottom: 1rem;
   box-shadow: none;
   width: auto;
