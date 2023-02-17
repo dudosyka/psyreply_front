@@ -201,7 +201,7 @@ export default {
       onExport: [],
       pageNumber: 0,
       maxPage: 100,
-      pageSize: 8,
+      pageSize: 6,
     }
   },
   methods: {
