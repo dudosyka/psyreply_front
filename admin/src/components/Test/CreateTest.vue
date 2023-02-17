@@ -1,5 +1,5 @@
-<template>
-  <y-modal class="modal create-modal" v-if="window === 'main'">
+<template >
+  <y-modal class="modal create-modal" v-if="window === 'main'" :show="showSlideBar" >
     <div class="container-fluid main-container">
         <header class="header">
           <y-left-arrow-button v-if="testId === -1" @click="close" />
@@ -132,6 +132,7 @@ import Test from '@/api/admin/Test'
 import CreateMetric from "@/components/Test/Metrics/CreateMetric";
 import YInput from "@/components/UI/YInput";
 import mainConf, {ProjectState} from "../../../../main.conf";
+import YLeftSideBar from "@/components/UI/YLeftSideBar.vue";
 
 function update(data) {
   if (data.testId !== -1) {
@@ -189,6 +190,7 @@ function update(data) {
 export default {
   name: "CreateTest",
   components: {
+    YLeftSideBar,
     YInput,
     CreateMetric,
     AddAnswers, Question
@@ -205,6 +207,10 @@ export default {
     },
     editable: {
       type: Boolean,
+      default: true
+    },
+    showSlideBar:{
+      type:Boolean,
       default: true
     }
   },

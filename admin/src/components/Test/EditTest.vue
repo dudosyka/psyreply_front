@@ -11,6 +11,7 @@
             :test-id="id"
             :title="test.title"
             :editable="test.company_id != null"
+            :showSlideBar="false"
         />
         <div class="container block" v-if="blocks.length > 0">
           <header>

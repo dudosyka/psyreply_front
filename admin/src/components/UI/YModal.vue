@@ -1,6 +1,6 @@
-<template>
+<template >
   <article class="modal disable">
-    <y-left-side-bar />
+    <y-left-side-bar v-if="show"/>
     <slot></slot>
   </article>
 </template>
@@ -16,6 +16,10 @@ export default {
     header: {
       type: Boolean,
       default: false
+    },
+    show:{
+      type: Boolean,
+      default: true
     }
   }
 }
