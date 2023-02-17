@@ -14,23 +14,32 @@
         <y-input max="59" min="0" type="number" v-model="time.seconds" placeholder="сс" class="time-picker__input"/>
       </y-modal>
 
-      <y-button :plus="true">Добавить блок</y-button>
+      <y-button @click="openCreateBlock" :plus="true">Добавить блок</y-button>
 
     </header>
     <y-input
-      v-model.trim="block.name"
-      placeholder="Название блока"
+      placeholder="Название рассылки"
     />
 
     <y-cool-button>Сохранить рассылку</y-cool-button>
   </y-modal>
+  <CreateMailingBlock
+      v-if="window === 'createBlock'"
+      @close="window = 'main'"
+  >
+
+  </CreateMailingBlock>
 </template>
 
 <script>
+import CreateMailingBlock from "@/components/Mailing/CreateMailingBlock.vue";
+import YModal from "@/components/UI/YModal.vue";
 
 export default {
   name: "CreateMailing",
   components: {
+    YModal,
+    CreateMailingBlock,
   },
   emits: ['close'],
   data() {
@@ -46,6 +55,9 @@ export default {
   created() {
   },
   methods: {
+    openCreateBlock() {
+      this.window = 'createBlock'
+    }
   }
 }
 </script>
