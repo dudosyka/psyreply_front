@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <y-modal>
+    <div class="container form-bg">
       <div class="YFromContent">
         <h3 class="form__header">Подтверждение</h3>
         <p class="description__aprove">Мы отправили на Ваш e-mail сообщение с кодом для сброса пароля. Введите его в поле ниже</p>
@@ -17,7 +17,7 @@
           <button class="btn btn__login" @click.prevent="login">Подтвердить</button>>
         </form>
       </div>
-    </y-modal>
+    </div>
   </div>
 </template>
 
@@ -51,6 +51,13 @@ export default {
 </script>
 
 <style scoped>
+.form-bg {
+  background-color: var(--acrylic-blur-dark);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid var(--border-dark);
+}
 form {
   display: flex;
   flex-direction: column;
@@ -95,6 +102,10 @@ a.resend {
   margin-top: 30px;
 }
 .box__input{
+  width: 25rem;
+  text-align: center;
+}
+.box__input:hover{
   width: 25rem;
 }
 .btn__login{

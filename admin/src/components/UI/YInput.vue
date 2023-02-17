@@ -49,43 +49,25 @@ export default {
 
 <style scoped>
 .input {
-  background: rgba(255, 255, 255, 0.24);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
-  transition: all .3s ease-in-out;
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
 }
 .input:hover {
-  background: hsla(0, 0%, 100%, 0.5);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
-  transition: all .3s ease-in-out;
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
 }
 .input:active {
-  background: hsla(0, 0%, 100%, 0.17);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
-  transition: all .3s ease-in-out;
+  background: var(--acrylic-blur-light)!important;
+  height: 3vh;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
 }
 .input:invalid {
   background-color: hsla(0, 83%, 41%, 0.89);

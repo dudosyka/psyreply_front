@@ -1,43 +1,36 @@
 <template>
   <y-popup-warn></y-popup-warn>
   <div class="wrapper">
-    <y-left-side-bar />
     <main class="main">
       <y-modal v-if="window === 'main'" class="main__modal">
-        <header class="header">
-          <div class="header__select">
-            <h2 class="heading header__heading">Блоки</h2>
-<!--            <select style="color: white" v-model="filter" @change="updateBlocksList">
-              <option style="color: black" :value="null">Без фильтра</option>
-              <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
-            </select>-->
-<!--            <y-select-->
-<!--                class="fs-2"-->
-<!--              :selects="companies"-->
-<!--              @select="updateBlocksList"-->
-<!--            />-->
-          </div>
-          <y-button :plus="true" @click="createBlock">Новый блок</y-button>
-        </header>
-<!--        U can add "items" props to list component. It must be array -->
-        <y-list
-          key-of-name="name"
-          :editable="true"
-          @edit="editBlock"
-          :items="blocks"
-          :pagination="true"
-          :pagination-block="true"
-          :page-size="4"
-        />
+        <div class="container-fluid main-container">
+          <header class="header">
+            <div class="header__select">
+              <h2 class="heading header__heading">Блоки</h2>
+            </div>
+            <y-button :plus="true" @click="createBlock">Новый блок</y-button>
+          </header>
+          <!--        U can add "items" props to list component. It must be array -->
+          <y-list
+              key-of-name="name"
+              :editable="true"
+              @edit="editBlock"
+              :items="blocks"
+              :pagination="true"
+              :pagination-block="true"
+              :page-size="4"
+          />
+
+        </div>
       </y-modal>
       <create-block
         v-if="window === 'createBlock'"
         @close="close"
-      />
+    />
       <edit-block
-        :id="editBlockId"
-        v-if="window === 'editBlock'"
-        @close="close"
+          :id="editBlockId"
+          v-if="window === 'editBlock'"
+          @close="close"
       />
     </main>
   </div>
@@ -119,6 +112,14 @@ export default {
 </script>
 
 <style scoped>
+.main-container {
+  width: 70vw;
+  display: flex;
+  gap: 6rem;
+  flex-direction: column;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -132,9 +133,12 @@ export default {
   justify-content: center;
 }
 .main__modal {
-  display: grid;
-  width: 70vw;
+  align-items: center;
+  display: flex;
+  width: 90vw;
+  padding-right: 3rem;
   grid-gap: 2.5625rem;
+  flex-direction: row;
 }
 
 .header {

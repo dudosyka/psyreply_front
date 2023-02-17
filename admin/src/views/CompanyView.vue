@@ -1,7 +1,6 @@
 <template>
   <y-popup-warn></y-popup-warn>
   <div class="wrapper">
-    <y-left-side-bar />
     <main class="main">
       <y-modal v-if="window === 'main'" class="main__modal">
         <header class="header">
@@ -113,8 +112,11 @@ export default {
   padding: 4.125rem;
 }
 .main__modal {
-  display: grid;
+  align-items: center;
+  display: flex;
+  width: 70vw;
   grid-gap: 2.5625rem;
+  flex-direction: row;
 }
 
 .header {

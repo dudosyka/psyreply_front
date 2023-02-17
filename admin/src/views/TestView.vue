@@ -1,9 +1,9 @@
 <template>
   <y-popup-warn></y-popup-warn>
   <div class="wrapper">
-    <y-left-side-bar />
     <main class="main">
       <y-modal v-if="window === 'main'" class="main__modal">
+        <div class="container-fluid main-container">
         <header class="header">
           <div class="header__select">
             <h2 class="heading header__heading">Тесты</h2>
@@ -15,24 +15,25 @@
           </div>
           <y-button :plus="true"  @click="createTest">Новый тест</y-button>
         </header>
-        <y-list
-          v-if="tests.length > 0"
-          key-of-name="title"
-          :items="tests"
-          :editable="true"
-          @edit="editTest"
-          :pagination="true"
-          :page-size="6"
-        />
+          <y-list
+              v-if="tests.length > 0"
+              key-of-name="title"
+              :items="tests"
+              :editable="true"
+              @edit="editTest"
+              :pagination="true"
+              :page-size="6"
+          />
+        </div>
       </y-modal>
       <create-test
-          @close="close('main')"
           v-if="window === 'createTest'"
+          @close="close('main')"
       />
       <edit-test
-        @close="close('main')"
-        v-if="window === 'editTest'"
-        :id="editTestId"
+          :id="editTestId"
+          v-if="window === 'editTest'"
+          @close="close('main')"
       />
     </main>
   </div>
@@ -156,7 +157,15 @@ export default {
 </script>
 
 <style scoped>
-
+.main-container {
+  width: 70vw;
+  display: flex;
+  gap: 1rem;
+  max-height: 60vh;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -170,13 +179,31 @@ export default {
   justify-content: center;
 }
 .main__modal {
-  display: grid;
-  width: 70vw;
+  align-items: center;
+  display: flex;
+  width: 90vw;
+  padding-right: 3rem;
   grid-gap: 2.5625rem;
+  flex-direction: row;
 }
+
 .header {
   display: grid;
   grid-template-columns: auto min-content;
+  max-height: 4rem;
+  width: 100%;
+}
+.header__select{
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: left;
+  max-height: 4rem;
+}
+
+
+.header__heading{
 }
 .header__arrow__button img{
   width: 26px;
@@ -185,9 +212,8 @@ export default {
   cursor: pointer;
 }
 
-.header__select {
-  display: flex;
-  align-items: flex-end;
+.fs-2 {
+  font-size: 1.3rem;
 }
 
 </style>

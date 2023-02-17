@@ -67,8 +67,7 @@ input.box__input {
   width: 15rem;
   padding: 18px 16px;
   font-size: 18px;
-
-
+  text-align: center;
 }
 input.box__input:focus {
   background: rgba(255, 255, 255, 0.17);
@@ -114,4 +113,5 @@ input.box__input:focus {
   color: white;
 
 }
+
 </style>

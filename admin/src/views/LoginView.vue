@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <y-modal>
+    <div class="container form-bg">
       <y-icon class="form__reply__logo"></y-icon>
       <y-form
         v-if="step === 0"
@@ -10,7 +10,7 @@
         v-else-if="step === 1"
         @submit="secondStep"
       />
-      <y-modal
+      <div class="container"
         v-else-if="step === 2"
       >
         <h2>Выберите компанию для входа</h2>
@@ -19,8 +19,8 @@
             {{ company.name }}
           </option>
         </select>
-      </y-modal>
-    </y-modal>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -90,6 +90,13 @@ export default {
 </script>
 
 <style scoped>
+.form-bg {
+  background-color: var(--acrylic-blur-dark);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid var(--border-dark);
+}
 .form__reply__logo{
   margin-bottom: 5%;
 }
@@ -113,6 +120,9 @@ export default {
   height: 30px;
   font-size: 1rem;
   color: white;
+}
+.input {
+  text-align: center!important;
 }
 </style>
 

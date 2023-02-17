@@ -141,6 +141,7 @@ export default {
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 1rem;
   max-height: 6vh;
   justify-content: space-between;
   border-top: 1px solid rgba(255, 255, 255, 0.13);
