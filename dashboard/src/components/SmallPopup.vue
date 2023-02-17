@@ -6,7 +6,7 @@
           <h5 class="modal-heading">Уведомление</h5>
         </div>
         <p class="modal-text">
-        Lorem ipsum dolor sit amet.
+          Ссылка скопирована
         </p>
       </div>
       </Transition>

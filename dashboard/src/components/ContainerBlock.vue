@@ -128,7 +128,7 @@
             </div>
             <p class="link-description" v-if="!copyLink">Нажмите на ссылку, чтобы скопировать</p>
             <p class="link-description success" v-if="copyLink">Ссылка скопирована</p>
-            <small-popup v-if="highlightShareLink"></small-popup>
+            <small-popup v-if="copyLinkPopup"></small-popup>
           </div>
         </div>
       </div>
@@ -160,7 +160,8 @@ export default {
       showContext: false,
       showLinkModal: false,
       highlightShareLink: false,
-      copyLink: false
+      copyLink: false,
+      copyLinkPopup: false
     }
   },
   async created() {
@@ -199,11 +200,13 @@ export default {
     },
     copyShareText() {
       this.copyLink = true
+      this.copyLinkPopup = true
       navigator.clipboard.writeText(this.shareText);
       this.highlightShareLink = true;
       setTimeout(() => {
         this.highlightShareLink = false;
-      }, 99999999);
+        this.copyLinkPopup = false
+      }, 2000);
 
     }
   },
