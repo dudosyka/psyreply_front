@@ -1,14 +1,15 @@
 <template>
   <y-modal class="modal" v-if="window === 'main'">
-    <div class="container-fluid main-container">
     <header class="header">
       <y-left-arrow-button @click="$emit('close')" />
       <h3 class="heading">Новый блок</h3>
-        <div class="row timer">
-          <y-input max="99" min="0" type="number" v-model="block.hours" placeholder="чч" class="time-picker__input"/>:
-          <y-input max="59" min="0" type="number" v-model="block.minutes" placeholder="мм" class="time-picker__input"/>:
-          <y-input max="59" min="0" type="number" v-model="block.seconds" placeholder="сс" class="time-picker__input"/>
-        </div>
+
+      <y-modal class="time-picker">Время на прохождение -
+        <y-input max="99" min="0" type="number" v-model="block.hours" placeholder="чч" class="time-picker__input"/>:
+        <y-input max="59" min="0" type="number" v-model="block.minutes" placeholder="мм" class="time-picker__input"/>:
+        <y-input max="59" min="0" type="number" v-model="block.seconds" placeholder="сс" class="time-picker__input"/>
+      </y-modal>
+
       <y-button class="addbtn" @click="createTest" :plus="true">Добавить тест</y-button>
 
     </header>
@@ -26,7 +27,6 @@
       :pagination-block="true"
     />
     <y-cool-button @click="saveBlock">Сохранить блок</y-cool-button>
-    </div>
   </y-modal>
 
   <create-test
@@ -143,34 +143,6 @@ export default {
 </script>
 
 <style scoped>
-.input {
-  padding-left: 1rem;
-  height: 2rem;
-  background: var(--acrylic-blur-light)!important;
-  box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
-  border-radius: 0.5rem;
-  border-color: var(--border-dark);
-  border-width: 1px;
-  border-style: solid;
-}
-.input:hover {
-  padding-left: 1rem;
-  height: 2rem;
-  background: var(--acrylic-blur-light)!important;
-  box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
-  border-radius: 0.5rem;
-  border-color: var(--border-dark);
-  border-width: 1px;
-  border-style: solid;
-}
-.main-container {
-  width: 70vw;
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
 .nameinput {
   background: var(--acrylic-blur-light)!important;
   height: 3vh;
@@ -188,14 +160,7 @@ export default {
 .addbtn {
   width: 10rem;
 }
-.modal {
-  align-items: center;
-  display: flex;
-  width: 90vw;
-  padding-right: 3rem;
-  grid-gap: 2.5625rem;
-  flex-direction: row;
-}
+
 .header {
   display: grid;
   grid-template-columns: auto 1fr auto min-content;

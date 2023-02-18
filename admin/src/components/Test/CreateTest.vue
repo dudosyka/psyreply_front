@@ -1,124 +1,125 @@
 <template >
-  <y-modal class="modal create-modal" v-if="window === 'main'" :show="showSlideBar" >
-    <div class="container-fluid main-container">
-        <header class="header">
-          <y-left-arrow-button v-if="testId === -1" @click="close" />
-          <h1 class="heading">{{ title }}</h1>
-        </header>
-        <article class="main"> <!-- We can use main единожды !-->
-          <div class="main__input_coins">
-            <y-input :disabled="!editable" v-model="test.title" placeholder="Название теста..."/>
-          </div>
+  <y-modal class="modal">
+    <template v-if="window === 'main'" :show="showSlideBar" >
+      <header class="header">
+        <y-left-arrow-button v-if="testId === -1" @click="close" />
+        <h1 class="heading">{{ title }}</h1>
+      </header>
+      <article class="main"> <!-- We can use main единожды !-->
+        <div class="main__input_coins">
+          <y-input :disabled="!editable" v-model="test.title" placeholder="Название теста..."/>
+        </div>
 
-          <div class="types">
-            <div class="type__test">
-              <h6 class="type__test__title">Тип теста</h6>
-              <div class="row">
-                <template
-                    v-for="type of questionTypes"
-                    :key="`${type.id}${type.name}`"
-                >
-                  <!--                <button-->
-                  <!--                    class=""-->
-                  <!--                    @click="selectLabel('type', type.id)"-->
-                  <!--                    :disabled="!editable"-->
-                  <!--                    v-if="type.id === test.type || editable"-->
-                  <!--                >-->
-                  <!--                  {{ type.name }}-->
-                  <!--                </button>-->
-                  <y-mini-button
-                      class="type__test__type"
-                      :active="type.id === test.type"
-                      @click="selectLabel('type', type.id)"
-                      :disabled="!editable"
-                      v-if="type.id === test.type || editable"
-                  >
-                    {{ type.name }}
-                  </y-mini-button>
-                </template>
-              </div>
-            </div>
-            <div class="type__metrics">
-              <h6 class="type__test__title">Тип метрики</h6>
+        <div class="types">
+          <div class="type__test">
+            <h6 class="type__test__title">Тип теста</h6>
+            <div class="row">
               <template
-                  v-for="metric of metrics"
-                  :key="`${metric.id}${metric.name}`"
+                  v-for="type of questionTypes"
+                  :key="`${type.id}${type.name}`"
               >
+<!--                <button-->
+<!--                    class=""-->
+<!--                    @click="selectLabel('type', type.id)"-->
+<!--                    :disabled="!editable"-->
+<!--                    v-if="type.id === test.type || editable"-->
+<!--                >-->
+<!--                  {{ type.name }}-->
+<!--                </button>-->
                 <y-mini-button
                     class="type__test__type"
-                    :active="metric.id === test.metric"
-                    @click="selectLabel('metric', metric.id)"
+                    :active="type.id === test.type"
+                    @click="selectLabel('type', type.id)"
                     :disabled="!editable"
-                    @contextmenu.prevent="openRemoveMetricPopUp(metric.id)"
-                    v-if="metric.id === test.metric || editable"
+                    v-if="type.id === test.type || editable"
                 >
-                  {{ metric.name }}
+                  {{ type.name }}
                 </y-mini-button>
               </template>
+            </div>
+          </div>
+          <div class="type__metrics">
+            <h6 class="type__test__title">Тип метрики</h6>
+            <template
+                v-for="metric of metrics"
+                :key="`${metric.id}${metric.name}`"
+            >
               <y-mini-button
-                  v-if="editable"
                   class="type__test__type"
-                  @click="createMetric"
+                  :active="metric.id === test.metric"
+                  @click="selectLabel('metric', metric.id)"
+                  :disabled="!editable"
+                  @contextmenu.prevent="openRemoveMetricPopUp(metric.id)"
+                  v-if="metric.id === test.metric || editable"
               >
-                Добавить
+                {{ metric.name }}
               </y-mini-button>
-            </div>
-          </div>
-        </article>
-
-        <section v-if="test.metric > 0 && test.type > 0" class="questions">
-          <hr/>
-          <div class="header__plus">
-            <h2 class="heading">Вопросы</h2>
-            <y-cool-button v-if="questions.length <= 0" class="ml-1" @click="addQuestion">Добавить вопрос</y-cool-button>
-
-          </div>
-
-          <template v-if="questions.length > 0">
-
-            <template v-for="(question, id) in questions" :key="`${id}${question.id}`">
-              <question
-                  :editable="editable"
-                  :question-id="id"
-                  :type="test.type"
-                  @remove="removeQuestion(id)"
-              />
             </template>
-            <div class="row center-button">
-              <y-cool-button v-if="editable" @click="addQuestion">Добавить вопрос</y-cool-button>
-            </div>
+            <y-mini-button
+                v-if="editable"
+                class="type__test__type"
+                @click="createMetric"
+            >
+              Добавить
+            </y-mini-button>
+          </div>
+        </div>
+      </article>
 
-            <div class="type__test">
-              <h4 class="type__test__title">Формула</h4>
-              <y-input :disabled="!editable" class="w-50" v-model="test.formula" /> <br>
-              <div v-if="editable" class="formula_controls">
-                <y-button class="formula_control" @click="autoFormula"><i class="fa-solid fa-plus"></i> Сумма по всем вопросам</y-button>
-                <!--              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>-->
-              </div>
-            </div>
-            <div class="row center-button">
-              <y-cool-button v-if="editable" @click="saveTest">Сохранить тест</y-cool-button>
-            </div>
+      <section v-if="test.metric > 0 && test.type > 0" class="questions">
+        <hr/>
+        <div class="header__plus">
+          <h2 class="heading">Вопросы</h2>
+          <y-cool-button v-if="questions.length <= 0" class="ml-1" @click="addQuestion">Добавить вопрос</y-cool-button>
+
+        </div>
+
+        <template v-if="questions.length > 0">
+
+          <template v-for="(question, id) in questions" :key="`${id}${question.id}`">
+            <question
+                :editable="editable"
+                :question-id="id"
+                :type="test.type"
+                @remove="removeQuestion(id)"
+            />
           </template>
-
-          <div v-else class="questions__list">
-            <div class="state_1">Здесь будет отображаться список вопросов.
-              <span>Начните с создание нового вопроса</span>
-            </div>
+          <div class="row center-button">
+           <y-cool-button v-if="editable" @click="addQuestion">Добавить вопрос</y-cool-button>
           </div>
 
-          <!--        <hr>
-                  <y-test-type1 />
-                  <hr>
-                  <y-test-type2 />
-                  <hr>-->
+          <div class="type__test">
+            <h4 class="type__test__title">Формула</h4>
+            <y-input :disabled="!editable" class="w-50" v-model="test.formula" /> <br>
+            <div v-if="editable" class="formula_controls">
+              <y-button class="formula_control" @click="autoFormula"><i class="fa-solid fa-plus"></i> Сумма по всем вопросам</y-button>
+<!--              <y-input class="formula_control" placeholder="Добавить делитель" v-model.trim="formula_div"></y-input>-->
+            </div>
+          </div>
+          <div class="row center-button">
+            <y-cool-button v-if="editable" @click="saveTest">Сохранить тест</y-cool-button>
+          </div>
+        </template>
 
-        </section>
-      <create-metric
-          v-if="window === 'createMetric'"
-          @close="createMetricClosed"
-      ></create-metric>
-    </div>
+        <div v-else class="questions__list">
+          <div class="state_1">Здесь будет отображаться список вопросов.
+            <span>Начните с создание нового вопроса</span>
+          </div>
+        </div>
+
+        <!--        <hr>
+                <y-test-type1 />
+                <hr>
+                <y-test-type2 />
+                <hr>-->
+
+      </section>
+    </template>
+
+    <create-metric
+        v-if="window === 'createMetric'"
+        @close="createMetricClosed"
+    ></create-metric>
   </y-modal>
 </template>
 
@@ -439,24 +440,6 @@ export default {
 </script>
 
 <style scoped>
-.modal {
-  align-items: center;
-  display: flex;
-  width: 90vw;
-  padding-right: 3rem;
-  grid-gap: 2.5625rem;
-  flex-direction: row;
-}
-.main-container {
-  width: 70vw;
-  display: flex;
-  gap: 1rem;
-  max-height: 60vh;
-  overflow-y: scroll;
-  flex-direction: column;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-}
 .center-button {
   width: 100%;
   display: flex;

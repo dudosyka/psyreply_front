@@ -1,5 +1,5 @@
 <template>
-  <div class="col sidebar-col">
+  <div class="col">
     <article class="side_bar">
       <div class="col header-area">
         <div class="col logo-box">
@@ -36,7 +36,6 @@ export default {
 </script>
 
 <style scoped>
-
 .exit {
   border-top: 1px solid var(--border-dark);
 }
@@ -86,14 +85,14 @@ export default {
   color: var(--inactive-color);
   transition: 0.3s;
   font-size: 1rem;
-  height: 70vh;
+  height: 100vh;
   width: 15vw;
   border-right: 1px solid rgba(255, 255, 255, 0.125);
   background: rgba(7, 18, 25, 0.75);
   box-shadow: 0 4px 52px rgba(143, 0, 255, 0.11);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 30px 0px 0px 30px;
+  border-radius: 0px 30px 30px 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,22 +1,21 @@
 <template>
   <y-popup-warn></y-popup-warn>
   <div class="wrapper">
+    <y-left-side-bar />
     <main class="main">
       <y-modal class="block" v-if="window === 'main'">
-        <div class="container-fluid main-container">
-          <header class="header">
-            <h2 class="heading">Управление группами компании</h2>
-            <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
-          </header>
-          <y-list  v-if="groups.length"
-                   key-of-name="name"
-                   :selectable="true"
-                   :items="groups"
-                   @select="selectGroup"
-                   :pagination="true"
-          />
+        <header class="header">
+          <h2 class="heading">Управление группами компании</h2>
+          <y-cool-button @click="addGroup">Добавить группу</y-cool-button>
+        </header>
+        <y-list  v-if="groups.length"
+                 key-of-name="name"
+                 :selectable="true"
+                 :items="groups"
+                 @select="selectGroup"
+                 :pagination="true"
+        />
 
-        </div>
       </y-modal>
       <create-group
           v-if="window === 'createGroup'"
@@ -90,14 +89,6 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-  width: 70vw;
-  display: flex;
-  gap: 6rem;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -111,12 +102,9 @@ export default {
   justify-content: center;
 }
 .modal.block {
-  align-items: center;
-  display: flex;
-  width: 90vw;
-  padding-right: 3rem;
+  display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
-  flex-direction: row;
 }
 
 .header {

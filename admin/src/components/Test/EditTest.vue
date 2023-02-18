@@ -1,38 +1,36 @@
 <template>
-  <y-modal>
-    <div class="main">
-      <y-popup-warn></y-popup-warn>
-      <div class="container-fluid main-container">
-        <header class="header">
-          <y-left-arrow-button @click="close" />
-          <h1>{{ test.company_id == null ? "Просмотр" : "Редактирование" }}: {{test.title}}</h1>
-        </header>
-        <create-test
-            :test-id="id"
-            :title="test.title"
-            :editable="test.company_id != null"
-            :showSlideBar="false"
-        />
-        <div class="container block" v-if="blocks.length > 0">
-          <header>
-            <h2 class="heading">Добавить в блок</h2>
-          </header>
-          <y-list
-              key-of-name="name"
-              :selectable="true"
-              :items="blocks"
-              @select="selectBlocks"
-              :pagination="true"
-              :page-size="5"
-          />
-          <y-cool-button @click="addToBlock">Добавить в блок</y-cool-button>
-        </div>
-        <div class="container block" v-if="test.company_id != null">
-          <h2 class="heading">Опасная зона</h2>
-          <y-cool-button @click="removeTest">Удалить тест</y-cool-button>
-        </div>
-      </div>
-    </div>
+  <y-modal class="main">
+    <y-popup-warn></y-popup-warn>
+    <header class="header">
+      <y-left-arrow-button @click="close" />
+      <h1>{{ test.company_id == null ? "Просмотр" : "Редактирование" }}: {{test.title}}</h1>
+    </header>
+
+    <create-test
+      :test-id="id"
+      :title="test.title"
+      :editable="test.company_id != null"
+    />
+
+    <y-modal class="block" v-if="blocks.length > 0">
+      <header>
+        <h2 class="heading">Добавить в блок</h2>
+      </header>
+      <y-list
+        key-of-name="name"
+        :selectable="true"
+        :items="blocks"
+        @select="selectBlocks"
+        :pagination="true"
+        :page-size="5"
+      />
+      <y-cool-button @click="addToBlock">Добавить в блок</y-cool-button>
+    </y-modal>
+
+    <y-modal class="block" v-if="test.company_id != null">
+      <h2 class="heading">Опасная зона</h2>
+      <y-cool-button @click="removeTest">Удалить тест</y-cool-button>
+    </y-modal>
   </y-modal>
 </template>
 
@@ -168,16 +166,9 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-  width: 70vw;
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  overflow-y: scroll;
-  max-height: 60vh;
-  height: 100%;
+.main {
+  display: grid;
+  grid-gap: 1rem;
 }
 .header {
   display: grid;
@@ -188,14 +179,6 @@ export default {
 .block {
   display: grid;
   grid-gap: .8rem;
-}
-.modal {
-  align-items: center;
-  display: flex;
-  width: 90vw;
-  padding-right: 3rem;
-  grid-gap: 2.5625rem;
-  flex-direction: row;
 }
 hr {
   margin-top: 30px;

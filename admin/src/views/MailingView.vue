@@ -1,40 +1,21 @@
 <template>
   <y-popup-warn></y-popup-warn>
   <div class="wrapper">
-
+    <y-left-side-bar />
     <main class="main">
-      <y-modal v-if="window === 'main'" class="main__modal">
-
       <!--
         Внутри этого template должна быть верстка касающаяся дефолт вида окна рассылок
         Тут должен быть список рассылок см. листочек с обсуждения
       -->
-        <div class="container-fluid main-container">
-          <template v-if="window === 'main'" >
-            <header class="header">
-              <div class="row header-row">
-                <div class="col heading-col">
-                  <h2 class="heading header__heading">Рассылки</h2>
-                </div>
-                <div class="col buttons-col">
-                  <y-button class="telegram"><i class="fa-brands fa-telegram"></i> Telegram Bot</y-button>
-                  <y-button :plus="true" @click="createMailing" class="create-mailing">Новая рассылка</y-button>
-                </div>
-              </div>
-            </header>
-            <y-list
-                key-of-name="name"
-                :editable="true"
-                @edit="editBlock"
-                :items="mailings"
-            />
-            <div class="container-fluid footer-container">
-              <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-              <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
-            </div>
-          </template>
-        </div>
-
+      <template v-if="window === 'main'" >
+        <header class="header">
+          <div class="header__select">
+            <h2 class="heading header__heading">Рассылки</h2>
+          </div>
+          <y-button :plus="true" @click="createMailing">Новая рассылка</y-button>
+        </header>
+        Список рассылок
+      </template>
 
       <!--
         Внутри этого template можно делать верстку касающуюся момента
@@ -43,7 +24,7 @@
       <template v-if="window === 'createBot'">
         <CreateMailingBot></CreateMailingBot>
       </template>
-        </y-modal>
+
       <!--
         Внутри этого template можно делать верстку касающуюся
         создания новой рассылки
@@ -68,8 +49,8 @@
             @close="close"
         />
       </template>
-    </main>
 
+    </main>
   </div>
 </template>
 
@@ -78,12 +59,10 @@ import YPopupWarn from "@/components/UI/YPopupWarn";
 import CreateMailing from "@/components/Mailing/CreateMailing.vue";
 import EditMailing from "@/components/Mailing/EditMailing.vue";
 import CreateMailingBot from "@/components/Mailing/CreateMailingBot.vue";
-import YButton from "@/components/UI/YButton.vue";
 
 export default {
   name: "MailingView",
   components: {
-    YButton,
     CreateMailingBot,
     EditMailing,
     CreateMailing,
@@ -92,7 +71,6 @@ export default {
   data() {
     return {
       window: 'main',
-      mailings: ["1", "2", "3", "4", "5"],
     }
   },
   created() {
@@ -132,60 +110,6 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-  width: 70vw;
-  display: flex;
-  padding-right: 1rem;
-  gap: 3rem;
-  max-height: 60vh;
-  overflow-y: scroll;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-.footer-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.13);
-  padding-top: 1rem;
-}
-.hide-pagination {
-  color: white!important;
-  opacity: 0.2;
-}
-.telegram {
-  width: 9vw;
-  border: 1px solid var(--border-dark);
-  border-radius: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.telegram:hover {
-  width: 9vw;
-  border: 1px solid rgba(255, 255, 255, 0.37);
-  border-radius: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.create-mailing {
-  width: 10vw;
-  border: 1px solid var(--border-dark);
-  border-radius: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.create-mailing:hover {
-  width: 10vw;
-  border: 1px solid rgba(255, 255, 255, 0.37);
-  border-radius: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.header-row {
-  display: flex;
-  justify-content: space-between;
-}
 .wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -199,12 +123,9 @@ export default {
   justify-content: center;
 }
 .main__modal {
-  align-items: center;
-  display: flex;
-  width: 90vw;
-  padding-right: 3rem;
+  display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
-  flex-direction: row;
 }
 
 .header {

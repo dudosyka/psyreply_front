@@ -1,64 +1,65 @@
 <template>
   <div class="wrapper">
-    <main class="main">
-      <y-modal v-if="window === 'main'" class="main__modal">
-        <div class="container-fluid main-container">
-          <header class="header">
-            <div class="header__select">
+    <y-left-side-bar />
 
-              <h2 class="heading header__heading">Результаты</h2>
-              <y-select
-                  font-size="1"
-                  :selects="blocks"
-                  @select="updateBlocksSelect"
-              />
-            </div>
-            <div class="company__date__select">
-              <y-date
-                  @update-date="setDateFilter"
-              />
-            </div>
-          </header>
-          <div class="filters" v-if="filters.block_id">
-            <y-input
-                class="week_input"
-                font-size="1"
-                v-model.trim="filters.week"
-                placeholder="Номер недели"
+    <main class="main">
+
+      <y-modal v-if="window === 'main'" class="main__modal">
+        <header class="header">
+          <div class="header__select">
+
+            <h2 class="heading header__heading">Результаты</h2>
+            <y-select
+              font-size="1"
+              :selects="blocks"
+              @select="updateBlocksSelect"
             />
-            <div class="export-block">
-              <y-select
-                  :selects="groups"
-                  @select="updateGroupSelect"
-              />
-            </div>
-            <button class="button" @click="statByWholeBlock()" v-if="filters.week != null && filters.week != ''">По всему блоку</button>
-            <button class="button" @click="statByGroup()" v-if="filters.week != null && filters.week != '' && filters.group_id">По всей группе</button>
           </div>
-          <y-results-list v-if="results.length > 0">
-            <y-results-list-item
-                v-for="result in pagineteData"
-                :name="result.block_title"
-                :id="result.user.jetBotId"
-                :username="result.user.login"
-                :week="result.week"
-                :row="result"
-                :valid="result.approved"
-                :date="result.createdAt"
-                @edit="openEditWindow(result)"
-                :active="result.active"
+          <div class="company__date__select">
+            <y-date
+              @update-date="setDateFilter"
             />
-            <!--            :selectable="filters.week != null && filters.week != ''"-->
-            <!--            @select="result_selected(result)"-->
-            <div class="container-fluid footer-container">
-              <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-              <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
-            </div>
-          </y-results-list>
-          <p class="new__results" v-else>
-            {{ answerMessage }}
-          </p>
+          </div>
+        </header>
+        <div class="filters" v-if="filters.block_id">
+          <y-input
+              class="week_input"
+              font-size="1"
+              v-model.trim="filters.week"
+              placeholder="Номер недели"
+          />
+          <div class="export-block">
+            <y-select
+                :selects="groups"
+                @select="updateGroupSelect"
+            />
+          </div>
+          <button class="button" @click="statByWholeBlock()" v-if="filters.week != null && filters.week != ''">По всему блоку</button>
+          <button class="button" @click="statByGroup()" v-if="filters.week != null && filters.week != '' && filters.group_id">По всей группе</button>
         </div>
+        <y-results-list v-if="results.length > 0">
+          <y-results-list-item
+            v-for="result in pagineteData"
+            :name="result.block_title"
+            :id="result.user.jetBotId"
+            :username="result.user.login"
+            :week="result.week"
+            :row="result"
+            :valid="result.approved"
+            :date="result.createdAt"
+            @edit="openEditWindow(result)"
+            :active="result.active"
+          />
+          <!--            :selectable="filters.week != null && filters.week != ''"-->
+          <!--            @select="result_selected(result)"-->
+          <div class="container-fluid footer-container">
+            <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
+            <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
+          </div>
+        </y-results-list>
+        <p class="new__results" v-else>
+          {{ answerMessage }}
+        </p>
       </y-modal>
       <y-modal v-if="window === 'dashboard'">
           <y-dashboard
@@ -380,15 +381,6 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-  width: 70vw;
-  display: flex;
-  gap: 1rem;
-  max-height: 60vh;
-  flex-direction: column;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-}
 .next {
   color: white;
 }
@@ -436,12 +428,9 @@ export default {
   justify-content: center;
 }
 .main__modal {
-  align-items: center;
-  display: flex;
-  width: 90vw;
+  display: grid;
+  width: 70vw;
   grid-gap: 2.5625rem;
-  flex-direction: row;
-  padding-right: 3rem;
 }
 
 .header {
