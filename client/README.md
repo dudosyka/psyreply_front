@@ -1,4 +1,4 @@
-# psyreply_client
+# Reply client application. 
 
 ## Project setup
 ```
