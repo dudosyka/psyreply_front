@@ -1,1 +1,0 @@
-scp -r ./dist/* reply@46.19.65.112:/home/reply/domains/dashboard.beta.psyreply.com
