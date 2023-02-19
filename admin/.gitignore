@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
+node_modules/*
+node_modules/.cache/babel-loader/
 /dist
 /src/api/api.conf.js
 /upload.sh
