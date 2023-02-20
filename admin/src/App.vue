@@ -28,7 +28,7 @@ export default {
   font-family: var(--font-rubik);
   font-size: calc(.5vw + .5rem);
   color: var(--light);
-  --acrylic-blur-dark: rgb(7 8 12 / 53%);
+  --acrylic-blur-dark: rgba(7, 8, 12, 0.76);
   --acrylic-blur-light: rgba(17, 25, 40, 0.75);/*Прозрачный фон всех элементов*/
   --border-dark: rgba(113 119 144 / 25%);
   --border-light: rgb(113 119 144 / 12%);/*Обводка*/
@@ -52,8 +52,41 @@ export default {
   box-sizing: inherit;
   text-decoration: none;
 }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
-.link:link,
+  .link:link,
 .link:visited,
 .link:hover,
 .link:active {

@@ -49,58 +49,53 @@ export default {
 
 <style scoped>
 .input {
-  background: rgba(255, 255, 255, 0.24);
+  background: rgba(7, 18, 25, 0.75);
   color: var(--light);
   border-color: var(--border-dark);
   border-width: 1px;
+  padding-left: 1rem!important;
   border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
+  height: 2rem;
+  border-radius: 0.3rem;
+  text-align: left;
   transition: all .3s ease-in-out;
 }
 .input:hover {
-  background: hsla(0, 0%, 100%, 0.5);
+  background: rgba(7, 18, 25, 0.75);
   color: var(--light);
   border-color: var(--border-dark);
   border-width: 1px;
+  padding-left: 1rem!important;
   border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
+  height: 2rem;
+  border-radius: 0.3rem;
+  text-align: left;
   transition: all .3s ease-in-out;
 }
 .input:active {
-  background: hsla(0, 0%, 100%, 0.17);
+  background: rgba(7, 18, 25, 0.75);
   color: var(--light);
   border-color: var(--border-dark);
   border-width: 1px;
+  padding-left: 1rem!important;
   border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
+  height: 2rem;
+  border-radius: 0.3rem;
+  text-align: left;
   transition: all .3s ease-in-out;
 }
 .input:invalid {
-  background-color: hsla(0, 83%, 41%, 0.89);
+  background: rgba(7, 18, 25, 0.75);
   color: var(--light);
   border-color: var(--border-dark);
   border-width: 1px;
+  padding-left: 1rem!important;
   border-style: solid;
-  height: 1rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  user-select: none;
-  outline: none;
+  height: 2rem;
+  border-radius: 0.3rem;
+  text-align: left;
   transition: all .3s ease-in-out;
 }
-
 ::placeholder {
   font-style: italic;
   color: rgba(255, 255, 255, 0.53);
