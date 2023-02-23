@@ -1,39 +1,33 @@
 <template>
-  <v-container class="main-container">
-    <v-row class="header d-flex align-center justify-start">
-    <v-img
-      class="logo"
-      src="https://selecty.psyreply.com/img/logotypes/reply_logo.svg"
-    ></v-img>
-  </v-row>
-        <v-row class="main-row d-flex align-center justify-center w-100">
-          <v-col  cols="auto">
-          <r-contact-list></r-contact-list>
-          </v-col>
-          <v-divider vertical></v-divider>
-          <v-col cols="auto" class="message-col d-flex">
-            <r-message></r-message>
-            <r-text-input></r-text-input>
-          </v-col>
-          <v-divider vertical></v-divider>
-          <v-col class="profile-col d-flex" cols="auto">
-            <v-container class="profile-container">
-              <r-profile-img></r-profile-img>
-              <h2>Hui</h2>
-            </v-container>
-          </v-col>
-        </v-row>
-  </v-container>
+  <v-card
+    class="card-left mx-auto"
+    max-width="300"
+  >
+    <v-toolbar class="toolbar">
+      <v-btn variant="text" icon="mdi-menu"></v-btn>
+
+      <v-toolbar-title>Inbox</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn variant="text" icon="mdi-magnify"></v-btn>
+    </v-toolbar>
+
+    <v-list class="list"
+            :items="items"
+            item-props
+            lines="three"
+    >
+      <template v-slot:subtitle="{ subtitle }">
+        <div v-html="subtitle"></div>
+      </template>
+    </v-list>
+  </v-card>
 </template>
 
-<script>
-import RContactList from "@/components/UI/RContactList.vue";
-import RMessage from "@/components/UI/RMessage.vue";
-import RTextInput from "@/components/UI/Elements/Chat/RTextInput.vue";
-import RProfileImg from "@/components/UI/Elements/Profile/RProfileImg.vue";
-
+<script lang="ts">
 export default {
-  components: {RProfileImg, RTextInput, RMessage, RContactList},
+  name: "RContactList",
   data: () => ({
     items: [
       { type: 'subheader', title: 'Today' },
@@ -67,10 +61,25 @@ export default {
         subtitle: '<span class="text-primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
       },
     ],
-  }),
+  })
 }
 </script>
 
 <style scoped>
-
+.card-left {
+  background: transparent;
+  color: white;
+}
+.list {
+  background: transparent;
+  color: white;
+}
+.toolbar {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(7, 10, 17, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  color: white;
+}
 </style>
