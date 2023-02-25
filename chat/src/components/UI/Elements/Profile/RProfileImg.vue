@@ -1,7 +1,7 @@
 <template>
   <v-img
     class="pfp"
-    src="../assets/pfp.jpg"
+    src="@/assets/pfp.jpg"
   ></v-img>
 </template>
 
@@ -13,8 +13,8 @@ export default {
 
 <style scoped>
 .pfp {
-  max-width: 150px!important;
+  max-width: 200px!important;
   border-radius: 50%;
-  width: 100%;
+  width: 10rem;
 }
 </style>

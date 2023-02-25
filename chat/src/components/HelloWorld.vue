@@ -17,10 +17,8 @@
           </v-col>
           <v-divider vertical></v-divider>
           <v-col class="profile-col d-flex" cols="auto">
-            <v-container class="profile-container">
               <r-profile-img></r-profile-img>
               <h2>Hui</h2>
-            </v-container>
           </v-col>
         </v-row>
   </v-container>

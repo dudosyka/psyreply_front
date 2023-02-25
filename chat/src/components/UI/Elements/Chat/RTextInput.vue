@@ -3,7 +3,6 @@
     class="mx-2"
     label="Введите сообщение"
     rows="1"
-    prepend-icon="mdi-comment"
   ></v-textarea>
 </template>
 

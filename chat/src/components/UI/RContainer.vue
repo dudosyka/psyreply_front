@@ -1,5 +1,7 @@
 <template>
-  <v-container class="main-container"></v-container>
+  <v-container class="main-container">
+    <slot></slot>
+  </v-container>
 </template>
 
 <script>
@@ -10,12 +12,12 @@ export default {
 
 <style scoped>
 .main-container {
-  backdrop-filter: blur(kawase 3);
+  backdrop-filter: blur(10px);
   background-color: rgba(17, 25, 40, 0.75);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
-  width: 100%;
-  min-width: 98vw;
-  min-height: 90vh;
+  width: auto;
+  max-width: 100%;
+  height: auto;
 }
 </style>

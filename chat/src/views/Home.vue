@@ -10,6 +10,7 @@
       </v-col>
       <v-col cols="auto">
         <r-profile-img></r-profile-img>
+        <h2>Hui</h2>
       </v-col>
     </v-row>
   </r-container>

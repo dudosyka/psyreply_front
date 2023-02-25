@@ -1,25 +1,40 @@
 <template>
-  <v-container class="message-area">
-    <v-row class="message-out-row">
-      <v-alert class="message-out"
-               text="Привет!"
-      ></v-alert>
-    </v-row>
-    <v-row class="message-in-row">
-      <v-alert class="message-in"
-               text="Пока!"
-      ></v-alert>
-    </v-row>
+  <v-container class="chat-container">
+    <v-container class="message-area">
+      <v-row class="message-out-row">
+        <v-alert class="message-out"
+                 text="Привет!"
+        ></v-alert>
+      </v-row>
+      <v-row class="message-in-row">
+        <v-alert class="message-in"
+                 text="Пока!"
+        ></v-alert>
+      </v-row>
+    </v-container>
+    <v-cintainer>
+      <r-text-input></r-text-input>
+    </v-cintainer>
   </v-container>
+
 </template>
 
 <script>
+import RTextInput from "@/components/UI/Elements/Chat/RTextInput.vue";
+
 export default {
-  name: "RMessage"
+  name: "RMessage",
+  components: {RTextInput}
 }
 </script>
 
 <style scoped>
+.chat-container {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .message-in-row {
   display: flex;
   justify-content: flex-end;
@@ -47,5 +62,12 @@ export default {
   background-color: rgba(7, 10, 17, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.125);
   color: white;
+}
+.message-area {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-width: 40vw;
+
 }
 </style>
