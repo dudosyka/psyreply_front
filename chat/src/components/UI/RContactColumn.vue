@@ -19,10 +19,8 @@ export default {
 <style scoped>
 .card-left {
   background: transparent;
-  max-width: 20vw;
   color: white;
-  max-height: 60vh;
-  overflow-y: scroll;
+  box-shadow: none;
 }
 .list {
   background: transparent;

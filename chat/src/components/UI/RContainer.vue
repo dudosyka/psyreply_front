@@ -13,7 +13,7 @@ export default {
 <style scoped>
 .main-container {
   backdrop-filter: blur(10px);
-  background-color: rgba(17, 25, 40, 0.75);
+  background: rgba(7,18,25,.75);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
   width: auto;

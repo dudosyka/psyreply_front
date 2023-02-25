@@ -12,9 +12,9 @@
         ></v-alert>
       </v-row>
     </v-container>
-    <v-cintainer>
+    <v-container>
       <r-text-input></r-text-input>
-    </v-cintainer>
+    </v-container>
   </v-container>
 
 </template>
@@ -29,6 +29,9 @@ export default {
 </script>
 
 <style scoped>
+.v-input__details {
+  display: none!important;
+}
 .chat-container {
   height: 60vh;
   display: flex;

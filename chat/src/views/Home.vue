@@ -18,9 +18,9 @@
 
 <script lang="ts" setup>
   import RContainer from "@/components/UI/RContainer.vue";
-  import RContactList from "@/components/UI/RContactList.vue";
+  import RContactList from "@/components/UI/RContactColumn.vue";
   import RHeader from "@/components/UI/RHeader.vue";
-  import RMessage from "@/components/UI/RMessage.vue";
+  import RMessage from "@/components/UI/RChatColumn.vue";
   import RProfileImg from "@/components/UI/Elements/Profile/RProfileImg.vue";
 
 </script>

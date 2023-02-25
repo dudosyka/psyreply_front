@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import RContactList from "@/components/UI/RContactList.vue";
-import RMessage from "@/components/UI/RMessage.vue";
+import RContactList from "@/components/UI/RContactColumn.vue";
+import RMessage from "@/components/UI/RChatColumn.vue";
 import RTextInput from "@/components/UI/Elements/Chat/RTextInput.vue";
 import RProfileImg from "@/components/UI/Elements/Profile/RProfileImg.vue";
 
