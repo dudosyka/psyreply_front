@@ -14,7 +14,7 @@ export default {
 .list-body {
   background-color: rgba(0, 0, 0, 0.25);
   color: white;
-  border-radius: 1rem 0rem 0rem 1rem;
+  border-radius: 0rem 0rem 0rem 1rem;
   border: 1px solid var(--border-dark);
   border-right: none;
   padding-top: 0;

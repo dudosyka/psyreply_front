@@ -63,7 +63,7 @@ export default {
   height: 5rem;
   transition: background .3s ease-in-out;
   width: 100%;
-  max-width: 18vw;
+
   background-color: transparent!important; /*убрать импотант после реализации активного класса*/
   border-bottom: 1px solid var(--border-dark);
 }

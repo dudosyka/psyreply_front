@@ -1,4 +1,5 @@
 <template>
+  <r-text-input></r-text-input>
   <v-card class="card-left mx-auto">
     <r-list-body>
       <r-list-item></r-list-item>
@@ -9,14 +10,16 @@
 <script lang="ts">
 import RListItem from "@/components/UI/Elements/Lists/RListItem.vue";
 import RListBody from "@/components/UI/Elements/Lists/RListBody.vue";
+import RTextInput from "@/components/UI/Elements/Inputs/RTextInput.vue";
 
 export default {
   name: "RContactList",
-  components: {RListBody, RListItem},
+  components: {RTextInput, RListBody, RListItem},
 }
 </script>
 
 <style scoped>
+
 .card-left {
   background: transparent;
   color: white;
