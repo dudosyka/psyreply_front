@@ -4,8 +4,8 @@
       <y-left-arrow-button @click="$emit('close')" />
       <h1 class="heading">Редактирование: {{ block.name }}</h1>
       <template v-if="block.company_id != null">
-        <y-button :plus="true" @click="generateBlockToken()">Сгенерировать токен</y-button>
-        <y-input max="1000" min="0" v-model.trim="block.week" type="number" />
+        <y-button class="gentoken-btn" :plus="true" @click="generateBlockToken()">Сгенерировать токен</y-button>
+        <y-input max="1000" min="0" class="week-input" v-model.trim="block.week" type="number" />
       </template>
     </header>
 
@@ -127,8 +127,20 @@ export default {
   methods: {
     async generateBlockToken() {
       const block = new Block();
-      await block.generateToken(this.block).then(res => {
-        window.prompt("Нажмите Ctrl+C", JSON.parse(res).body);
+
+      if (!this.block.week) {
+        this.$store.commit('openErrorPopup', 'Для генерации токена укажите неделю! (текстовое поле справа от кнопки генерации)')
+        return;
+      }
+
+      const token = await block.generateToken(this.block).then(res => {
+        return JSON.parse(res).body;
+      });
+
+      navigator.clipboard.writeText(token).then(() => {
+        this.$store.commit('openPopup', "Токен скопирован в буфер обмена!")
+      }).catch(() => {
+        window.prompt("Нажмите Ctrl+C", token);
       });
     },
     update() {
@@ -280,5 +292,9 @@ export default {
 }
 .time-picker__input {
   padding: .1rem;
+}
+.week-input {
+  font-size: 1rem;
+  padding: 1rem;
 }
 </style>

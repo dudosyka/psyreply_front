@@ -126,7 +126,6 @@ input.box__input:focus {
   width: 60%;
   margin-left: 20%;
   margin-right: 20%;
-  padding: 18px 16px;
   font-size: 18px;
 }
 .btn__login:hover {

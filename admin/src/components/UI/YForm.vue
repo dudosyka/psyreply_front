@@ -97,7 +97,6 @@ input.box__input:focus {
   height: 5vh;
   margin-left: 20%;
   margin-right: 20%;
-  padding: 18px 16px;
   font-size: 18px;
 }
 .btn__login:hover {
