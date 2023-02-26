@@ -85,7 +85,8 @@ export default {
   border-width: 2px;
   border-style: solid;
   width: 100%;
-  height: 37vh;
+  height: fit-content;
+  max-height: 50vh;
   overflow-y: scroll;
 }
 .overlay {
@@ -95,8 +96,7 @@ export default {
   z-index: 9999;
 }
 .list{
-
-  height: 25rem;
+  height: fit-content;
   z-index: 1;
 }
 @media screen and (max-width:820px){
@@ -109,7 +109,8 @@ export default {
     border-width: 2px;
     border-style: solid;
     width: 100%;
-    height: 32vh;
+    height: fit-content;
+    max-height: 50vh;
     overflow-y: scroll;
   }
 }

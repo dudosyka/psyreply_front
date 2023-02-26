@@ -1,3 +1,4 @@
+<!-- Range -->
 <template>
   <div class="QuestionType">
     <div class="row header-row">
