@@ -18,7 +18,9 @@ export default createStore({
     results: null,
     tokens: [
         '5783059057:AAFKjXFRicrIanLozc5RTue_Hl7y_imwY1A',
-        '5208325504:AAEKGs0MqFVQ-NHJnuzXqKol9H-fkOS9-YM'
+        '5208325504:AAEKGs0MqFVQ-NHJnuzXqKol9H-fkOS9-YM',
+        '6069143205:AAFbUz4h_fdrdgGxujkQsrZWKYWOJdF0Vsk',
+        '5927214631:AAGhrTprF62v7o1MTQjqHicTye6-VPkLneE'
     ]
   },
   getters: {
