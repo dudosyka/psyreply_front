@@ -113,6 +113,8 @@ export default {
   height: 30px;
   font-size: 1rem;
   color: white;
+  background-color: var(--acrylic-blur-dark);
+  backdrop-filter: blur(20px);
 }
 </style>
 
