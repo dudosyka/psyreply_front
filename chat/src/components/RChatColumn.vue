@@ -8,16 +8,15 @@
     </v-container>
     <v-container class="chat-container">
       <v-container class="message-area">
-        <r-date-chip></r-date-chip>
-        <r-message-blob><slot></slot></r-message-blob>
-        <r-message-blob><slot></slot></r-message-blob>
+<!--        <r-date-chip></r-date-chip>-->
+        <r-message-blob :key="`${Date.now()}${message.id}`" v-for="message in messages" :message-model="message"><slot></slot></r-message-blob>
       </v-container>
       <v-container class="textarea-container">
         <v-divider class="hr"></v-divider>
         <v-row class="input-area">
           <r-button></r-button>
-          <r-text-input></r-text-input>
-          <r-button></r-button>
+          <r-text-input v-model="text"></r-text-input>
+          <r-button @click="sendMessage"></r-button>
         </v-row>
       </v-container>
     </v-container>
@@ -29,10 +28,30 @@ import RTextInput from "@/components/UI/Elements/Inputs/RTextInput.vue";
 import RMessageBlob from "@/components/UI/Elements/Chat/RMessageBlob.vue";
 import RDateChip from "@/components/UI/Elements/Chat/RDateChip.vue";
 import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
+import {ChatModel} from "@/api/models/chat.model";
 
 export default {
   name: "RMessage",
-  components: {RDateChip, RButton, RMessageBlob, RTextInput}
+  components: {RButton, RMessageBlob, RTextInput},
+  data: () => ({
+    text: ""
+  }),
+  methods: {
+    sendMessage() {
+      const chatModel = new ChatModel();
+      chatModel.sendMessage(this.text);
+    }
+  },
+  computed: {
+    messages() {
+      return this.$store.getters.messages.map(el => {
+        return {
+          ...el,
+          text: el.content.text
+        }
+      });
+    }
+  }
 }
 </script>
 

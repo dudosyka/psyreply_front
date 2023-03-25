@@ -1,15 +1,16 @@
 <template>
   <v-row class="message-out-row message-in-row">
     <v-alert
-      class="message-out message-in"
+      :class="messageModel.bot_message_id ? 'message-in' : 'message-out'"
     >
       <v-row class="message-row">
         <v-col class="message-col">
-          <p class="message-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad at autem dicta dolore eos et itaque,
-            iusto magni maxime minima mollitia non nulla obcaecati perferendis possimus quo, velit voluptas.</p>
+          <p class="message-text">{{
+              messageModel.text
+            }}</p>
         </v-col>
         <v-col class="time-col">
-          <span class="time-text">12:00</span>
+          <span class="time-text">{{ messageModel.createdAt }}</span>
         </v-col>
       </v-row>
     </v-alert>
@@ -19,6 +20,12 @@
 <script>
 export default {
   name: "RMessageBlob",
+  props: {
+    messageModel: {
+      type: Object,
+      default: () => {}
+    }
+  }
 }
 </script>
 

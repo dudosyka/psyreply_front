@@ -2,8 +2,12 @@
   <router-view />
 </template>
 
-<script lang="ts" setup>
-  //
+<script>
+  export default {
+    async created() {
+      await this.$store.dispatch('loadApplication')
+    }
+  }
 </script>
 
 <style>

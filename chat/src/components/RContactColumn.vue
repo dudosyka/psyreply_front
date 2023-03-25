@@ -1,20 +1,30 @@
 <template>
   <r-text-input></r-text-input>
   <v-card class="card-left mx-auto">
-    <r-list-body>
-      <r-list-item></r-list-item>
+    <r-list-body v-if="contacts.length">
+      <r-list-item @selected="selectChat" :items="contacts"></r-list-item>
     </r-list-body>
   </v-card>
 </template>
 
-<script lang="ts">
-import RListItem from "@/components/UI/Elements/Lists/RListItem.vue";
+<script>
+import RListItem from "@/components/UI/Elements/Lists/RListItems.vue";
 import RListBody from "@/components/UI/Elements/Lists/RListBody.vue";
 import RTextInput from "@/components/UI/Elements/Inputs/RTextInput.vue";
 
 export default {
   name: "RContactList",
   components: {RTextInput, RListBody, RListItem},
+  methods: {
+    selectChat(contact) {
+      this.$store.dispatch('selectChat', contact);
+    }
+  },
+  computed: {
+    contacts() {
+      return this.$store.getters.contacts;
+    }
+  }
 }
 </script>
 

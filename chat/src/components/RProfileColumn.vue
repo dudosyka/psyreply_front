@@ -3,10 +3,10 @@
     <v-container class="profile-name">
       <v-img
         class="pfp"
-        src="@/assets/pfp.jpg"
+        :src="user.avatar"
       ></v-img>
       <v-row align-content="center" align="center">
-        <h3>Виктор Палыч</h3>
+        <h3>{{ user.login }}</h3>
 <!-- Кнопка дашборда-->
         <r-button></r-button>
       </v-row>
@@ -26,13 +26,18 @@
 </template>
 
 <script>
-import RListItem from "@/components/UI/Elements/Lists/RListItem.vue";
+import RListItem from "@/components/UI/Elements/Lists/RListItems.vue";
 import RMessage from "@/components/RChatColumn.vue";
 import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
 
 export default {
   name: "RProfileColumn",
-  components: {RButton, RMessage, RListItem}
+  components: {RButton, RMessage, RListItem},
+  computed: {
+    user() {
+      return this.$store.getters.selectedContact;
+    }
+  }
 }
 </script>
 
