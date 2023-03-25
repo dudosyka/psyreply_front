@@ -42,15 +42,14 @@ export default {
 </script>
 
 <style scoped>
-.chat-container {
-
-}
 .notes {
-  max-height: 30vh;
-  overflow-y: scroll;
+  height: 100%;
   padding: 0;
 }
 .notes-chat {
+  height: 100%;
+  min-height: 50vh;
+  max-height: 50vh;
 }
 .profile-col {
   width: auto;

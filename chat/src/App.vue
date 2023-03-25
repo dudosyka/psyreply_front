@@ -65,7 +65,4 @@ html, body {
 *::-webkit-scrollbar-thumb:active {
   background-color: rgba(184, 192, 194, 0.47);
 }
-.v-input__details {
-  display: none!important;
-}
 </style>

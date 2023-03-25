@@ -8,14 +8,12 @@
         hide-details="auto"
         append-inner-icon="mdi-text-search"-->
   <v-textarea
-    className="mx2 text-area"
-    rows="2"
-    hide-details
+    label="Сообщение..."
     auto-grow
-    clearable
-    label="Сообщение...">
-
-  </v-textarea>
+    variant="outlined"
+    rows="1"
+    row-height="40"
+  ></v-textarea>
 </template>
 
 <script>
@@ -28,18 +26,6 @@ export default {
 </script>
 
 <style scoped>
-.hr {
-  margin-bottom: 2rem;
-}
-
-.text-area {
-  margin-bottom: 0;
-  max-height: 10rem;
-  padding-bottom: 0 !important;
-  overflow-y: scroll;
-  background: transparent;
-}
-
 .v-text-field .v-input__details {
   display: none !important;
 }

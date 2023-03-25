@@ -1,7 +1,7 @@
 <template>
   <r-container>
     <v-row class="d-flex align-center justify-center">
-      <v-col cols="auto">
+      <v-col class="contacts" cols="auto">
         <r-header></r-header>
         <r-contact-list></r-contact-list>
       </v-col>
@@ -24,5 +24,14 @@
 <style>
 .message-col {
   min-width: 40vw;
+  height: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.contacts {
+  height: auto;
+  min-height: 75vh;
 }
 </style>

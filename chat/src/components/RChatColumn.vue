@@ -1,7 +1,7 @@
 <template>
   <v-col>
     <v-container class="header-container">
-      <v-row align="center" justify="space-between">
+      <v-row class="nametag" align="center" justify="space-between">
         <h3 class="name">Виктор Палыч</h3>
       </v-row>
       <v-divider class="hr"></v-divider>
@@ -83,7 +83,7 @@ export default {
   display: none!important;
 }
 .chat-container {
-  height: 70vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
