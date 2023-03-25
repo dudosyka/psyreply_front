@@ -25,7 +25,6 @@
 .message-col {
   min-width: 40vw;
   height: 100%;
-  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -33,5 +32,7 @@
 .contacts {
   height: auto;
   min-height: 75vh;
+  max-height: 75vh;
+  overflow-y: scroll;
 }
 </style>

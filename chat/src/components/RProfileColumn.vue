@@ -1,10 +1,12 @@
 <template>
   <v-col class="profile-col" cols="auto" fill-height>
     <v-container class="profile-name">
-      <v-img
-        class="pfp"
-        :src="user.avatar"
-      ></v-img>
+      <v-container class="profile-picture">
+        <v-img
+          class="pfp"
+          :src="user.avatar"
+        ></v-img>
+      </v-container>
       <v-row align-content="center" align="center">
         <h3>{{ user.login }}</h3>
 <!-- Кнопка дашборда-->
@@ -42,14 +44,25 @@ export default {
 </script>
 
 <style scoped>
+.profile-picture {
+  width: 7rem;
+  height: 7rem;
+  padding: 0;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 50%;
+  object-fit: cover!important;
+}
+.v-img__img--contain {
+  object-fit: cover!important;
+}
 .notes {
   height: 100%;
   padding: 0;
 }
 .notes-chat {
   height: 100%;
-  min-height: 50vh;
-  max-height: 50vh;
+  max-height: 40vh;
 }
 .profile-col {
   width: auto;
@@ -68,8 +81,8 @@ export default {
   padding: 0;
 }
 .pfp {
-  max-width: 8rem!important;
-  border-radius: 50%;
-  width: 10rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover!important;
 }
 </style>

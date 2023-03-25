@@ -23,6 +23,8 @@
 }
 html, body {
   font-family: 'Rubik', sans-serif;
+  height: 100vh;
+  overflow-y: hidden;
 }
 #app {
   background-image: url("assets/bg.png");
@@ -64,5 +66,8 @@ html, body {
 
 *::-webkit-scrollbar-thumb:active {
   background-color: rgba(184, 192, 194, 0.47);
+}
+.v-img__img--contain {
+  object-fit: cover!important;
 }
 </style>

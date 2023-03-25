@@ -35,7 +35,9 @@ export default {
   color: rgba(255, 255, 255, 0.47);
 }
 .message-text {
-  width: 18rem;
+  width: auto;
+  max-width: 20rem;
+  text-align: left;
 }
 .time-col {
   display: flex;
