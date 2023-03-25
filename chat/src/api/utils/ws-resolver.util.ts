@@ -1,4 +1,5 @@
 import {io, Socket} from 'socket.io-client'
+import apiConf from "@/api/api.conf";
 
 export class WsResolverUtil {
   private socket: Socket;
@@ -6,7 +7,7 @@ export class WsResolverUtil {
     private url: string,
     private bearer: string
   ) {
-    this.socket = io('http://localhost:8080', {
+    this.socket = io(apiConf.url, {
       transportOptions: {
         polling: {
           extraHeaders: {

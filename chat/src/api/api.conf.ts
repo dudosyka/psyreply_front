@@ -1,3 +1,4 @@
 export default {
-  url: "http://localhost:8080"
+  // url: "https://api.beta.psyreply.com"
+  url: "https://api.beta.psyreply.com"
 }

@@ -73,18 +73,20 @@ export const store = createStore<State>({
 
       commit('setContacts', contacts)
     },
-    async selectChat({ commit, state }, selectedContact: UserModelDto) {
+    async selectChat({ commit }, selectedContact: UserModelDto) {
       const botModel = new BotModel();
       const chatModel = new ChatModel();
 
       const history = (await botModel.getHistory(selectedContact.BotUserModel.bot_id, selectedContact.id)).map(el => {
         const content = `${el.message.content}`;
+
         if (typeof el.message.content == "object")
           return el.message;
         else if (content.length)
-          el.message.content = JSON.parse(content)
+          el.message.content = JSON.parse(el.message.content)
         else
           el.message.content = { attachments: [], text: "" }
+
         return el.message;
       })
 
