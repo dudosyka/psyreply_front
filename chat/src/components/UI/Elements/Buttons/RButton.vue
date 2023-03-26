@@ -11,14 +11,20 @@
 <!--    Запись голосового - "mdi-microphone"-->
 <!--    Дашборд - "mdi-monitor-account"-->
     <v-icon
-      icon="mdi-microphone"
+      :icon="icon"
     ></v-icon>
   </v-btn>
 </template>
 
 <script>
 export default {
-  name: "RButton"
+  name: "RButton",
+  props: {
+    icon: {
+      type: String,
+      default: () => 'mdi-microphone'
+    }
+  }
 }
 </script>
 

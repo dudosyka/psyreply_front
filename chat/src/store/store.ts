@@ -31,6 +31,9 @@ export const store = createStore<State>({
     chatModel: new ChatModel()
   },
   getters: {
+    bot(state) {
+      return state.currentBot;
+    },
     contacts(state) {
       return state.contacts;
     },

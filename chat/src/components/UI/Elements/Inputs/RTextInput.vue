@@ -11,7 +11,8 @@
     :label="placeholder"
     auto-grow
     variant="outlined"
-    rows="1"
+    :rows="startRows"
+    :focused="focused"
     max-rows="3"
     row-height="40"
   ></v-textarea>
@@ -26,6 +27,14 @@ export default {
     placeholder: {
       type: String,
       default: () => ""
+    },
+    focused: {
+      type: Boolean,
+      default: () => false
+    },
+    startRows: {
+      type: Number,
+      default: () => 1
     }
   },
   components: {RButton}
@@ -33,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.v-text-field .v-input__details {
+.v-input__details {
   display: none !important;
 }
 </style>

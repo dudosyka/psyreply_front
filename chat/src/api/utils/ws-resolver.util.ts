@@ -25,4 +25,8 @@ export class WsResolverUtil {
   emit(event: string, data: Record<string, any>, callback: { (...args: any): void } = () => null) {
     this.socket.emit(event, data, (res: string) => callback(JSON.parse(res)))
   }
+
+  close() {
+    this.socket.close();
+  }
 }

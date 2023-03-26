@@ -2,16 +2,16 @@
   <v-col>
     <v-container class="header-container" v-if="selectedUser.login">
       <v-row class="nametag" align="center" justify="space-between">
-        <h3 class="name">{{ selectedUser.login }}</h3>
+        <h3 class="name">Чат с {{ selectedUser.login }}</h3>
       </v-row>
       <v-divider class="hr"></v-divider>
     </v-container>
-    <r-message-list @send="sendMessage" :show-input="!!selectedUser.login" :messages="messages" />
+    <r-message-list @send="sendMessage" :show-controls="true" :show-input="!!selectedUser.login" :messages="messages" />
   </v-col>
 </template>
 
 <script>
-import RMessageList from "@/components/RMessageList.vue";
+import RMessageList from "@/components/UI/Elements/Lists/RMessageList.vue";
 
 export default {
   name: "RMessage",
@@ -23,9 +23,10 @@ export default {
     this.chatModel = this.$store.getters.chatModel;
   },
   methods: {
-    async sendMessage({ msg }) {
+    async sendMessage({ msg, attachments }) {
       console.log(msg);
-      await this.chatModel.sendMessage(msg);
+      const type_id = (attachments.length) ? 2 : 1
+      await this.chatModel.sendMessage(msg, attachments, type_id);
     },
   },
   computed: {

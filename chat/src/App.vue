@@ -26,9 +26,6 @@ html, body {
   height: 100vh;
   overflow-y: hidden;
 }
-#app {
-  background-image: url("assets/bg.png");
-}
 /* Firefox */
 * {
   scrollbar-width: thin;

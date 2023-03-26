@@ -1,6 +1,10 @@
 <template>
   <r-text-input class="search-input" placeholder="Поиск..." v-model="search"></r-text-input>
   <v-card class="card-left mx-auto">
+    <v-divider class="mb-5"></v-divider>
+    <v-badge :content="!copiedBot ? 'Click to copy' : 'Copied!'">
+      <v-chip class="mb-3" :class="{'active': copiedBot}" @click="copyBotName()">{{ bot.name }}</v-chip>
+    </v-badge>
     <r-list-body class="list-body" v-if="contacts.length">
       <r-list-item @selected="selectChat" :items="contacts"></r-list-item>
     </r-list-body>
@@ -16,11 +20,17 @@ export default {
   name: "RContactList",
   components: {RTextInput, RListBody, RListItem},
   data: () => ({
-    search: ""
+    search: "",
+    copiedBot: false
   }),
   methods: {
     selectChat(contact) {
       this.$store.dispatch('selectChat', contact);
+    },
+    copyBotName() {
+      this.copiedBot = true;
+      setTimeout(() => this.copiedBot = false, 1000);
+      navigator.clipboard.writeText(this.bot.name)
     }
   },
   computed: {
@@ -31,6 +41,9 @@ export default {
         return this.$store.getters.contacts.filter(el => {
           return el.login.includes(this.search);
         })
+    },
+    bot() {
+      return this.$store.getters.bot;
     }
   }
 }
@@ -60,5 +73,8 @@ export default {
 }
 .search-input {
   min-width: 17.5rem;
+}
+.active {
+  box-shadow: #0bff76;
 }
 </style>

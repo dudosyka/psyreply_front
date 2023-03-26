@@ -11,7 +11,7 @@
         <v-row align-content="center" align="center">
           <h3>{{ user.login }}</h3>
           <!-- Кнопка дашборда-->
-          <r-button @click="openClient"></r-button>
+          <r-button :icon="'mdi-monitor-account'" @click="openClient"></r-button>
         </v-row>
       </v-container>
       <v-divider></v-divider>
@@ -24,7 +24,7 @@
       <h4>Заметки</h4>
     </template>
       <v-container class="notes">
-        <r-message-list :one-side="true" :show-input="!!user.login" :messages="notes" @send="sendMessage" class="notes-chat"></r-message-list>
+        <r-message-list :show-controls="false" :one-side="true" :show-input="!!user.login" :messages="notes" @send="sendMessage" class="notes-chat"></r-message-list>
       </v-container>
   </v-col>
 </template>
@@ -32,7 +32,7 @@
 <script>
 import RListItem from "@/components/UI/Elements/Lists/RListItems.vue";
 import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
-import RMessageList from "@/components/RMessageList.vue";
+import RMessageList from "@/components/UI/Elements/Lists/RMessageList.vue";
 import {NoteModel} from "@/api/models/note.model";
 
 export default {
@@ -84,13 +84,14 @@ export default {
 .v-img__img--contain {
   object-fit: cover!important;
 }
+
 .notes {
   height: 100%;
+  max-height: 59vh;
   padding: 0;
 }
 .notes-chat {
   height: 100%;
-  max-height: 50.5vh;
 }
 .profile-col {
   width: auto;

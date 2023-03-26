@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import {nextTick} from "vue";
 
 const routes = [
   {
@@ -38,6 +39,14 @@ const router = createRouter({
 //   }
 //   return next()
 // })
+
+const DEFAULT_TITLE = 'Reply | Chat'
+
+router.afterEach((to,from) => {
+  nextTick(() => {
+    document.title = `${to.meta.title || DEFAULT_TITLE}`;
+  })
+})
 
 
 export default router

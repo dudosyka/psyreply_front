@@ -9,16 +9,9 @@ import {TimestampParserUtil} from "@/api/utils/timestamp-parser.util";
 
 
 export class ChatModel extends BaseModel {
-  socket: WsResolverUtil;
+  socket: WsResolverUtil | null = null;
   constructor() {
     super("chat")
-    const token =  localStorage.getItem("token");
-    this.socket = new WsResolverUtil("http://localhost:8080", token ? token : "");
-    this.socket.on("connect", function () {
-      console.log("Connected!");
-    })
-
-    this.socket.on("newMessage", this.newMessage)
   }
 
   private newMessage(data: any) {
@@ -30,25 +23,35 @@ export class ChatModel extends BaseModel {
 
   async sendMessage(text: string, attachments: number[] = [], type_id: number = 1) {
     const selectedChat: UserModelDto = store.getters.selectedContact;
-    this.socket.emit(
-      "sendMessage",
-      {
-              chatId: selectedChat.BotUserModel.chat_id,
-              msg: {
-                text,
-                attachments,
-                type_id
+    if (this.socket)
+      this.socket.emit(
+        "sendMessage",
+        {
+                chatId: selectedChat.BotUserModel.chat_id,
+                msg: {
+                  text,
+                  attachments,
+                  type_id
+                },
+                botUserId: selectedChat.BotUserModel.id
               },
-              botUserId: selectedChat.BotUserModel.id
-            },
-            function (res) {
-              if (res.status == 201)
-                store.commit("pushMessages", [res.body])
-            }
-          );
+              function (res) {
+                if (res.status == 201)
+                  store.commit("pushMessages", [res.body])
+              }
+            );
   }
 
   async subscribe(chatId: number) {
+    const token =  localStorage.getItem("token");
+    if (this.socket)
+      this.socket.close();
+    this.socket = new WsResolverUtil("http://localhost:8080", token ? token : "");
+    this.socket.on("connect", function () {
+      console.log("Connected!");
+    })
+
+    this.socket.on("newMessage", this.newMessage)
     this.socket.emit('subscribe_chat', { chatId: chatId.toString() })
   }
 

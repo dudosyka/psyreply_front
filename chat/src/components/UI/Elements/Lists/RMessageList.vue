@@ -1,6 +1,6 @@
 <template>
   <v-container class="chat-container">
-    <r-updatable-container @updated="updateScroll" @created="updateScroll">
+    <r-updatable-container @updated="updateScroll" @created="updateScroll(5000)">
       <v-container class="message-area" ref="msg-area">
         <template :key="`${Date.now()}${item.type}${index}`" v-for="(item, index) in messages">
           <r-date-chip v-if="item.type == 'date'" :value="item.value"></r-date-chip>
@@ -11,9 +11,10 @@
     <v-container class="textarea-container" v-if="showInput">
       <v-divider class="hr"></v-divider>
       <v-row class="input-area">
-        <r-button></r-button>
-        <r-text-input :placeholder="'Сообщение'" v-model="text"></r-text-input>
-        <r-button @click="sendMessage"></r-button>
+        <input ref="inputFile" type="file" style="display: none;" @change="fileSelected"/>
+        <r-button v-if="showControls" :icon="'mdi-paperclip'" class="controls" @click="selectFile"></r-button>
+        <r-text-input @keyup.enter.prevent="sendMessage" :placeholder="'Сообщение'" v-model="text"></r-text-input>
+        <r-button v-if="showControls" :icon="'mdi-microphone'" class="controls"></r-button>
       </v-row>
     </v-container>
   </v-container>
@@ -25,6 +26,7 @@ import RMessageBlob from "@/components/UI/Elements/Chat/RMessageBlob.vue";
 import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
 import RTextInput from "@/components/UI/Elements/Inputs/RTextInput.vue";
 import RUpdatableContainer from "@/components/RUpdatableContainer.vue";
+import {FilesModel} from "@/api/models/files.model";
 
 export default {
   name: "RMessageList",
@@ -41,18 +43,28 @@ export default {
     oneSide: {
       type: Boolean,
       default: () => false
+    },
+    showControls: {
+      type: Boolean,
+      default: () => true,
     }
   },
   emits: {
     send: {}
   },
   data: () => ({
-    text: ""
+    text: "",
+    file: null,
+    fileUploading: false,
+    attachments: []
   }),
   methods: {
     sendMessage() {
-      this.$emit('send', { msg: this.text });
-      this.text = "";
+      if (!this.fileUploading) {
+        this.$emit('send', { msg: this.text, attachments: this.attachments });
+        this.text = "";
+        this.attachments = [];
+      }
     },
     updateScroll(delay = 1) {
       if (this.$refs["msg-area"]) {
@@ -60,10 +72,21 @@ export default {
           console.log('scrolled');
           this.$refs['msg-area'].$el.scrollTo({
             behavior: 'smooth',
-            top: this.$refs['msg-area'].$el.scrollHeight
+            top: this.$refs['msg-area'].$el.scrollHeight * 3
           });
         }, delay)
       }
+    },
+    selectFile() {
+      this.$refs.inputFile.click();
+      this.fileUploading = true;
+    },
+    async fileSelected(file) {
+      console.log(file);
+      const filesModel = new FilesModel();
+      const uploaded = await filesModel.upload(file.target.files[0]);
+      this.attachments = [uploaded.id];
+      this.fileUploading = false;
     }
   },
   watch: {
@@ -97,6 +120,7 @@ export default {
   flex-direction: column;
   height: auto;
   overflow-y: scroll;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 .textarea-container {
@@ -104,5 +128,8 @@ export default {
 }
 .v-alert__content {
   padding: 1.5rem;
+}
+.controls {
+  margin-top: 0 !important;
 }
 </style>
