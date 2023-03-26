@@ -1,16 +1,34 @@
 <template>
-  <v-row class="message-out-row message-in-row">
+  <v-row :class="{'message-out-row': !!messageModel.bot_message_id && !oneSide, 'message-in-row': !messageModel.bot_message_id}">
     <v-alert
-      :class="messageModel.bot_message_id ? 'message-in' : 'message-out'"
+      :class="{'message-out': !!messageModel.bot_message_id && !oneSide, 'message-in': !messageModel.bot_message_id}"
     >
       <v-row class="message-row">
         <v-col class="message-col">
+          <template
+            v-if="messageModel.content"
+          >
+            <v-img
+              :key="`${Date.now()}img${attached.link}`"
+              v-for="attached in messageModel.content.attachments"
+              :src="AttachmentLoaderUtil.load(attached.link[0])"
+            >
+              <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-progress-circular
+                    color="grey-lighten-4"
+                    indeterminate
+                  ></v-progress-circular>
+                </div>
+              </template>
+            </v-img>
+          </template>
           <p class="message-text">{{
               messageModel.text
             }}</p>
         </v-col>
         <v-col class="time-col">
-          <span class="time-text">{{ messageModel.createdAt }}</span>
+          <span class="time-text">{{ (new TimestampParserUtil(messageModel.createdAt)).getMessageFormatTime() }}</span>
         </v-col>
       </v-row>
     </v-alert>
@@ -18,12 +36,27 @@
 </template>
 
 <script>
+import {TimestampParserUtil} from "../../../../api/utils/timestamp-parser.util";
+import {AttachmentLoaderUtil} from "@/api/utils/attachment-loader.util";
+
 export default {
   name: "RMessageBlob",
+  computed: {
+    AttachmentLoaderUtil() {
+      return AttachmentLoaderUtil
+    },
+    TimestampParserUtil() {
+      return TimestampParserUtil
+    }
+  },
   props: {
     messageModel: {
       type: Object,
       default: () => {}
+    },
+    oneSide: {
+      type: Boolean,
+      default: () => false,
     }
   }
 }

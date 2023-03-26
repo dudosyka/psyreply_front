@@ -1,5 +1,5 @@
 <template>
-  <r-text-input></r-text-input>
+  <r-text-input placeholder="Поиск..." v-model="search"></r-text-input>
   <v-card class="card-left mx-auto">
     <r-list-body v-if="contacts.length">
       <r-list-item @selected="selectChat" :items="contacts"></r-list-item>
@@ -15,6 +15,9 @@ import RTextInput from "@/components/UI/Elements/Inputs/RTextInput.vue";
 export default {
   name: "RContactList",
   components: {RTextInput, RListBody, RListItem},
+  data: () => ({
+    search: ""
+  }),
   methods: {
     selectChat(contact) {
       this.$store.dispatch('selectChat', contact);
@@ -22,7 +25,12 @@ export default {
   },
   computed: {
     contacts() {
-      return this.$store.getters.contacts;
+      if (this.search === "")
+        return this.$store.getters.contacts;
+      else
+        return this.$store.getters.contacts.filter(el => {
+          return el.login.includes(this.search);
+        })
     }
   }
 }

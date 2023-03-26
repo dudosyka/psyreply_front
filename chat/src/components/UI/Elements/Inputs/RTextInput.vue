@@ -8,7 +8,7 @@
         hide-details="auto"
         append-inner-icon="mdi-text-search"-->
   <v-textarea
-    label="Сообщение..."
+    :label="placeholder"
     auto-grow
     variant="outlined"
     rows="1"
@@ -21,6 +21,12 @@ import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
 
 export default {
   name: "RTextInput",
+  props: {
+    placeholder: {
+      type: String,
+      default: () => ""
+    }
+  },
   components: {RButton}
 }
 </script>

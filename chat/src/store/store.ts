@@ -1,4 +1,4 @@
-import { InjectionKey } from 'vue'
+import {InjectionKey} from 'vue'
 import {createStore, Store, useStore as baseUseStore} from "vuex";
 import {BotModel} from "@/api/models/bot.model";
 import apiConf from "@/api/api.conf";
@@ -7,13 +7,16 @@ import {ChatModel} from "@/api/models/chat.model";
 import {MessageModelDto} from "@/api/dto/message-model.dto";
 import {BotModelDto} from "@/api/dto/bot-model.dto";
 import {SelectedChatDto} from "@/api/dto/selected-chat.dto";
+import {NoteModelDto} from "@/api/dto/note-model.dto";
+import {UserModel} from "@/api/models/user.model";
 
 // define your typings for the store state
 export interface State {
   token: string,
   contacts: UserModelDto[],
   currentBot: BotModelDto | null,
-  selectedChat: SelectedChatDto | null
+  selectedChat: SelectedChatDto | null,
+  chatModel: ChatModel
 }
 
 // define injection key
@@ -24,18 +27,27 @@ export const store = createStore<State>({
     token: "",
     contacts: [],
     currentBot: null,
-    selectedChat: null
+    selectedChat: null,
+    chatModel: new ChatModel()
   },
   getters: {
     contacts(state) {
       return state.contacts;
+    },
+    chatModel(state) {
+      return state.chatModel
     },
     messages(state) {
       if (state.selectedChat == null)
         return [];
       return state.selectedChat.messages;
     },
-    selectedContact: state => state.selectedChat ? state.selectedChat.user : {}
+    selectedContact: state => state.selectedChat ? state.selectedChat.user : {},
+    selectedContactInfo: state => state.selectedChat ? state.selectedChat.info : {},
+    selectedContactInfoNotes: state => state.selectedChat ? state.selectedChat.info.notes : [],
+    chatMessages(state) {
+      return state.chatModel.insertDateSteps(state.selectedChat ? state.selectedChat.messages : [])
+    }
   },
   mutations: {
     setContacts(state, contacts) {
@@ -50,6 +62,11 @@ export const store = createStore<State>({
     pushMessages(state, messages: MessageModelDto[]) {
       if (state.selectedChat)
         state.selectedChat.messages.push(...messages)
+    },
+    pushNote(state, note: NoteModelDto) {
+      if (state.selectedChat) {
+        state.selectedChat.info.notes.push(note)
+      }
     }
   },
   actions: {
@@ -73,9 +90,9 @@ export const store = createStore<State>({
 
       commit('setContacts', contacts)
     },
-    async selectChat({ commit }, selectedContact: UserModelDto) {
+    async selectChat({ commit, state }, selectedContact: UserModelDto) {
       const botModel = new BotModel();
-      const chatModel = new ChatModel();
+      const userModel = new UserModel();
 
       const history = (await botModel.getHistory(selectedContact.BotUserModel.bot_id, selectedContact.id)).map(el => {
         const content = `${el.message.content}`;
@@ -90,9 +107,10 @@ export const store = createStore<State>({
         return el.message;
       })
 
-      const info = await chatModel.getChatInfo(selectedContact.BotUserModel.id)
+      const info = await state.chatModel.getChatInfo(selectedContact.BotUserModel.id)
+      info.link = await userModel.getLink(selectedContact.jetBotId);
 
-      await chatModel.subscribe(selectedContact.BotUserModel.chat_id)
+      await state.chatModel.subscribe(selectedContact.BotUserModel.chat_id)
 
       commit('selectChat', { messages: history, info, user: selectedContact });
     }

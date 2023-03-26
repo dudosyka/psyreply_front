@@ -16,6 +16,11 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  emits: {
+    selected: {
+
+    }
   }
 }
 </script>

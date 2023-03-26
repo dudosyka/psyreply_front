@@ -4,6 +4,9 @@ import {BaseModel} from "@/api/models/base.model";
 import {ChatInfoDto} from "@/api/dto/chat-info.dto";
 import {store,key} from "@/store/store";
 import {UserModelDto} from "@/api/dto/user-model.dto";
+import {MessageModelDto} from "@/api/dto/message-model.dto";
+import {TimestampParserUtil} from "@/api/utils/timestamp-parser.util";
+
 
 export class ChatModel extends BaseModel {
   socket: WsResolverUtil;
@@ -11,7 +14,6 @@ export class ChatModel extends BaseModel {
     super("chat")
     const token =  localStorage.getItem("token");
     this.socket = new WsResolverUtil("http://localhost:8080", token ? token : "");
-
     this.socket.on("connect", function () {
       console.log("Connected!");
     })
@@ -23,10 +25,8 @@ export class ChatModel extends BaseModel {
     const dto = {
       ...data.body
     };
-    dto.content = JSON.parse(dto.content);
     store.commit("pushMessages", [dto])
   }
-
 
   async sendMessage(text: string, attachments: number[] = [], type_id: number = 1) {
     const selectedChat: UserModelDto = store.getters.selectedContact;
@@ -56,5 +56,34 @@ export class ChatModel extends BaseModel {
     const res: { body: ChatInfoDto } = await this.apiResolver.request("GET", `${botUserId}/info`);
 
     return res.body;
+  }
+
+  insertDateSteps(messages: MessageModelDto[]): any[] {
+    if (!messages.length)
+      return [];
+    let lastPushed = (new TimestampParserUtil(messages[0].createdAt)).getDayNum();
+    const result = [];
+    result.push({
+      type: "date",
+      value: (new TimestampParserUtil(messages[0].createdAt)).getMessageFormatDate()
+    });
+    messages.map((el, index) => {
+      if (index == 0) {
+        result.push({type: 'msg', value: el})
+        return;
+      }
+
+      const curDay = (new TimestampParserUtil(el.createdAt));
+      if (lastPushed != curDay.getDayNum()) {
+        result.push({
+          type: "date",
+          value: (new TimestampParserUtil(el.createdAt)).getMessageFormatDate()
+        })
+        lastPushed = curDay.getDayNum();
+      }
+      result.push({type: 'msg', value: el})
+    })
+
+    return result;
   }
 }

@@ -6,14 +6,20 @@
       class="ma-2"
       color="secondary"
     >
-      24.05.2023
+      {{ value }}
     </v-chip>
   </v-row>
 </template>
 
 <script>
 export default {
-  name: "RDateChip"
+  name: "RDateChip",
+  props: {
+    value: {
+      type: String,
+      default: () => ""
+    }
+  }
 }
 </script>
 
