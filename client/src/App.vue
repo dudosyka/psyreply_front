@@ -177,7 +177,10 @@ export default {
       this.$store.dispatch('getResultsByTestToken')
     },
     startTest() {
-      this.step = 'testing'
+      if (this.blockOnPass.tests.length)
+        this.step = 'testing'
+      else
+        this.step = 'gaming'
       this.startTime = Date.now()
     },
     gamesEnded() {

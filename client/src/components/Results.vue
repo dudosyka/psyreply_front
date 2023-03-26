@@ -43,6 +43,7 @@ export default {
         }
         return results;
       }
+      console.log(this.$store.getters.results)
       return this.$store.getters.results;
     },
   }

@@ -199,6 +199,9 @@ export default createStore({
     async getCurResults({ state, commit, dispatch }) {
       const client = new Client()
 
+      if (!state.blockOnPass.tests.length)
+        return dispatch('getResultsAfterPass');
+
       const token = localStorage.getItem('testToken')
 
       client.getCurResults(token).then(res => {
