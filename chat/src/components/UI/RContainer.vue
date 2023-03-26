@@ -19,5 +19,6 @@ export default {
   width: auto;
   max-width: 100%;
   height: auto;
+  min-width: 90vw;
 }
 </style>

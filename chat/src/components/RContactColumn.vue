@@ -1,7 +1,7 @@
 <template>
-  <r-text-input placeholder="Поиск..." v-model="search"></r-text-input>
+  <r-text-input class="search-input" placeholder="Поиск..." v-model="search"></r-text-input>
   <v-card class="card-left mx-auto">
-    <r-list-body v-if="contacts.length">
+    <r-list-body class="list-body" v-if="contacts.length">
       <r-list-item @selected="selectChat" :items="contacts"></r-list-item>
     </r-list-body>
   </v-card>
@@ -54,5 +54,11 @@ export default {
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
   color: white;
+}
+.list-body {
+  min-width: 17.5rem;
+}
+.search-input {
+  min-width: 17.5rem;
 }
 </style>

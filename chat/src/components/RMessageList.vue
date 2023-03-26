@@ -86,19 +86,23 @@ export default {
 }
 .chat-container {
   height: 100%;
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .message-area {
   display: flex;
+  max-height: 59vh;
   flex-direction: column;
   height: auto;
-  max-height: 52vh;
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
 .textarea-container {
-  padding-top: 2rem;
+  padding: 2rem 1rem 0 1rem;
+}
+.v-alert__content {
+  padding: 1.5rem;
 }
 </style>

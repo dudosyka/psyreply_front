@@ -90,7 +90,7 @@ export default {
 }
 .notes-chat {
   height: 100%;
-  max-height: 40vh;
+  max-height: 50.5vh;
 }
 .profile-col {
   width: auto;

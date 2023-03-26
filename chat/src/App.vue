@@ -70,4 +70,7 @@ html, body {
 .v-img__img--contain {
   object-fit: cover!important;
 }
+.v-alert__content {
+  padding: 1rem;
+}
 </style>

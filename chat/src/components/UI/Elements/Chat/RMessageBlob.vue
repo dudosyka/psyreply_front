@@ -76,14 +76,14 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  width: 1rem;
+  padding: 0;
 }
 .message-row {
   display: flex;
   justify-content: flex-start;
   width: 19vw;
   max-width: 30vw;
-  flex-direction: row;
+  flex-direction: column;
 }
 .message-in-row {
   display: flex;
@@ -96,7 +96,8 @@ export default {
 }
 .message-in {
   max-width: 20vw;
-  min-width: 10vw;
+  padding: 0.3rem;
+  min-width: 21vw;
   color: white;
   display: flex;
   flex-direction: row;
@@ -107,10 +108,12 @@ export default {
   border: 2px solid rgba(209, 213, 219, 0.3);
 }
 .message-out {
+  margin-top: 2rem;
   max-width: 20vw;
-  min-width: 10vw;
+  min-width: 21vw;
   border-radius: 1rem;
   width: 100%;
+  padding: 0.3rem;
   display: flex;
   flex-direction: row;
   background-color: rgba(7, 10, 17, 0.35);

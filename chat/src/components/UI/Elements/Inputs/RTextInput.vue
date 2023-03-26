@@ -12,6 +12,7 @@
     auto-grow
     variant="outlined"
     rows="1"
+    max-rows="3"
     row-height="40"
   ></v-textarea>
 </template>

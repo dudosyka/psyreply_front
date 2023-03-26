@@ -6,7 +6,7 @@
         <r-contact-list></r-contact-list>
       </v-col>
       <v-divider vertical></v-divider>
-      <r-message class="message-col"></r-message>
+      <r-message class="message-cont"></r-message>
       <v-divider vertical></v-divider>
       <r-profile-column><slot></slot></r-profile-column>
     </v-row>
@@ -22,12 +22,20 @@
 </script>
 
 <style>
-.message-col {
-  min-width: 40vw;
+.message-cont {
   height: 100%;
+  min-height: 80vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.message-col {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
 }
 .contacts {
   height: auto;
