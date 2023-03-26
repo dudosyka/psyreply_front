@@ -13,6 +13,7 @@
           <router-link to="/results" active-class="nav__link_active" class="link nav__link"><i class="fa-solid fa-square-poll-vertical"></i> Результаты</router-link>
           <router-link to="/users" active-class="nav__link_active" class="link nav__link"><i class="fa-solid fa-users"></i> Пользователи</router-link>
           <router-link to="/mailing" active-class="nav__link_active" class="link nav__link"><i class="fa-solid fa-envelope"></i> Рассылки</router-link>
+          <a :href="chatLink" target="_blank" active-class="nav__link_active" class="link nav__link"><i class="fa-solid fa-comments"></i> Чат</a>
         </nav>
       </div>
       <!--    <div></div>-->
@@ -24,8 +25,18 @@
 </template>
 
 <script>
+import apiConf from "@/api/api.conf";
+
 export default {
   name: "YLeftSideBar",
+  computed: {
+    apiConf() {
+      return apiConf
+    },
+    chatLink() {
+      return `${apiConf.chat_root}/auth?${localStorage.getItem('token')}`
+    }
+  },
   methods: {
     logout() {
       localStorage.removeItem('token');
