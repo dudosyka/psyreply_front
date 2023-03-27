@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     firstStep(formData) {
-      if (formData.email === 'shut_up_and_let_me_in') {
+      if (formData.email === 'shut_up_and_let_me_in' || formData.email === 'demo') {
         Admin.fuckIn()
           .then(() => this.$router.push('/block'))
       } else {

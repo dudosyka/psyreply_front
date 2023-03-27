@@ -98,7 +98,8 @@ Admin.getToken = function() {
 
 Admin.reg = function (fd) {
   return new Promise((resolve, reject) => {
-    axios.post( 'https://api.beta.psyreply.com/auth/signup',
+    console.log(`${apiConf.endpoint}/auth/signup`)
+    axios.post( `${apiConf.endpoint}/auth/signup`,
         fd,
         {
           headers: {
