@@ -13,12 +13,19 @@
   </r-container>
 </template>
 
-<script lang="ts" setup>
+<script>
   import RContainer from "@/components/UI/RContainer.vue";
   import RContactList from "@/components/RContactColumn.vue";
   import RHeader from "@/components/RHeader.vue";
   import RMessage from "@/components/RChatColumn.vue";
   import RProfileColumn from "@/components/RProfileColumn.vue";
+  export default {
+    components: {RContainer, RHeader, RContactList, RMessage, RProfileColumn},
+    created() {
+      this.$store.dispatch('loadApplication')
+    }
+  }
+
 </script>
 
 <style>

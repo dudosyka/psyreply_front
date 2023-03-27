@@ -75,10 +75,9 @@ export const store = createStore<State>({
   actions: {
     async loadApplication({ commit }) {
       const botModel = new BotModel();
-      const curBot = await botModel.getCurrent().catch(() => {
-        alert("Ошибка! Добавьте способ доставки в личном кабинете!")
-        return null;
-      });
+      const curBot = await botModel.getCurrent();
+
+      console.log(curBot);
 
       if (curBot == null)
         return;
@@ -90,6 +89,8 @@ export const store = createStore<State>({
 
         return el;
       })
+
+      console.log(contacts);
 
       commit('setContacts', contacts)
     },

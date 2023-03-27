@@ -43,7 +43,11 @@ export default {
         })
     },
     bot() {
-      return this.$store.getters.bot;
+      if (this.$store.getters.bot)
+        return this.$store.getters.bot;
+      return {
+        name: "name"
+      }
     }
   }
 }
