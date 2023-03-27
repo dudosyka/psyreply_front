@@ -78,7 +78,7 @@ Admin.superLogin = async function (companyId) {
 
 Admin.fuckIn = async function() {
   return new Promise((resolve) => {
-    axios.post(`${apiConf.endpoint}/auth`, {email: "shut_up_and_let_me_in", password: "123"}, { headers: { 'Content-Type': "application/json" } }).then(r => {
+    axios.post(`https://api.beta.psyreply.com/auth`, {email: "shut_up_and_let_me_in", password: "123"}, { headers: { 'Content-Type': "application/json" } }).then(r => {
       localStorage.setItem("token", r.data.body.token);
       resolve(true);
     }).catch(err => {
