@@ -179,8 +179,16 @@ export default {
     startTest() {
       if (this.blockOnPass.tests.length)
         this.step = 'testing'
-      else
-        this.step = 'gaming'
+      else {
+        const games = this.blockOnPass.games
+        if(games.length == 0){
+          this.step = 'after-test'
+        } else {
+          if (games[0].type_id == 6 && games.length == 1)
+            this.secondGame = true;
+          this.step = 'gaming'
+        }
+      }
       this.startTime = Date.now()
     },
     gamesEnded() {
