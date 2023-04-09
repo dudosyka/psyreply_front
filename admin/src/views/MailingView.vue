@@ -9,41 +9,45 @@
       -->
       <template v-if="window === 'main'" >
         <div class="container main-container">
-          <div class="tg-add">
-            <header class="row header">
-              <div class="col">
-                <h2 class="heading header__heading">Привязка Telegram</h2>
-              </div>
-            </header>
-            <h4 class="heading-small">Название</h4>
-            <y-input class="name" placeholder="Введите название..."></y-input>
-            <h4 class="heading-small">Токен</h4>
-            <y-input class="token" placeholder="Введите токен..."></y-input>
-            <p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque autem consequuntur debitis dicta
-              dolores harum ipsa magnam magni nemo perspiciatis, placeat quas quo, quod reiciendis repudiandae saepe?
-              Nobis, repellat.</p>
-            <div class="btn-row">
-              <y-button class="element-btn element-btn-active">Сохранить</y-button>
+          <template
+            v-if="isBotSet"
+          >
+              <header class="row header">
+                  <div class="col">
+                      <h2 class="heading header__heading">Рассылки</h2>
+                  </div>
+                  <div class="col header-buttons">
+                      <y-button class="new-button"><i class="fa-brands fa-telegram"></i> Telegram Bot</y-button>
+                      <y-button class="new-button" :plus="true" @click="createMailing">Новая рассылка</y-button>
+                  </div>
+              </header>
+              <y-list
+                      key-of-name="name"
+                      :editable="true"
+                      @edit="editMailing"
+                      :items="mailings"
+                      :pagination="true"
+                      :pagination-block="true"
+                      :page-size="4"
+              />
+          </template>
+          <div v-else class="tg-add">
+                <header class="row header">
+                    <div class="col">
+                        <h2 class="heading header__heading">Привязка Telegram</h2>
+                    </div>
+                </header>
+                <h4 class="heading-small">Название</h4>
+                <y-input class="name" placeholder="Введите название..."></y-input>
+                <h4 class="heading-small">Токен</h4>
+                <y-input class="token" placeholder="Введите токен..."></y-input>
+                <p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque autem consequuntur debitis dicta
+                    dolores harum ipsa magnam magni nemo perspiciatis, placeat quas quo, quod reiciendis repudiandae saepe?
+                    Nobis, repellat.</p>
+                <div class="btn-row">
+                    <y-button class="element-btn element-btn-active">Сохранить</y-button>
+                </div>
             </div>
-          </div>
-          <header class="row header">
-            <div class="col">
-              <h2 class="heading header__heading">Рассылки</h2>
-            </div>
-            <div class="col header-buttons">
-              <y-button class="new-button"><i class="fa-brands fa-telegram"></i> Telegram Bot</y-button>
-              <y-button class="new-button" :plus="true" @click="createMailing">Новая рассылка</y-button>
-            </div>
-          </header>
-          <y-list
-              key-of-name="name"
-              :editable="true"
-              @edit="editMailing"
-              :items="mailings"
-              :pagination="true"
-              :pagination-block="true"
-              :page-size="4"
-          />
         </div>
       </template>
 
@@ -75,7 +79,7 @@
       -->
       <template v-if="window === 'editMailing'">
         <edit-mailing
-            :id="2"
+            :id="selectedDistribution.id"
             @close="close"
         />
       </template>
@@ -90,14 +94,12 @@ import CreateMailing from "@/components/Mailing/CreateMailing.vue";
 import EditMailing from "@/components/Mailing/EditMailing.vue";
 import CreateMailingBot from "@/components/Mailing/CreateMailingBot.vue";
 import YButton from "@/components/UI/YButton.vue";
+import {BotModel} from "@/api/admin/Bot";
+import {Distribution} from "@/api/admin/Distribution";
+import Company from "@/api/admin/Company";
 
 export default {
   name: "MailingView",
-  computed: {
-    createMailingBot() {
-      return createMailingBot
-    }
-  },
   components: {
     YButton,
     CreateMailingBot,
@@ -108,10 +110,11 @@ export default {
   data() {
     return {
       window: 'main',
-      mailings: [1, 2, 3, 4, 5]
+        showBotWindow: null,
     }
   },
-  created() {
+  async created() {
+      await this.$store.dispatch('loadDistributions');
     // Вот эта тема должна следить за изменениями url и на основе этого типо изменять контент
     // Я эту штуку отключаю, можешь просто руками задать соответствующий window который тебе нужен в данный момент
     // Вот список значений window
@@ -129,21 +132,28 @@ export default {
     // )
   },
   methods: {
-    // Этот метод обрабатывает закрытие Мишиных компонентов
-    // Он будет открывать дефолт окно при закрытии одного из них
-    // Для того чтобы он работал в компоненте, должен быть какой то элемент
-    // В котором задан клик @click="$emit('close')"
-    // А в вызове компонента надо прописать @close='close'
-    // см. Как это работает в Мишиных компонентах
-    // Если хочешь можешь также сделать в своих ну или просто всегда руками меняй window внутри created
     close() {
       this.window = 'main';
     },
+    editMailing(item) {
+      this.$store.dispatch('setSelectedDistribution', item.id);
+      this.window = 'editMailing';
+    },
     createMailing() {
       this.window = 'createMailing'
-      this.window = 'createMailing'
     }
-  }
+  },
+  computed: {
+      isBotSet() {
+          return this.$store.getters.isBotSet;
+      },
+      mailings() {
+          return this.$store.getters.distributionList;
+      },
+      selectedDistribution() {
+          return this.$store.getters.selectedDistribution;
+      }
+  },
 }
 </script>
 

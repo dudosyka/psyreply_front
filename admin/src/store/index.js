@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
 import mainConf, {ProjectState} from "../../../main.conf";
+import {BotModel} from "@/api/admin/Bot";
+import {Distribution} from "@/api/admin/Distribution";
+import Company from "@/api/admin/Company";
 
 export default createStore({
   state: {
@@ -29,13 +32,33 @@ export default createStore({
       editBlock: null
     },
     company: {
+        users: [],
     },
     group: {
     },
     currentEmail: "",
     signUpData: [],
+    distribution: {
+      isBotSet: false,
+      list: [],
+        selected: {
+          id: null
+        }
+    }
   },
   getters: {
+    isBotSet(state) {
+      return state.distribution.isBotSet;
+    },
+    distributionList(state) {
+        return state.distribution.list;
+    },
+      selectedDistribution(state) {
+        return state.distribution.selected;
+      },
+      companyUsers(state) {
+        return state.company.users;
+      },
     getSignUpData(state){
       return state.signUpData
     },
@@ -166,11 +189,39 @@ export default createStore({
     },
     blockCreateSetTests(state, tests) {
       state.newBlock.selectedTests = tests;
-    }
+    },
+      setDistributionList(state, list) {
+        state.distribution.list = list;
+      },
+      setIsBotSet(state, isBotSet) {
+        state.distribution.isBotSet = isBotSet;
+      },
+      setCompanyUsers(state, users) {
+        state.company.users = users;
+      },
+      setSelectedDistribution(state, dist) {
+        state.distribution.selected = dist;
+      }
   },
   actions: {
     createGroup() {
-    }
+    },
+    async loadDistributions({ commit }) {
+        const botModel = new BotModel();
+        const distribution = new Distribution();
+        const company = new Company();
+        const list = await distribution.getAll();
+        const isBotSet = await botModel.isSet();
+        const users = await company.getAllUsers();
+        commit('setDistributionList', list);
+        commit('setIsBotSet', isBotSet);
+        commit('setCompanyUsers', users);
+    },
+      setSelectedDistribution({ commit }, id) {
+          const distribution = new Distribution();
+        const selected = distribution.getOne(id);
+        commit('setSelectedDistribution', selected);
+      }
   },
   modules: {
   }

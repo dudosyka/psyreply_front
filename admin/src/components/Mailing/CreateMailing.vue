@@ -12,31 +12,33 @@
           <h5>Время рассылки: </h5>
           <y-input max="99" min="0" type="number" v-model="time.hours" placeholder="чч" class="time-picker__input"/>:
           <y-input max="59" min="0" type="number" v-model="time.minutes" placeholder="мм" class="time-picker__input"/>:
-          <y-input max="59" min="0" type="number" v-model="time.seconds" placeholder="сс" class="time-picker__input"/>
         </div>
 
         <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
 
       </header>
       <y-input
+              v-model="name"
           placeholder="Название рассылки"
       />
     <h5 class="heading-small">Периодичность</h5>
     <y-modal class="time-picker">
       <div class="col">
-        <y-cool-button class="element-btn" ><i class="fa-solid fa-arrow-right-long"></i> Разовая</y-cool-button>
-        <y-cool-button class="element-btn" ><i class="fa-solid fa-arrows-rotate"></i> Многоразовая</y-cool-button>
+        <y-cool-button v-if="!one_time" @click="selectIsOneTime(true)" class="element-btn" ><i class="fa-solid fa-arrow-right-long"></i> Разовая</y-cool-button>
+        <y-cool-button v-else @click="selectIsOneTime(false)" class="element-btn" ><i class="fa-solid fa-arrows-rotate"></i> Многоразовая</y-cool-button>
       </div>
-      <div class="col">
-        <y-cool-button class="element-btn" >Каждый день</y-cool-button>
-        <y-cool-button class="element-btn" >Каждую неделю</y-cool-button>
-        <y-cool-button class="element-btn" >Каждый месяц</y-cool-button>
-        <y-cool-button class="element-btn" >Своя</y-cool-button>
-      </div>
-      <div class="col custom-day">
-        <h5>Периодичность (в днях)</h5>
-        <y-input class="day"></y-input>
-      </div>
+        <template v-if="!one_time">
+            <div class="col">
+                <y-cool-button class="element-btn" @click="setPeriod(1)" :class="{'active-element-btn': day_period == 1}" >Каждый день</y-cool-button>
+                <y-cool-button class="element-btn" @click="setPeriod(7)" :class="{'active-element-btn': day_period == 7}" >Каждую неделю</y-cool-button>
+                <y-cool-button class="element-btn" @click="setPeriod(30)" :class="{'active-element-btn': day_period == 30}" >Каждые 30 дней</y-cool-button>
+                <y-cool-button class="element-btn" @clikc="setPeriod(14)" :class="{'active-element-btn': showCustomPeriod}" >Своя</y-cool-button>
+            </div>
+            <div v-if="showCustomPeriod" class="col custom-day">
+                <h5>Периодичность (в днях)</h5>
+                <y-input class="day" v-model="day_period_input"></y-input>
+            </div>
+        </template>
     </y-modal>
     <h5 class="heading-small">Адресаты</h5>
     <div class="container-fluid contacts">
@@ -93,10 +95,13 @@ export default {
   emits: ['close'],
   data() {
     return {
+        name: "",
+        one_time: true,
+        day_period: 1,
+        day_period_input: 14,
       time: {
         hours: null,
-        minutes: null,
-        seconds: null
+        minutes: null
       },
       window: 'main',
     }
@@ -106,8 +111,20 @@ export default {
   methods: {
     openCreateBlock() {
       this.window = 'createBlock'
+    },
+      selectIsOneTime(isOneTime) {
+        this.one_time = isOneTime;
+      },
+      setPeriod(period) {
+        console.log(period);
+        this.day_period = period;
+      }
+  },
+    computed: {
+      showCustomPeriod() {
+          return this.day_period != 1 && this.day_period != 7 && this.day_period != 30
+      }
     }
-  }
 }
 </script>
 
@@ -155,6 +172,9 @@ export default {
   padding-left: 1rem;
   background: transparent!important;
   border: 1px solid var(--border-dark);
+}
+.active-element-btn {
+ background: red !important;
 }
 .element-btn:hover {
   max-width: 15vw;
