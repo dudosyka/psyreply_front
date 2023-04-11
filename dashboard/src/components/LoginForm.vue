@@ -19,9 +19,6 @@
 </template>
 
 <script>
-import '@/api/api.conf'
-
-
 export default {
   name: "LoginForm",
   data(){

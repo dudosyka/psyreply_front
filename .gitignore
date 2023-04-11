@@ -4,3 +4,6 @@
 /admin
 /admin/
 /client
+/chat/src/api/api.conf.ts
+/chat
+/chat/
