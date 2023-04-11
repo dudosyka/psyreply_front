@@ -10,7 +10,7 @@
 
         <div class="col time">
           <h5>Время рассылки: </h5>
-          <y-input max="99" min="0" type="number" v-model="time.hours" placeholder="чч" class="time-picker__input"/>:
+          <y-input max="24" min="0" type="number" v-model="time.hours" placeholder="чч" class="time-picker__input"/>:
           <y-input max="59" min="0" type="number" v-model="time.minutes" placeholder="мм" class="time-picker__input"/>:
         </div>
 
@@ -32,11 +32,11 @@
                 <y-cool-button class="element-btn" @click="setPeriod(1)" :class="{'active-element-btn': day_period == 1}" >Каждый день</y-cool-button>
                 <y-cool-button class="element-btn" @click="setPeriod(7)" :class="{'active-element-btn': day_period == 7}" >Каждую неделю</y-cool-button>
                 <y-cool-button class="element-btn" @click="setPeriod(30)" :class="{'active-element-btn': day_period == 30}" >Каждые 30 дней</y-cool-button>
-                <y-cool-button class="element-btn" @clikc="setPeriod(14)" :class="{'active-element-btn': showCustomPeriod}" >Своя</y-cool-button>
+                <y-cool-button class="element-btn" @click="setPeriod(day_period_input)" :class="{'active-element-btn': showCustomPeriod}" >Своя</y-cool-button>
             </div>
             <div v-if="showCustomPeriod" class="col custom-day">
                 <h5>Периодичность (в днях)</h5>
-                <y-input class="day" v-model="day_period_input"></y-input>
+                <y-input  class="day" v-model.number="day_period_input" @change="setPeriod(day_period_input)"></y-input>
             </div>
         </template>
     </y-modal>
@@ -71,7 +71,7 @@
       <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
     </div>
     <div class="row button-row">
-      <y-cool-button>Сохранить рассылку</y-cool-button>
+      <y-cool-button @click="testing">Сохранить рассылку</y-cool-button>
     </div>
   </y-modal>
   <CreateMailingBlock
@@ -98,7 +98,7 @@ export default {
         name: "",
         one_time: true,
         day_period: 1,
-        day_period_input: 14,
+        day_period_input: null,
       time: {
         hours: null,
         minutes: null
@@ -109,6 +109,9 @@ export default {
   created() {
   },
   methods: {
+    testing(){
+      console.log(this.time.hours,this.time.minutes,this.name,this.day_period)
+    },
     openCreateBlock() {
       this.window = 'createBlock'
     },

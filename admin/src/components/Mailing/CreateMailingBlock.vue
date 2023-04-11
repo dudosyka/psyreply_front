@@ -117,8 +117,8 @@ export default {
       elements: [
         {name: "test"}
       ],
-      tests: [1, 2, 3, 4],
-      mailingBlocks: [1,2,3]
+      tests: [],
+      mailingBlocks: []
     }
   },
   methods: {
