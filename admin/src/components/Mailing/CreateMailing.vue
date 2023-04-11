@@ -174,15 +174,18 @@ export default {
   border: 1px solid var(--border-dark);
 }
 .active-element-btn {
- background: red !important;
+    background: #8419a1!important;
+    border: 1px solid var(--border-dark);
+    border-radius: 0.5rem;
+    color: white;
 }
 .element-btn:hover {
   max-width: 15vw;
   padding-right: 1rem;
   padding-left: 1rem;
   width: auto;
-  background: transparent!important;
-  border: 1px solid var(--border-dark);
+  background: #8419a1!important;
+  border: 1px solid rgba(255, 255, 255, 0.56);
 }
 .header {
   display: flex;
@@ -217,7 +220,7 @@ export default {
   display: flex;
   border-radius: 0.3rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
 }
 .input {
