@@ -135,11 +135,12 @@ export default {
     close() {
       this.window = 'main';
     },
-    editMailing(item) {
-      this.$store.dispatch('setSelectedDistribution', item.id);
-      this.window = 'editMailing';
+    async editMailing(item) {
+      await this.$store.dispatch('selectDistribution', item.id);
+      this.window = 'createMailing';
     },
-    createMailing() {
+    async createMailing() {
+      await this.$store.dispatch('createNewDistribution');
       this.window = 'createMailing'
     }
   },

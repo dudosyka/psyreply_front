@@ -43,7 +43,16 @@ export default createStore({
       isBotSet: false,
       list: [],
       selected: {
+        index: null,
         id: null,
+        name: null,
+        onetime: null,
+        day_period: null,
+        send_time: {
+          hours: null,
+          minutes: null
+        },
+        recipients: [],
         blocks: [],
         selectedBlock: null,
       },
@@ -213,9 +222,26 @@ export default createStore({
     setCompanyUsers(state, users) {
       state.company.users = users;
     },
-    setSelectedDistribution(state, dist) {
-      state.distribution.selected = dist;
+    
+    newDistribution(state, recipients) {
+      state.distribution.selected = {
+        name: "",
+        onetime: true,
+        day_period: 1,
+        send_time: {
+          hours: null,
+          minutes: null
+        },
+        recipients,
+        blocks: [],
+        selectedBlock: null
+      };
+      console.log(state.distribution.selected)
     },
+    setSelectedDistribution(state, distribution) {
+      state.distribution.selected = distribution;
+    },
+    
     addDistributionBlock(state, { name, elements }) {
       state.distribution.selected.blocks.push({ name, elements, new: true })
     },
@@ -231,25 +257,43 @@ export default createStore({
       }
     }
    },
+  modules: {
+  },
   actions: {
     createGroup() {
     },
     async loadDistributions({ commit }) {
-        const botModel = new BotModel();
-        const distribution = new Distribution();
-        const company = new Company();
-        const list = await distribution.getAll();
-        const isBotSet = await botModel.isSet();
-        const users = await company.getAllUsers();
-        commit('setDistributionList', list);
-        commit('setIsBotSet', isBotSet);
-        commit('setCompanyUsers', users);
-    },
-    setSelectedDistribution({ commit }, id) {
+      const botModel = new BotModel();
       const distribution = new Distribution();
-      const selected = distribution.getOne(id);
+      const company = new Company();
+      const list = (await distribution.getAll());
+      const isBotSet = await botModel.isSet();
+      const users = await company.getAllUsers();
+      commit('setDistributionList', list);
+      commit('setIsBotSet', isBotSet);
+      commit('setCompanyUsers', users);
+    },
+    
+    async createNewDistribution({ commit }) {
+      const company = new Company();
+      
+      const recipients = await company.getAllUsers().then(r => {
+        return r.map(el => ({ ...el, active: false }));
+      });
+      
+      commit('newDistribution', recipients)
+    },
+    async selectDistribution({ commit }, id) {
+      const distribution = new Distribution();
+      const selected = await distribution.getOne(id);
+      const company = new Company();
+      selected.recipients = await company.getAllUsers().then(r => {
+        return r.map(el => ({ ...el, active: false }));
+      });
+      //Тут надо написать ещё обработку чтобы челики выбранные стали active: true
       commit('setSelectedDistribution', selected);
     },
+    
     createNewDistributionBlock({ commit, state }) {
       commit('addDistributionBlock', { name: "", elements: [] })
       return state.distribution.selected.blocks.length - 1;
@@ -269,7 +313,5 @@ export default createStore({
     clearNotSaveBlocks({ state }) {
       state.distribution.selected.blocks = state.distribution.selected.blocks.filter(el => !el.new);
     }
-  },
-  modules: {
   }
 })

@@ -10,8 +10,8 @@
 
         <div class="col time">
           <h5>Время рассылки: </h5>
-          <y-input max="24" min="0" type="number" v-model="time.hours" placeholder="чч" class="time-picker__input"/>:
-          <y-input max="59" min="0" type="number" v-model="time.minutes" placeholder="мм" class="time-picker__input"/>:
+          <y-input max="24" min="0" type="number" v-model="time.hours" @update="fixHours" placeholder="чч" class="time-picker__input"/>:
+          <y-input max="59" min="0" type="number" v-model="time.minutes" @update="fixMinutes" placeholder="мм" class="time-picker__input"/>:
         </div>
 
         <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
@@ -32,7 +32,7 @@
                 <y-cool-button class="element-btn" @click="setPeriod(1)" :class="{'active-element-btn': day_period == 1}" >Каждый день</y-cool-button>
                 <y-cool-button class="element-btn" @click="setPeriod(7)" :class="{'active-element-btn': day_period == 7}" >Каждую неделю</y-cool-button>
                 <y-cool-button class="element-btn" @click="setPeriod(30)" :class="{'active-element-btn': day_period == 30}" >Каждые 30 дней</y-cool-button>
-                <y-cool-button class="element-btn" @click="setPeriod(day_period_input)" :class="{'active-element-btn': showCustomPeriod}" >Своя</y-cool-button>
+                <y-cool-button class="element-btn" @click="setPeriod(0)" :class="{'active-element-btn': showCustomPeriod}" >Своя</y-cool-button>
             </div>
             <div v-if="showCustomPeriod" class="col custom-day">
                 <h5>Периодичность (в днях)</h5>
@@ -40,6 +40,7 @@
             </div>
         </template>
     </y-modal>
+    
     <h5 class="heading-small">Адресаты</h5>
     <div class="container-fluid contacts">
       <div class="col groups">
@@ -56,10 +57,6 @@
           :page-size="6"
           ></y-list>
         </div>
-<!--        <div class="container-fluid footer-container">-->
-<!--          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
-<!--          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
-<!--        </div>-->
 
       </div>
 
@@ -75,14 +72,11 @@
               :page-size="6">
           </y-list>
         </div>
-        <div class="container-fluid footer-container">
-<!--          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
-<!--          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
-        </div>
       </div>
     </div>
+    
     <h5 class="heading-small">Блоки рассылок</h5>
-      <y-list
+    <y-list
         :items="blocks"
         key-of-name="name"
         :selectable="false"
@@ -91,12 +85,9 @@
         :pagination="true"
         :page-size="5"
       ></y-list>
-<!--    <div class="container-fluid footer-container">-->
-<!--      <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
-<!--      <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
-<!--    </div>-->
+      
     <div class="row button-row">
-      <y-cool-button @click="testing">Сохранить рассылку</y-cool-button>
+     <y-cool-button @click="testing">Сохранить рассылку</y-cool-button>
     </div>
   </y-modal>
   <CreateMailingBlock
@@ -110,7 +101,6 @@
 <script>
 import CreateMailingBlock from "@/components/Mailing/CreateMailingBlock.vue";
 import YModal from "@/components/UI/YModal.vue";
-import User from "@/api/admin/User";
 import Company from "@/api/admin/Company";
 
 export default {
@@ -122,13 +112,13 @@ export default {
   emits: ['close'],
   data() {
     return {
-        name: "",
-        one_time: true,
-        day_period: 1,
-        day_period_input: null,
-        groups: [],
-        peopleInGroup: [],
-        allPeople: [],
+      name: "",
+      one_time: true,
+      day_period: 1,
+      day_period_input: null,
+      groups: [],
+      peopleInGroup: [],
+      allPeople: [],
       time: {
         hours: null,
         minutes: null
@@ -142,9 +132,13 @@ export default {
     company.getGroups().then(r => {
       this.groups = r.map(el => ({ ...el, active: false }));
     });
-    company.getAllUsers().then(r => {
-      this.allPeople = r.map(el => ({ ...el, active: false }));
-    });
+    const { recipients, name, one_time, day_period, send_time } = this.$store.getters.selectedDistribution;
+    console.log('DATA', recipients, name, one_time, day_period, send_time);
+    this.allPeople = recipients;
+    this.name = name;
+    this.day_period = day_period;
+    this.one_time = one_time;
+    this.time = {...send_time};
   },
   methods: {
     testing(){
@@ -156,25 +150,16 @@ export default {
     },
     showedPeople(group){
       this.peopleInGroup = this.allPeople
-      this.peopleInGroup = this.allPeople.filter(el=>(el.group_id == group.id))//понять как подставить id группы
+      this.peopleInGroup = this.allPeople.filter(el=>(el.group_id == group.id))
       console.log("люди вывелись")
 
     },
     selectGroup(group){
-      console.log("группа выбралась")
       group.active = !group.active
-        console.log(group)
-        const people = this.allPeople.filter(el=>(el.group_id == group.id)).map(el => el)
-        var index, len
-        for (index = 0, len = people.length; index < len; ++index){
-          this.selectPerson(people[index])
-        }
-
+      this.allPeople.filter(el=>(el.group_id == group.id)).forEach(el => this.selectPerson(el))
     },
     selectPerson(user){
-      console.log("чувак выбран")
       user.active = !user.active;
-      //this.allPeople.filter(el => el.active).map(el => el.id)
     },
     async openCreateBlock() {
       const index = await this.$store.dispatch('createNewDistributionBlock');
@@ -185,7 +170,6 @@ export default {
       this.one_time = isOneTime;
     },
     setPeriod(period) {
-      console.log(period);
       this.day_period = period;
     },
     selectBlock(item) {
