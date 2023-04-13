@@ -14,7 +14,7 @@
               v-for="attached in messageModel.content.attachments"
             >
               <v-img
-                v-if="attached.type == 0"
+                v-if="!attached.type || attached.type == 0"
                 :src="AttachmentLoaderUtil.load(attached.link)"
                 :lazy-src="AttachmentLoaderUtil.load(attached.link)"
                 :width="1000"
