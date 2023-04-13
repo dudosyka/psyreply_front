@@ -44,22 +44,50 @@
     <div class="container-fluid contacts">
       <div class="col groups">
         <h5>Группы</h5>
+        <YButton @click="back" v-if="this.showPeople === true"><i class="fa-solid fa-chevron-left"></i></YButton>
         <div class="container">
-          <y-list ></y-list>
+          <y-list v-if="this.showPeople === false"
+          :items="groups"
+          key-of-name="name"
+          :editable="true"
+          @edit="showedPeople"
+          :selectable="true"
+          @select="selectGroup"
+          :pagination="true"
+          :page-size="6"
+          ></y-list>
+          <y-list
+              v-if="this.showPeople === true"
+                  :items="peopleInGroup"
+                  key-of-name="login"
+                  :selectable="true"
+                  @select="selectPerson"
+                  :pagination="true"
+                  :page-size="6"
+          ></y-list>
         </div>
-        <div class="container-fluid footer-container">
-          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
-        </div>
+<!--        <div class="container-fluid footer-container">-->
+<!--          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
+<!--          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
+<!--        </div>-->
+
       </div>
+
       <div class="col people">
         <h5>Люди</h5>
         <div class="container">
-          <y-list></y-list>
+          <y-list
+              :items="selectedPeople"
+              key-of-name="login"
+              :selectable="true"
+              @select="selectPerson"
+              :pagination="true"
+              :page-size="6">
+          </y-list>
         </div>
         <div class="container-fluid footer-container">
-          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
+<!--          <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
+<!--          <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
         </div>
       </div>
     </div>
@@ -85,6 +113,8 @@
 <script>
 import CreateMailingBlock from "@/components/Mailing/CreateMailingBlock.vue";
 import YModal from "@/components/UI/YModal.vue";
+import User from "@/api/admin/User";
+import Company from "@/api/admin/Company";
 
 export default {
   name: "CreateMailing",
@@ -99,6 +129,11 @@ export default {
         one_time: true,
         day_period: 1,
         day_period_input: null,
+        groups: [],
+        peopleInGroup: [],
+        allPeople: [],
+        selectedPeople: ['sdsd','a'],
+        showPeople: false,
       time: {
         hours: null,
         minutes: null
@@ -107,10 +142,43 @@ export default {
     }
   },
   created() {
+    //создание списка групп
+  const company = new Company()
+    company.getGroups().then(r => {
+      this.groups = r;
+    });
+    company.getAllUsers().then(r => {
+      this.allPeople = r;
+    });
   },
   methods: {
     testing(){
       console.log(this.time.hours,this.time.minutes,this.name,this.day_period)
+      console.log(this.groups)
+      console.log(this.peopleInGroup)
+      console.log(this.allPeople)
+      console.log(this.selectedPeople)
+    },
+    showedPeople(){
+      this.showPeople = true
+      this.peopleInGroup = this.allPeople
+      // this.peopleInGroup = this.allPeople.filter(el=>(el.group_id == this.groups))//понять как подставить id группы
+      console.log("люди вывелись")
+
+    },
+    selectGroup(){
+      console.log("группа выбралась")
+    },
+    selectPerson(){
+      console.log("чувак выбран")
+      if(this.selectedPeople.includes('a')){
+        this.selectedPeople.pop(this.selectedPeople.indexOf('a'))
+      }else{
+        this.selectedPeople.push('a')
+      }
+    },
+    back(){
+      this.showPeople = false
     },
     openCreateBlock() {
       this.window = 'createBlock'
