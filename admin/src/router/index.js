@@ -51,7 +51,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/mailing:after(.*)',
+    path: '/distribution:after(.*)',
     name: 'mailing',
     component: () => import('@/views/MailingView.vue'),
     meta: { requiresAuth: true }

@@ -1,136 +1,194 @@
 <template>
-  <y-modal class="modal" v-if="window === 'main'">
+  <y-modal class="modal">
     <header class="header">
       <!--
         Если будешь заменять эту кнопку то не забудь в том элементе, на который заменишь, прописать точно такой же @click
         Подробнее см. пояснение внутри MailingView в методе close
       -->
-      <y-left-arrow-button @click="$emit('close')" />
+      <y-left-arrow-button @click="close" />
       <h1 class="heading">Новый блок рассылок</h1>
 
 
     </header>
     <y-input
+        v-model="name"
         placeholder="Название блока"
     />
 
     <div class="container elements">
       <h3 class="add-heading">Добавление элементов</h3>
-      <y-cool-button class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-text-width"></i> Текст</y-cool-button>
-      <y-cool-button class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-newspaper"></i> Медиа</y-cool-button>
-      <y-cool-button class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-list"></i> Тест</y-cool-button>
-      <y-cool-button class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-link"></i> Ссылка</y-cool-button>
-      <y-cool-button  class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-route"></i> Навигация</y-cool-button>
+      <y-cool-button class="element-btn element-btn-active" @click="createElement(DIstributionMessageType.TEXT)"><i class="fa-solid fa-text-width"></i> Текст</y-cool-button>
+      <y-cool-button class="element-btn element-btn-active" @click="createElement(DIstributionMessageType.MEDIA)"><i class="fa-solid fa-newspaper"></i> Медиа</y-cool-button>
+      <y-cool-button class="element-btn element-btn-active" @click="createElement(DIstributionMessageType.LINK)"><i class="fa-solid fa-link"></i> Ссылка</y-cool-button>
+      <y-cool-button class="element-btn element-btn-active" @click="createElement(DIstributionMessageType.TEST)"><i class="fa-solid fa-list"></i> Тест</y-cool-button>
+<!--      <y-cool-button  class="element-btn element-btn-active" @click="createElement(5)"><i class="fa-solid fa-route"></i> Навигация</y-cool-button>-->
     </div>
 
-    <div class="element text">
-      <h4 class="element-heading">Текст</h4>
-      <textarea class="text-area">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</textarea>
-      <div class="row button-row">
-        <y-cool-button class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
-      </div>
-    </div>
+    <template v-for="(element, index) in elements">
+        <div v-if="element.type === DIstributionMessageType.TEXT" class="element text">
+            <h4 class="element-heading">Текст</h4>
+            <textarea v-model="element.text" class="text-area"></textarea>
+            <div class="row button-row">
+                <y-cool-button @click="removeElement(index)"  class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
+            </div>
+        </div>
 
-    <div class="element text-img">
-      <h4 class="element-heading">Медиа</h4>
-      <div class="row media-row">
-        <input  type="file" id="img" style="display:none;">
-        <label class="upload-text" for="img"><i class="fa-solid fa-file"></i> Выберите файл</label>
-        <y-cool-button  class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-pen"></i> Подпись</y-cool-button>
-      </div>
-      <h5 class="heading-small">Подпись</h5>
-      <textarea class="text-area">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</textarea>
-      <div class="row button-row">
-        <y-cool-button class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
-      </div>
-    </div>
+        <div v-if="element.type === DIstributionMessageType.MEDIA" class="element text-img">
+            <h4 class="element-heading">Медиа</h4>
+            <div class="row media-row">
+                <input @change="getMedia($event, element)" type="file" id="img" style="display:none;">
+                <label class="upload-text" for="img"><i class="fa-solid fa-file"></i> Выберите файл</label>
+                <y-cool-button  class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-pen"></i> Подпись</y-cool-button>
+            </div>
+            <h5 class="heading-small">Подпись</h5>
+            <textarea class="text-area" v-model="element.text"></textarea>
+            <div class="row button-row">
+                <y-cool-button @click="removeElement(index)"  class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
+            </div>
+        </div>
 
-    <div class="element button-element">
-      <h4 class="element-heading">Ссылка</h4>
-      <h5 class="heading-small">Текст кнопки</h5>
-      <y-input class="button-text" placeholder="Текст кнопки"/>
-      <h5 class="heading-small">URL</h5>
-      <y-input class="button-text" placeholder="Адрес ссылки"/>
-      <div class="row button-row">
-        <y-cool-button class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
-      </div>
-      </div>
+        <div v-if="element.type === DIstributionMessageType.LINK" class="element button-element">
+            <h4 class="element-heading">Ссылка</h4>
+            <h5 class="heading-small">Текст кнопки</h5>
+            <y-input v-model="element.text" class="button-text" placeholder="Текст кнопки"/>
+            <h5 class="heading-small">URL</h5>
+            <y-input v-model="element.attachments.link" class="button-text" placeholder="Адрес ссылки"/>
+            <div class="row button-row">
+                <y-cool-button @click="removeElement(index)"  class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
+            </div>
+        </div>
 
-    <div class="element test-element">
-      <h4 class="element-heading test">Тест</h4>
-      <h5 class="heading-small">Привязать блок тестов</h5>
-      <div class="container tests">
-        <y-list
-                v-if="tests.length > 0"
-                key-of-name="title"
-                :items="tests"
-                :editable="false"
-                @edit="editTest"
-                :pagination="true"
-                :page-size="6"
-        />
-      </div>
-      <div class="row button-row">
-        <y-cool-button class="element-btn element-delete"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
-      </div>
-    </div>
+        <div v-if="element.type === DIstributionMessageType.TEST" class="element test-element">
+            <h4 class="element-heading test">Тест</h4>
+            <h5 class="heading-small">Привязать блок тестов</h5>
+            <div class="container tests">
+                <y-list
+                        key-of-name="name"
+                        :editable="false"
+                        :selectable="true"
+                        @select="selectTestBlock($event, element)"
+                        :items="testBlocks"
+                        :pagination="true"
+                        :pagination-block="true"
+                        :page-size="4"
+                />
+            </div>
+            <div class="row button-row">
+                <y-cool-button @click="removeElement(index)" class="element-btn element-delete"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
+            </div>
+        </div>
 
-    <div class="element nav-element">
-      <h4 class="element-heading test">Навигация</h4>
-      <div class="row media-row">
-        <h5 class="heading-small">Выберите, на какой блок рассылки переходить</h5>
-        <y-cool-button  class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-pen"></i> Подпись</y-cool-button>
-      </div>
-      <div class="container tests">
-        <y-list
-            v-if="tests.length > 0"
-            key-of-name="title"
-            :items="mailingBlocks"
-            :editable="false"
-            @edit="editTest"
-            :pagination="true"
-            :page-size="6"
-        />
-      </div>
-      <h5 class="heading-small">Подпись</h5>
-      <textarea class="text-area">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</textarea>
-      <div class="row button-row">
-        <y-cool-button class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
-      </div>
-    </div>
-    <template v-for="element in elements">
-      <h1>{{element.name}}</h1>
+        <div v-if="element.type === 5" class="element nav-element">
+            <h4 class="element-heading test">Навигация</h4>
+            <div class="row media-row">
+                <h5 class="heading-small">Выберите, на какой блок рассылки переходить</h5>
+                <y-cool-button  class="element-btn element-btn-active" @click="createElement"><i class="fa-solid fa-pen"></i> Подпись</y-cool-button>
+            </div>
+            <div class="container tests">
+                <y-list
+                        v-if="tests.length > 0"
+                        key-of-name="title"
+                        :items="mailingBlocks"
+                        :editable="false"
+                        @edit="editTest"
+                        :pagination="true"
+                        :page-size="6"
+                />
+            </div>
+            <h5 class="heading-small">Подпись</h5>
+            <textarea class="text-area">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</textarea>
+            <div class="row button-row">
+                <y-cool-button class="element-btn element-delete element-delete-active"><i class="fa-sharp fa-solid fa-trash"></i> Удалить элемент</y-cool-button>
+            </div>
+        </div>
     </template>
 
     <div class="row button-row">
-      <y-cool-button>Сохранить блок</y-cool-button>
+      <y-cool-button @click="saveBlock">Сохранить блок</y-cool-button>
     </div>
   </y-modal>
 </template>
 
 <script>
+import Block from "@/api/admin/Block";
+import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
+
 export default {
   name: "CreateMailingBlock",
+  computed: {
+    DIstributionMessageType() {
+      return DIstributionMessageType
+    }
+  },
   data() {
     return {
-      window: 'main',
-      elements: [
-        {name: "test"}
-      ],
-      tests: [],
-      mailingBlocks: []
+      blockIndex: 0,
+      name: "",
+      elements: [],
+      testBlocks: [],
+      //1 - text, 2 - media, 3 - test, 4 - link
+      selectedType: 0,
     }
+  },
+  async created() {
+    const block = new Block()
+    block.getAll({filters: { company_id: null }})
+      .then(res => {
+        if (res.ok) {
+          res.json().then(data => data.body).then(r => this.testBlocks = r.map(el => ({ ...el, active: false })))
+        }
+      })
+    
+    const {index, name, elements} = await this.$store.getters.selectedDistributionBlock;
+    this.blockIndex = index;
+    this.name = name;
+    this.elements = elements;
   },
   methods: {
-    createElement() {
-      this.elements.push({name: 'test' + Date.now()})
+    selectTestBlock(testBlock, element) {
+      this.testBlocks.map(el => el.active = false)
+      testBlock.active = true;
+      element.attachments.block_id = testBlock.id;
+    },
+    getMedia(event, element) {
+      element.attachments.file_id = event.target.files[0];
+    },
+    removeElement(index) {
+      this.elements.splice(index, 1);
+    },
+    createElement(type) {
+      let elementTemplate = {
+        type,
+        text: "",
+        attachments: {}
+      }
+      switch (type) {
+        case DIstributionMessageType.MEDIA:
+          elementTemplate.attachments.file_id = null;
+          break;
+        case DIstributionMessageType.LINK:
+          elementTemplate.attachments.link = "";
+          break;
+        case DIstributionMessageType.TEST:
+          elementTemplate.attachments.block_id = null;
+          break;
+        default:
+          break;
+      }
+      
+      this.elements.push(elementTemplate)
+    },
+    saveBlock() {
+      this.$store.dispatch('updateDistributionBlock', {
+        index: this.blockIndex, block: { name: this.name, elements: this.elements }
+      });
+      this.$emit('close');
+    },
+    close() {
+      this.$store.dispatch('clearNotSaveBlocks');
+      this.$emit('close');
     }
   },
-  // computed: {
-  //   elements() {
-  //     return []
-  //   }
-  // }
 }
 </script>
 

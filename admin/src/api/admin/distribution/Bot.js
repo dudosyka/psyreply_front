@@ -1,5 +1,5 @@
 import ApiResolver from "@/api/ApiResolver";
-import {CompanyDistribution} from "@/api/admin/CompanyDistribution";
+import {CompanyDistribution} from "@/api/admin/distribution/CompanyDistribution";
 
 export class BotModel extends ApiResolver {
     companyDistributionModel = new CompanyDistribution()
