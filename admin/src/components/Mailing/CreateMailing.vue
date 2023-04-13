@@ -82,12 +82,19 @@
       </div>
     </div>
     <h5 class="heading-small">Блоки рассылок</h5>
-
-      <y-list></y-list>
-    <div class="container-fluid footer-container">
-      <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-      <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
-    </div>
+      <y-list
+        :items="blocks"
+        key-of-name="name"
+        :selectable="false"
+        :editable="true"
+        @edit="selectBlock"
+        :pagination="true"
+        :page-size="5"
+      ></y-list>
+<!--    <div class="container-fluid footer-container">-->
+<!--      <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>-->
+<!--      <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>-->
+<!--    </div>-->
     <div class="row button-row">
       <y-cool-button @click="testing">Сохранить рассылку</y-cool-button>
     </div>
@@ -131,7 +138,7 @@ export default {
   },
   created() {
     //создание списка групп
-  const company = new Company()
+    const company = new Company()
     company.getGroups().then(r => {
       this.groups = r.map(el => ({ ...el, active: false }));
     });
@@ -169,22 +176,33 @@ export default {
       user.active = !user.active;
       //this.allPeople.filter(el => el.active).map(el => el.id)
     },
-    openCreateBlock() {
+    async openCreateBlock() {
+      const index = await this.$store.dispatch('createNewDistributionBlock');
+      this.$store.dispatch('selectDistributionBlock', index);
       this.window = 'createBlock'
     },
-      selectIsOneTime(isOneTime) {
-        this.one_time = isOneTime;
-      },
-      setPeriod(period) {
-        console.log(period);
-        this.day_period = period;
-      }
-  },
-    computed: {
-      showCustomPeriod() {
-          return this.day_period != 1 && this.day_period != 7 && this.day_period != 30
-      }
+    selectIsOneTime(isOneTime) {
+      this.one_time = isOneTime;
+    },
+    setPeriod(period) {
+      console.log(period);
+      this.day_period = period;
+    },
+    selectBlock(item) {
+      this.$store.dispatch('selectDistributionBlock', item.index);
+      this.window = 'createBlock';
     }
+  },
+  computed: {
+    showCustomPeriod() {
+      return this.day_period != 1 && this.day_period != 7 && this.day_period != 30
+    },
+    blocks() {
+      const blocks = this.$store.getters.distributionBlocks;
+      console.log(blocks);
+      return blocks;
+    }
+  }
 }
 </script>
 

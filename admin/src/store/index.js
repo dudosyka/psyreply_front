@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
 import mainConf, {ProjectState} from "../../../main.conf";
-import {BotModel} from "@/api/admin/Bot";
-import {Distribution} from "@/api/admin/Distribution";
+import {BotModel} from "@/api/admin/distribution/Bot";
+import {Distribution} from "@/api/admin/distribution/Distribution";
 import Company from "@/api/admin/Company";
+import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
 
 export default createStore({
   state: {
@@ -41,9 +42,11 @@ export default createStore({
     distribution: {
       isBotSet: false,
       list: [],
-        selected: {
-          id: null
-        }
+      selected: {
+        id: null,
+        blocks: [],
+        selectedBlock: null,
+      },
     }
   },
   getters: {
@@ -53,12 +56,23 @@ export default createStore({
     distributionList(state) {
         return state.distribution.list;
     },
-      selectedDistribution(state) {
-        return state.distribution.selected;
-      },
-      companyUsers(state) {
-        return state.company.users;
-      },
+    selectedDistribution(state) {
+      return state.distribution.selected;
+    },
+    distributionBlocks(state) {
+      return state.distribution.selected.blocks.map((el, index) => {
+        return {
+          ...el,
+          index
+        }
+      });
+    },
+    selectedDistributionBlock(state) {
+      return state.distribution.selected.selectedBlock;
+    },
+    companyUsers(state) {
+      return state.company.users;
+    },
     getSignUpData(state){
       return state.signUpData
     },
@@ -190,19 +204,33 @@ export default createStore({
     blockCreateSetTests(state, tests) {
       state.newBlock.selectedTests = tests;
     },
-      setDistributionList(state, list) {
-        state.distribution.list = list;
-      },
-      setIsBotSet(state, isBotSet) {
-        state.distribution.isBotSet = isBotSet;
-      },
-      setCompanyUsers(state, users) {
-        state.company.users = users;
-      },
-      setSelectedDistribution(state, dist) {
-        state.distribution.selected = dist;
+    setDistributionList(state, list) {
+      state.distribution.list = list;
+    },
+    setIsBotSet(state, isBotSet) {
+      state.distribution.isBotSet = isBotSet;
+    },
+    setCompanyUsers(state, users) {
+      state.company.users = users;
+    },
+    setSelectedDistribution(state, dist) {
+      state.distribution.selected = dist;
+    },
+    addDistributionBlock(state, { name, elements }) {
+      state.distribution.selected.blocks.push({ name, elements, new: true })
+    },
+    setSelectedDistributionBlock(state, index) {
+      state.distribution.selected.selectedBlock = {
+        ...state.distribution.selected.blocks[index],
+        index
+      };
+    },
+    setDistributionBlock(state, { index, block: { name, elements } }) {
+      state.distribution.selected.blocks[index] = {
+        name, elements
       }
-  },
+    }
+   },
   actions: {
     createGroup() {
     },
@@ -217,11 +245,30 @@ export default createStore({
         commit('setIsBotSet', isBotSet);
         commit('setCompanyUsers', users);
     },
-      setSelectedDistribution({ commit }, id) {
-          const distribution = new Distribution();
-        const selected = distribution.getOne(id);
-        commit('setSelectedDistribution', selected);
-      }
+    setSelectedDistribution({ commit }, id) {
+      const distribution = new Distribution();
+      const selected = distribution.getOne(id);
+      commit('setSelectedDistribution', selected);
+    },
+    createNewDistributionBlock({ commit, state }) {
+      commit('addDistributionBlock', { name: "", elements: [] })
+      return state.distribution.selected.blocks.length - 1;
+    },
+    selectDistributionBlock({commit, state}, index) {
+      commit('setSelectedDistributionBlock', index);
+    },
+    updateDistributionBlock({ commit }, { index, block: { name, elements } }) {
+      elements = elements.map((el, key) => {
+        return {
+          ...el,
+          relative_id: key + 1
+        }
+      })
+      commit('setDistributionBlock', { index, block: { name, elements } })
+    },
+    clearNotSaveBlocks({ state }) {
+      state.distribution.selected.blocks = state.distribution.selected.blocks.filter(el => !el.new);
+    }
   },
   modules: {
   }

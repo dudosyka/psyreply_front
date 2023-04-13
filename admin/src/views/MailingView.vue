@@ -94,8 +94,8 @@ import CreateMailing from "@/components/Mailing/CreateMailing.vue";
 import EditMailing from "@/components/Mailing/EditMailing.vue";
 import CreateMailingBot from "@/components/Mailing/CreateMailingBot.vue";
 import YButton from "@/components/UI/YButton.vue";
-import {BotModel} from "@/api/admin/Bot";
-import {Distribution} from "@/api/admin/Distribution";
+import {BotModel} from "@/api/admin/distribution/Bot";
+import {Distribution} from "@/api/admin/distribution/Distribution";
 import Company from "@/api/admin/Company";
 
 export default {
