@@ -156,14 +156,13 @@ export default {
     selectGroup(group){
       console.log("группа выбралась")
       group.active = !group.active
-      if(group.active == true){
         console.log(group)
         const people = this.allPeople.filter(el=>(el.group_id == group.id)).map(el => el)
         var index, len
         for (index = 0, len = people.length; index < len; ++index){
           this.selectPerson(people[index])
         }
-      }
+
     },
     selectPerson(user){
       console.log("чувак выбран")
