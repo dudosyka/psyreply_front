@@ -44,9 +44,8 @@
     <div class="container-fluid contacts">
       <div class="col groups">
         <h5>Группы</h5>
-        <YButton @click="back" v-if="this.showPeople === true"><i class="fa-solid fa-chevron-left"></i></YButton>
         <div class="container">
-          <y-list v-if="this.showPeople === false"
+          <y-list
           :items="groups"
           key-of-name="name"
           :editable="true"
@@ -55,15 +54,6 @@
           @select="selectGroup"
           :pagination="true"
           :page-size="6"
-          ></y-list>
-          <y-list
-              v-if="this.showPeople === true"
-                  :items="peopleInGroup"
-                  key-of-name="login"
-                  :selectable="true"
-                  @select="selectPerson"
-                  :pagination="true"
-                  :page-size="6"
           ></y-list>
         </div>
 <!--        <div class="container-fluid footer-container">-->
@@ -77,7 +67,7 @@
         <h5>Люди</h5>
         <div class="container">
           <y-list
-              :items="selectedPeople"
+              :items="peopleInGroup"
               key-of-name="login"
               :selectable="true"
               @select="selectPerson"
@@ -139,8 +129,6 @@ export default {
         groups: [],
         peopleInGroup: [],
         allPeople: [],
-        selectedPeople: ['sdsd','a'],
-        showPeople: false,
       time: {
         hours: null,
         minutes: null
@@ -152,10 +140,10 @@ export default {
     //создание списка групп
     const company = new Company()
     company.getGroups().then(r => {
-      this.groups = r;
+      this.groups = r.map(el => ({ ...el, active: false }));
     });
     company.getAllUsers().then(r => {
-      this.allPeople = r;
+      this.allPeople = r.map(el => ({ ...el, active: false }));
     });
   },
   methods: {
@@ -164,28 +152,23 @@ export default {
       console.log(this.groups)
       console.log(this.peopleInGroup)
       console.log(this.allPeople)
-      console.log(this.selectedPeople)
+      console.log('dsdfsdf',this.allPeople.filter(el => el.active).map(el => el.id))
     },
-    showedPeople(){
-      this.showPeople = true
+    showedPeople(group){
       this.peopleInGroup = this.allPeople
-      // this.peopleInGroup = this.allPeople.filter(el=>(el.group_id == this.groups))//понять как подставить id группы
+      this.peopleInGroup = this.allPeople.filter(el=>(el.group_id == group.id))//понять как подставить id группы
       console.log("люди вывелись")
 
     },
-    selectGroup(){
+    selectGroup(group){
       console.log("группа выбралась")
+      group.active = !group.active
+
     },
-    selectPerson(){
+    selectPerson(user){
       console.log("чувак выбран")
-      if(this.selectedPeople.includes('a')){
-        this.selectedPeople.pop(this.selectedPeople.indexOf('a'))
-      }else{
-        this.selectedPeople.push('a')
-      }
-    },
-    back(){
-      this.showPeople = false
+      user.active = !user.active;
+      //this.allPeople.filter(el => el.active).map(el => el.id)
     },
     async openCreateBlock() {
       const index = await this.$store.dispatch('createNewDistributionBlock');
