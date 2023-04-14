@@ -10,8 +10,8 @@
 
         <div class="col time">
           <h5>Время рассылки: </h5>
-          <y-input max="24" min="0" type="number" v-model="time.hours" @update="fixHours" placeholder="чч" class="time-picker__input"/>:
-          <y-input max="59" min="0" type="number" v-model="time.minutes" @update="fixMinutes" placeholder="мм" class="time-picker__input"/>:
+          <y-input @blur="checkhours" max="24" min="0" type="number" v-model="time.hours" @update="fixHours" placeholder="чч" class="time-picker__input"/>:
+          <y-input @blur="checkMinutes" max="59" min="0" type="number" v-model="time.minutes" @update="fixMinutes" placeholder="мм" class="time-picker__input"/>:
         </div>
 
         <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
@@ -148,6 +148,16 @@ export default {
       console.log(this.allPeople)
       console.log('dsdfsdf',this.allPeople.filter(el => el.active).map(el => el.id))
       console.log( String(this.time.hours + ':' + this.time.minutes + ':00'))
+    },
+    checkhours(){
+      if((this.time.hours > 24)){
+        this.time.hours = null
+      }
+    },
+    checkMinutes(){
+      if((this.time.minutes > 59)){
+        this.time.minutes = null
+      }
     },
     showedPeople(group){
       this.peopleInGroup = this.allPeople
