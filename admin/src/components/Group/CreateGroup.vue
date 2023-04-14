@@ -1,28 +1,28 @@
 <template>
 
-  <y-modal
-    class="block"
-  >
-    <header class="header">
-    <y-left-arrow-button @click="$emit('close')" />
-    <h2>Создание новой группы</h2>
-  </header>
-    <header class="header">
-      <h3 class="heading">Основная информация</h3>
-    </header>
-    <y-input placeholder="Название" v-model.trim="group.name" />
-    <header class="header">
-      <h3 class="heading">Добавление пользователей в группу</h3>
-    </header>
-    <y-list
-        :items="users"
-        key-of-name="login"
-        show-id="jetBotId"
-        :selectable="true"
-        @select="selectUser"
-    />
-    <y-cool-button @click="create">Сохранить</y-cool-button>
-  </y-modal>
+    <y-modal
+            class="block"
+    >
+        <header class="header">
+            <y-left-arrow-button @click="$emit('close')"/>
+            <h2>Создание новой группы</h2>
+        </header>
+        <header class="header">
+            <h3 class="heading">Основная информация</h3>
+        </header>
+        <y-input placeholder="Название" v-model.trim="group.name"/>
+        <header class="header">
+            <h3 class="heading">Добавление пользователей в группу</h3>
+        </header>
+        <y-list
+                :items="users"
+                key-of-name="login"
+                show-id="jetBotId"
+                :selectable="true"
+                @select="selectUser"
+        />
+        <y-cool-button @click="create">Сохранить</y-cool-button>
+    </y-modal>
 
 </template>
 
@@ -45,7 +45,7 @@ export default {
   async created() {
     if (mainConf.projectState === ProjectState.dev)
       console.log(this.$store.state.company.name);
-
+    
     const user = new User();
     this.users = (await user.getAll({
       byCompany: true,
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-  .header {
+.header {
     display: flex;
     grid-template-columns: auto max-content;
     justify-content: flex-start;
@@ -81,22 +81,23 @@ export default {
     align-items: center;
     border-bottom: 1px solid var(--border-dark);
     padding-bottom: 1rem;
-    margin-bottom:  1rem;
+    margin-bottom: 1rem;
     width: 100%;
-  }
+}
 
-  .input {
-    background: var(--acrylic-blur-light)!important;
+.input {
+    background: var(--acrylic-blur-light) !important;
     height: 3vh;
     width: 100%;
     text-align: left;
     padding-left: 2rem;
-  }
-  .input:hover {
-    background: var(--acrylic-blur-light)!important;
+}
+
+.input:hover {
+    background: var(--acrylic-blur-light) !important;
     height: 3vh;
     width: 100%;
     text-align: left;
     padding-left: 2rem;
-  }
+}
 </style>

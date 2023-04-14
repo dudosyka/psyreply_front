@@ -1,24 +1,24 @@
 <template>
-  <input
-    v-if="type === 'number'"
-    :max="max"
-    :min="min"
-    @input="$emit('update:modelValue', $event.target.value)"
-    class="input"
-    :type="type"
-    :placeholder="placeholder"
-    :value="modelValue"
-    :disabled="disabled"
-  >
-  <input
-    v-else
-    @input="$emit('update:modelValue', $event.target.value)"
-    class="input"
-    :type="type"
-    :placeholder="placeholder"
-    :value="modelValue"
-    :disabled="disabled"
-  >
+    <input
+            v-if="type === 'number'"
+            :max="max"
+            :min="min"
+            @input="$emit('update:modelValue', $event.target.value)"
+            class="input"
+            :type="type"
+            :placeholder="placeholder"
+            :value="modelValue"
+            :disabled="disabled"
+    >
+    <input
+            v-else
+            @input="$emit('update:modelValue', $event.target.value)"
+            class="input"
+            :type="type"
+            :placeholder="placeholder"
+            :value="modelValue"
+            :disabled="disabled"
+    >
 </template>
 
 <script>
@@ -49,55 +49,59 @@ export default {
 
 <style scoped>
 .input {
-  background: rgba(7, 18, 25, 0.75);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  padding-left: 1rem!important;
-  border-style: solid;
-  height: 2rem;
-  border-radius: 0.3rem;
-  text-align: left;
-  transition: all .3s ease-in-out;
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    padding-left: 1rem !important;
+    border-style: solid;
+    height: 2rem;
+    border-radius: 0.3rem;
+    text-align: left;
+    transition: all .3s ease-in-out;
 }
+
 .input:hover {
-  background: rgba(7, 18, 25, 0.75);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  padding-left: 1rem!important;
-  border-style: solid;
-  height: 2rem;
-  border-radius: 0.3rem;
-  text-align: left;
-  transition: all .3s ease-in-out;
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    padding-left: 1rem !important;
+    border-style: solid;
+    height: 2rem;
+    border-radius: 0.3rem;
+    text-align: left;
+    transition: all .3s ease-in-out;
 }
+
 .input:active {
-  background: rgba(7, 18, 25, 0.75);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  padding-left: 1rem!important;
-  border-style: solid;
-  height: 2rem;
-  border-radius: 0.3rem;
-  text-align: left;
-  transition: all .3s ease-in-out;
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    padding-left: 1rem !important;
+    border-style: solid;
+    height: 2rem;
+    border-radius: 0.3rem;
+    text-align: left;
+    transition: all .3s ease-in-out;
 }
+
 .input:invalid {
-  background: rgba(7, 18, 25, 0.75);
-  color: var(--light);
-  border-color: var(--border-dark);
-  border-width: 1px;
-  padding-left: 1rem!important;
-  border-style: solid;
-  height: 2rem;
-  border-radius: 0.3rem;
-  text-align: left;
-  transition: all .3s ease-in-out;
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    padding-left: 1rem !important;
+    border-style: solid;
+    height: 2rem;
+    border-radius: 0.3rem;
+    text-align: left;
+    transition: all .3s ease-in-out;
 }
+
 ::placeholder {
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.53);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.53);
 }
 </style>

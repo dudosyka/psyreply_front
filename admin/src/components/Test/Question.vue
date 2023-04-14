@@ -1,17 +1,17 @@
 <template>
-  <question-type1
-    v-if="type === 1 || type === 3 || type === 4 || type === 5"
-    :question-id="questionId"
-    @remove="$emit('remove')"
-    :editable="editable"
-  />
-  <question-type2
-    v-else-if="type === 2"
-    :question-id="questionId"
-    @remove="$emit('remove')"
-    :editable="editable"
-  />
-  <hr>
+    <question-type1
+            v-if="type === 1 || type === 3 || type === 4 || type === 5"
+            :question-id="questionId"
+            @remove="$emit('remove')"
+            :editable="editable"
+    />
+    <question-type2
+            v-else-if="type === 2"
+            :question-id="questionId"
+            @remove="$emit('remove')"
+            :editable="editable"
+    />
+    <hr>
 </template>
 
 <script>
@@ -37,12 +37,12 @@ export default {
 
 <style scoped>
 hr {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  min-width: 30vw;
-  border-left: 0px solid white;
-  border-right: 0px solid white;
-  border-bottom: 0px solid white;
-  border-top: 1px solid rgba(255, 255, 255, 0.52);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-width: 30vw;
+    border-left: 0px solid white;
+    border-right: 0px solid white;
+    border-bottom: 0px solid white;
+    border-top: 1px solid rgba(255, 255, 255, 0.52);
 }
 </style>

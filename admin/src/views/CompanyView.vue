@@ -1,38 +1,38 @@
 <template>
-  <y-popup-warn></y-popup-warn>
-  <div class="wrapper">
-    <y-left-side-bar />
-    <main class="main">
-      <y-modal v-if="window === 'main'" class="main__modal">
-        <header class="header">
-          <div class="header__select">
-            <h2 class="heading header__heading">Компании</h2>
-          </div>
-          <y-button :plus="true" @click="createCompany">Новая компания</y-button>
-        </header>
-        <!--        U can add "items" props to list component. It must be array -->
-        <y-list
-          v-if="companies.length > 0"
-          :items="companies"
-          key-of-name="name"
-          :selectable="false"
-          :editable="true"
-          @edit="editCompany"
-          :pagination="true"
-          :page-size="4"
-        />
-      </y-modal>
-      <create-company
-          v-if="window === 'createCompany'"
-          @close="getCompanies"
-      />
-      <edit-company
-        v-if="window === 'editCompany'"
-        :companyId="companyId"
-        @close="getCompanies"
-      />
-    </main>
-  </div>
+    <y-popup-warn></y-popup-warn>
+    <div class="wrapper">
+        <y-left-side-bar/>
+        <main class="main">
+            <y-modal v-if="window === 'main'" class="main__modal">
+                <header class="header">
+                    <div class="header__select">
+                        <h2 class="heading header__heading">Компании</h2>
+                    </div>
+                    <y-button :plus="true" @click="createCompany">Новая компания</y-button>
+                </header>
+                <!--        U can add "items" props to list component. It must be array -->
+                <y-list
+                        v-if="companies.length > 0"
+                        :items="companies"
+                        key-of-name="name"
+                        :selectable="false"
+                        :editable="true"
+                        @edit="editCompany"
+                        :pagination="true"
+                        :page-size="4"
+                />
+            </y-modal>
+            <create-company
+                    v-if="window === 'createCompany'"
+                    @close="getCompanies"
+            />
+            <edit-company
+                    v-if="window === 'editCompany'"
+                    :companyId="companyId"
+                    @close="getCompanies"
+            />
+        </main>
+    </div>
 </template>
 
 <script>
@@ -61,11 +61,11 @@ export default {
   },
   created() {
     this.$watch(
-        () => this.$route.params,
-        (toParams, previousParams) => {
-          if (toParams.after === '')
-            this.window = 'main'
-        }
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        if (toParams.after === '')
+          this.window = 'main'
+      }
     )
     const company = new Company()
     company.getOne()
@@ -104,43 +104,46 @@ export default {
 
 <style scoped>
 .wrapper {
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  width: 100%;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    width: 100%;
 }
 
 .main {
-  padding: 4.125rem;
+    padding: 4.125rem;
 }
+
 .main__modal {
-  display: grid;
-  grid-gap: 2.5625rem;
+    display: grid;
+    grid-gap: 2.5625rem;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: auto min-content;
-}
-.header__select{
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: left;
-
+    display: grid;
+    grid-template-columns: auto min-content;
 }
 
+.header__select {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: left;
 
-.header__heading{
-  margin-right: 0.5rem;
-
-  font-size:2rem;
 }
-.header__arrow__button img{
-  width: 26px;
-  height: 26px;
-  margin-right: 20px;
-  cursor: pointer;
+
+
+.header__heading {
+    margin-right: 0.5rem;
+
+    font-size: 2rem;
+}
+
+.header__arrow__button img {
+    width: 26px;
+    height: 26px;
+    margin-right: 20px;
+    cursor: pointer;
 }
 
 </style>

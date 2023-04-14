@@ -1,7 +1,7 @@
 <template>
-  <div class="y-results-table">
-    <slot></slot>
-  </div>
+    <div class="y-results-table">
+        <slot></slot>
+    </div>
 
 </template>
 
@@ -12,9 +12,9 @@ export default {
 </script>
 
 <style scoped>
-.y-results-table{
-  display: grid;
-  grid-gap: 1rem;
+.y-results-table {
+    display: grid;
+    grid-gap: 1rem;
 }
 
 </style>

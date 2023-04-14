@@ -1,9 +1,8 @@
-import { createStore } from 'vuex'
+import {createStore} from 'vuex'
 import mainConf, {ProjectState} from "../../../main.conf";
 import {BotModel} from "@/api/admin/distribution/Bot";
 import {Distribution} from "@/api/admin/distribution/Distribution";
 import Company from "@/api/admin/Company";
-import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
 
 export default createStore({
   state: {
@@ -33,10 +32,9 @@ export default createStore({
       editBlock: null
     },
     company: {
-        users: [],
+      users: [],
     },
-    group: {
-    },
+    group: {},
     currentEmail: "",
     signUpData: [],
     distribution: {
@@ -63,7 +61,7 @@ export default createStore({
       return state.distribution.isBotSet;
     },
     distributionList(state) {
-        return state.distribution.list;
+      return state.distribution.list;
     },
     selectedDistribution(state) {
       return state.distribution.selected;
@@ -82,7 +80,7 @@ export default createStore({
     companyUsers(state) {
       return state.company.users;
     },
-    getSignUpData(state){
+    getSignUpData(state) {
       return state.signUpData
     },
     editBlock(state) {
@@ -123,11 +121,11 @@ export default createStore({
     removeEditBlock(state) {
       state.results.editBlock = null
     },
-    addQuestion(state, { question, needCopy }) {
+    addQuestion(state, {question, needCopy}) {
       question.id = state.newTest.questionsCount
       state.newTest.questions.push(question)
       state.newTest.questionsCount++
-
+      
       if (state.newTest.questions.length > 1 && needCopy) {
         let i = 1;
         state.newTest.questions[0].answers.map(el => {
@@ -184,7 +182,7 @@ export default createStore({
       state.app.popupError.show = false
       state.app.popupError.message = ''
     },
-    openWarnPopup(state, { message, acceptCallback }) {
+    openWarnPopup(state, {message, acceptCallback}) {
       state.app.popupWarn.show = true;
       state.app.popupWarn.message = message;
       state.app.popupWarn.acceptCallback = acceptCallback;
@@ -241,8 +239,8 @@ export default createStore({
       state.distribution.selected = distribution;
     },
     
-    addDistributionBlock(state, { name, elements }) {
-      state.distribution.selected.blocks.push({ name, elements, new: true })
+    addDistributionBlock(state, {name, elements}) {
+      state.distribution.selected.blocks.push({name, elements, new: true})
     },
     setSelectedDistributionBlock(state, index) {
       state.distribution.selected.selectedBlock = {
@@ -250,18 +248,17 @@ export default createStore({
         index
       };
     },
-    setDistributionBlock(state, { index, block: { name, elements } }) {
+    setDistributionBlock(state, {index, block: {name, elements}}) {
       state.distribution.selected.blocks[index] = {
         name, elements
       }
     }
-   },
-  modules: {
   },
+  modules: {},
   actions: {
     createGroup() {
     },
-    async loadDistributions({ commit }) {
+    async loadDistributions({commit}) {
       const botModel = new BotModel();
       const distribution = new Distribution();
       const company = new Company();
@@ -273,43 +270,43 @@ export default createStore({
       // commit('setCompanyUsers', users);
     },
     
-    async createNewDistribution({ commit }) {
+    async createNewDistribution({commit}) {
       const company = new Company();
       
       const recipients = await company.getAllUsers().then(r => {
-        return r.map(el => ({ ...el, active: false }));
+        return r.map(el => ({...el, active: false}));
       });
       
       commit('newDistribution', recipients)
     },
-    async selectDistribution({ commit }, id) {
+    async selectDistribution({commit}, id) {
       const distribution = new Distribution();
       const selected = await distribution.getOne(id);
       const company = new Company();
       selected.recipients = await company.getAllUsers().then(r => {
-        return r.map(el => ({ ...el, active: false }));
+        return r.map(el => ({...el, active: false}));
       });
       //Тут надо написать ещё обработку чтобы челики выбранные стали active: true
       commit('setSelectedDistribution', selected);
     },
     
-    createNewDistributionBlock({ commit, state }) {
-      commit('addDistributionBlock', { name: "", elements: [] })
+    createNewDistributionBlock({commit, state}) {
+      commit('addDistributionBlock', {name: "", elements: []})
       return state.distribution.selected.blocks.length - 1;
     },
     selectDistributionBlock({commit, state}, index) {
       commit('setSelectedDistributionBlock', index);
     },
-    updateDistributionBlock({ commit }, { index, block: { name, elements } }) {
+    updateDistributionBlock({commit}, {index, block: {name, elements}}) {
       elements = elements.map((el, key) => {
         return {
           ...el,
           relative_id: key + 1
         }
       })
-      commit('setDistributionBlock', { index, block: { name, elements } })
+      commit('setDistributionBlock', {index, block: {name, elements}})
     },
-    clearNotSaveBlocks({ state }) {
+    clearNotSaveBlocks({state}) {
       state.distribution.selected.blocks = state.distribution.selected.blocks.filter(el => !el.new);
     }
   }

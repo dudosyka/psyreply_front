@@ -1,25 +1,27 @@
 <template>
-  <div class="YDate">
-    <y-button @click="picker.show = !picker.show">
-      <div class="row date-row">
-        <div class="date__img">
-          <p class="date__title"><i class="fa-solid fa-calendar-days"></i> Дата</p>
-          {{ date }}
-        </div>
-      </div>
-    </y-button>
-    <y-modal class="picker" :class="{ 'picker_active': picker.show }">
-      <y-input class="picker__input" v-model="picker.day" /> /
-      <y-input class="picker__input" v-model="picker.month" /> /
-      <y-input class="picker__input" v-model="picker.year" />
-      <y-mini-button @click="selectDate">Выбрать</y-mini-button>
-      <y-mini-button @click="clearDate">X</y-mini-button>
-    </y-modal>
-  </div>
+    <div class="YDate">
+        <y-button @click="picker.show = !picker.show">
+            <div class="row date-row">
+                <div class="date__img">
+                    <p class="date__title"><i class="fa-solid fa-calendar-days"></i> Дата</p>
+                    {{ date }}
+                </div>
+            </div>
+        </y-button>
+        <y-modal class="picker" :class="{ 'picker_active': picker.show }">
+            <y-input class="picker__input" v-model="picker.day"/>
+            /
+            <y-input class="picker__input" v-model="picker.month"/>
+            /
+            <y-input class="picker__input" v-model="picker.year"/>
+            <y-mini-button @click="selectDate">Выбрать</y-mini-button>
+            <y-mini-button @click="clearDate">X</y-mini-button>
+        </y-modal>
+    </div>
 </template>
 
 <script>
-import YButton from "@/components/UI/YButton";
+
 export default {
   name: "YDate",
   data() {
@@ -62,43 +64,49 @@ export default {
 
 <style scoped>
 .date-row {
-  width: 15vw;
-}
-.YDate {
-  position: relative;
-}
-.picker {
-  display: none;
-  position: absolute;
-  top: calc(100% + .2em);
-  right: 0;
-  padding: .3em;
-  backdrop-filter: blur(10px);
-}
-.picker__input {
-  padding: .3em;
-}
-.picker_active {
-  display: grid;
-  grid-template-columns: repeat(2, 3rem auto) 4rem auto auto;
-  align-items: center;
-  border-radius: 0.5rem;
-  grid-gap: .2em;
+    width: 15vw;
 }
 
-.date__img{
-  min-width: 11rem;
-  display: flex;
-  grid-gap: 1rem;
-  padding-right: 5rem;
-  grid-template-columns: auto min-content;
-  align-items: center;
+.YDate {
+    position: relative;
 }
-.date__title{
-  margin-right:1rem ;
-  font-size: 1rem;
+
+.picker {
+    display: none;
+    position: absolute;
+    top: calc(100% + .2em);
+    right: 0;
+    padding: .3em;
+    backdrop-filter: blur(10px);
 }
+
+.picker__input {
+    padding: .3em;
+}
+
+.picker_active {
+    display: grid;
+    grid-template-columns: repeat(2, 3rem auto) 4rem auto auto;
+    align-items: center;
+    border-radius: 0.5rem;
+    grid-gap: .2em;
+}
+
+.date__img {
+    min-width: 11rem;
+    display: flex;
+    grid-gap: 1rem;
+    padding-right: 5rem;
+    grid-template-columns: auto min-content;
+    align-items: center;
+}
+
+.date__title {
+    margin-right: 1rem;
+    font-size: 1rem;
+}
+
 .input {
-  border-radius: 3px;
+    border-radius: 3px;
 }
 </style>

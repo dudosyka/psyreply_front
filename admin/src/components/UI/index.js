@@ -20,7 +20,6 @@ import YResultsTabel from "@/components/UI/YResultsTabel";
 import YResultsTabelItem from "@/components/UI/YResultsTabelItem";
 
 
-
 export default [
   YButton,
   YCoolButton,

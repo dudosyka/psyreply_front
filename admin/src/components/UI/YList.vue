@@ -1,24 +1,27 @@
 <template>
-  <ul class="list">
-    <y-list-item
-      v-for="item in filteredItems"
-      :key="`${item.id}${item[keyOfName]}`"
-      :selectable="selectable"
-      :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
-      :active="item.active"
-      :deletable="deletable"
-      @select="$emit('select', item)"
-      @edit="$emit('edit', item)"
-      @delete="$emit('delete', item)"
-    >
-      {{showId ? (item[showId]) ? `${item[showId]} ` : 'Администратор' : ""}} {{item[keyOfName]}}
+    <ul class="list">
+        <y-list-item
+                v-for="item in filteredItems"
+                :key="`${item.id}${item[keyOfName]}`"
+                :selectable="selectable"
+                :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
+                :active="item.active"
+                :deletable="deletable"
+                @select="$emit('select', item)"
+                @edit="$emit('edit', item)"
+                @delete="$emit('delete', item)"
+        >
+            {{ showId ? (item[showId]) ? `${item[showId]} ` : 'Администратор' : "" }} {{ item[keyOfName] }}
 
-    </y-list-item>
-  </ul>
-  <footer class="container-fluid footer-container" v-if="pagination === true">
-    <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i class="fa-solid fa-chevron-left"></i> Назад</YButton>
-    <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i class="fa-solid fa-chevron-right"></i></YButton>
-  </footer>
+        </y-list-item>
+    </ul>
+    <footer class="container-fluid footer-container" v-if="pagination === true">
+        <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i
+                class="fa-solid fa-chevron-left"></i> Назад
+        </YButton>
+        <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i
+                class="fa-solid fa-chevron-right"></i></YButton>
+    </footer>
 </template>
 
 <script>
@@ -29,7 +32,7 @@ import YCoolButton from "@/components/UI/YCoolButton.vue";
 export default {
   name: "YList",
   components: {YCoolButton, YButton},
-  data(){
+  data() {
     return {
       pageNumber: 0,
       maxPage: 100,
@@ -43,11 +46,11 @@ export default {
       type: Boolean,
       default: false
     },
-    paginationBlock:{
+    paginationBlock: {
       type: Boolean,
       default: false
     },
-    pageSize:{
+    pageSize: {
       type: Number,
       require: false,
       default: 5
@@ -55,9 +58,9 @@ export default {
     items: {
       type: Array,
       default: [
-        { name: 'test1' },
-        { name: 'test2' },
-        { name: 'test3' },
+        {name: 'test1'},
+        {name: 'test2'},
+        {name: 'test3'},
       ]
     },
     keyOfName: {
@@ -91,11 +94,11 @@ export default {
         return !(el.type_id === 6 || el.type_id === 7)
       })
       console.log(this.items, tests, games)
-      if (pagination === false){
-        return filteredArray.concat(games,tests)
+      if (pagination === false) {
+        return filteredArray.concat(games, tests)
       } else {
         const start = this.pageNumber * this.pageSize, end = start + this.pageSize
-        return filteredArray.concat(games,tests).slice(start,end)
+        return filteredArray.concat(games, tests).slice(start, end)
       }
     },
     showNext() {
@@ -107,18 +110,18 @@ export default {
         return !(el.type_id === 6 || el.type_id === 7)
       })
       const start = (this.pageNumber + 1) * this.pageSize, end = start + this.pageSize
-      return (filteredArray.concat(games,tests).slice(start,end).length > 0)
+      return (filteredArray.concat(games, tests).slice(start, end).length > 0)
     },
     showPrev() {
       return this.pageNumber > 0;
     }
   },
-  methods:{
-    nextPage(){
+  methods: {
+    nextPage() {
       if (this.showNext)
         this.pageNumber++;
     },
-    previousPage(){
+    previousPage() {
       if (this.showPrev)
         this.pageNumber--;
     }
@@ -128,29 +131,33 @@ export default {
 
 <style scoped>
 .next {
-  color: white;
+    color: white;
 }
+
 .prev {
-  color: white;
+    color: white;
 }
+
 .list {
-  display: grid;
-  grid-gap: 1rem;
-  list-style: none;
-  width: 100%;
+    display: grid;
+    grid-gap: 1rem;
+    list-style: none;
+    width: 100%;
 }
+
 .hide-pagination {
-  color: white;
-  opacity: 0.2;
+    color: white;
+    opacity: 0.2;
 }
+
 .footer-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-height: 6vh;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.13);
-  padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-height: 6vh;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    padding-top: 1rem;
 }
 </style>
 
