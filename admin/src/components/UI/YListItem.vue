@@ -3,9 +3,6 @@
     class="list__item"
     :class="{ list__item_not_settings: !editable, list__item_not_select: !selectable }"
   >
-      <div class="left-area">
-
-      </div>
     <div
       v-if="selectable"
       @click="$emit('select')"
@@ -55,6 +52,7 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: row;
+    width: 100%;
     justify-content: space-between;
 }
 .delete_btn {
@@ -109,18 +107,17 @@ export default {
 }
 .list__item{
   padding-left: 1rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
+  display: flex;
   justify-content: start;
   max-height: 3rem;
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   background: var(--acrylic-blur-light)!important;
   box-shadow: 0 4px 52px hsla(274, 100%, 50%, 0.11);
   border-radius: 0.5rem;
   border-color: var(--border-dark);
   border-width: 1px;
   border-style: solid;
+  align-items: center;
 }
 .list__item_not_settings {
   padding: 1rem;
