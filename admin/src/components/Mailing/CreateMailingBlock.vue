@@ -112,6 +112,7 @@
 <script>
 import Block from "@/api/admin/Block";
 import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
+import {FilesModel} from "@/api/admin/FilesModel";
 
 export default {
   name: "CreateMailingBlock",
@@ -152,6 +153,10 @@ export default {
     },
     getMedia(event, element) {
       element.attachments.file_id = event.target.files[0];
+      const files = new FilesModel();
+      files.import(element.attachments.file_id).then(r => {
+        console.log(r);
+      });
     },
     removeElement(index) {
       this.elements.splice(index, 1);
