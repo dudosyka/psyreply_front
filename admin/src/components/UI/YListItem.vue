@@ -3,13 +3,20 @@
     class="list__item"
     :class="{ list__item_not_settings: !editable, list__item_not_select: !selectable }"
   >
+      <div class="left-area">
+
+      </div>
     <div
       v-if="selectable"
       @click="$emit('select')"
       class="elipce"
       :class="{ elipce_active: active }"
     ></div>
-    <div class="name"><slot></slot></div>
+<!--      Контейнер, чтобы кнопка удаления и заголовок по краям разместить-->
+      <div class="container-fluid left-area">
+          <div class="name"><slot></slot></div>
+          <button class="delete_btn"><i class="cross fa-solid fa-xmark"></i></button>
+      </div>
     <div
       v-if="editable"
       @click="$emit('edit')"
@@ -44,6 +51,35 @@ export default {
 </script>
 
 <style scoped>
+.left-area {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.delete_btn {
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.delete_btn:hover {
+    background: #FF0057FF;
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    animation: ease-in linear 0.5s;
+    transition: 0.3s;
+}
+.cross {
+    font-size: 1rem;
+    line-height: normal;
+    padding: 0;
+    margin:0;
+}
+
 .settings-icon {
   width: 1rem;
 }
@@ -90,7 +126,6 @@ export default {
   padding: 1rem;
 }
 .list__item_not_select {
-  grid-template-columns: 1fr auto;
 }
 .options{
   padding: 1rem;
