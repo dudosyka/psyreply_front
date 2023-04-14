@@ -8,4 +8,8 @@ export class CompanyDistribution extends ApiResolver {
   async createBot({name, token}) {
     return await this.request('bot', 'POST', {name, token})
   }
+  
+  async updateBot({name, token, id}) {
+    return await this.request(`bot/${id}`, 'PATCH', {name, token})
+  }
 }

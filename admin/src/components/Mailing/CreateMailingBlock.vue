@@ -33,7 +33,7 @@
         </div>
 
         <template v-for="(element, index) in elements">
-            <div v-if="element.type === DIstributionMessageType.TEXT" class="element text">
+            <div v-if="element.type_id === DIstributionMessageType.TEXT" class="element text">
                 <h4 class="element-heading">Текст</h4>
                 <textarea v-model="element.text" class="text-area"></textarea>
                 <div class="row button-row">
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div v-if="element.type === DIstributionMessageType.MEDIA" class="element text-img">
+            <div v-if="element.type_id === DIstributionMessageType.MEDIA" class="element text-img">
                 <h4 class="element-heading">Медиа</h4>
                 <div class="row media-row">
                     <input @change="getMedia($event, element)" type="file" id="img" style="display:none;">
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div v-if="element.type === DIstributionMessageType.LINK" class="element button-element">
+            <div v-if="element.type_id === DIstributionMessageType.LINK" class="element button-element">
                 <h4 class="element-heading">Ссылка</h4>
                 <h5 class="heading-small">Текст кнопки</h5>
                 <y-input v-model="element.text" class="button-text" placeholder="Текст кнопки"/>
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div v-if="element.type === DIstributionMessageType.TEST" class="element test-element">
+            <div v-if="element.type_id === DIstributionMessageType.TEST" class="element test-element">
                 <h4 class="element-heading test">Тест</h4>
                 <h5 class="heading-small">Привязать блок тестов</h5>
                 <div class="container tests">
@@ -86,7 +86,7 @@
                             :editable="false"
                             :selectable="true"
                             @select="selectTestBlock($event, element)"
-                            :items="testBlocks"
+                            :items="element.tests"
                             :pagination="true"
                             :pagination-block="true"
                             :page-size="4"
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div v-if="element.type === 5" class="element nav-element">
+            <div v-if="element.type_id === 5" class="element nav-element">
                 <h4 class="element-heading test">Навигация</h4>
                 <div class="row media-row">
                     <h5 class="heading-small">Выберите, на какой блок рассылки переходить</h5>
@@ -137,7 +137,6 @@
 <script>
 import Block from "@/api/admin/Block";
 import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
-import {FilesModel} from "@/api/admin/FilesModel";
 
 export default {
   name: "CreateMailingBlock",
@@ -158,37 +157,45 @@ export default {
   },
   async created() {
     const block = new Block()
-    block.getAll({filters: {company_id: null}})
-      .then(res => {
+    await block.getAll({filters: {company_id: null}})
+      .then(async res => {
         if (res.ok) {
-          res.json().then(data => data.body).then(r => this.testBlocks = r.map(el => ({...el, active: false})))
+          await res.json().then(data => data.body).then(r => this.testBlocks = r.map(el => ({...el, active: false})))
         }
+        const {index, name, elements} = await this.$store.getters.selectedDistributionBlock;
+        this.blockIndex = index;
+        this.name = name;
+        this.elements = elements.map(el => {
+          if (el.type_id == DIstributionMessageType.TEST) {
+            const tests = this.getTestBlocks(el.attachments.block_id)
+            return {
+              ...el,
+              tests
+            }
+          }
+          return {
+            ...el,
+            
+          }
+        });
       })
     
-    const {index, name, elements} = await this.$store.getters.selectedDistributionBlock;
-    this.blockIndex = index;
-    this.name = name;
-    this.elements = elements;
   },
   methods: {
     selectTestBlock(testBlock, element) {
-      this.testBlocks.map(el => el.active = false)
+      element.tests.map(el => el.active = false)
       testBlock.active = true;
       element.attachments.block_id = testBlock.id;
     },
     getMedia(event, element) {
       element.attachments.file_id = event.target.files[0];
-      const files = new FilesModel();
-      files.import(element.attachments.file_id).then(r => {
-        console.log(r);
-      });
     },
     removeElement(index) {
       this.elements.splice(index, 1);
     },
     createElement(type) {
       let elementTemplate = {
-        type,
+        type_id: type,
         text: "",
         attachments: {}
       }
@@ -200,6 +207,7 @@ export default {
           elementTemplate.attachments.link = "";
           break;
         case DIstributionMessageType.TEST:
+          elementTemplate.tests = this.getTestBlocks(0);
           elementTemplate.attachments.block_id = null;
           break;
         default:
@@ -207,6 +215,10 @@ export default {
       }
       
       this.elements.push(elementTemplate)
+    },
+    getTestBlocks(active) {
+      console.log('BLOCKS', this.testBlocks);
+      return [...this.testBlocks].map(el => ({...el, active: (el.id == active)}))
     },
     saveBlock() {
       this.$store.dispatch('updateDistributionBlock', {

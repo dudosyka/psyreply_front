@@ -3,6 +3,8 @@ import mainConf, {ProjectState} from "../../../main.conf";
 import {BotModel} from "@/api/admin/distribution/Bot";
 import {Distribution} from "@/api/admin/distribution/Distribution";
 import Company from "@/api/admin/Company";
+import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
+import {FilesModel} from "@/api/admin/FilesModel";
 
 export default createStore({
   state: {
@@ -233,7 +235,6 @@ export default createStore({
         blocks: [],
         selectedBlock: null
       };
-      console.log(state.distribution.selected)
     },
     setSelectedDistribution(state, distribution) {
       state.distribution.selected = distribution;
@@ -264,10 +265,8 @@ export default createStore({
       const company = new Company();
       const list = (await distribution.getAll());
       const isBotSet = await botModel.isSet();
-      // const users = await company.getAllUsers();
       commit('setDistributionList', list);
       commit('setIsBotSet', isBotSet);
-      // commit('setCompanyUsers', users);
     },
     
     async createNewDistribution({commit}) {
@@ -282,12 +281,66 @@ export default createStore({
     async selectDistribution({commit}, id) {
       const distribution = new Distribution();
       const selected = await distribution.getOne(id);
+      console.log(selected);
+      const userIds = selected.contacts.map(el => el.id);
       const company = new Company();
       selected.recipients = await company.getAllUsers().then(r => {
-        return r.map(el => ({...el, active: false}));
+        return r.map(el => ({...el, active: userIds.includes(el.id)}));
       });
       //Тут надо написать ещё обработку чтобы челики выбранные стали active: true
-      commit('setSelectedDistribution', selected);
+      commit('setSelectedDistribution', {
+        ...selected,
+        send_time: (() => {
+          const hours = parseInt(selected.send_time.split(':')[0])
+          const minutes = parseInt(selected.send_time.split(":")[1])
+          return {
+            hours: hours >= 10 ? hours : `0${hours}`, minutes: minutes >= 10 ? minutes : `0${minutes}`
+          }
+        })(),
+        blocks: selected.blocks.map(el => ({
+          ...el, elements: el.messages.map(el => {
+            return {
+              ...el,
+              attachments: JSON.parse(el.attachments)
+            }
+          })
+        }))
+      });
+    },
+    async saveDistribution({state}, data) {
+      const model = new Distribution();
+      console.log(data);
+      const dto = {
+        ...data,
+        blocks: await Promise.all(state.distribution.selected.blocks.map(async (el, index) => {
+          const {elements, name} = el;
+          return {
+            name,
+            messages: await Promise.all(elements.map(async el => {
+              if (el.type_id == DIstributionMessageType.MEDIA && typeof el.attachments.file_id === 'object') {
+                const fileModel = new FilesModel();
+                el.attachments.file_id = await fileModel.import(el.attachments.file_id).then(r => r.id).catch(err => {
+                  console.log('err3', err);
+                });
+              }
+              return {
+                ...el,
+              }
+            })),
+            relative_id: index + 1
+          }
+        })).catch(err => {
+          console.log('err2', err);
+        })
+      };
+      //If we have ID, try to update
+      if (state.distribution.selected.id) {
+        await model.update(state.distribution.selected.id, dto);
+      }
+      //If no id in selected object than we do creation
+      else {
+        await model.create(dto);
+      }
     },
     
     createNewDistributionBlock({commit, state}) {

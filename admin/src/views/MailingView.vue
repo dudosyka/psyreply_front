@@ -7,17 +7,18 @@
               Внутри этого template должна быть верстка касающаяся дефолт вида окна рассылок
               Тут должен быть список рассылок см. листочек с обсуждения
             -->
-            <template v-if="window === 'main'">
+            <template v-if="window === 'main' || window === 'bot-edit'">
                 <div class="container main-container">
                     <template
-                            v-if="isBotSet"
+                            v-if="isBotSet !== false && window != 'bot-edit'"
                     >
                         <header class="row header">
                             <div class="col">
                                 <h2 class="heading header__heading">Рассылки</h2>
                             </div>
                             <div class="col header-buttons">
-                                <y-button class="new-button"><i class="fa-brands fa-telegram"></i> Telegram Bot
+                                <y-button @click="window = 'bot-edit'" class="new-button"><i
+                                        class="fa-brands fa-telegram"></i> Telegram Bot
                                 </y-button>
                                 <y-button class="new-button" :plus="true" @click="createMailing">Новая рассылка
                                 </y-button>
@@ -35,23 +36,19 @@
                                 @delete="deleteDistribution"
                         />
                     </template>
-                    <div v-else class="tg-add">
+                    <div v-if="window == 'bot-edit'" class="tg-add">
                         <header class="row header">
                             <div class="col">
                                 <h2 class="heading header__heading">Привязка Telegram</h2>
                             </div>
                         </header>
                         <h4 class="heading-small">Название</h4>
-                        <y-input class="name" placeholder="Введите название..."></y-input>
+                        <y-input v-model="botName" class="name" placeholder="Введите название..."></y-input>
                         <h4 class="heading-small">Токен</h4>
-                        <y-input class="token" placeholder="Введите токен..."></y-input>
-                        <p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque autem
-                            consequuntur debitis dicta
-                            dolores harum ipsa magnam magni nemo perspiciatis, placeat quas quo, quod reiciendis
-                            repudiandae saepe?
-                            Nobis, repellat.</p>
+                        <y-input v-model="botToken" class="token" placeholder="Введите токен..."></y-input>
+                        <p class="info">Тут должна быть какая то инструкция, но я ее не придумал.</p>
                         <div class="btn-row">
-                            <y-button class="element-btn element-btn-active">Сохранить</y-button>
+                            <y-button class="element-btn element-btn-active" @click="saveBot">Сохранить</y-button>
                         </div>
                     </div>
                 </div>
@@ -101,6 +98,7 @@ import EditMailing from "@/components/Mailing/EditMailing.vue";
 import CreateMailingBot from "@/components/Mailing/CreateMailingBot.vue";
 import YButton from "@/components/UI/YButton.vue";
 import {Distribution} from "@/api/admin/distribution/Distribution";
+import {CompanyDistribution} from "@/api/admin/distribution/CompanyDistribution";
 
 export default {
   name: "MailingView",
@@ -115,10 +113,16 @@ export default {
     return {
       window: 'main',
       showBotWindow: null,
+      botName: "",
+      botToken: "",
     }
   },
   async created() {
     await this.$store.dispatch('loadDistributions');
+    if (this.isBotSet !== false) {
+      this.botName = this.isBotSet.name;
+      this.botToken = this.isBotSet.token;
+    }
     // Вот эта тема должна следить за изменениями url и на основе этого типо изменять контент
     // Я эту штуку отключаю, можешь просто руками задать соответствующий window который тебе нужен в данный момент
     // Вот список значений window
@@ -157,6 +161,24 @@ export default {
           });
         }
       });
+    },
+    async saveBot() {
+      const companyDistribution = new CompanyDistribution();
+      if (this.isBotSet !== false) {
+        await companyDistribution.updateBot({
+          name: this.botName,
+          token: this.botToken,
+          id: this.isBotSet.id
+        }).then(() => {
+          this.$store.commit('openPopup', 'Данные сохранены!');
+          this.window = 'main';
+        }).catch(err => {
+          console.log(err);
+          this.$store.commit('openErrorPopup', 'Ошибка в сохранении!');
+        })
+      } else {
+        await companyDistribution.createBot({name: this.botName, token: this.botToken})
+      }
     }
   },
   computed: {

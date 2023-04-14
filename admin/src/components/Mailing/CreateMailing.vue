@@ -6,14 +6,14 @@
               Подробнее см. пояснение внутри MailingView в методе close
             -->
             <y-left-arrow-button @click="$emit('close')"/>
-            <h1 class="heading">Новая рассылка</h1>
+            <h1 class="heading">{{ header }}</h1>
 
             <div class="col time">
                 <h5>Время рассылки: </h5>
-                <y-input @blur="checkhours" max="24" min="0" type="number" v-model="time.hours" @update="fixHours"
+                <y-input @blur="checkHours" max="24" min="0" type="number" v-model="time.hours"
                          placeholder="чч" class="time-picker__input"/>
                 :
-                <y-input @blur="checkMinutes" max="59" min="0" type="number" v-model="time.minutes" @update="fixMinutes"
+                <y-input @blur="checkMinutes" max="59" min="0" type="number" v-model="time.minutes"
                          placeholder="мм" class="time-picker__input"/>
                 :
             </div>
@@ -105,7 +105,7 @@
         ></y-list>
 
         <div class="row button-row">
-            <y-cool-button @click="testing">Сохранить рассылку</y-cool-button>
+            <y-cool-button @click="saveMailing">Сохранить рассылку</y-cool-button>
         </div>
     </y-modal>
     <CreateMailingBlock
@@ -148,26 +148,47 @@ export default {
     //создание списка групп
     const company = new Company()
     company.getGroups().then(r => {
-      this.groups = r.map(el => ({...el, active: false}));
+      this.groups = r.map(el => {
+        const allInGroup = recipients.filter(user => user.group_id == el.id)
+        const selectedInGroup = allInGroup.filter(el => el.active);
+        return {
+          ...el,
+          active: allInGroup.length == selectedInGroup.length
+        }
+      });
     });
     const {recipients, name, one_time, day_period, send_time} = this.$store.getters.selectedDistribution;
     console.log('DATA', recipients, name, one_time, day_period, send_time);
     this.allPeople = recipients;
     this.name = name;
     this.day_period = day_period;
+    if (this.showCustomPeriod) {
+      this.day_period_input = day_period;
+    }
     this.one_time = one_time;
+    console.log(send_time);
     this.time = {...send_time};
   },
   methods: {
-    testing() {
-      console.log(this.time.hours, this.time.minutes, this.name, this.day_period)
-      console.log(this.groups)
-      console.log(this.peopleInGroup)
-      console.log(this.allPeople)
-      console.log('dsdfsdf', this.allPeople.filter(el => el.active).map(el => el.id))
-      console.log(String(this.time.hours + ':' + this.time.minutes + ':00'))
+    saveMailing() {
+      const data = {
+        name: this.name,
+        day_period: this.day_period,
+        onetime: this.one_time ? 1 : 0,
+        send_time: `${this.time.hours}:${this.time.minutes}:00`,
+        recipients: this.allPeople.filter(el => el.active).map(el => el.id),
+      };
+      
+      this.$store.dispatch('saveDistribution', data).then(() => {
+        this.$emit('close');
+        this.$store.commit('openPopup', 'Данные сохранены!')
+        this.$store.dispatch('loadDistributions');
+      }).catch(err => {
+        console.log(err);
+        this.$store.commit('openErrorPopup', 'Ошибка! Проверьте правильность заполнения данных!')
+      });
     },
-    checkhours() {
+    checkHours() {
       if ((this.time.hours > 24)) {
         this.time.hours = null
       }
@@ -214,6 +235,10 @@ export default {
       const blocks = this.$store.getters.distributionBlocks;
       console.log(blocks);
       return blocks;
+    },
+    header() {
+      const distribution = this.$store.getters.selectedDistribution;
+      return (distribution.id) ? 'Редактирование рассылки' : 'Создание рассылки'
     }
   }
 }
