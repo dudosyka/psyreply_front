@@ -3,12 +3,14 @@
     class="list__item"
     :class="{ list__item_not_settings: !editable, list__item_not_select: !selectable }"
   >
-    <div
-      v-if="selectable"
-      @click="$emit('select')"
-      class="elipce"
-      :class="{ elipce_active: active }"
-    ></div>
+  <div class="col selector-col">
+      <div
+              v-if="selectable"
+              @click="$emit('select')"
+              class="elipce"
+              :class="{ elipce_active: active }"
+      ></div>
+  </div>
 <!--      Контейнер, чтобы кнопка удаления и заголовок по краям разместить-->
       <div class="container-fluid left-area">
           <div class="name"><slot></slot></div>
