@@ -147,6 +147,7 @@ export default {
       console.log(this.peopleInGroup)
       console.log(this.allPeople)
       console.log('dsdfsdf',this.allPeople.filter(el => el.active).map(el => el.id))
+      console.log( String(this.time.hours + ':' + this.time.minutes + ':00'))
     },
     showedPeople(group){
       this.peopleInGroup = this.allPeople
