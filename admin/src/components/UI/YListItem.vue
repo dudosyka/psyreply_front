@@ -12,10 +12,10 @@
       ></div>
   </div>
 <!--      Контейнер, чтобы кнопка удаления и заголовок по краям разместить-->
-      <div class="container-fluid left-area">
-          <div class="name"><slot></slot></div>
-          <button class="delete_btn"><i class="cross fa-solid fa-xmark"></i></button>
-      </div>
+    <div class="container-fluid left-area">
+        <div class="name"><slot></slot></div>
+        <button v-if="deletable" @click="$emit('delete')" class="delete_btn"><i class="cross fa-solid fa-xmark"></i></button>
+    </div>
     <div
       v-if="editable"
       @click="$emit('edit')"
@@ -41,6 +41,10 @@ export default {
     editable: {
       type: Boolean,
       default: false
+    },
+    deletable: {
+      type: Boolean,
+      default: false,
     }
   },
   methods:{

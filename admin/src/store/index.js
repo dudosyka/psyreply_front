@@ -222,7 +222,6 @@ export default createStore({
     setCompanyUsers(state, users) {
       state.company.users = users;
     },
-    
     newDistribution(state, recipients) {
       state.distribution.selected = {
         name: "",
@@ -268,10 +267,10 @@ export default createStore({
       const company = new Company();
       const list = (await distribution.getAll());
       const isBotSet = await botModel.isSet();
-      const users = await company.getAllUsers();
+      // const users = await company.getAllUsers();
       commit('setDistributionList', list);
       commit('setIsBotSet', isBotSet);
-      commit('setCompanyUsers', users);
+      // commit('setCompanyUsers', users);
     },
     
     async createNewDistribution({ commit }) {

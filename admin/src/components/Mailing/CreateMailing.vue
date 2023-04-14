@@ -84,6 +84,7 @@
         @edit="selectBlock"
         :pagination="true"
         :page-size="5"
+        :deletable="true"
       ></y-list>
       
     <div class="row button-row">

@@ -25,10 +25,14 @@ export default class ApiResolver {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         }).then(res => {
-            if (res.data.status === 200) {
-                resolve(res.data.body);
+            if (res.status < 400) {
+                if (res.status < 204)
+                  resolve(res.data.body);
+                else
+                  resolve(null);
+            } else {
+              reject(res.body)
             }
-            reject(res.body)
         }).catch(err => {
             reject(err);
         })));

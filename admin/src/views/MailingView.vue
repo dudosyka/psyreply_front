@@ -29,6 +29,8 @@
                       :pagination="true"
                       :pagination-block="true"
                       :page-size="4"
+                      :deletable="true"
+                      @delete="deleteDistribution"
               />
           </template>
           <div v-else class="tg-add">
@@ -142,6 +144,17 @@ export default {
     async createMailing() {
       await this.$store.dispatch('createNewDistribution');
       this.window = 'createMailing'
+    },
+    async deleteDistribution(distribution) {
+      const model = new Distribution();
+      this.$store.commit('openWarnPopup', {
+        message: "Вы уверены, что хотите удалить рассылку?",
+        acceptCallback: () => {
+          model.remove(distribution.id).then(() => {
+            this.$store.dispatch('loadDistributions');
+          });
+        }
+      });
     }
   },
   computed: {
