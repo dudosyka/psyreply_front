@@ -87,7 +87,7 @@ export default {
 
 .notes {
   height: 100%;
-  max-height: 59vh;
+  max-height: 51vh;
   padding: 0;
 }
 .notes-chat {
