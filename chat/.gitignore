@@ -2,6 +2,7 @@
 node_modules
 /dist
 /src/api/api.conf.ts
+/deploy.sh
 
 # local env files
 .env.local
