@@ -26,9 +26,10 @@
         <y-input
                 v-model="name"
                 placeholder="Название рассылки"
-                class="error-input"
+                @change="validation.name = false"
+                :class="{'error-input': validation.name}"
         />
-        <h4 class="heading-small error-input">Периодичность</h4>
+        <h4 class="heading-small" :class="{'error-input': validation.period}">Периодичность</h4>
         <y-modal class="time-picker">
             <div class="col">
                 <y-cool-button v-if="!one_time" @click="selectIsOneTime(true)" class="element-btn"><i
@@ -46,7 +47,7 @@
                     <y-cool-button class="element-btn" @click="setPeriod(7)"
                                    :class="{'active-element-btn': day_period == 7}">Каждую неделю
                     </y-cool-button>
-                    <y-cool-button class="error-input element-btn" @click="setPeriod(30)"
+                    <y-cool-button class="element-btn" @click="setPeriod(30)"
                                    :class="{'active-element-btn': day_period == 30}">Каждые 30 дней
                     </y-cool-button>
                     <y-cool-button class="element-btn" @click="setPeriod(0)"
@@ -61,7 +62,7 @@
             </template>
         </y-modal>
 
-        <h4 class="heading-small">Адресаты</h4>
+        <h4 class="heading-small" :class="{'error-input': validation.recipients}">Адресаты</h4>
         <div class="container-fluid contacts">
             <div class="col groups">
                 <h5 class="subheading">Группы</h5>
@@ -141,8 +142,13 @@ export default {
       peopleInGroup: [],
       allPeople: [],
       time: {
-        hours: null,
-        minutes: null
+        hours: 12,
+        minutes: 0
+      },
+      validation: {
+        name: false,
+        recipients: false,
+        period: false,
       },
       window: 'main',
     }
@@ -174,13 +180,37 @@ export default {
   },
   methods: {
     saveMailing() {
+      if (this.showCustomPeriod && !this.day_period_input) {
+        this.validation.period = true;
+      }
+      
+      if (!this.name) {
+        this.validation.name = true;
+      }
+      
+      const recipients = this.allPeople.filter(el => el.active).map(el => el.id);
+      
+      if (recipients.length <= 0) {
+        this.validation.recipients = true;
+      }
+      
+      const errsLength = (Object.keys(this.validation).filter(el => {
+        return this.validation[el]
+      })).length;
+      
+      if (errsLength) {
+        this.$store.commit('openErrorPopup', 'Ошибка! Проверьте правильность заполнения полей!');
+        return;
+      }
+      
       const data = {
         name: this.name,
         day_period: this.day_period,
         onetime: this.one_time ? 1 : 0,
         send_time: `${this.time.hours}:${this.time.minutes}:00`,
-        recipients: this.allPeople.filter(el => el.active).map(el => el.id),
+        recipients,
       };
+      
       
       this.$store.dispatch('saveDistribution', data).then(() => {
         this.$emit('close');
@@ -212,6 +242,7 @@ export default {
       this.allPeople.filter(el => (el.group_id == group.id)).forEach(el => this.selectPerson(el))
     },
     selectPerson(user) {
+      this.validation.recipients = false;
       user.active = !user.active;
     },
     async openCreateBlock() {

@@ -13,6 +13,8 @@
         <y-input
                 v-model="name"
                 placeholder="Название блока"
+                :class="{'error-input': validation.name}"
+                @change="validation.name = false"
         />
 
         <div class="container elements">
@@ -35,7 +37,7 @@
         <template v-for="(element, index) in elements">
             <div v-if="element.type_id === DIstributionMessageType.TEXT" class="element text">
                 <h4 class="element-heading">Текст</h4>
-                <textarea v-model="element.text" class="text-area"></textarea>
+                <textarea @change="dropValidation(element)" v-model="element.text" class="text-area" :class="{'error-input': element.validation.text}"></textarea>
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)"
                                    class="element-btn element-delete element-delete-active"><i
@@ -47,25 +49,21 @@
             <div v-if="element.type_id === DIstributionMessageType.MEDIA" class="element text-img">
                 <h4 class="element-heading">Медиа</h4>
                 <div class="row media-row">
-                    <input @change="getMedia($event, element)" type="file" id="img" style="display:none;">
-                    <label class="upload-text" for="img"><i class="fa-solid fa-file"></i> Выберите файл</label>
-                    <y-cool-button class="element-btn element-btn-active" @click="createElement"><i
-                            class="fa-solid fa-pen"></i> Подпись
+                    <template v-if="!getAttachedFile(element)">
+                        <input @change="getMedia($event, element)" type="file" id="img" style="display:none;">
+                        <label :class="{'error-input': element.validation.file_id}" class="upload-text" for="img"><i class="fa-solid fa-file"></i> Выберите файл</label>
+                    </template>
+                    <div v-else class="attached-file">
+                        <span class="file-name">{{ getAttachedFile(element) }}</span><i @click="clearFile(element)" class="delete-file fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <y-cool-button class="element-btn element-btn-active" @click="toggleMediaLabel(element)">
+                        <i class="fa-solid fa-pen"></i> Подпись
                     </y-cool-button>
                 </div>
-                <div class="row attached-files">
-                    <div class="attached-file">
-                        <span class="file-name">фыволыфлдводыфлдыфовлдыфводлыфовлд</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
-                    </div>
-                    <div class="attached-file">
-                        <span class="file-name">фыволыфлдводыфлдыфовлдыфводлыфовлд</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
-                    </div>
-                    <div class="attached-file">
-                        <span class="file-name">Я календарь</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
-                    </div>
-                </div>
-                <h5 class="heading-small">Подпись</h5>
-                <textarea class="text-area" v-model="element.text"></textarea>
+                <template v-if="element.showLabel">
+                    <h5 class="heading-small">Подпись</h5>
+                    <textarea @change="dropValidation(element)" class="text-area" :class="{'error-input': element.validation.text}" v-model="element.text"></textarea>
+                </template>
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)"
                                    class="element-btn element-delete element-delete-active"><i
@@ -77,9 +75,9 @@
             <div v-if="element.type_id === DIstributionMessageType.LINK" class="element button-element">
                 <h4 class="element-heading">Ссылка</h4>
                 <h5 class="heading-small">Текст кнопки</h5>
-                <y-input v-model="element.text" class="button-text" placeholder="Текст кнопки"/>
+                <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.text}" v-model="element.text" class="button-text" placeholder="Текст кнопки"/>
                 <h5 class="heading-small">URL</h5>
-                <y-input v-model="element.attachments.link" class="button-text" placeholder="Адрес ссылки"/>
+                <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.link}" v-model="element.attachments.link" class="button-text" placeholder="Адрес ссылки"/>
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)"
                                    class="element-btn element-delete element-delete-active"><i
@@ -90,7 +88,7 @@
 
             <div v-if="element.type_id === DIstributionMessageType.TEST" class="element test-element">
                 <h4 class="element-heading test">Тест</h4>
-                <h5 class="heading-small">Привязать блок тестов</h5>
+                <h5 class="heading-small" :class="{'error-input': element.validation.block_id}">Привязать блок тестов</h5>
                 <div class="container tests">
                     <y-list
                             key-of-name="name"
@@ -104,7 +102,7 @@
                     />
                 </div>
                 <h5 class="heading-small">Подпись</h5>
-                <textarea class="text-area" v-model="element.text"></textarea>
+                <textarea @change="dropValidation(element)" :class="{'error-input': element.validation.text}" class="text-area" v-model="element.text"></textarea>
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)" class="element-btn element-delete"><i
                             class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
@@ -150,6 +148,7 @@
 <script>
 import Block from "@/api/admin/Block";
 import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
+import {FilesModel} from "@/api/admin/FilesModel";
 
 export default {
   name: "CreateMailingBlock",
@@ -166,6 +165,9 @@ export default {
       testBlocks: [],
       //1 - text, 2 - media, 3 - test, 4 - link
       selectedType: 0,
+      validation: {
+        name: false
+      }
     }
   },
   async created() {
@@ -188,7 +190,12 @@ export default {
           }
           return {
             ...el,
-            
+            validation: {
+              text: false,
+              file_id: false,
+              block_id: false,
+              link: false,
+            }
           }
         });
       })
@@ -199,9 +206,36 @@ export default {
       element.tests.map(el => el.active = false)
       testBlock.active = true;
       element.attachments.block_id = testBlock.id;
+      element.validation.block_id = false;
     },
     getMedia(event, element) {
       element.attachments.file_id = event.target.files[0];
+      element.validation.file_id = false;
+    },
+    getAttachedFile(element) {
+      if (!element.attachments.file_id)
+        return false;
+      if (element.attachments.file_id.name)
+        return element.attachments.file_id.name;
+      else {
+        const fileModel = new FilesModel();
+        fileModel.getModel(element.attachments.file_id).then(r => {
+          element.attachments.file_id = {
+            id: r.id,
+            name: r.path,
+          };
+        });
+        return 'file';
+      }
+    },
+    clearFile(element) {
+      element.attachments.file_id = null;
+      console.log(element)
+    },
+    toggleMediaLabel(element) {
+      element.showLabel = !element.showLabel;
+      if (!element.showLabel)
+        element.text = ""
     },
     removeElement(index) {
       this.elements.splice(index, 1);
@@ -210,18 +244,26 @@ export default {
       let elementTemplate = {
         type_id: type,
         text: "",
-        attachments: {}
+        attachments: {},
+        validation: {
+          text: false,
+          elements: false,
+        }
       }
       switch (type) {
         case DIstributionMessageType.MEDIA:
           elementTemplate.attachments.file_id = null;
+          elementTemplate.validation.file_id = false;
+          elementTemplate.showLabel = false;
           break;
         case DIstributionMessageType.LINK:
           elementTemplate.attachments.link = "";
+          elementTemplate.validation.link = false;
           break;
         case DIstributionMessageType.TEST:
           elementTemplate.tests = this.getTestBlocks(0);
           elementTemplate.attachments.block_id = null;
+          elementTemplate.validation.block_id = false;
           break;
         default:
           break;
@@ -233,7 +275,59 @@ export default {
       console.log('BLOCKS', this.testBlocks);
       return [...this.testBlocks].map(el => ({...el, active: (el.id == active)}))
     },
+    dropValidation(element) {
+      element.validation.text = false;
+    },
     saveBlock() {
+      if (!this.name) {
+        this.validation.name = true;
+      }
+      
+      this.elements.map(el => {
+        if (!el.text) {
+          el.validation.text = true;
+        }
+        
+        switch (el.type_id) {
+          case DIstributionMessageType.MEDIA:
+            if (!el.file_id) {
+              el.validation.file_id = true;
+              this.validation.elements = true;
+            }
+            if (!el.showLabel) {
+              el.validation.text = false;
+            }
+            break;
+          case DIstributionMessageType.LINK:
+            if (!el.link) {
+              el.validation.link = true;
+              this.validation.elements = true;
+            }
+            break;
+          case DIstributionMessageType.TEST:
+            if (!el.block_id) {
+              el.validation.block_id = true;
+              this.validation.elements = true;
+            }
+            break;
+        }
+        
+        //We check it here because we change el.validation.text in switch-case block
+        if (el.validation.text)
+          this.validation.elements = true;
+      });
+      
+      console.log(this.validation);
+      
+      const errsLength = (Object.keys(this.validation).filter(el => {
+        return this.validation[el]
+      })).length;
+      
+      if (errsLength) {
+        this.$store.commit('openErrorPopup', 'Ошибка! Проверьте правильность заполнения полей!');
+        return;
+      }
+      
       this.$store.dispatch('updateDistributionBlock', {
         index: this.blockIndex, block: {name: this.name, elements: this.elements}
       });
@@ -485,5 +579,12 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::-webkit-scrollbar-thumb:hover {
     background-color: #494849 !important;
+}
+.error-input {
+    border-color: #500000;
+    color: #ff7d7d;
+}
+.error-input::placeholder {
+    color: #ff7d7d;
 }
 </style>

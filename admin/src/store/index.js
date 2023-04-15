@@ -228,8 +228,8 @@ export default createStore({
         onetime: true,
         day_period: 1,
         send_time: {
-          hours: null,
-          minutes: null
+          hours: 12,
+          minutes: 30
         },
         recipients,
         blocks: [],
@@ -319,9 +319,12 @@ export default createStore({
             messages: await Promise.all(elements.map(async el => {
               if (el.type_id == DIstributionMessageType.MEDIA && typeof el.attachments.file_id === 'object') {
                 const fileModel = new FilesModel();
-                el.attachments.file_id = await fileModel.import(el.attachments.file_id).then(r => r.id).catch(err => {
-                  console.log('err3', err);
-                });
+                if (el.attachments.file_id.id)
+                  el.attachments.file_id = el.attachments.file_id.id;
+                else
+                  el.attachments.file_id = await fileModel.import(el.attachments.file_id).then(r => r.id).catch(err => {
+                    console.log('err3', err);
+                  });
               }
               return {
                 ...el,

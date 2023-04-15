@@ -7,6 +7,10 @@ export class FilesModel extends ApiResolver {
     super('files');
   }
   
+  async getModel(file_id) {
+    return await this.request(`model/${file_id}`, 'GET', null);
+  }
+  
   import(file) {
     const fd = new FormData();
     
