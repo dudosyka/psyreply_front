@@ -119,9 +119,13 @@ export default {
   },
   async created() {
     await this.$store.dispatch('loadDistributions');
+    this.window = 'main';
+    
     if (this.isBotSet !== false) {
       this.botName = this.isBotSet.name;
       this.botToken = this.isBotSet.token;
+    } else {
+      this.window = 'bot-edit';
     }
     // Вот эта тема должна следить за изменениями url и на основе этого типо изменять контент
     // Я эту штуку отключаю, можешь просто руками задать соответствующий window который тебе нужен в данный момент
@@ -130,7 +134,6 @@ export default {
     // createBot - Создание бота (первый вход)
     // createMailing - Создание рассылок
     // editMailing - Редактирование рассылок
-    this.window = 'main';
     // this.$watch(
     //     () => this.$route.params,
     //     (toParams, previousParams) => {
@@ -177,7 +180,15 @@ export default {
           this.$store.commit('openErrorPopup', 'Ошибка в сохранении!');
         })
       } else {
-        await companyDistribution.createBot({name: this.botName, token: this.botToken})
+        await companyDistribution.createBot({name: this.botName, token: this.botToken}).then(() => {
+          this.$store.commit('openPopup', 'Данные сохранены!');
+          this.$store.dispatch('loadDistributions').finally(() => {
+            this.window = 'main';
+          });
+        }).catch(err => {
+          console.log(err);
+          this.$store.commit('openErrorPopup', 'Ошибка в сохранении!');
+        })
       }
     }
   },
