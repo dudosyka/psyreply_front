@@ -5,6 +5,7 @@ node_modules/.cache/babel-loader/
 /dist
 /src/api/api.conf.js
 /upload.sh
+/deploy.sh
 
 
 # local env files
