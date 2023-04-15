@@ -198,7 +198,8 @@ export default {
 <style scoped>
 /*Активная кнопка*/
 .element-btn-active {
-    max-width: 15vw;
+    max-width: 10vw;
+    width: 100%;
     background: #8419a1;
     border: 1px solid var(--border-dark);
     padding: 0.3rem;
@@ -215,7 +216,8 @@ export default {
 }
 
 .element-btn {
-    max-width: 15vw;
+    max-width: 10vw;
+    width: 100%;
     background: transparent !important;
     border: 1px solid var(--border-dark);
     padding: 0.3rem;
@@ -224,7 +226,8 @@ export default {
 }
 
 .element-btn:hover {
-    max-width: 15vw;
+    max-width: 10vw;
+    width: 100%;
     background: #8419a1 !important;
     border: 1px solid var(--border-dark);
     padding: 0.3rem;

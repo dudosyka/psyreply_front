@@ -2,7 +2,7 @@
     <y-modal class="modal">
         <header class="header">
             <y-left-arrow-button @click="$emit('close')"/>
-            <h1 class="heading">Редактирование рассылки</h1>
+            <h3 class="heading">Редактирование рассылки</h3>
         </header>
 
         <y-modal>
@@ -53,7 +53,9 @@ export default {
     display: grid;
     grid-gap: 1rem;
 }
-
+.heading {
+    font-size: 1rem;
+}
 .header {
     display: grid;
     grid-template-columns: auto 1fr min-content min-content;

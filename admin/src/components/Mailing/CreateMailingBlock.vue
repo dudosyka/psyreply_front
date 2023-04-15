@@ -53,6 +53,17 @@
                             class="fa-solid fa-pen"></i> Подпись
                     </y-cool-button>
                 </div>
+                <div class="row attached-files">
+                    <div class="attached-file">
+                        <span class="file-name">фыволыфлдводыфлдыфовлдыфводлыфовлд</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="attached-file">
+                        <span class="file-name">фыволыфлдводыфлдыфовлдыфводлыфовлд</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="attached-file">
+                        <span class="file-name">Я календарь</span> <i class="delete-file fa-solid fa-circle-xmark"></i>
+                    </div>
+                </div>
                 <h5 class="heading-small">Подпись</h5>
                 <textarea class="text-area" v-model="element.text"></textarea>
                 <div class="row button-row">
@@ -92,6 +103,8 @@
                             :page-size="4"
                     />
                 </div>
+                <h5 class="heading-small">Подпись</h5>
+                <textarea class="text-area" v-model="element.text"></textarea>
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)" class="element-btn element-delete"><i
                             class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
@@ -235,6 +248,40 @@ export default {
 </script>
 
 <style scoped>
+.attached-files {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    max-width: 60vw;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+.attached-file {
+    background: rgba(255, 255, 255, 0.18);
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    min-width: 10vw;
+    max-width: max-content;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+}
+.file-name {
+    margin-right: 1rem;
+}
+.delete-file {
+    font-size: 0.8rem;
+}
+.delete-file:hover {
+    color: #ff0059;
+    transition: 0.3s;
+}
 /*Активные кнопки*/
 .element-delete-active {
     background: rgba(233, 67, 97, 0.66) !important;

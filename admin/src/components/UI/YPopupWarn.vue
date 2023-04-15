@@ -6,7 +6,7 @@
             <h1 class="popup__title">Внимание!</h1>
             <div class="error__code">{{ popupWarn.message }}</div>
             <div class="controls">
-                <y-button class="accept_control" @click="accept">Подтвердить</y-button>
+                <y-button class="accept_control" @click="accept"><i class="fa-solid fa-trash-can"></i> Подтвердить</y-button>
                 <y-button class="rollback_control" @click="close">Отмена</y-button>
             </div>
         </div>
@@ -37,6 +37,44 @@ export default {
 </script>
 
 <style scoped>
+.accept_control {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.4rem;
+    width: 100%;
+    max-width: 15vw;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #ff0062;
+    color: white;
+}
+.accept_control:hover {
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 0.4rem;
+    width: 100%;
+    max-width: 15vw;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #ff0062;
+    color: white;
+}
+.rollback_control {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.4rem;
+    color: white;
+    width: 100%;
+    max-width: 15vw;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.rollback_control:hover {
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 0.4rem;
+    color: white;
+    width: 100%;
+    max-width: 15vw;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
 .popup {
     display: flex;
     align-items: center;

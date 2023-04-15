@@ -5,8 +5,10 @@
               Если будешь заменять эту кнопку то не забудь в том элементе, на который заменишь, прописать точно такой же @click
               Подробнее см. пояснение внутри MailingView в методе close
             -->
-            <y-left-arrow-button @click="$emit('close')"/>
-            <h1 class="heading">{{ header }}</h1>
+            <div class="col">
+                <y-left-arrow-button @click="$emit('close')"/>
+            </div>
+            <h2 class="heading">{{ header }}</h2>
 
             <div class="col time">
                 <h5>Время рассылки: </h5>
@@ -24,8 +26,9 @@
         <y-input
                 v-model="name"
                 placeholder="Название рассылки"
+                class="error-input"
         />
-        <h5 class="heading-small">Периодичность</h5>
+        <h4 class="heading-small error-input">Периодичность</h4>
         <y-modal class="time-picker">
             <div class="col">
                 <y-cool-button v-if="!one_time" @click="selectIsOneTime(true)" class="element-btn"><i
@@ -43,7 +46,7 @@
                     <y-cool-button class="element-btn" @click="setPeriod(7)"
                                    :class="{'active-element-btn': day_period == 7}">Каждую неделю
                     </y-cool-button>
-                    <y-cool-button class="element-btn" @click="setPeriod(30)"
+                    <y-cool-button class="error-input element-btn" @click="setPeriod(30)"
                                    :class="{'active-element-btn': day_period == 30}">Каждые 30 дней
                     </y-cool-button>
                     <y-cool-button class="element-btn" @click="setPeriod(0)"
@@ -58,10 +61,10 @@
             </template>
         </y-modal>
 
-        <h5 class="heading-small">Адресаты</h5>
+        <h4 class="heading-small">Адресаты</h4>
         <div class="container-fluid contacts">
             <div class="col groups">
-                <h5>Группы</h5>
+                <h5 class="subheading">Группы</h5>
                 <div class="container">
                     <y-list
                             :items="groups"
@@ -78,7 +81,7 @@
             </div>
 
             <div class="col people">
-                <h5>Люди</h5>
+                <h5 class="subheading">Люди</h5>
                 <div class="container">
                     <y-list
                             :items="peopleInGroup"
@@ -92,7 +95,7 @@
             </div>
         </div>
 
-        <h5 class="heading-small">Блоки рассылок</h5>
+        <h4 class="heading-small">Блоки рассылок</h4>
         <y-list
                 :items="blocks"
                 key-of-name="name"
@@ -245,6 +248,11 @@ export default {
 </script>
 
 <style scoped>
+.heading {
+    width: 100%;
+    max-width: 25vw;
+    padding-left: 1rem;
+}
 .button-row {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
@@ -322,7 +330,7 @@ export default {
 }
 
 .new-button {
-    width: 10vw;
+    width: 12vw;
 }
 
 .modal {
@@ -375,7 +383,18 @@ export default {
 
 .time {
     display: flex;
+    justify-content: center;
     align-items: center;
     width: 35vw;
+}
+.subheading {
+    margin-bottom: 1rem;
+}
+.error-input {
+    border-color: #500000;
+    color: #ff7d7d;
+}
+.error-input::placeholder {
+    color: #ff7d7d;
 }
 </style>
