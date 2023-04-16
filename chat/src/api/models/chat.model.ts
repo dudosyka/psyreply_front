@@ -1,11 +1,10 @@
 import {WsResolverUtil} from "@/api/utils/ws-resolver.util";
-import {ContactDtoList} from "@/api/dto/contact.dto";
 import {BaseModel} from "@/api/models/base.model";
 import {ChatInfoDto} from "@/api/dto/chat-info.dto";
-import {store,key} from "@/store/store";
-import {UserModelDto} from "@/api/dto/user-model.dto";
-import {MessageModelDto} from "@/api/dto/message-model.dto";
+import {store} from "@/store/store";
 import {TimestampParserUtil} from "@/api/utils/timestamp-parser.util";
+import {ChatModelDto} from "@/api/dto/chat-model.dto";
+import {MessageModelDto} from "@/api/dto/message-model.dto";
 
 
 export class ChatModel extends BaseModel {
@@ -18,24 +17,26 @@ export class ChatModel extends BaseModel {
     const dto = {
       ...data.body
     };
+    console.log(dto);
     store.commit("pushMessages", [dto])
   }
 
   async sendMessage(text: string, attachments: number[] = [], type_id: number = 1) {
-    const selectedChat: UserModelDto = store.getters.selectedContact;
+    const selectedChat: ChatModelDto = store.getters.selectedContact;
     if (this.socket)
       this.socket.emit(
         "sendMessage",
         {
-                chatId: selectedChat.BotUserModel.chat_id,
+                chatId: selectedChat.chatBotModel.telegram_chat_id,
                 msg: {
                   text,
                   attachments,
                   type_id
                 },
-                botUserId: selectedChat.BotUserModel.id
+                chatModelId: selectedChat.id,
               },
               function (res) {
+                console.log(res);
                 if (res.status == 201)
                   store.commit("pushMessages", [res.body])
               }
@@ -55,8 +56,8 @@ export class ChatModel extends BaseModel {
     this.socket.emit('subscribe_chat', { chatId: chatId.toString() })
   }
 
-  async getChatInfo(botUserId: number): Promise<ChatInfoDto> {
-    const res: { body: ChatInfoDto } = await this.apiResolver.request("GET", `${botUserId}/info`);
+  async getChatInfo(chatId: number): Promise<ChatInfoDto> {
+    const res: { body: ChatInfoDto } = await this.apiResolver.request("GET", `${chatId}`);
 
     return res.body;
   }

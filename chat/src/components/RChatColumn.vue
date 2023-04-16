@@ -24,14 +24,15 @@ export default {
   },
   methods: {
     async sendMessage({ msg, attachments }) {
-      console.log(msg);
       const type_id = (attachments.length) ? 2 : 1
       await this.chatModel.sendMessage(msg, attachments, type_id);
     },
   },
   computed: {
     messages() {
+      console.log("djskdjklsfds");
       const messages = this.$store.getters.chatMessages.map(el => {
+        console.log(el);
         if (el.type == 'msg') {
           return {
             type: 'msg',
@@ -39,6 +40,7 @@ export default {
               ...el.value,
               text: el.value.content.text
             },
+            // direction:
           }
         }
         return el;
@@ -47,7 +49,11 @@ export default {
       return messages;
     },
     selectedUser() {
-      return this.$store.getters.selectedContact;
+      const chat = this.$store.getters.selectedContact;
+      if (chat.userModel)
+        return chat.userModel;
+      else
+        return {};
     },
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <v-row :class="{'message-out-row': !!messageModel.bot_message_id && !oneSide, 'message-in-row': !messageModel.bot_message_id}">
+  <v-row :class="{'message-out-row': !!messageModel.direction && !oneSide, 'message-in-row': !messageModel.direction}">
     <v-alert
       class="message"
-      :class="{'message-out': !!messageModel.bot_message_id && !oneSide, 'message-in': !messageModel.bot_message_id}"
+      :class="{'message-out': !!messageModel.direction && !oneSide, 'message-in': !messageModel.direction}"
     >
       <v-row class="message-row">
         <v-col class="message-col">
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {TimestampParserUtil} from "../../../../api/utils/timestamp-parser.util";
+import {TimestampParserUtil} from "@/api/utils/timestamp-parser.util";
 import {AttachmentLoaderUtil} from "@/api/utils/attachment-loader.util";
 import {LinkifyUtil} from "@/utils/linkify.util";
 

@@ -36,10 +36,22 @@ export default {
   computed: {
     contacts() {
       if (this.search === "")
-        return this.$store.getters.contacts;
+        return this.$store.getters.contacts.map(el => {
+          return {
+            ...el.userModel,
+            ...el,
+            id: el.id
+          }
+        });
       else
         return this.$store.getters.contacts.filter(el => {
-          return el.login.includes(this.search);
+          return el.userModel.login.includes(this.search);
+        }).map(el => {
+          return {
+            ...el.userModel,
+            ...el,
+            id: el.id
+          }
         })
     },
     bot() {

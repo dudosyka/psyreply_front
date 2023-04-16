@@ -1,5 +1,3 @@
-import {BotUserModelDto} from "@/api/dto/bot-user-model.dto";
-
 export type UserModelDto = {
   id: number,
   jetBotId: number,
@@ -9,5 +7,4 @@ export type UserModelDto = {
   group_id: number | null,
   createdAt: string,
   updatedAt: string,
-  BotUserModel: BotUserModelDto
 }
