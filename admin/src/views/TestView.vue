@@ -22,7 +22,7 @@
                         :editable="true"
                         @edit="editTest"
                         :pagination="true"
-                        :page-size="6"
+                        :page-size="10"
                 />
             </y-modal>
             <create-test

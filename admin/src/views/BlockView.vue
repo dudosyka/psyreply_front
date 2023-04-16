@@ -27,7 +27,7 @@
                         :items="blocks"
                         :pagination="true"
                         :pagination-block="true"
-                        :page-size="4"
+                        :page-size="10"
                 />
             </y-modal>
             <create-block
