@@ -16,11 +16,11 @@
                     <router-link to="/test" active-class="nav__link_active" class="link nav__link"><i
                             class="fa-solid fa-check-double"></i> Тесты
                     </router-link>
-                    <router-link to="/results" active-class="nav__link_active" class="link nav__link"><i
-                            class="fa-solid fa-square-poll-vertical"></i> Результаты
-                    </router-link>
                     <router-link to="/users" active-class="nav__link_active" class="link nav__link"><i
-                            class="fa-solid fa-users"></i> Пользователи
+                            class="fa-solid fa-square-poll-vertical"></i> Пользователи
+                    </router-link>
+                    <router-link to="/groups" active-class="nav__link_active" class="link nav__link"><i
+                            class="fa-solid fa-users"></i> Группы
                     </router-link>
                     <router-link to="/distribution" active-class="nav__link_active" class="link nav__link"><i
                             class="fa-solid fa-envelope"></i> Рассылки

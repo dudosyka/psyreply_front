@@ -33,8 +33,8 @@ const routes = [
     meta: {requiresAuth: true, authPage: false}
   },
   {
-    path: '/users:after(.*)',
-    name: 'users',
+    path: '/groups:after(.*)',
+    name: 'groups',
     component: () => import('@/views/UsersView.vue'),
     meta: {requiresAuth: true}
   },
@@ -45,8 +45,8 @@ const routes = [
     meta: {requiresAuth: true, authPage: false}
   },
   {
-    path: '/results:after(.*)',
-    name: 'results',
+    path: '/users:after(.*)',
+    name: 'users',
     component: () => import('@/views/ResultsView'),
     meta: {requiresAuth: true}
   },
