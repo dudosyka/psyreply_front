@@ -57,7 +57,19 @@ export default {
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
-    text-align: left;
+    text-align: center;
+    transition: all .3s ease-in-out;
+}
+.input:focus {
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    padding-left: 1rem !important;
+    border-style: solid;
+    height: 2rem;
+    border-radius: 0.3rem;
+    text-align: center;
     transition: all .3s ease-in-out;
 }
 
@@ -70,7 +82,7 @@ export default {
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
-    text-align: left;
+    text-align: center;
     transition: all .3s ease-in-out;
 }
 
@@ -83,7 +95,7 @@ export default {
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
-    text-align: left;
+    text-align: center;
     transition: all .3s ease-in-out;
 }
 
@@ -96,7 +108,7 @@ export default {
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
-    text-align: left;
+    text-align: center;
     transition: all .3s ease-in-out;
 }
 

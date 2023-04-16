@@ -12,11 +12,17 @@
 
                     <div class="form__box">
                         <h3 class="form__header">Введите новый пароль</h3>
-                        <y-input v-model.trim="formData.pass" class="box__input" type="password"/>
+                        <div class="row-pass">
+                            <div class="col-eye">
+                                <!--Когда пароль скрыт у <i> класс fa-eye. Когда пароль показан у <i> класс fa-eye-slash-->
+                                <button class="swap"><i class="pass-hidden fa-solid fa-eye"></i></button>
+                            </div>
+                            <div class="col-input">
+                                <y-input v-model.trim="formData.pass" class="box__input" type="password"/>
+                            </div>
+                        </div>
                     </div>
-
                     <button class="btn btn__login" @click.prevent="login">Подтвердить</button>
-                    >
                 </form>
             </div>
         </y-modal>
@@ -109,5 +115,39 @@ a.resend {
 
 .btn__login {
     margin-top: 30px;
+}
+.row-pass {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.col-input {
+    position: relative;
+}
+.col-eye {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    right: 10rem;
+    color: white;
+    z-index: 9999;
+}
+.pass-hidden {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.pass-hidden:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+.swap {
+    margin-top: 10px;
 }
 </style>

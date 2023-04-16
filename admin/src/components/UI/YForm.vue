@@ -7,7 +7,15 @@
             </div>
             <div class="form__box">
                 <label class="box__lable">Пароль</label>
-                <y-input :type="'password'" class="box__input" v-model.trim="formData.password"/>
+                <div class="row-pass">
+                 <div class="col-eye">
+                  <!--Когда пароль скрыт у <i> класс fa-eye. Когда пароль показан у <i> класс fa-eye-slash-->
+                  <button class="swap"><i class="pass-hidden fa-solid fa-eye"></i></button>
+                 </div>
+                 <div class="col-input">
+                  <y-input :type="'password'" class="box__input" v-model.trim="formData.password"/>
+                 </div>
+                </div>
             </div>
             <div class="form__button">
                 <button @click.prevent="submit" class="btn btn__login">Войти</button>
@@ -119,6 +127,39 @@ input.box__input:focus {
     box-shadow: 0px 0px 20px rgba(221, 126, 255, 0.35);
     border-radius: 12px;
     color: white;
-
+}
+.row-pass {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.col-input {
+    position: relative;
+}
+.col-eye {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    right: 4rem;
+    color: white;
+    z-index: 9999;
+}
+.pass-hidden {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.pass-hidden:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+.swap {
+    margin-top: 10px;
 }
 </style>

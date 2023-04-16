@@ -2,8 +2,12 @@
     <article class="wrapper">
         <y-modal class="modal">
             <header class="header">
-                <y-left-arrow-button @click="$emit('close')"/>
-                <h1 class="heading">{{ editable ? "Добавить ответы" : "Просмотр ответов" }}</h1>
+                <div class="col-arrow">
+                    <y-left-arrow-button @click="$emit('close')"/>
+                </div>
+                <div class="col-head">
+                    <h1 class="heading">{{ editable ? "Добавить ответы" : "Просмотр ответов" }}</h1>
+                </div>
             </header>
 
             <template v-if="answers.length > 0">
@@ -26,7 +30,9 @@
                 <button @click="addAnswer" class="plus">+</button>
             </div>
 
-            <y-cool-button v-if="editable" @click="$emit('close')">Сохранить и вернтуься</y-cool-button>
+            <div class="row-button">
+                <y-cool-button class="btn-save" v-if="editable" @click="$emit('close')">Сохранить и вернтуься</y-cool-button>
+            </div>
         </y-modal>
     </article>
 </template>
@@ -89,15 +95,16 @@ export default {
 }
 
 .header {
-    display: grid;
-    grid-template-columns: auto 1fr min-content;
-    grid-gap: 2rem;
+    display: flex;
+    width: 100%;
+    grid-gap: 0rem;
     justify-content: start;
     align-items: center;
 }
 
 .heading {
     font-size: 1.5rem;
+    text-align: center;
 }
 
 .input {
@@ -181,5 +188,21 @@ hr {
     width: 36px;
     line-height: 34px;
     font-size: 32px;
+}
+.col-arrow {
+    width: 1vw;
+}
+.col-head {
+    width: 100%;
+}
+.row-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.btn-save {
+    width: 15vw;
 }
 </style>
