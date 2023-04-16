@@ -185,6 +185,8 @@ export default {
             const tests = this.getTestBlocks(el.attachments.block_id)
             return {
               ...el,
+              validation: {
+                block_id: false,},
               tests
             }
           }
@@ -290,7 +292,7 @@ export default {
         
         switch (el.type_id) {
           case DIstributionMessageType.MEDIA:
-            if (!el.file_id) {
+            if (!el.attachments.file_id) {
               el.validation.file_id = true;
               this.validation.elements = true;
             }
@@ -299,13 +301,13 @@ export default {
             }
             break;
           case DIstributionMessageType.LINK:
-            if (!el.link) {
+            if (!el.attachments.link) {
               el.validation.link = true;
               this.validation.elements = true;
             }
             break;
           case DIstributionMessageType.TEST:
-            if (!el.block_id) {
+            if (!el.attachments.block_id) {
               el.validation.block_id = true;
               this.validation.elements = true;
             }
