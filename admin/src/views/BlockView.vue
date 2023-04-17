@@ -28,6 +28,9 @@
                         :pagination="true"
                         :pagination-block="true"
                         :page-size="4"
+
+                        :clickable="true"
+                        @clicked="clickTest"
                 />
             </y-modal>
             <create-block
@@ -114,6 +117,9 @@ export default {
       this.filter = null
       update(this)
     },
+    clickTest() {
+        console.log('123')
+    }
   }
 }
 </script>

@@ -23,6 +23,7 @@
                         @edit="editTest"
                         :pagination="true"
                         :page-size="6"
+                        @clicked="clickTest"
                 />
             </y-modal>
             <create-test
@@ -150,6 +151,9 @@ export default {
       }
       this.$store.commit('clearNewTest')
       update(this)
+    },
+    clickTest() {
+        console.log('123')
     }
   }
 }

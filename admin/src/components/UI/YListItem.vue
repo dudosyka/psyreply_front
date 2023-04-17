@@ -12,7 +12,10 @@
             ></div>
         </div>
         <!--      Контейнер, чтобы кнопка удаления и заголовок по краям разместить-->
-        <div class="container-fluid left-area">
+        <div
+             @click="$emit('clicked')"
+             class="container-fluid left-area"
+        >
             <div class="name">
                 <slot></slot>
             </div>
@@ -48,6 +51,10 @@ export default {
     deletable: {
       type: Boolean,
       default: false,
+    },
+    clickable: {
+        type: Boolean,
+        default: false
     }
   },
   methods: {}

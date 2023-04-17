@@ -7,9 +7,11 @@
                 :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
                 :active="item.active"
                 :deletable="deletable"
+
                 @select="$emit('select', item)"
                 @edit="$emit('edit', item)"
                 @delete="$emit('delete', item)"
+                @clicked="$emit('clicked', item)"
         >
             {{ showId ? (item[showId]) ? `${item[showId]} ` : 'Администратор' : "" }} {{ item[keyOfName] }}
 
@@ -81,6 +83,10 @@ export default {
     deletable: {
       type: Boolean,
       default: false,
+    },
+    clickable: {
+        type: Boolean,
+        default: false
     }
   },
   computed: {
