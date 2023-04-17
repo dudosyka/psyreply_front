@@ -22,7 +22,7 @@
                         :editable="true"
                         @edit="editTest"
                         :pagination="true"
-                        :page-size="6"
+                        :page-size="10"
                         @clicked="clickTest"
                 />
             </y-modal>
@@ -153,7 +153,7 @@ export default {
       update(this)
     },
     clickTest() {
-        console.log('123')
+        console.log('123');
     }
   }
 }

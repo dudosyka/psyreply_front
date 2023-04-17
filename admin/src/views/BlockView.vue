@@ -27,9 +27,7 @@
                         :items="blocks"
                         :pagination="true"
                         :pagination-block="true"
-                        :page-size="4"
-
-                        :clickable="true"
+                        :page-size="10"
                         @clicked="clickTest"
                 />
             </y-modal>
@@ -118,7 +116,7 @@ export default {
       update(this)
     },
     clickTest() {
-        console.log('123')
+        console.log('123');
     }
   }
 }

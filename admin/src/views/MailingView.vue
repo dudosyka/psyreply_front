@@ -31,7 +31,7 @@
                                 :items="mailings"
                                 :pagination="true"
                                 :pagination-block="true"
-                                :page-size="4"
+                                :page-size="10"
                                 :deletable="true"
                                 @delete="deleteDistribution"
                         />
