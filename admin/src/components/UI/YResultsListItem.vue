@@ -1,7 +1,7 @@
 <template>
     <li class="results__item">
         <div class="block__item">
-            <img src="@/assets/img/block.svg" @click="$emit('edit', id)" alt="">
+            <img class="edit-btn" src="@/assets/img/block.svg" @click="$emit('edit', id)" alt="">
             <div class="name">{{ name }}</div>
         </div>
         <div class="line"></div>
@@ -160,5 +160,8 @@ export default {
 
 .elipce_active {
     background: linear-gradient(200.42deg, #38F9D7 13.57%, #43E97B 98.35%);
+}
+.edit-btn {
+    cursor: pointer;
 }
 </style>
