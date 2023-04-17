@@ -6,14 +6,20 @@
             <y-modal v-if="window === 'main'" class="main__modal">
                 <header class="header">
                     <div class="header__select">
-                        <h2 class="heading header__heading">Тесты</h2>
-                        <y-select
-                                class="fs-2"
-                                :selects="testsCategories"
-                                @select="updateTestsList"
-                        />
+                        <div class="row-header">
+                            <div class="col-heading">
+                                <h2 class="heading header__heading">Тесты</h2>
+                                <y-select
+                                    class="fs-2"
+                                    :selects="testsCategories"
+                                    @select="updateTestsList"
+                                />
+                            </div>
+                            <div class="col-btn">
+                                <y-button :plus="true" @click="createTest">Новый тест</y-button>
+                            </div>
+                        </div>
                     </div>
-                    <y-button :plus="true" @click="createTest">Новый тест</y-button>
                 </header>
                 <y-list
                         v-if="tests.length > 0"
@@ -196,5 +202,21 @@ export default {
     display: flex;
     align-items: flex-end;
 }
-
+.row-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.col-btn {
+    display: flex;
+    width: 100%;
+    max-width: 15vw;
+    justify-content: flex-end;
+}
+.col-heading {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
 </style>

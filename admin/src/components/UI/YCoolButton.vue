@@ -18,6 +18,7 @@ export default {
     border-radius: 0.5rem;
     color: white;
     text-transform: none;
+    cursor: pointer;
     width: 10vw;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;

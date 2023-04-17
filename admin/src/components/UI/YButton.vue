@@ -30,12 +30,12 @@ export default {
     border-radius: 0;
     color: var(--inactive-color);
     text-transform: none;
-    width: 7vw;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     margin-left: 0.5rem;
     transition: 0.3s;
     max-height: fit-content;
+    cursor: pointer;
 }
 
 .btn:hover {

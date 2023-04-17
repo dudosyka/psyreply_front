@@ -19,9 +19,9 @@
                          placeholder="мм" class="time-picker__input"/>
                 :
             </div>
-
-            <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
-
+            <div class="col-btn">
+                <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
+            </div>
         </header>
         <y-input
                 v-model="name"
@@ -361,7 +361,7 @@ export default {
 }
 
 .new-button {
-    width: 12vw;
+    width: 13vw;
 }
 
 .modal {

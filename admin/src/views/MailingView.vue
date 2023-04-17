@@ -273,7 +273,8 @@ export default {
 }
 
 .new-button {
-    width: 10vw;
+    width: 100%;
+    max-width: 14vw;
 }
 
 .main-container {
@@ -337,5 +338,11 @@ export default {
 .fs-2 {
     font-size: 1.3rem;
 }
-
+.header-buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+}
 </style>

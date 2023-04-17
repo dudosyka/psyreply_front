@@ -96,9 +96,9 @@ export default {
     min-width: 11rem;
     display: flex;
     grid-gap: 1rem;
-    padding-right: 5rem;
     grid-template-columns: auto min-content;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .date__title {

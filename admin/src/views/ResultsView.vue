@@ -7,18 +7,23 @@
             <y-modal v-if="window === 'main'" class="main__modal">
                 <header class="header">
                     <div class="header__select">
-
-                        <h2 class="heading header__heading">Результаты</h2>
-                        <y-select
+                        <div class="row-header">
+                            <div class="col-heading">
+                                <h2 class="heading header__heading">Результаты</h2>
+                                <y-select
                                 font-size="1"
                                 :selects="blocks"
                                 @select="updateBlocksSelect"
-                        />
-                    </div>
-                    <div class="company__date__select">
-                        <y-date
-                                @update-date="setDateFilter"
-                        />
+                            />
+                            </div>
+                            <div class="col-btn">
+                                <div class="company__date__select">
+                                    <y-date
+                                        @update-date="setDateFilter"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </header>
                 <div class="filters" v-if="filters.block_id">
@@ -445,12 +450,6 @@ export default {
     grid-gap: 2.5625rem;
 }
 
-.header {
-    display: flex;
-    width: 95%;
-    justify-content: space-between;
-}
-
 .header__select {
     cursor: pointer;
     display: flex;
@@ -514,5 +513,22 @@ export default {
 
 .hide-pagination {
     color: rgb(255, 11, 56);
+}
+.row-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.col-btn {
+    display: flex;
+    width: 100%;
+    max-width: 15vw;
+    justify-content: flex-end;
+}
+.col-heading {
+    display: flex;
+    align-items: center;
+    align-content: center;
 }
 </style>

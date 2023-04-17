@@ -6,7 +6,14 @@
             <y-modal v-if="window === 'main'" class="main__modal">
                 <header class="header">
                     <div class="header__select">
-                        <h2 class="heading header__heading">Блоки</h2>
+                        <div class="row-header">
+                            <div class="col-heading">
+                                <h2 class="heading header__heading">Блоки</h2>
+                            </div>
+                            <div class="col-btn">
+                                <y-button :plus="true" @click="createBlock">Новый блок</y-button>
+                            </div>
+                        </div>
                         <!--            <select style="color: white" v-model="filter" @change="updateBlocksList">
                                       <option style="color: black" :value="null">Без фильтра</option>
                                       <option style="color: black" v-for="company of companies" :value="company.id">{{company.name}}</option>
@@ -17,7 +24,7 @@
                         <!--              @select="updateBlocksList"-->
                         <!--            />-->
                     </div>
-                    <y-button :plus="true" @click="createBlock">Новый блок</y-button>
+
                 </header>
                 <!--        U can add "items" props to list component. It must be array -->
                 <y-list
@@ -172,5 +179,16 @@ export default {
 .fs-2 {
     font-size: 1.3rem;
 }
-
+.row-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.col-btn {
+    display: flex;
+    width: 100%;
+    max-width: 15vw;
+    justify-content: flex-end;
+}
 </style>

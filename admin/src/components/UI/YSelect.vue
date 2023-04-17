@@ -86,7 +86,8 @@ export default {
 }
 
 .select__button {
-    padding: .3rem 1rem;
+    padding-top: 0.3rem;
+    padding-left: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
