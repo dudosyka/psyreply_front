@@ -41,25 +41,26 @@ export default {
 
 <style scoped>
 .input {
-    background: hsla(0, 0%, 100%, 0.17);
-    font-size: 1.3rem;
-    padding: .8em;
+    background: rgba(7, 18, 25, 0.75);
     color: var(--light);
-    border-color: var(--light-opacity);
-    border-width: 2px;
+    border-color: var(--border-dark);
+    border-width: 1px;
     border-style: solid;
-    border-radius: .875rem;
-    user-select: none;
-    outline: none;
+    border-radius: 0.3rem;
+    text-align: center;
     transition: all .3s ease-in-out;
 }
-
-.input:hover {
-    background: hsla(0, 0%, 100%, 0.5);
+.input::placeholder {
 }
-
-.input:active {
-    background: hsla(0, 0%, 100%, 0.17);
+.input:hover {
+    background: rgba(7, 18, 25, 0.75);
+    color: var(--light);
+    border-color: var(--border-dark);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.3rem;
+    text-align: center;
+    transition: all .3s ease-in-out;
 }
 
 .input:invalid {

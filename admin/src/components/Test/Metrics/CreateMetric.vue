@@ -13,8 +13,9 @@
                 v-model.trim="description"
                 placeholder="Описание метрики"
         />
-
-        <y-cool-button @click="createMetric">Добавить</y-cool-button>
+        <div class="row">
+            <y-cool-button @click="createMetric">Добавить</y-cool-button>
+        </div>
     </y-modal>
 </template>
 
@@ -64,5 +65,10 @@ export default {
     grid-gap: 2rem;
     justify-content: start;
     align-items: center;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 </style>

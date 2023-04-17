@@ -53,7 +53,6 @@ export default {
     color: var(--light);
     border-color: var(--border-dark);
     border-width: 1px;
-    padding-left: 1rem !important;
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
@@ -65,7 +64,6 @@ export default {
     color: var(--light);
     border-color: var(--border-dark);
     border-width: 1px;
-    padding-left: 1rem !important;
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
@@ -78,7 +76,6 @@ export default {
     color: var(--light);
     border-color: var(--border-dark);
     border-width: 1px;
-    padding-left: 1rem !important;
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
@@ -91,7 +88,6 @@ export default {
     color: var(--light);
     border-color: var(--border-dark);
     border-width: 1px;
-    padding-left: 1rem !important;
     border-style: solid;
     height: 2rem;
     border-radius: 0.3rem;
