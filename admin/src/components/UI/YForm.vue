@@ -10,10 +10,12 @@
                 <div class="row-pass">
                  <div class="col-eye">
                   <!--Когда пароль скрыт у <i> класс fa-eye. Когда пароль показан у <i> класс fa-eye-slash-->
-                  <button class="swap"><i class="pass-hidden fa-solid fa-eye"></i></button>
+                  <button class="swap" @click.prevent="passVisibility">
+                      <i class="pass-hidden fa-solid" :class="checkStatus"></i>
+                  </button>
                  </div>
                  <div class="col-input">
-                  <y-input :type="'password'" class="box__input" v-model.trim="formData.password"/>
+                  <y-input :type="checkType" class="box__input" v-model.trim="formData.password"/>
                  </div>
                 </div>
             </div>
@@ -33,12 +35,24 @@ export default {
       formData: {
         email: null,
         password: null
-      }
+      },
+      checkStatus: 'fa-eye',
+      checkType: 'password'
     }
   },
   methods: {
     submit() {
       this.$emit('submit', this.formData)
+    },
+    passVisibility() {
+        if (this.checkStatus === 'fa-eye') {
+            this.checkStatus = 'fa-eye-slash'
+            this.checkType = 'pass'
+        }
+        else {
+            this.checkStatus = 'fa-eye'
+            this.checkType = 'password'
+        }
     }
   }
 }
