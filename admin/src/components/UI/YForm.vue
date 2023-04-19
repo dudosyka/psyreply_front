@@ -1,6 +1,6 @@
 <template>
     <div class="YForm">
-        <form @submit.prevent>
+        <div @keydown="keyDown">
             <div class="form__box">
                 <label class="box__lable">Логин</label>
                 <y-input class="box__input" v-model.trim="formData.email"/>
@@ -23,7 +23,7 @@
                 <button @click.prevent="submit" class="btn btn__login">Войти</button>
                 <router-link to="/forget" class="btn btn__forget">Забыли пароль?</router-link>
             </div>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -41,10 +41,14 @@ export default {
     }
   },
   methods: {
+    keyDown(e) {
+      if (e.code == 'Enter')
+        this.submit();
+    },
     submit() {
       this.$emit('submit', this.formData)
     },
-    passVisibility() {
+    passVisibility(e) {
         if (this.checkStatus === 'fa-eye') {
             this.checkStatus = 'fa-eye-slash'
             this.checkType = 'pass'
