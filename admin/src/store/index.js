@@ -273,7 +273,7 @@ export default createStore({
       const company = new Company();
       
       const recipients = await company.getAllUsers().then(r => {
-        return r.map(el => ({...el, active: false}));
+        return r.map(el => ({...{...el, groups: el.groups.map(el => el.id)}, active: false}));
       });
       
       commit('newDistribution', recipients)
@@ -285,8 +285,9 @@ export default createStore({
       const userIds = selected.contacts.map(el => el.id);
       const company = new Company();
       selected.recipients = await company.getAllUsers().then(r => {
-        return r.map(el => ({...el, active: userIds.includes(el.id)}));
+        return r.map(el => ({...{...el, groups: el.groups.map(el => el.id)}, active: userIds.includes(el.id)}));
       });
+      console.log(selected.recipients);
       //Тут надо написать ещё обработку чтобы челики выбранные стали active: true
       commit('setSelectedDistribution', {
         ...selected,
@@ -301,7 +302,7 @@ export default createStore({
           ...el, elements: el.messages.map(el => {
             return {
               ...el,
-              attachments: JSON.parse(el.attachments)
+              attachments: el.attachments
             }
           })
         }))

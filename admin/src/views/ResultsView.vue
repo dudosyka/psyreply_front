@@ -322,13 +322,13 @@ export default {
     },
     
     openEditWindow(obj) {
-      this.$router.push('/results/edit')
+      this.$router.push('/users/edit')
       this.$store.commit('setEditBlock', obj)
       this.window = 'dashboard'
     },
     closeEditWindow() {
       this.window = 'main'
-      this.$router.push('/results')
+      this.$router.push('/users')
       this.$store.commit('removeEditBlock')
       update(this)
     },
