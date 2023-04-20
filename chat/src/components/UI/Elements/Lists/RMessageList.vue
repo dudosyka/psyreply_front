@@ -59,7 +59,17 @@ export default {
     attachments: []
   }),
   methods: {
-    sendMessage() {
+    sendMessage(event) {
+      if (event.shiftKey) {
+        return;
+      }
+
+      this.text = this.text.trim()
+
+      if (!this.attachments.length && !this.text) {
+        return false;
+      }
+
       if (!this.fileUploading) {
         this.$emit('send', { msg: this.text, attachments: this.attachments });
         this.text = "";

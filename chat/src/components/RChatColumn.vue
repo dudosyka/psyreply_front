@@ -32,7 +32,6 @@ export default {
     messages() {
       console.log("djskdjklsfds");
       const messages = this.$store.getters.chatMessages.map(el => {
-        console.log(el);
         if (el.type == 'msg') {
           return {
             type: 'msg',

@@ -101,9 +101,6 @@ export const store = createStore<State>({
 
       const history = (await botModel.getHistory(selectedContact.id)).map(el => {
         const content = `${el.content}`;
-
-        console.log(el);
-
         if (typeof el.content == "object")
           return el;
         else if (content.length)
