@@ -302,7 +302,7 @@ export default createStore({
           ...el, elements: el.messages.map(el => {
             return {
               ...el,
-              attachments: el.attachments
+              attachments: JSON.parse(el.attachments)
             }
           })
         }))

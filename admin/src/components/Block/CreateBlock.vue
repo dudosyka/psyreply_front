@@ -22,6 +22,11 @@
                  v-model.trim="block.name"
                  placeholder="Название блока"
         />
+        <y-input-textarea
+                class="descriptioninput"
+                v-model.trim="block.description"
+                placeholder="Описание блока"
+        />
         <y-list
                 :items="tests"
                 key-of-name="title"
@@ -45,10 +50,12 @@ import CreateTest from '@/components/Test/CreateTest';
 import Test from '@/api/admin/Test'
 import Block from '@/api/admin/Block';
 import mainConf, {ProjectState} from "../../../../main.conf";
+import YInputTextarea from "@/components/UI/YInputTextarea.vue";
 
 export default {
   name: "CreateBlock",
   components: {
+    YInputTextarea,
     CreateTest
   },
   emits: ['close'],
@@ -57,6 +64,7 @@ export default {
       window: 'main',
       block: {
         name: null,
+        description: null,
         hours: null,
         minutes: null,
         seconds: null
@@ -110,6 +118,8 @@ export default {
       
       body.name = this.block.name
       
+      body.description = this.block.description;
+      
       let time = 0
       
       time += this.block.hours * 60 * 60 * 1000
@@ -148,6 +158,15 @@ export default {
 </script>
 
 <style scoped>
+.descriptioninput {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    font-family: 'Rubik';
+}
+.descriptioninput:hover {
+    text-align: left;
+}
 .nameinput {
     background: var(--acrylic-blur-light) !important;
     height: 3vh;
