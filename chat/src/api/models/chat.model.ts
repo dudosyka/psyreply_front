@@ -5,6 +5,7 @@ import {store} from "@/store/store";
 import {TimestampParserUtil} from "@/api/utils/timestamp-parser.util";
 import {ChatModelDto} from "@/api/dto/chat-model.dto";
 import {MessageModelDto} from "@/api/dto/message-model.dto";
+import apiConf from "@/api/api.conf";
 
 
 export class ChatModel extends BaseModel {
@@ -47,7 +48,7 @@ export class ChatModel extends BaseModel {
     const token =  localStorage.getItem("token");
     if (this.socket)
       this.socket.close();
-    this.socket = new WsResolverUtil("http://localhost:8080", token ? token : "");
+    this.socket = new WsResolverUtil(apiConf.url, token ? token : "");
     this.socket.on("connect", function () {
       console.log("Connected!");
     })
