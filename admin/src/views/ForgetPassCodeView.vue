@@ -25,6 +25,7 @@
                         </div>
                     </div>
                     <button class="btn btn__login" @click.prevent="login">Подтвердить</button>
+                    <button class="btn btn__login" @click.prevent="back">назад</button>
                 </form>
             </div>
         </y-modal>
@@ -49,6 +50,9 @@ export default {
     }
   },
   methods: {
+      back(){
+          this.$router.push('/');
+      },
     login() {
       Admin.forgetPasswordSecond(this.formData.code, this.formData.pass).then(() => {
         this.$router.push('/')

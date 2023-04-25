@@ -10,6 +10,7 @@
                         <y-input v-model.trim="formData.email" class="box__input" type="email"/>
                     </div>
                     <button class="btn btn__login" @click.prevent="login">Подтвердить</button>
+                    <button class="btn btn__login" @click.prevent="back">назад</button>
                 </form>
             </div>
         </y-modal>
@@ -31,6 +32,9 @@ export default {
     }
   },
   methods: {
+    back(){
+        this.$router.push('/');
+      },
     login() {
       console.log('dfgjhfdjghjfd', this.formData.email)
       Admin.forgetPasswordFirst(this.formData.email).then(() => {
