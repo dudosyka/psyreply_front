@@ -504,9 +504,7 @@ export default {
   /*таймер*/
   #app2{
     display: none;
-    padding-top: 1rem;
-    position: fixed;
-    padding-top: 30rem;
+    flex-direction: column;
   }
 
   .base-timer {
@@ -522,6 +520,7 @@ export default {
   .base-timer__circle {
     fill: none;
     stroke: none;
+
   }
 
   .base-timer__path-elapsed {
