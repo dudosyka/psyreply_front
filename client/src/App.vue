@@ -192,8 +192,11 @@ export default {
       this.startTime = Date.now()
     },
     gamesEnded() {
-      if (this.secondGame || (!this.secondGame && this.blockOnPass.games.length === 1))
-        this.step = 'after-test'
+      if (this.secondGame || (!this.secondGame && this.blockOnPass.games.length === 1)) {
+          if (this.blockOnPass.tests.length) {
+              this.step = 'after-test'
+          }
+      }
       else
         this.secondGame = true;
     },

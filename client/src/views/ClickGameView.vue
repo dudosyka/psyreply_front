@@ -83,7 +83,7 @@
 
   <div class="finalbody" >
     <div class="mainaft" id="finalpage">
-      <img class="psy_picture" src="@/assets/games/img/psy.png">
+      <img class="psy_picture_last" src="@/assets/games/img/psy.png">
       <canvas id="line-chart"></canvas>
       <a type="submit" id="submit3" class="gradient-button start-button" @click="$emit('secondGameEnded')">Далее</a>
     </div>
@@ -319,6 +319,7 @@ export default {
                     fill: false,
                     backgroundColor: "#0bff76",
 
+
                   }]
 
                 },
@@ -413,6 +414,15 @@ export default {
     width: 250px;
     margin-bottom: 20px;
   }
+  .psy_picture_last{
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      height: auto;
+      width: 180px;
+      margin-bottom: 20px;
+  }
 
   @media screen and (max-width:900px) {
     .big_text {
@@ -455,7 +465,7 @@ export default {
     .big_text {
       width: 100%;
       color: aliceblue;
-      font-size: 1.4rem;
+      font-size: 2rem;
       font-family: 'Rubik', sans-serif;
       text-align: left;
 
@@ -464,9 +474,10 @@ export default {
     .small_text {
       width: 100%;
       color: aliceblue;
-      font-size: 1.2rem;
+      font-size: 1.7rem;
       font-family: 'Rubik', sans-serif;
       padding: 2%;
+        line-height: 2.5rem
     }
       .gradient-button {
         text-decoration: none;
@@ -484,7 +495,7 @@ export default {
         background-size: 200% auto;
         box-shadow: 0 0 20px rgba(0, 0, 0, .1);
         transition: .5s;
-        font-size: 1rem;
+        font-size: 1.4rem;
       }
   }
   hr {
