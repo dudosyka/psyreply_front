@@ -12,12 +12,12 @@
 
             <div class="col time">
                 <h5>Время рассылки: </h5>
-                <y-input @blur="checkHours" max="24" min="0" type="number" v-model="time.hours"
+                <y-input @blur="checkHours" max="24" min="0"  type="number" v-model="time.hours"
                          placeholder="чч" class="time-picker__input"/>
                 :
-                <y-input @blur="checkMinutes" max="59" min="0" type="number" v-model="time.minutes"
+                <y-input @blur="checkMinutes" max="59" min="0" step="5" type="number" v-model="time.minutes"
                          placeholder="мм" class="time-picker__input"/>
-                :
+
             </div>
             <div class="col-btn">
                 <y-button class="new-button" @click="openCreateBlock" :plus="true">Добавить блок</y-button>
@@ -230,6 +230,11 @@ export default {
       if ((this.time.minutes > 59)) {
         this.time.minutes = null
       }
+        if(this.time.minutes % 5 != 0){
+            this.time.minutes = parseInt(this.time.minutes % 5) >2? Math.ceil(this.time.minutes / 5) * 5 : Math.floor((this.time.minutes / 5))* 5
+            // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes) / 5,this.time.minutes % 5,'dfdhfhdhfjhs')
+        }
+        // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes / 5) *5,this.time.minutes % 5,'dfdhfhdhfjhs')
     },
     showedPeople(group) {
       console.log(group);
