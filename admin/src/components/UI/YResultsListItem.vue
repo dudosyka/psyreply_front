@@ -63,7 +63,8 @@ export default {
     async openClientDash() {
       const client = new User();
       const link = await client.getDashLink(this.row.user.jetBotId).then(res => res.text());
-      window.open(link, "_blank")
+      const jsonKink = JSON.parse(link)
+      window.open(jsonKink.body)
     }
   },
   computed: {

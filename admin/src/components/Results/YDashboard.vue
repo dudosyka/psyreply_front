@@ -126,7 +126,8 @@ export default {
     async openClientDash() {
       const client = new User();
       const link = await client.getDashLink(this.$store.getters.editBlock.user.jetBotId).then(res => res.text());
-      window.open(link, "_blank")
+      const jsonLink = JSON.parse(link)
+        window.open(jsonLink.body)
     }
   },
   computed: {
