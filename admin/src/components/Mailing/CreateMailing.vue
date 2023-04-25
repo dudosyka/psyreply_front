@@ -158,11 +158,11 @@ export default {
     const company = new Company()
     company.getGroups().then(r => {
       this.groups = r.map(el => {
-        const allInGroup = recipients.filter(user => user.group_id == el.id)
+        const allInGroup = recipients.filter(user => user.groups.includes(el.id))
         const selectedInGroup = allInGroup.filter(el => el.active);
         return {
           ...el,
-          active: allInGroup.length == selectedInGroup.length
+          active: allInGroup.length == selectedInGroup.length && selectedInGroup.length != 0
         }
       });
     });
@@ -232,14 +232,15 @@ export default {
       }
     },
     showedPeople(group) {
+      console.log(group);
       this.peopleInGroup = this.allPeople
-      this.peopleInGroup = this.allPeople.filter(el => (el.group_id == group.id))
+      this.peopleInGroup = this.allPeople.filter(el => (el.groups.includes(group.id)))
       console.log("люди вывелись")
       
     },
     selectGroup(group) {
       group.active = !group.active
-      this.allPeople.filter(el => (el.group_id == group.id)).forEach(el => this.selectPerson(el))
+      this.allPeople.filter(el => (el.groups.includes(group.id))).forEach(el => this.selectPerson(el))
     },
     selectPerson(user) {
       this.validation.recipients = false;

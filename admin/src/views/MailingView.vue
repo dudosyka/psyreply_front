@@ -17,7 +17,7 @@
                                 <h2 class="heading header__heading">Рассылки</h2>
                             </div>
                             <div class="col header-buttons">
-                                <y-button @click="window = 'bot-edit'" class="new-button"><i
+                                <y-button @click="editBot('bot-edit')" class="new-button"><i
                                         class="fa-brands fa-telegram"></i> Telegram Bot
                                 </y-button>
                                 <y-button class="new-button" :plus="true" @click="createMailing">Новая рассылка
@@ -118,6 +118,13 @@ export default {
     }
   },
   async created() {
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        if (toParams.after === '')
+          this.window = 'main'
+      }
+    )
     await this.$store.dispatch('loadDistributions');
     this.window = 'main';
     
@@ -144,14 +151,17 @@ export default {
   },
   methods: {
     close() {
+      this.$router.push('/distribution')
       this.window = 'main';
     },
     async editMailing(item) {
       await this.$store.dispatch('selectDistribution', item.id);
+      this.$router.push('/distribution/update')
       this.window = 'createMailing';
     },
     async createMailing() {
       await this.$store.dispatch('createNewDistribution');
+      this.$router.push('/distribution/create')
       this.window = 'createMailing'
     },
     async deleteDistribution(distribution) {
@@ -164,6 +174,10 @@ export default {
           });
         }
       });
+    },
+    editBot(route) {
+      this.$router.push('/distribution/bot/edit')
+      this.window = route;
     },
     async saveBot() {
       const companyDistribution = new CompanyDistribution();
@@ -190,7 +204,7 @@ export default {
           this.$store.commit('openErrorPopup', 'Ошибка в сохранении!');
         })
       }
-    }
+    },
   },
   computed: {
     isBotSet() {
