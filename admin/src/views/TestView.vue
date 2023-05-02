@@ -56,7 +56,7 @@ function update(data) {
   const test = new Test()
   test.getAll({filters: {}})
     .then(res => {
-      if (res.ok) {
+        if (res.ok) {
         res.json().then(data => data.body).then(r => {
           console.log(r);
           data.tests = r;
@@ -66,13 +66,13 @@ function update(data) {
           
           console.log(data.tests);
           console.log(r);
-          data.tests = data.testsAll.filter(el => {
-            if (n.type == 0)
-              return el;
-            if (n.type == 1 && el.company_id == null)
-              return el;
-            if (n.type == 2 && el.company_id != null)
-              return el;
+          data.tests = data.testsAll.sort((a,b) => a.createdAt < b.createdAt ? 1 : -1).filter(el => {
+              if (n.type == 0)
+                  return el
+              if (n.type == 1 && el.company_id == null)
+                return el;
+              if (n.type == 2 && el.company_id != null)
+                return el;
           })
         })
       }
@@ -119,36 +119,37 @@ export default {
           this.window = 'main'
       }
     )
-    update(this)
+      console.log(this.testsAll)
+      update(this)
   },
   methods: {
-    createTest() {
-      this.$router.push('/test/create')
-      this.window = 'createTest'
-    },
-    editTest(n) {
-      this.$router.push('/test/edit')
-      this.editTestId = n.id
-      this.window = 'editTest'
-    },
-    updateTestsList(n) {
-      this.testsCategories = this.testsCategories.map(el => {
-        let active = false;
-        if (el.type == n.type)
-          active = true;
-        return {
-          ...el,
-          active
-        }
-      })
-      this.tests = this.testsAll.filter(el => {
-        if (n.type == 0)
-          return el;
-        if (n.type == 1 && el.company_id == null)
-          return el;
-        if (n.type == 2 && el.company_id != null)
-          return el;
-      })
+      createTest() {
+        this.$router.push('/test/create')
+        this.window = 'createTest'
+      },
+      editTest(n) {
+        this.$router.push('/test/edit')
+        this.editTestId = n.id
+        this.window = 'editTest'
+      },
+      updateTestsList(n) {
+        this.testsCategories = this.testsCategories.map(el => {
+          let active = false;
+          if (el.type == n.type)
+            active = true;
+          return {
+            ...el,
+            active
+          }
+        })
+        this.tests = this.testsAll.filter(el => {
+          if (n.type == 0)
+            return el;
+          if (n.type == 1 && el.company_id == null)
+            return el;
+          if (n.type == 2 && el.company_id != null)
+            return el;
+        })
     },
     close(toWindow) {
       this.window = toWindow

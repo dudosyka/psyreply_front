@@ -63,10 +63,13 @@ function update(data) {
   block.getAll({filters: {company_id: data.filter}})
     .then(res => {
       if (res.ok) {
-        res.json().then(data => data.body).then(r => data.blocks = r)
-      }
-    })
-}
+        res.json().then(data => data.body).then(r => {
+            data.blocks = r.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+        })
+        }
+      })
+    }
+
 
 export default {
   name: "BlockView",

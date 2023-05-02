@@ -7,7 +7,7 @@
                 :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
                 :active="item.active"
                 :deletable="deletable"
-                :clickable="clicable"
+                :clickable="clickable"
 
                 @select="$emit('select', item)"
                 @edit="$emit('edit', item)"
