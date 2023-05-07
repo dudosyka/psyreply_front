@@ -12,20 +12,11 @@
 
                     <div class="form__box">
                         <h3 class="form__header">Введите новый пароль</h3>
-                        <div class="row-pass">
-                            <div class="col-eye">
-                                <!--Когда пароль скрыт у <i> класс fa-eye. Когда пароль показан у <i> класс fa-eye-slash-->
-                                <button class="swap" @click.prevent="passVisibility">
-                                    <i class="pass-hidden fa-solid" :class="checkStatus"></i>
-                                </button>
-                            </div>
-                            <div class="col-input">
-                                <y-input v-model.trim="formData.pass" class="box__input" :type="checkType"/>
-                            </div>
-                        </div>
+                        <y-password-input v-model.trim="formData.pass" class="box__input"/>
                     </div>
+
                     <button class="btn btn__login" @click.prevent="login">Подтвердить</button>
-                    <button class="btn btn__login" @click.prevent="back">назад</button>
+                    <button class="btn btn__login" @click.prevent="back">Назад</button>
                 </form>
             </div>
         </y-modal>
@@ -35,10 +26,11 @@
 <script>
 import YModal from "@/components/UI/YModal.vue";
 import Admin from "@/api/admin/Auth";
+import YPasswordInput from "@/components/UI/YPasswordInput.vue";
 
 export default {
   name: "ForgetPassCodeView",
-  components: {YModal},
+  components: {YPasswordInput, YModal},
   data() {
     return {
       formData: {
@@ -80,6 +72,7 @@ export default {
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .main {
@@ -123,9 +116,9 @@ a.resend {
     margin-bottom: 10px;
 }
 
-.form__box {
-    margin-top: 30px;
-}
+/*.form__box {*/
+/*    margin-top: 30px;*/
+/*}*/
 
 .box__input {
     width: 25rem;
@@ -134,38 +127,37 @@ a.resend {
 .btn__login {
     margin-top: 30px;
 }
-.row-pass {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    flex-direction: row;
-    justify-content: center;
+
+/*.row-pass {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    align-content: center;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*}*/
+/*.col-input {*/
+/*    position: relative;*/
+/*}*/
+/*.col-eye {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+.btn__login {
+    margin-top: 30px;
+    width: 15rem;
 }
-.col-input {
-    position: relative;
+
+.box__input {
+    width: 25rem;
 }
-.col-eye {
+.form__box {
+    margin-top: 30px;
     display: flex;
-    align-content: center;
     flex-direction: column;
     justify-content: center;
-    position: absolute;
-    right: 10rem;
-    color: white;
-    z-index: 9999;
-}
-.pass-hidden {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: 0.3s;
-}
-.pass-hidden:hover {
-    color: rgba(255, 255, 255, 0.65);
-}
-.swap {
-    margin-top: 10px;
+    align-items: center;
 }
 </style>

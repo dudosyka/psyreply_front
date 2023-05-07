@@ -19,7 +19,7 @@
             </div>
             <div class="form__box">
                 <label class="box__lable">Пароль администратора</label>
-                <y-input :type="'password'" class="box__input" v-model.trim="formData.password"/>
+                <y-password-input class="box__input" v-model.trim="formData.password"/>
             </div>
             <div class="form__button">
                 <button @click.prevent="submit" class="btn btn__login">Зарегистрироваться</button>
@@ -30,9 +30,11 @@
 
 <script>
 import Admin from "@/api/admin/Auth";
+import YPasswordInput from "@/components/UI/YPasswordInput.vue";
 
 export default {
   name: "YFormRegistration",
+    components: {YPasswordInput},
   data() {
     return {
       formData: {
@@ -89,10 +91,9 @@ export default {
     color: white;
     display: flex;
     flex-direction: column;
-
 }
 
-input.box__input {
+input.box__input{
     margin-top: 10px;
     background: rgba(255, 255, 255, 0.23);
     border: 2px solid rgba(255, 255, 255, 0.38);
@@ -103,8 +104,6 @@ input.box__input {
     width: 20rem;
     padding: 18px 16px;
     font-size: 18px;
-
-
 }
 
 input.box__input:focus {

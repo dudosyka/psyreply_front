@@ -5,19 +5,9 @@
                 <label class="box__lable">Логин</label>
                 <y-input class="box__input" v-model.trim="formData.email"/>
             </div>
-            <div class="form__box">
+            <div class="form__box pass_input">
                 <label class="box__lable">Пароль</label>
-                <div class="row-pass">
-                 <div class="col-eye">
-                  <!--Когда пароль скрыт у <i> класс fa-eye. Когда пароль показан у <i> класс fa-eye-slash-->
-                  <button class="swap" @click.prevent="passVisibility">
-                      <i class="pass-hidden fa-solid" :class="checkStatus"></i>
-                  </button>
-                 </div>
-                 <div class="col-input">
-                  <y-input :type="checkType" class="box__input" v-model.trim="formData.password"/>
-                 </div>
-                </div>
+                <y-password-input class="box__input" v-model.trim="formData.password"/>
             </div>
             <div class="form__button">
                 <button @click.prevent="submit" class="btn btn__login">Войти</button>
@@ -28,16 +18,18 @@
 </template>
 
 <script>
+
+import YPasswordInput from "@/components/UI/YPasswordInput.vue";
+
 export default {
   name: "YForm",
+    components: {YPasswordInput},
   data() {
     return {
       formData: {
         email: null,
         password: null
-      },
-      checkStatus: 'fa-eye',
-      checkType: 'password'
+      }
     }
   },
   methods: {
@@ -47,16 +39,6 @@ export default {
     },
     submit() {
       this.$emit('submit', this.formData)
-    },
-    passVisibility(e) {
-        if (this.checkStatus === 'fa-eye') {
-            this.checkStatus = 'fa-eye-slash'
-            this.checkType = 'pass'
-        }
-        else {
-            this.checkStatus = 'fa-eye'
-            this.checkType = 'password'
-        }
     }
   }
 }
@@ -81,7 +63,7 @@ export default {
     color: white;
     display: flex;
     flex-direction: column;
-
+    /*width: 15rem;*/
 }
 
 input.box__input {
@@ -95,8 +77,6 @@ input.box__input {
     width: 15rem;
     padding: 18px 16px;
     font-size: 18px;
-
-
 }
 
 input.box__input:focus {
@@ -146,38 +126,8 @@ input.box__input:focus {
     border-radius: 12px;
     color: white;
 }
-.row-pass {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    flex-direction: row;
-    justify-content: center;
-}
-.col-input {
-    position: relative;
-}
-.col-eye {
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    right: 4rem;
-    color: white;
-    z-index: 9999;
-}
-.pass-hidden {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: 0.3s;
-}
-.pass-hidden:hover {
-    color: rgba(255, 255, 255, 0.65);
-}
-.swap {
-    margin-top: 10px;
+
+.pass_input {
+    width: 15rem;
 }
 </style>
