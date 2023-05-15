@@ -9,9 +9,8 @@
           ></v-img>
         </v-container>
         <v-row align-content="center" align="center">
-          <h3>{{ user.login }}</h3>
-          <!-- Кнопка дашборда-->
-          <r-button :icon="'mdi-monitor-account'" @click="openClient"></r-button>
+          <r-nick-input @open="openClient" :login="user.login" @login="editNick" v-if="this.login === ''"/>
+          <r-nick-input @open="openClient" :login="login" @login="editNick" v-else-if="this.login !== ''"/>
         </v-row>
       </v-container>
       <v-divider></v-divider>
@@ -34,10 +33,16 @@ import RListItem from "@/components/UI/Elements/Lists/RListItems.vue";
 import RButton from "@/components/UI/Elements/Buttons/RButton.vue";
 import RMessageList from "@/components/UI/Elements/Lists/RMessageList.vue";
 import {NoteModel} from "@/api/models/note.model";
+import RNickInput from "@/components/UI/Elements/Inputs/RNickInput.vue";
 
 export default {
   name: "RProfileColumn",
-  components: {RMessageList, RButton, RListItem},
+  components: {RNickInput, RMessageList, RButton, RListItem},
+  data() {
+    return{
+      login: ''
+    }
+  },
   methods: {
     async sendMessage({ msg }) {
       const noteModel = new NoteModel();
@@ -47,6 +52,9 @@ export default {
     },
     openClient() {
       window.open(this.info.link, '_blank').focus();
+    },
+    editNick(data) {
+        this.login = data.login
     }
   },
   computed: {

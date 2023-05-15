@@ -16,6 +16,7 @@ export default {}
   --content-bg-dark: rgb(146 151 179 / 13%); /*Второй фон для всех элементов*/
   --inactive-color: rgb(113 119 144 / 78%); /*Цвет неактивных ссылок*/
   --active-color: #faf9fb; /*Цвет активных ссылок*/
+  --light: hsl(0, 0%, 100%);
 }
 html, body {
   font-family: 'Rubik', sans-serif;
