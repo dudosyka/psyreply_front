@@ -9,8 +9,16 @@
           ></v-img>
         </v-container>
         <v-row align-content="center" align="center">
-          <r-nick-input @open="openClient" :login="user.login" @login="editNick" v-if="this.login === ''"/>
-          <r-nick-input @open="openClient" :login="login" @login="editNick" v-else-if="this.login !== ''"/>
+          <div class="container">
+            <r-nick-input @open="openClient"
+                          @login="editNick"
+                          :login="user.login"
+                          :placeholder="'Новый ник'"
+            />
+
+            <!-- Кнопка дашборда-->
+            <r-button :icon="'mdi-monitor-account'" @click="$emit('open')"></r-button>
+          </div>
         </v-row>
       </v-container>
       <v-divider></v-divider>
@@ -38,11 +46,6 @@ import RNickInput from "@/components/UI/Elements/Inputs/RNickInput.vue";
 export default {
   name: "RProfileColumn",
   components: {RNickInput, RMessageList, RButton, RListItem},
-  data() {
-    return{
-      login: ''
-    }
-  },
   methods: {
     async sendMessage({ msg }) {
       const noteModel = new NoteModel();
@@ -54,12 +57,17 @@ export default {
       window.open(this.info.link, '_blank').focus();
     },
     editNick(data) {
-        this.login = data.login
+        this.user.login = data.login
     }
   },
   computed: {
-    user() {
-      return this.$store.getters.selectedContact;
+    user: {
+      get() {
+        return this.$store.getters.selectedContact;
+      },
+      set(newValue) {
+        [this.user.login] = newValue.split(' ')
+      }
     },
     info() {
       return this.$store.getters.selectedContactInfo;
@@ -80,6 +88,13 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 12rem;
+}
+
 .profile-picture {
   width: 7rem;
   height: 7rem;
