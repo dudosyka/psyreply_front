@@ -14,6 +14,7 @@
                           @login="editNick"
                           :login="user.login"
                           :placeholder="'Новый ник'"
+                          :error="'Ник не может быть пустым!'"
             />
 
             <!-- Кнопка дашборда-->

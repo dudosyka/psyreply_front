@@ -1,5 +1,5 @@
 <template>
-    <h3 @click="edit" v-if="show" class="nick">{{ login }}</h3>
+    <h3 @click="edit" v-if="show" class="nick">{{ newLogin }}</h3>
     <div class="inputBlock" v-if="!show">
       <y-input class="input" :placeholder="placeholder" v-model="newLogin"/>
       <img src="@/assets/img/tick.svg" alt="tick" class="tick" @click="editNick">
@@ -18,7 +18,8 @@ export default {
       type: String,
       default: ''
     },
-    placeholder: ''
+    placeholder: '',
+    error: ''
   },
   data() {
     return {
@@ -36,11 +37,21 @@ export default {
       console.log(this.login)
     },
     editNick() {
-      this.show = !this.show
-      this.$emit('login', {
-        login: this.newLogin
-      })
+      if (this.newLogin !== '') {
+        this.show = !this.show
+        this.$emit('login', {
+          login: this.newLogin
+        })
+      }
+      else {
+       this.newLogin = this.login
+       alert(this.error)
+      }
     }
+  },
+  created() {
+    this.newLogin = this.login
+    console.log(this.newLogin)
   }
 }
 </script>
