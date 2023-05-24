@@ -6,9 +6,8 @@
             <template v-if="step === 'before-test'">
               <y-modal class="before_test animate__animated animate__fadeIn">
                 <p class="before_test_text"><h3 class="before_test_heading">Добро пожаловать в Reply,<br> cистему диагностики состояния. </h3><br>
+                  {{ dataField }} <br><br>
 
-                  Впереди Вас ждет небольшой опрос, после которого Вы получите результаты в виде графического отчета и рекомендации от вашего психолога-куратора.<br><br>
-                  Прочитайте каждый вопрос и выбирайте максимально близкий ответ из всех предложенных. Лучше, если вы будете отвечать быстро, а не обдумывать тщательно каждый ответ.<br><br>
                   <span class="disclaimer">Доступ к данным вашего опроса будет только у Вас и у психолога-куратора Reply.</span></p>
                 <y-cool-button @click="startTest">Начать тестирование</y-cool-button>
               </y-modal>
@@ -163,7 +162,10 @@ export default {
       step: 'before-test', //TODO: remove after test
       startTime: null,
       endTime: null,
-      secondGame: false
+      secondGame: false,
+      description: "Впереди Вас ждет небольшой опрос, после которого Вы получите результаты в виде графического отчета и рекомендации от вашего психолога-куратора. \n" +
+          "Прочитайте каждый вопрос и выбирайте максимально близкий ответ из всех предложенных. " +
+          "Лучше, если вы будете отвечать быстро, а не обдумывать тщательно каждый ответ. \n"
     }
   },
   methods: {
@@ -272,6 +274,9 @@ export default {
     },
     percentOfPass() {
       return this.$store.getters.relationAnswersAndPassedAnswers
+    },
+    dataField() {
+        return this.getBlockData.description && this.getBlockData.description.length ? this.getBlockData.description : this.description
     }
   },
   watch: {
