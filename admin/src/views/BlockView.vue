@@ -35,6 +35,7 @@
                         :pagination="true"
                         :pagination-block="true"
                         :page-size="10"
+                        :page-num="this.startPage"
                         @clicked="clickTest"
                 />
             </y-modal>
@@ -83,7 +84,8 @@ export default {
       blocks: [],
       editBlockId: null,
       companies: [],
-      filter: null
+      filter: null,
+      startPage: 0 //страница с которой начинает грузиться раздел
     }
   },
   created() {
@@ -97,10 +99,14 @@ export default {
     update(this)
   },
   methods: {
-    editBlock(n) {
-      this.$router.push('/block/edit')
-      this.window = 'editBlock'
-      this.editBlockId = n.id
+    editBlock(n, data) {
+        let page = data.pageNumber
+
+        this.$router.push('/block/edit')
+        this.window = 'editBlock'
+        this.editBlockId = n.id
+
+        this.$store.commit('pageNumber', page)
     },
     createBlock() {
       this.$router.push('/block/create')
@@ -117,6 +123,7 @@ export default {
     close() {
       this.$router.push('/block')
       this.window = 'main'
+      this.startPage = this.$store.state.pageNumber
       
       this.companies.map(el => el.active = false)
       this.companies.map(el => {

@@ -10,7 +10,9 @@
                 :clickable="clickable"
 
                 @select="$emit('select', item)"
-                @edit="$emit('edit', item)"
+                @edit="$emit('edit', item, {
+                    pageNumber: this.pageNumber
+                })"
                 @delete="$emit('delete', item)"
                 @clicked="$emit('clicked', item)"
         >
@@ -22,8 +24,10 @@
         <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i
                 class="fa-solid fa-chevron-left"></i> Назад
         </YButton>
+        <span class="page_indicator"> {{this.pageNumber + 1}} </span>
         <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i
-                class="fa-solid fa-chevron-right"></i></YButton>
+                class="fa-solid fa-chevron-right"></i>
+        </YButton>
     </footer>
 </template>
 
@@ -43,6 +47,7 @@ export default {
   },
   created() {
     this.maxPage = Math.ceil(this.items.length / this.pageSize);
+    this.pageNumber = this.pageNum
   },
   props: {
     pagination: {
@@ -57,6 +62,10 @@ export default {
       type: Number,
       require: false,
       default: 5
+    },
+    pageNum: {
+        type: Number,
+        default: 0
     },
     items: {
       type: Array,
@@ -132,7 +141,7 @@ export default {
       if (this.showPrev)
         this.pageNumber--;
     }
-  },
+  }
 }
 </script>
 
@@ -165,6 +174,11 @@ export default {
     justify-content: space-between;
     border-top: 1px solid rgba(255, 255, 255, 0.13);
     padding-top: 1rem;
+}
+
+.page_indicator {
+    padding-top: 0.1rem;
+    font-size: 1.25rem;
 }
 </style>
 

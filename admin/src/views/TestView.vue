@@ -29,6 +29,7 @@
                         @edit="editTest"
                         :pagination="true"
                         :page-size="10"
+                        :page-num="this.startPage"
                         @clicked="clickTest"
                 />
             </y-modal>
@@ -108,7 +109,8 @@ export default {
           active: false,
         }
       ],
-      editTestId: null
+      editTestId: null,
+      startPage: 0 //страница с которой начинает грузиться раздел
     }
   },
   created() {
@@ -127,10 +129,14 @@ export default {
         this.$router.push('/test/create')
         this.window = 'createTest'
       },
-      editTest(n) {
-        this.$router.push('/test/edit')
-        this.editTestId = n.id
-        this.window = 'editTest'
+      editTest(n, data) {
+          let page = data.pageNumber
+
+          this.$router.push('/test/edit')
+          this.editTestId = n.id
+          this.window = 'editTest'
+
+          this.$store.commit('pageNumber', page)
       },
       updateTestsList(n) {
         this.testsCategories = this.testsCategories.map(el => {
@@ -156,6 +162,8 @@ export default {
       if (toWindow == 'main') {
         this.$router.push('/test')
       }
+      this.startPage = this.$store.state.pageNumber
+
       this.$store.commit('clearNewTest')
       update(this)
     },

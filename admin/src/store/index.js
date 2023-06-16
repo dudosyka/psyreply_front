@@ -56,7 +56,8 @@ export default createStore({
         blocks: [],
         selectedBlock: null,
       },
-    }
+    },
+    pageNumber: 0
   },
   getters: {
     isBotSet(state) {
@@ -111,11 +112,17 @@ export default createStore({
     },
     currentEmail(state) {
       return state.currentEmail;
+    },
+    pageNumber(state) {
+        return state.pageNumber;
     }
   },
   mutations: {
     setCurrentEmail(state, currentEmail) {
       state.currentEmail = currentEmail;
+    },
+    pageNumber(state, pageNumber) {
+        state.pageNumber = pageNumber;
     },
     setEditBlock(state, block) {
       state.results.editBlock = block
