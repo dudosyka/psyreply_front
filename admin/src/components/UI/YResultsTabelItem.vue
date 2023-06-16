@@ -1,45 +1,60 @@
 <template>
     <div class="tabel__item">
         <h2 class="item__metric">{{ metricName }}</h2>
-        <h3 class="item__status">{{ oldValue }}</h3>
-        <y-input class="input" @input="changeValue" :value="value" type="text"/>
+        <y-editable-input class="input"
+                          :metric-value="this.metricValue"
+                          :placeholder="'Баллы за метрику'"
+                          :error="'Поле не может быть пустым!'"
+                          @update="changeValue"
+        />
     </div>
 </template>
 
 <script>
 import Metric from '@/api/admin/Metric'
+import YEditableInput from "@/components/UI/YEditableInput.vue";
 
 export default {
   name: "YResultsTabelItem",
+    components: {YEditableInput},
   props: ['id', 'value'],
   data() {
     return {
-      oldValue: null,
-      metricName: null
+        oldValue: null,
+        metricName: null,
+        metricValue: null
     }
   },
   created() {
-    this.oldValue = this.value
-    const metric = new Metric()
-    metric.getOne()
-      .then(res => {
-        if (res.ok) {
-          res.json().then(data => data.body).then(r => {
-            r.map(el => {
-              if (el.id == this.id) {
-                this.metricName = el.name
-              }
+      this.metricValue = this.value
+
+      const metric = new Metric()
+      metric.getOne()
+        .then(res => {
+            if (res.ok) {
+            res.json().then(data => data.body).then(r => {
+                r.map(el => {
+                 if (el.id == this.id) {
+                    this.metricName = el.name
+                 }
+                })
             })
-          })
-        } else {
-          this.metricName = this.id
-        }
-      })
+            }
+            else {
+             this.metricName = this.id
+            }
+        })
   },
   methods: {
-    changeValue(e) {
-      this.$emit('update:modelValue', e.target.value)
-    }
+      changeValue(data) {
+          if (data.newData > 100) {
+              this.metricValue = 100
+          }
+          else
+              this.metricValue = data.newData
+
+          this.$emit('update:modelValue', this.metricValue)
+      }
   }
 }
 </script>
@@ -47,7 +62,7 @@ export default {
 <style scoped>
 .tabel__item {
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
+    grid-template-columns: 10fr 3fr;
     align-items: center;
 }
 
