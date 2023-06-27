@@ -14,7 +14,8 @@
         <input ref="inputFile" type="file" style="display: none;" @change="fileSelected"/>
         <r-button v-if="showControls" :icon="'mdi-paperclip'" class="controls" @click="selectFile"></r-button>
         <r-text-input @keyup.enter.prevent="sendMessage" :placeholder="'Сообщение'" v-model="text"></r-text-input>
-        <r-button v-if="showControls" :icon="'mdi-microphone'" class="controls"></r-button>
+        <r-button @click="sendMessage" :icon="'mdi-send'" class="controls"></r-button>
+<!--        <r-button v-if="showControls" :icon="'mdi-microphone'" class="controls"></r-button>-->
       </v-row>
     </v-container>
   </v-container>

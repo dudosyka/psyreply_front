@@ -30,6 +30,7 @@ export class ChatModel extends BaseModel {
         {
                 chatId: selectedChat.chatBotModel.telegram_chat_id,
                 msg: {
+                  title: "null",
                   text,
                   attachments,
                   type_id

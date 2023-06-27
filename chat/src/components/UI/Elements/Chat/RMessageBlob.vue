@@ -25,7 +25,7 @@
               <template
                 v-else-if="attached.type == 1"
               >
-                <v-btn class="mb-3" @click="goByLink(attached.link)" > Ссылка </v-btn>
+                <v-btn class="mb-3" @click="goByLink(attached.link)" > {{messageModel.content.title}} </v-btn>
               </template>
 
               <!-- BLOCK LINK -->
@@ -33,7 +33,7 @@
                 v-else-if="attached.type == 2"
               >
                 <p class="font-italic mb-2">
-                  Ссылка на блок тестирования
+                  Ссылка на блок тестирования ({{messageModel.content.title}})
                 </p>
                 <hr class="w-75 mb-2 ml-auto mr-auto">
               </template>

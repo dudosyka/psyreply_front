@@ -50,7 +50,8 @@ export default {
   methods: {
     async sendMessage({ msg }) {
       const noteModel = new NoteModel();
-      const note = await noteModel.createNote(this.user.BotUserModel.id, { message: msg })
+      console.log(this.user)
+      const note = await noteModel.createNote(this.user.chatBotModel.chat_id, { message: msg })
       this.$store.commit('pushNote', note);
       console.log(note);
     },
