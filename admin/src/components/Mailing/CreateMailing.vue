@@ -166,16 +166,15 @@ export default {
         }
       });
     });
-    const {recipients, name, one_time, day_period, send_time} = this.$store.getters.selectedDistribution;
-    console.log('DATA', recipients, name, one_time, day_period, send_time);
+    const {recipients, name, onetime, day_period, send_time} = this.$store.getters.selectedDistribution;
+    console.log('DATA', recipients, name, onetime, day_period, send_time);
     this.allPeople = recipients;
     this.name = name;
     this.day_period = day_period;
     if (this.showCustomPeriod) {
       this.day_period_input = day_period;
     }
-    this.one_time = one_time;
-    console.log(send_time);
+    this.one_time = onetime;
     this.time = {...send_time};
   },
   methods: {

@@ -178,7 +178,7 @@ export default {
 
 .page_indicator {
     padding-top: 0.1rem;
-    font-size: 1.25rem;
+    font-size: .8rem;
 }
 </style>
 
