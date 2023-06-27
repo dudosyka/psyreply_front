@@ -74,8 +74,10 @@
 
             <div v-if="element.type_id === DIstributionMessageType.LINK" class="element button-element">
                 <h4 class="element-heading">Ссылка</h4>
+                <h5 class="heading-small">Подпись</h5>
+                <textarea @change="dropValidation(element)" :class="{'error-input': element.validation.text}" class="text-area" v-model="element.text"></textarea>
                 <h5 class="heading-small">Текст кнопки</h5>
-                <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.text}" v-model="element.text" class="button-text" placeholder="Текст кнопки"/>
+               <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.title}" class="button-text" v-model="element.attachments.title" />
                 <h5 class="heading-small">URL</h5>
                 <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.link}" v-model="element.attachments.link" class="button-text" placeholder="Адрес ссылки"/>
                 <div class="row button-row">
@@ -103,6 +105,8 @@
                 </div>
                 <h5 class="heading-small">Подпись</h5>
                 <textarea @change="dropValidation(element)" :class="{'error-input': element.validation.text}" class="text-area" v-model="element.text"></textarea>
+                <h5 class="heading-small">Текст кнопки</h5>
+                <y-input @change="dropValidation(element)" :class="{'error-input': element.validation.title}" class="button-text" v-model="element.attachments.title" />
                 <div class="row button-row">
                     <y-cool-button @click="removeElement(index)" class="element-btn element-delete"><i
                             class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
@@ -590,3 +594,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     color: #ff7d7d;
 }
 </style>
+<script setup>
+</script>
+<script setup>
+</script>

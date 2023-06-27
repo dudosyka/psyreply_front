@@ -230,11 +230,14 @@ export default {
       if ((this.time.minutes > 59)) {
         this.time.minutes = null
       }
-        if(this.time.minutes % 5 != 0){
-            this.time.minutes = parseInt(this.time.minutes % 5) >2? Math.ceil(this.time.minutes / 5) * 5 : Math.floor((this.time.minutes / 5))* 5
-            // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes) / 5,this.time.minutes % 5,'dfdhfhdhfjhs')
-        }
-        // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes / 5) *5,this.time.minutes % 5,'dfdhfhdhfjhs')
+      // if(this.time.minutes % 2 != 0){
+      //     this.time.minutes = parseInt(this.time.minutes % 5) >2? Math.ceil(this.time.minutes / 5) * 5 : Math.floor((this.time.minutes / 5))* 5
+      //     // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes) / 5,this.time.minutes % 5,'dfdhfhdhfjhs')
+      // }
+      if (this.time.minutes < 10) {
+        this.time.minutes = `0${this.time.minutes}`
+      }
+      // console.log(parseInt(this.time.minutes),parseInt(this.time.minutes / 5) *5,this.time.minutes % 5,'dfdhfhdhfjhs')
     },
     showedPeople(group) {
       console.log(group);
