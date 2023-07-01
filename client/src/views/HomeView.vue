@@ -1,6 +1,22 @@
 <template>
   <div class="main">
     <div class="container form-bg" id="registration">
+      <img class="avatar-img" src="@/assets/pfp.png"/>
+      <div class="row">
+        <h1>Авторизация</h1>
+      </div>
+      <label class="label" for="email">Адрес эл. почты</label>
+      <input class="input" type="email" id="email" name="email">
+      <label class="label" for="password">Пароль</label>
+      <input class="input" type="password" id="password" name="password">
+
+      <div class="row">
+        <button class="btn">
+          Войти
+        </button>
+      </div>
+    </div>
+    <div class="container form-bg" id="registration">
       <div class="row">
         <h1>Регистрация</h1>
       </div>
