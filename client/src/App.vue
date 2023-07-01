@@ -276,7 +276,7 @@ export default {
       return this.$store.getters.relationAnswersAndPassedAnswers
     },
     dataField() {
-        return this.getBlockData.description && this.getBlockData.description.length ? this.getBlockData.description : this.description
+        return this.blockOnPass.description && this.blockOnPass.description.length ? this.blockOnPass.description : this.description
     }
   },
   watch: {
