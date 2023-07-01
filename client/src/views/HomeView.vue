@@ -4,6 +4,11 @@
       <div class="row">
         <h1>Регистрация</h1>
       </div>
+      <img class="avatar-img" src="@/assets/pfp.png"/>
+      <label for="avatar">Загрузить фото</label>
+      <input type="file"
+             id="avatar" name="avatar"
+             accept="image/png, image/jpeg">
       <label class="label" for="name">ФИО</label>
       <input class="input" type="text" id="name" name="name">
       <label class="label" for="email">Адрес эл. почты</label>
@@ -39,9 +44,9 @@
         <h1>Профиль</h1>
       </div>
       <hr class="hr">
+      <img class="avatar-img" src="@/assets/pfp.png"/>
       <label class="label" for="name">ФИО</label>
       <span class="info-text">Lorem ipsum dolor.</span>
-      <hr class="hr">
       <label class="label" for="email">Адрес эл. почты</label>
       <span class="info-text">Lorem ipsum dolor.</span>
       <hr class="hr">
@@ -166,5 +171,10 @@ export default {
 }
 hr {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.avatar-img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
 }
 </style>
