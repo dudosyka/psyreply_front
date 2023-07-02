@@ -85,7 +85,7 @@ export default {
       editBlockId: null,
       companies: [],
       filter: null,
-      startPage: 0 //страница с которой начинает грузиться раздел
+      startPage: 0 //the page from which the section starts loading
     }
   },
   created() {
@@ -124,7 +124,7 @@ export default {
       this.$router.push('/block')
       this.window = 'main'
       this.startPage = this.$store.state.pageNumber
-      
+
       this.companies.map(el => el.active = false)
       this.companies.map(el => {
         el.active = el.id === null;

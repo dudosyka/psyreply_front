@@ -37,8 +37,6 @@ export default {
     methods: {
         edit() {
             this.show = !this.show
-            // console.log(this.show)
-            // console.log(this.inputData)
         },
         editData() {
             if (this.inputData !== '') {
@@ -55,10 +53,6 @@ export default {
     },
     created() {
         this.inputData = this.metricValue
-        // alert(this.inputData)
-    },
-    updated() {
-        // alert('kk')
     }
 }
 </script>

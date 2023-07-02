@@ -24,7 +24,7 @@
         <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i
                 class="fa-solid fa-chevron-left"></i> Назад
         </YButton>
-        <span class="page_indicator"> {{this.pageNumber + 1}} </span>
+        <span class="page_indicator"> {{ currentlyPage }} </span>
         <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i
                 class="fa-solid fa-chevron-right"></i>
         </YButton>
@@ -130,6 +130,9 @@ export default {
     },
     showPrev() {
       return this.pageNumber > 0;
+    },
+    currentlyPage() {
+        return this.pageNumber + 1
     }
   },
   methods: {
