@@ -57,6 +57,9 @@ export default createStore({
         selectedBlock: null,
       },
     },
+    greetings: {
+        list: []
+    },
     pageNumber: 0
   },
   getters: {
@@ -134,7 +137,7 @@ export default createStore({
       question.id = state.newTest.questionsCount
       state.newTest.questions.push(question)
       state.newTest.questionsCount++
-      
+
       if (state.newTest.questions.length > 1 && needCopy) {
         let i = 1;
         state.newTest.questions[0].answers.map(el => {
@@ -246,7 +249,7 @@ export default createStore({
     setSelectedDistribution(state, distribution) {
       state.distribution.selected = distribution;
     },
-    
+
     addDistributionBlock(state, {name, elements}) {
       state.distribution.selected.blocks.push({name, elements, new: true})
     },
@@ -275,26 +278,24 @@ export default createStore({
       commit('setDistributionList', list);
       commit('setIsBotSet', isBotSet);
     },
-    
+
     async createNewDistribution({commit}) {
       const company = new Company();
-      
+
       const recipients = await company.getAllUsers().then(r => {
         return r.map(el => ({...{...el, groups: el.groups.map(el => el.id)}, active: false}));
       });
-      
+
       commit('newDistribution', recipients)
     },
     async selectDistribution({commit}, id) {
       const distribution = new Distribution();
       const selected = await distribution.getOne(id);
-      console.log(selected);
       const userIds = selected.contacts.map(el => el.id);
       const company = new Company();
       selected.recipients = await company.getAllUsers().then(r => {
         return r.map(el => ({...{...el, groups: el.groups.map(el => el.id)}, active: userIds.includes(el.id)}));
       });
-      console.log(selected.recipients);
       //Тут надо написать ещё обработку чтобы челики выбранные стали active: true
       commit('setSelectedDistribution', {
         ...selected,
@@ -353,7 +354,7 @@ export default createStore({
         await model.create(dto);
       }
     },
-    
+
     createNewDistributionBlock({commit, state}) {
       commit('addDistributionBlock', {name: "", elements: []})
       return state.distribution.selected.blocks.length - 1;

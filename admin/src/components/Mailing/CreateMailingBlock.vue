@@ -1,6 +1,6 @@
 <template>
     <y-modal class="modal">
-        <header class="header">
+        <header class="header" v-if="!tg_block">
             <!--
               Если будешь заменять эту кнопку то не забудь в том элементе, на который заменишь, прописать точно такой же @click
               Подробнее см. пояснение внутри MailingView в методе close
@@ -12,6 +12,7 @@
         </header>
         <y-input
                 v-model="name"
+                v-if="!tg_block"
                 placeholder="Название блока"
                 :class="{'error-input': validation.name}"
                 @change="validation.name = false"
@@ -144,8 +145,11 @@
         </template>
 
         <div class="row button-row">
-            <y-cool-button @click="saveBlock">Сохранить блок</y-cool-button>
+            <y-cool-button @click="saveBlock">
+                <slot class="btn_slot" name="btn_slot_name">Сохранить блок</slot>
+            </y-cool-button>
         </div>
+
     </y-modal>
 </template>
 
@@ -156,6 +160,12 @@ import {FilesModel} from "@/api/admin/FilesModel";
 
 export default {
   name: "CreateMailingBlock",
+    props: {
+      tg_block: {
+          type: Boolean,
+          default: false
+      }
+    },
   computed: {
     DIstributionMessageType() {
       return DIstributionMessageType
@@ -184,6 +194,7 @@ export default {
         const {index, name, elements} = await this.$store.getters.selectedDistributionBlock;
         this.blockIndex = index;
         this.name = name;
+        console.log(`Selected block name = ${name}/${this.name}`)
         this.elements = elements.map(el => {
           if (el.type_id == DIstributionMessageType.TEST) {
             const tests = this.getTestBlocks(el.attachments.block_id)
@@ -205,7 +216,7 @@ export default {
           }
         });
       })
-    
+
   },
   methods: {
     selectTestBlock(testBlock, element) {
@@ -274,7 +285,7 @@ export default {
         default:
           break;
       }
-      
+
       this.elements.push(elementTemplate)
     },
     getTestBlocks(active) {
@@ -288,12 +299,12 @@ export default {
       if (!this.name) {
         this.validation.name = true;
       }
-      
+
       this.elements.map(el => {
         if (!el.text) {
           el.validation.text = true;
         }
-        
+
         switch (el.type_id) {
           case DIstributionMessageType.MEDIA:
             if (!el.attachments.file_id) {
@@ -317,23 +328,23 @@ export default {
             }
             break;
         }
-        
+
         //We check it here because we change el.validation.text in switch-case block
         if (el.validation.text)
           this.validation.elements = true;
       });
-      
+
       console.log(this.validation);
-      
+
       const errsLength = (Object.keys(this.validation).filter(el => {
         return this.validation[el]
       })).length;
-      
+
       if (errsLength) {
         this.$store.commit('openErrorPopup', 'Ошибка! Проверьте правильность заполнения полей!');
         return;
       }
-      
+
       this.$store.dispatch('updateDistributionBlock', {
         index: this.blockIndex, block: {name: this.name, elements: this.elements}
       });
@@ -477,6 +488,7 @@ export default {
 
 .element-heading {
     margin-bottom: 1rem;
+    width: initial;
 }
 
 .header {
@@ -493,7 +505,7 @@ export default {
 
 .modal {
     display: grid;
-    width: 70vw;
+    width: 70rem;
     grid-gap: 2.5625rem;
     background: rgba(7, 18, 25, 0.75);
     backdrop-filter: blur(16px) saturate(180%);

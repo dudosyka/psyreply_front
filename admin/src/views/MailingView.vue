@@ -7,7 +7,7 @@
               Внутри этого template должна быть верстка касающаяся дефолт вида окна рассылок
               Тут должен быть список рассылок см. листочек с обсуждения
             -->
-            <template v-if="window === 'main' || window === 'bot-edit'">
+            <template v-if="window === 'main' || window == 'bot-edit'">
                 <div class="container main-container">
                     <template
                         v-if="isBotSet !== false && window != 'bot-edit'"
@@ -34,12 +34,13 @@
                             :page-size="10"
                             :deletable="true"
                             @delete="deleteDistribution"
+                            :filter-items="filterItems"
                         />
                     </template>
                     <div v-if="window == 'bot-edit'" class="tg-add">
                         <header class="row header">
                             <div class="col">
-                                <h2 class="heading header__heading">Привязка Telegram</h2>
+                                <h2 class="heading header__heading" @click="saveBot">Привязка Telegram</h2>
                             </div>
                         </header>
                         <h4 class="heading-small">Название</h4>
@@ -47,125 +48,9 @@
                         <h4 class="heading-small">Токен</h4>
                         <y-input v-model="botToken" class="token" placeholder="Введите токен..."></y-input>
 
-                        <div class="container elements">
-                            <h3 class="add-heading">Добавление элементов</h3>
-                            <y-cool-button class="element-btn element-btn-active"
-                                           @click="createElement(DIstributionMessageType.TEXT)">
-                                <i class="fa-solid fa-text-width"></i> Текст
-                            </y-cool-button>
-                            <y-cool-button class="element-btn element-btn-active"
-                                           @click="createElement(DIstributionMessageType.MEDIA)">
-                                <i class="fa-solid fa-newspaper"></i> Медиа
-                            </y-cool-button>
-                            <y-cool-button class="element-btn element-btn-active"
-                                           @click="createElement(DIstributionMessageType.LINK)">
-                                <i class="fa-solid fa-link"></i> Ссылка
-                            </y-cool-button>
-                            <y-cool-button class="element-btn element-btn-active"
-                                           @click="createElement(DIstributionMessageType.TEST)">
-                                <i class="fa-solid fa-list"></i> Тест
-                            </y-cool-button>
-                        </div>
-
-                        <template v-for="(element, index) in elements">
-                            <div v-if="element.type_id === DIstributionMessageType.TEXT" class="element text">
-                                <h4 class="element-heading">Текст</h4>
-                                <textarea @change="dropValidation(element)" v-model="element.text" class="text-area"
-                                          :class="{'error-input': element.validation.text}"></textarea>
-                                <div class="row button-row">
-                                    <y-cool-button @click="removeElement(index)"
-                                                   class="element-btn element-delete element-delete-active"><i
-                                        class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
-                                    </y-cool-button>
-                                </div>
-                            </div>
-
-                            <div v-if="element.type_id === DIstributionMessageType.MEDIA" class="element text-img">
-                                <h4 class="element-heading">Медиа</h4>
-                                <div class="row media-row">
-                                    <template v-if="!getAttachedFile(element)">
-                                        <input @change="getMedia($event, element)" type="file" id="img"
-                                               style="display:none;">
-                                        <label :class="{'error-input': element.validation.file_id}" class="upload-text"
-                                               for="img"><i class="fa-solid fa-file"></i> Выберите файл</label>
-                                    </template>
-                                    <div v-else class="attached-file">
-                                        <span class="file-name">{{ getAttachedFile(element) }}</span><i
-                                        @click="clearFile(element)" class="delete-file fa-solid fa-circle-xmark"></i>
-                                    </div>
-                                    <y-cool-button class="element-btn element-btn-active"
-                                                   @click="toggleMediaLabel(element)">
-                                        <i class="fa-solid fa-pen"></i> Подпись
-                                    </y-cool-button>
-                                </div>
-                                <template v-if="element.showLabel">
-                                    <h5 class="heading-small">Подпись</h5>
-                                    <textarea @change="dropValidation(element)" class="text-area"
-                                              :class="{'error-input': element.validation.text}"
-                                              v-model="element.text"></textarea>
-                                </template>
-                                <div class="row button-row">
-                                    <y-cool-button @click="removeElement(index)"
-                                                   class="element-btn element-delete element-delete-active"><i
-                                        class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
-                                    </y-cool-button>
-                                </div>
-                            </div>
-
-                            <div v-if="element.type_id === DIstributionMessageType.LINK" class="element button-element">
-                                <h4 class="element-heading">Ссылка</h4>
-                                <h5 class="heading-small">Подпись</h5>
-                                <textarea @change="dropValidation(element)"
-                                          :class="{'error-input': element.validation.text}" class="text-area"
-                                          v-model="element.text"></textarea>
-                                <h5 class="heading-small">Текст кнопки</h5>
-                                <y-input @change="dropValidation(element)"
-                                         :class="{'error-input': element.validation.title}" class="button-text"
-                                         v-model="element.attachments.title"/>
-                                <h5 class="heading-small">URL</h5>
-                                <y-input @change="dropValidation(element)"
-                                         :class="{'error-input': element.validation.link}"
-                                         v-model="element.attachments.link" class="button-text"
-                                         placeholder="Адрес ссылки"/>
-                                <div class="row button-row">
-                                    <y-cool-button @click="removeElement(index)"
-                                                   class="element-btn element-delete element-delete-active"><i
-                                        class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
-                                    </y-cool-button>
-                                </div>
-                            </div>
-
-                            <div v-if="element.type_id === DIstributionMessageType.TEST" class="element test-element">
-                                <h4 class="element-heading test">Тест</h4>
-                                <h5 class="heading-small" :class="{'error-input': element.validation.block_id}">
-                                    Привязать блок тестов</h5>
-                                <div class="container tests">
-                                    <y-list
-                                        key-of-name="name"
-                                        :editable="false"
-                                        :selectable="true"
-                                        @select="selectTestBlock($event, element)"
-                                        :items="element.tests"
-                                        :pagination="true"
-                                        :pagination-block="true"
-                                        :page-size="4"
-                                    />
-                                </div>
-                                <h5 class="heading-small">Подпись</h5>
-                                <textarea @change="dropValidation(element)"
-                                          :class="{'error-input': element.validation.text}" class="text-area"
-                                          v-model="element.text"></textarea>
-                                <h5 class="heading-small">Текст кнопки</h5>
-                                <y-input @change="dropValidation(element)"
-                                         :class="{'error-input': element.validation.title}" class="button-text"
-                                         v-model="element.attachments.title"/>
-                                <div class="row button-row">
-                                    <y-cool-button @click="removeElement(index)" class="element-btn element-delete"><i
-                                        class="fa-sharp fa-solid fa-trash"></i> Удалить элемент
-                                    </y-cool-button>
-                                </div>
-                            </div>
-                        </template>
+                        <create-mailing-block :tg_block="true" class="greetings_block" @close="saveGreeting">
+                            <template v-slot:btn_slot_name> Сохранить блок </template>
+                        </create-mailing-block>
                     </div>
                 </div>
             </template>
@@ -218,10 +103,19 @@ import {CompanyDistribution} from "@/api/admin/distribution/CompanyDistribution"
 import DIstributionMessageType from "@/api/admin/distribution/DIstributionMessageType";
 import Block from "@/api/admin/Block";
 import {FilesModel} from "@/api/admin/FilesModel";
+import YCoolButton from "@/components/UI/YCoolButton.vue";
+import {Greetings} from "@/api/admin/greetings/Greetings";
+import CreateMailingBlock from "@/components/Mailing/CreateMailingBlock.vue";
+import {BotModel} from "@/api/admin/distribution/Bot";
+
+
+const greetings = new Greetings();
 
 export default {
     name: "MailingView",
     components: {
+        CreateMailingBlock,
+        YCoolButton,
         YButton,
         CreateMailingBot,
         EditMailing,
@@ -241,7 +135,8 @@ export default {
             validation: {
                 name: false
             },
-            selectedType: 0
+            selectedType: 0,
+            greetingsDistribution: {}
         }
     },
     async created() {
@@ -314,6 +209,9 @@ export default {
 
     },
     methods: {
+        filterItems(el) {
+            return !el.greetings
+        },
         close() {
             this.$router.push('/distribution')
             this.window = 'main';
@@ -376,9 +274,21 @@ export default {
                 }
             });
         },
-        editBot(route) {
+        async editBot(route) {
+            const bot = new BotModel();
+            console.log('bot', bot.isSet());
+            this.greetingsDistribution = await greetings.getGreeting();
+
+            await this.$store.dispatch('selectDistribution', this.greetingsDistribution.id);
+            await this.$store.dispatch('selectDistributionBlock', 0);
+
             this.$router.push('/distribution/bot/edit')
             this.window = route;
+        },
+        saveGreeting() {
+            const block = this.$store.getters.distributionBlocks[0]
+            greetings.updateGreeting(this.greetingsDistribution.id, {block: {messages: block.elements, relative_id: 1, name: block.name}})
+            this.saveBot()
         },
         async saveBot() {
             const companyDistribution = new CompanyDistribution();
@@ -465,6 +375,10 @@ export default {
 </script>
 
 <style scoped>
+.greetings_block {
+    margin-top: 2rem;
+}
+
 .attached-files {
     display: flex;
     flex-direction: row;
