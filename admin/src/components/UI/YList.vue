@@ -1,20 +1,20 @@
 <template>
     <ul class="list">
         <y-list-item
-                v-for="item in filteredItems"
-                :key="`${item.id}${item[keyOfName]}`"
-                :selectable="selectable"
-                :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
-                :active="item.active"
-                :deletable="deletable"
-                :clickable="clickable"
+            v-for="item in filteredItems"
+            :key="`${item.id}${item[keyOfName]}`"
+            :selectable="selectable"
+            :editable="(item.type_id === 6 || item.type_id === 7) ? false : editable"
+            :active="item.active"
+            :deletable="deletable"
+            :clickable="clickable"
 
-                @select="$emit('select', item)"
-                @edit="$emit('edit', item, {
+            @select="$emit('select', item)"
+            @edit="$emit('edit', item, {
                     pageNumber: this.pageNumber
                 })"
-                @delete="$emit('delete', item)"
-                @clicked="$emit('clicked', item)"
+            @delete="$emit('delete', item)"
+            @clicked="$emit('clicked', item)"
         >
             {{ showId ? (item[showId]) ? `${item[showId]} ` : 'Администратор' : "" }} {{ item[keyOfName] }}
 
@@ -22,11 +22,11 @@
     </ul>
     <footer class="container-fluid footer-container" v-if="pagination === true">
         <YButton @click="previousPage" :class="{'hide-pagination': !showPrev}" class="prev"><i
-                class="fa-solid fa-chevron-left"></i> Назад
+            class="fa-solid fa-chevron-left"></i> Назад
         </YButton>
         <span class="page_indicator"> {{ currentlyPage }} </span>
         <YButton @click="nextPage" :class="{'hide-pagination': !showNext}" class="next">Далее <i
-                class="fa-solid fa-chevron-right"></i>
+            class="fa-solid fa-chevron-right"></i>
         </YButton>
     </footer>
 </template>
@@ -37,114 +37,118 @@ import YButton from "@/components/UI/YButton.vue";
 import YCoolButton from "@/components/UI/YCoolButton.vue";
 
 export default {
-  name: "YList",
-  components: {YCoolButton, YButton},
-  data() {
-    return {
-      pageNumber: 0,
-      maxPage: 100,
+    name: "YList",
+    components: {YCoolButton, YButton},
+    data() {
+        return {
+            pageNumber: 0,
+            maxPage: 100,
+        }
+    },
+    created() {
+        this.maxPage = Math.ceil(this.items.length / this.pageSize);
+        this.pageNumber = this.pageNum
+    },
+    props: {
+        pagination: {
+            type: Boolean,
+            default: false
+        },
+        paginationBlock: {
+            type: Boolean,
+            default: false
+        },
+        pageSize: {
+            type: Number,
+            require: false,
+            default: 5
+        },
+        pageNum: {
+            type: Number,
+            default: 0
+        },
+        items: {
+            type: Array,
+            default: [
+                {name: 'test1'},
+                {name: 'test2'},
+                {name: 'test3'},
+            ]
+        },
+        filterItems: {
+            type: Function,
+            default: el => true
+        },
+        keyOfName: {
+            type: String,
+            default: name
+        },
+        showId: {
+            default: false
+        },
+        selectable: {
+            type: Boolean,
+            default: false
+        },
+        editable: {
+            type: Boolean,
+            default: false
+        },
+        deletable: {
+            type: Boolean,
+            default: false,
+        },
+        clickable: {
+            type: Boolean,
+            default: false
+        }
+    },
+    computed: {
+        filteredItems() {
+            let pagination = this.pagination
+            const filteredArray = [];
+            const games = this.items.filter(el => {
+                return (el.type_id === 6 || el.type_id === 7)
+            })
+            const tests = this.items.filter(el => {
+                return !(el.type_id === 6 || el.type_id === 7)
+            })
+            console.log(this.items, tests, games)
+            if (pagination === false) {
+                return filteredArray.concat(games, tests).filter(this.filterItems)
+            } else {
+                const start = this.pageNumber * this.pageSize, end = start + this.pageSize
+                return filteredArray.concat(games, tests).slice(start, end).filter(this.filterItems)
+            }
+        },
+        showNext() {
+            let filteredArray = []
+            const games = this.items.filter(el => {
+                return (el.type_id === 6 || el.type_id === 7)
+            })
+            const tests = this.items.filter(el => {
+                return !(el.type_id === 6 || el.type_id === 7)
+            })
+            const start = (this.pageNumber + 1) * this.pageSize, end = start + this.pageSize
+            return (filteredArray.concat(games, tests).slice(start, end).length > 0)
+        },
+        showPrev() {
+            return this.pageNumber > 0;
+        },
+        currentlyPage() {
+            return this.pageNumber + 1
+        }
+    },
+    methods: {
+        nextPage() {
+            if (this.showNext)
+                this.pageNumber++;
+        },
+        previousPage() {
+            if (this.showPrev)
+                this.pageNumber--;
+        }
     }
-  },
-  created() {
-    this.maxPage = Math.ceil(this.items.length / this.pageSize);
-    this.pageNumber = this.pageNum
-  },
-  props: {
-    pagination: {
-      type: Boolean,
-      default: false
-    },
-    paginationBlock: {
-      type: Boolean,
-      default: false
-    },
-    pageSize: {
-      type: Number,
-      require: false,
-      default: 5
-    },
-    pageNum: {
-        type: Number,
-        default: 0
-    },
-    items: {
-      type: Array,
-      default: [
-        {name: 'test1'},
-        {name: 'test2'},
-        {name: 'test3'},
-      ]
-    },
-    keyOfName: {
-      type: String,
-      default: name
-    },
-    showId: {
-      default: false
-    },
-    selectable: {
-      type: Boolean,
-      default: false
-    },
-    editable: {
-      type: Boolean,
-      default: false
-    },
-    deletable: {
-      type: Boolean,
-      default: false,
-    },
-    clickable: {
-        type: Boolean,
-        default: false
-    }
-  },
-  computed: {
-    filteredItems() {
-      let pagination = this.pagination
-      const filteredArray = [];
-      const games = this.items.filter(el => {
-        return (el.type_id === 6 || el.type_id === 7)
-      })
-      const tests = this.items.filter(el => {
-        return !(el.type_id === 6 || el.type_id === 7)
-      })
-      console.log(this.items, tests, games)
-      if (pagination === false) {
-        return filteredArray.concat(games, tests)
-      } else {
-        const start = this.pageNumber * this.pageSize, end = start + this.pageSize
-        return filteredArray.concat(games, tests).slice(start, end)
-      }
-    },
-    showNext() {
-      let filteredArray = []
-      const games = this.items.filter(el => {
-        return (el.type_id === 6 || el.type_id === 7)
-      })
-      const tests = this.items.filter(el => {
-        return !(el.type_id === 6 || el.type_id === 7)
-      })
-      const start = (this.pageNumber + 1) * this.pageSize, end = start + this.pageSize
-      return (filteredArray.concat(games, tests).slice(start, end).length > 0)
-    },
-    showPrev() {
-      return this.pageNumber > 0;
-    },
-    currentlyPage() {
-        return this.pageNumber + 1
-    }
-  },
-  methods: {
-    nextPage() {
-      if (this.showNext)
-        this.pageNumber++;
-    },
-    previousPage() {
-      if (this.showPrev)
-        this.pageNumber--;
-    }
-  }
 }
 </script>
 
