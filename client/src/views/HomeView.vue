@@ -51,7 +51,7 @@
         </div>
         <div class="container form-bg" id="profile" v-if="this.$route.name === 'profile'">
             <div class="row">
-                <h1>Профиль</h1>
+                <h1 @click="drop">Профиль</h1>
             </div>
             <hr class="hr">
             <img class="avatar-img" src="@/assets/pfp.png"/>
@@ -102,6 +102,9 @@ export default {
         }
     },
     methods: {
+        drop() {
+          localStorage.removeItem('token')
+        },
         getFile(event) {
             this.formData.file = event.target.files[0];
         },
