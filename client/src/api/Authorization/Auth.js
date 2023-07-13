@@ -29,6 +29,11 @@ export class Auth {
             });
         });
     }
+
+    checkAuth() {
+        const token = localStorage.getItem('token')
+        return token !== null
+    }
 }
 
 export class SignIn extends ApiResolver {

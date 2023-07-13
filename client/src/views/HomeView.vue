@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="container form-bg" id="registration" v-if="window === 'registration'">
+        <div class="container form-bg" id="registration" v-if="this.$route.name === 'signup'">
             <div class="row">
                 <h1>Регистрация</h1>
             </div>
@@ -13,8 +13,8 @@
             <input class="input" type="text" id="name" name="name" v-model.trim="formData.fullName">
             <label class="label" for="email">Адрес эл. почты</label>
             <input class="input" type="email" id="email" name="email" v-model.trim="formData.email">
-            <label class="label" for="email">Моб. телефон</label>
-            <input class="input" type="email" id="email" name="email" v-model.trim="formData.phone">
+            <label class="label" for="phone">Моб. телефон</label>
+            <input class="input" type="phone" id="phone" name="phone" v-model.trim="formData.phone">
             <label class="label" for="password">Придумайте пароль</label>
             <input class="input" type="password" id="password" name="password" v-model.trim="formData.password">
             <label class="label" for="password">Повторите пароль</label>
@@ -24,13 +24,13 @@
                 <button class="btn" @click="checkValid">
                     Создать аккаунт
                 </button>
-                <button class="btn" @click="this.window = 'login'">
+                <button class="btn" @click="this.$router.push({name: 'login'})">
                     Войти
                 </button>
 
             </div>
         </div>
-        <div class="container form-bg" id="registration" v-if="window === 'login'">
+        <div class="container form-bg" id="registration" v-if="this.$route.name === 'login'">
             <img class="avatar-img" src="@/assets/pfp.png"/>
             <div class="row">
                 <h1>Авторизация</h1>
@@ -44,14 +44,14 @@
                 <button class="btn" @click="login">
                     Войти
                 </button>
-                <button class="btn" @click="this.window = 'registration'">
+                <button class="btn" @click="this.$router.push({name: 'signup'})">
                     Создать аккаунт
                 </button>
             </div>
         </div>
-        <div class="container form-bg" id="profile" v-if="window === 'profile'">
+        <div class="container form-bg" id="profile" v-if="this.$route.name === 'profile'">
             <div class="row">
-                <h1>Профиль</h1>
+                <h1 @click="drop">Профиль</h1>
             </div>
             <hr class="hr">
             <img class="avatar-img" src="@/assets/pfp.png"/>
@@ -75,12 +75,11 @@
 <script>
 
 import {Auth, SignIn} from "@/api/Authorization/Auth";
-import {GetData} from "@/api/Authorization/GetData";
+import {GetUserData} from "@/api/Authorization/GetUserData";
 
 const auth = new Auth();
 const signIn = new SignIn();
-const getData = new GetData()
-
+const getUserData = new GetUserData();
 
 export default {
     name: 'HomeView',
@@ -99,16 +98,18 @@ export default {
                 fullName: null,
                 email: null,
                 phone: null,
-            },
-            window: 'registration',
+            }
         }
     },
     methods: {
+        drop() {
+          localStorage.removeItem('token')
+        },
         getFile(event) {
             this.formData.file = event.target.files[0];
         },
-        async getData() {
-            const Data = await getData.getProfile()
+        async getUserData() {
+            const Data = await getUserData.getProfile()
             const user = this.user;
 
             user.fullName = Data.fullname
@@ -145,12 +146,12 @@ export default {
                 .catch(err => {
                     if (err.request.status === 409){
                         this.$store.commit('openErrorPopup', 'Пользователь с такими данными уже существует!');
-                        this.window = 'login'
+                        this.$router.push({name: 'login'})
                     }
                 })
 
             if (localStorage.getItem('token') !== null)
-                this.window = 'profile'
+                this.$router.push({name: 'profile'})
         },
         async login() {
             const email = this.formData.email;
@@ -163,31 +164,21 @@ export default {
                 })
 
             if (localStorage.getItem('token') !== null)
-                this.window = 'profile'
+                this.$router.push({name: 'profile'})
 
-            await this.getData();
+            await this.getUserData();
         },
         logout() {
+            //deleting previous user data
             localStorage.removeItem('token')
-            this.window = 'registration'
+            Object.keys(this.formData).forEach(key => (delete this.formData[key]))
+
+            this.$router.push({name: 'signup'})
         }
     },
     created() {
-        console.log(this.$route.params)
-        this.$watch(
-            () => this.$route.params,
-            (toParams, previousParams) => {
-                if (toParams.after === '')
-                    this.window = 'main'
-            }
-        )
-
-        if (localStorage.getItem('token') !== null) {
-            this.window = 'profile'
-            this.getData()
-        }
-        else
-            this.window = 'registration'
+        if (this.$route.name === 'profile')
+            this.getUserData()
     }
 }
 </script>
