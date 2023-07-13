@@ -1,6 +1,6 @@
 import ApiResolver from "@/api/ApiResolver";
 
-export class GetData extends ApiResolver {
+export class GetUserData extends ApiResolver {
     constructor() {
         super('user/client');
     }
